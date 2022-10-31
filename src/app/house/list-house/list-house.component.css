@@ -1,0 +1,297 @@
+.container {
+  overflow: hidden;
+
+}
+
+.content-container {
+  padding: 15px 50px 11px;
+}
+
+h2 {
+  font-weight: 400;
+  color: #02675c;
+  text-transform: uppercase;
+  font-size: 24px;
+}
+
+header.header-5,
+.header.header-5 {
+
+  background-color: #079081;
+
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 195px;
+  background-color: #3c85008c;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  margin: 30px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.pwd {
+  margin-left: 448px;
+  margin-top: -43px;
+}
+
+.content-area {
+  padding: 20px 20px 50px 20px;
+}
+
+
+
+.addbtn {
+  float: right
+}
+
+.card-block .btn,
+.card-block .btn.btn-link,
+.card-block .card-link,
+.card-footer .btn,
+.card-footer .btn.btn-link,
+.card-footer .card-link {
+
+  color: #02675c !important;
+}
+
+
+
+.list_area {
+  padding: 0 20px !important;
+}
+
+.table_view {
+  max-height: calc(100vh - 240px);
+  width: 100%;
+}
+
+.create_area {
+  background-color: #f2fbf0;
+  padding: 0;
+  margin: 0;
+  position: fixed;
+  z-index: 501;
+  animation-duration: .3s;
+  animation-name: slidein;
+  animation-iteration-count: initial;
+
+  display: grid;
+  grid-template-rows: 65px auto 50px;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  border-left: 1px solid #e0e0e0;
+  border-radius: 0%;
+
+  top: 60px;
+  bottom: 0;
+  right: 0;
+  overflow: scroll;
+  width: 40%;
+}
+
+@keyframes slidein {
+  from {
+    right: -250px;
+    opacity: 0;
+  }
+
+  to {
+    right: 0;
+    opacity: 1;
+  }
+}
+
+
+.modal-body div {
+  display: flex;
+
+}
+
+.modal-body div span {
+  flex: 1;
+  margin: 5px;
+}
+
+.content-container {
+  display: inline-block;
+}
+
+.addbtn {
+  padding: 45px 55px 11px;
+}
+
+/* css table color*/
+.tablecolor:nth-child(even) {
+  background-color: #f5f5f5;
+}
+
+
+
+/*icon add  new farm icon*/
+
+.tooltip-add {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-add .tooltiptext-add {
+  visibility: hidden;
+  width: 126px;
+  font-size: 10px;
+  background-color: #16796e;
+  color: #fff;
+  text-align: center;
+  border-radius: 3px;
+  padding: 2px 10px;
+  position: absolute;
+  z-index: 1;
+  bottom: 136%;
+  left: 35%;
+  margin-left: -60px;
+  text-transform: initial;
+  transition: opacity 0.3s;
+}
+
+.tooltip-add .tooltiptext-add::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip-add:hover .tooltiptext-add {
+  visibility: visible;
+  opacity: 1;
+}
+
+.addbtn .btn {
+  overflow: initial !important;
+  outline: 0 !important;
+  height: 38px;
+  color: white;
+}
+
+.datagrid-detail-caret .datagrid-detail-caret-button {
+  background: #02675c !important;
+}
+
+.btn.btn-primary,
+.btn-primary .btn {
+  border-color: #02675c;
+  background-color: #02675c;
+  color: #fff;
+  color: var(--clr-btn-primary-color, white);
+}
+
+.clr-contrat-label {
+
+  color: #454545;
+  color: var(--clr-forms-label-color, #454545);
+  font-size: .65rem;
+  font-weight: 600;
+  font-weight: var(--clr-forms-label-font-weight, 600);
+  line-height: .9rem;
+  padding-left: 0;
+}
+
+.btn.btn-primary .btn-primary .datagrid-detail-caret-button .upload {
+  border-color: #65c7c0;
+  background-color: #65c7c0;
+  color: #fff;
+  color: var(--clr-btn-primary-color, white);
+}
+
+.btnagreement {
+  border: none;
+  background: transparent;
+}
+
+.datagrid-detail-caret-button {
+  outline: 0 !important;
+}
+
+.icon-title {
+
+  display: inline-block;
+  margin: 0;
+  height: 27px;
+  width: 27px;
+  vertical-align: middle;
+  fill: currentColor;
+  color: #65c7c0;
+  margin-right: 9px;
+
+}
+
+.datagrid-detail-caret .datagrid-detail-caret-button {
+  outline: 0 !important
+}
+
+.datagrid-detail-caret .datagrid-detail-caret-button.is-open {
+  background-color: #65c7c0 !important;
+}
+
+clr-icon {
+  display: inline-block;
+  margin: 0;
+  height: 27px;
+  width: 27px;
+  vertical-align: middle;
+  fill: currentColor;
+  color: #65c7c0;
+  margin-right: 9px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}

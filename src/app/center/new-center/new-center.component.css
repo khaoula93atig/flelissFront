@@ -1,0 +1,25 @@
+
+.card-block .btn, .card-block .btn.btn-link, .card-block .card-link, .card-footer .btn, .card-footer .btn.btn-link, .card-footer .card-link {
+
+    border-color: #02675c !important;
+    color: #02675c !important;
+  }
+  .card-header, .card-block, .card-footer {
+
+    margin-top: 33px !important;
+}
+
+.datagrid-detail-caret .datagrid-detail-caret-button {
+  background: #02675c !important;
+ }
+ .uploadfile{
+ display: flex;
+    padding-top: 30px;
+    margin-left: -8px;
+}
+clr-input-container{
+    display: -webkit-box;
+  }
+  clr-select-container{
+    display: -webkit-box;
+  }

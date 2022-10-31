@@ -1,0 +1,323 @@
+
+@import '~ngx-toastr/toastr';
+/* You can add global styles to this file, and also import other style files */
+.addbtn .btn {
+
+  outline: 0 !important;
+
+}
+
+.dropdown-menu .btn,
+.dropdown-menu .dropdown-item {
+  padding: .15rem 1.2rem;
+  outline: 0 !important;
+}
+
+header .settings>.dropdown>.dropdown-toggle:enabled:hover,
+header .header-actions>.dropdown>.dropdown-toggle:enabled:hover,
+.header .settings>.dropdown>.dropdown-toggle:enabled:hover,
+.header .header-actions>.dropdown>.dropdown-toggle:enabled:hover {
+  opacity: 1;
+  outline: 0 !important;
+  opacity: var(--clr-header-nav-hover-opacity, 1);
+}
+
+.datagrid-detail-caret .datagrid-detail-caret-button.is-open .datagrid-detail-caret-icon {
+  color: #fff;
+  outline: 0 !important;
+  color: var(--clr-datagrid-detail-caret-icon-open-icon-color, white);
+  outline: 0 !important;
+}
+
+
+.icon-title {
+
+  display: inline-block;
+  margin: 0;
+  height: 27px;
+  width: 27px;
+  vertical-align: middle;
+  fill: currentColor;
+  color: #02675c;
+  margin-right: 9px;
+
+}
+
+.datagrid-detail-caret .datagrid-detail-caret-button {
+  outline: 0 !important
+}
+
+.datagrid-detail-caret .datagrid-detail-caret-button.is-open {
+  background-color: #65c7c0 !important;
+}
+
+.clr-input-group .clr-input-group-icon-action clr-icon {
+  height: .9rem;
+  color: #03675c;
+  width: .9rem;
+  outline: 0 !important;
+  transform: translate(-.05rem, -.05rem);
+}
+
+button {
+  outline: 0 !important
+}
+
+.datagrid-detail-pane-content {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  height: 100%;
+  outline: 0 !important;
+}
+
+.datagrid-table {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  align-content: flex-start;
+  min-height: 3.6rem;
+  position: relative;
+  outline: 0 !important;
+  height: 100%;
+
+}
+
+.icon-title-update {
+
+  display: inline-block;
+  margin: 0;
+  height: 27px;
+  width: 27px;
+  vertical-align: middle;
+  fill: currentColor;
+  color: #65c7c0;
+  margin-bottom: 9px;
+  margin-right: 9px;
+
+}
+
+/*scroll*/
+.modal-body {
+  /*overflow-y: hidden; */
+  overflow-x: hidden;
+}
+
+.internal-title {
+  color: #1a675c;
+}
+
+header .settings .nav-link.active,
+header .header-nav .nav-link.active,
+header .header-actions .nav-link.active,
+.header .settings .nav-link.active,
+.header .header-nav .nav-link.active,
+.header .header-actions .nav-link.active {
+
+  border-bottom: 3px solid #f5d103;
+}
+
+body {
+  background: url(../src/assets/bgbro.png) !important;
+  background-size: cover !important;
+
+
+}
+
+.main-container {
+  background: none !important;
+}
+
+.datagrid-footer {
+  background-color: rgba(250, 250, 250, .4) !important;
+}
+
+.datagrid-table .datagrid-column .datagrid-column-title {
+  color: #024C44 !important;
+}
+
+.datagrid-row-sticky {
+  background-color: transparent !important;
+}
+
+.details .datagrid-detail-pane-content::after {
+  position: absolute;
+  content: "";
+  background: url(../src/assets/adult-chicken.png);
+  background-size: cover;
+  right: 0;
+  bottom: 0;
+  opacity: .3;
+  width: 165px;
+  height: 190px;
+}
+
+.btn.btn-primary,
+.btn-primary .btn {
+  background-color: #4BAFA7;
+  border-color: #4BAFA7;
+}
+
+.btn.btn-primary:hover,
+.btn-primary .btn:hover {
+  background-color: #024C44;
+  border-color: #024C44;
+}
+
+.btn.btn-outline,
+.btn.btn-outline .btn,
+.btn.btn-info-outline,
+.btn-info-outline .btn,
+.btn.btn-outline-info,
+.btn-outline .btn {
+  border-color: #4BAFA7;
+  color: #4BAFA7
+}
+
+.btn.btn-outline:hover,
+.btn.btn-outline .btn:hover,
+.btn.btn-info-outline:hover,
+.btn-info-outline .btn:hover,
+.btn.btn-outline-info:hover,
+.btn-outline .btn:hover {
+  background-color: rgba(3, 103, 92, .1);
+  color: #03675C;
+}
+
+.login-wrapper {
+  background: url(../src/assets/Poultry.jpg);
+  background-size: cover;
+  background-position: 0px 0;
+  position: relative;
+  /* background-position: right center; */
+}
+
+.form-visit::before {
+  position: absolute;
+  content: "";
+  background: url(../src/assets/icons8.png);
+  background-size: cover;
+  left: -43px;
+  top: 115px;
+  opacity: .1;
+  width: 200px;
+  height: 192px;
+}
+
+.modal-dialog {
+  position: relative;
+  z-index: 1050;
+  width: 32rem;
+  max-width: 102%;
+}
+
+.modal-header .close clr-icon {
+
+  display: none !important;
+}
+
+.measurePerc2 {
+  padding: 2px 0px 2px 6px;
+  background-color: #ededed;
+  width: 100px;
+  border-radius: 3px;
+  box-shadow: 0 8px 6px -8px grey
+}
+
+.measurePerc3 {
+  display: flex;
+  padding: 2px 0px 2px 6px;
+  background-color: #ededed;
+  border-radius: 3px;
+  box-shadow: 0 8px 6px -8px grey;
+}
+
+.modalV .tabs-vertical>.nav {
+  margin-right: 0 !important;
+  z-index: 1;
+}
+
+.modalV .tabs-vertical>.nav .nav-link.active {
+  background-color: rgba(3, 103, 92, .2) !important;
+  box-shadow: inset 0.15rem 0 0 #03675C !important
+}
+
+.modalV .tabs-vertical>.nav .nav-link:not(.active):hover {
+  box-shadow: inset 0.15rem 0 0 #03675C !important
+}
+
+.modalV .tabs-vertical>.nav {
+  margin-right: 0px !important;
+}
+
+.modalV::before {
+  position: absolute;
+  content: "";
+  background: url(/assets/vetri.png);
+  background-size: cover;
+  left: 0;
+  bottom: 0;
+  opacity: .3;
+  width: 250px;
+  height: 200px;
+}
+
+.datagrid-detail-open .datagrid-inner-wrapper {
+  width: 26%;
+}
+
+.rc-anchor-light.rc-anchor-normal {
+  border: 1px solid #d3d3d3;
+  opacity: 0.9;
+}
+
+/* Sous menu - Audit visit style*/
+.nav .nav-link:hover,
+.nav .nav-link.active {
+  box-shadow: 0 -0.15rem 0 #01665c inset !important;
+  color: #03655c;
+}
+
+.tabs-vertical-style ul {
+  width: 10rem !important;
+  padding: 0 !important;
+
+}
+
+
+/* Dialog footer */
+.modal-footer {
+  padding: 1rem 18px 15px 0px;
+}
+
+.form-recep {
+  background-color: #f1c40e26;
+  border: 2px solid #f1c40e;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+h3 {
+  font-weight: 500;
+}
+/* TOASTR BUGFIX */
+#toast-container > div {
+  opacity: 1;
+}
+.toast {
+  font-size: initial !important;
+  border: initial !important;
+  backdrop-filter: blur(0) !important;
+}
+.toast-success {
+  background-color: #51A351 !important;
+}
+.toast-error {
+  background-color: #BD362F !important;
+}
+.toast-info {
+  background-color: #2F96B4 !important;
+}
+.toast-warning {
+  background-color: #F89406 !important;
+}

@@ -1,0 +1,38 @@
+.boxContent{
+    background:rgb(255, 255, 255);
+    box-shadow: rgb(50 50 93 / 7%) 0px 50px 100px -20px, rgb(0 0 0 / 10%) 0px 30px 60px -30px, rgb(10 37 64 / 31%) 0px -2px 6px 0px inset;
+}
+
+
+.value{
+    padding: 14px 20px;
+}
+.value h4{
+   margin-top: 0;
+}
+.value .contentText h5{ 
+    text-align: center;
+    margin: 5px;
+    /* font-size: 30px; */
+    color: #01675c;
+}
+.value .contentText h4{ 
+    text-align: center;
+}
+
+
+.value .contentText span small{ 
+    font-size: 16px;
+}
+
+.titleHeader h5 {
+    color: #01675c;
+    font-size: 28px;
+}
+
+.DateHeader p{
+    text-align: right;
+    font-size: 15px;
+    margin: 0px 4px 10px;
+    color: #01675c;
+}

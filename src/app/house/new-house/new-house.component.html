@@ -1,0 +1,105 @@
+<form novalidate name="myForm" #myForm='ngForm' (ngSubmit)="onSubmit();">
+    <clr-modal [(clrModalOpen)]="show">
+        <h3 class="modal-title" style="color: #02675c;">
+            <img src="../../../assets/addHouse.png" width="43" height="40"
+                style="margin-top: -6px; margin-right: 10px;">
+            Add House
+        </h3>
+        <div class="modal-body">
+            <!-- /Spinner-->
+            <div class="form clr-col-md-12" style=" display: inline-block;">
+                <clr-select-container>
+                    <label for="farm" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">Center *</label>
+                    <select clrSelect name=" farm" required name="centerId" [(ngModel)]="centerId" style="width: 165px"
+                        (change)="getCenterId($event.target.value)" class="clr-col-xs-12-sm-12 clr-col-md-12">
+                        <option *ngFor="let center of centers" [value]='center.centerId'>
+                            {{center.centerName}}
+                        </option>
+                    </select>
+                </clr-select-container>
+                <clr-input-container>
+                    <label for="housesName" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">House Name *
+                    </label>
+                    <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-12" size="30" type="text" n="1"
+                        [(ngModel)]="housesName" name="housesName" />
+                    <clr-control-helper></clr-control-helper>
+                </clr-input-container>
+
+                <clr-input-container>
+                    <label for="housesNumber" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">Brids number *
+                    </label>
+                    <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-12" size="30" type="number" n="1"
+                        [(ngModel)]="birdsNumber" name="birdsNumber" />
+                    <clr-control-helper></clr-control-helper>
+                </clr-input-container>
+
+                <clr-select-container>
+                    <label class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">Ventilation * </label>
+                    <select clrSelect required [(ngModel)]="ventilation" name="ventilation"
+                        class="clr-col-xs-12 clr-col-md-12" style="width: 155px;"
+                        (change)="getventilationSelect($event.target.value)">
+                        <option size="200">
+                            static
+                        </option>
+                        <option size="200">
+                            dynamic
+                        </option>
+                    </select>
+                </clr-select-container>
+
+                <clr-input-container>
+                    <label for="housesNumber" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">Surface *
+                    </label>
+                    <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" size="30" type="number" n="1"
+                        [(ngModel)]="area" name="area" />
+                </clr-input-container>
+
+                <clr-input-container>
+                    <label for="housesNumber" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">Density per
+                        meter *
+                    </label>
+                    <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" size="30" type="number" n="1"
+                        [(ngModel)]="density" name="density" />
+                </clr-input-container>
+
+                <clr-input-container>
+                    <label for="housesNumber" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">Feeder *
+                    </label>
+                    <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" size="20" type="text" n="1"
+                        [(ngModel)]="feeder" name="feeder" />
+                </clr-input-container>
+
+                <clr-input-container>
+                    <label for="housesNumber" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">Cycles Number *
+                    </label>
+                    <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" size="30" type="number" n="1"
+                        [(ngModel)]="nbrCyclesPerYear" name="nbrCyclesPerYear" />
+                </clr-input-container>
+
+                <clr-input-container>
+                    <label for="housesNumber" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">Duration Of
+                        Rotation * </label>
+                    <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" size="30" type="number" n="1"
+                        [(ngModel)]="durationOfRotation" name="durationOfRotation" />
+                </clr-input-container>
+
+                <clr-select-container>
+                    <label class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">Water Source * </label>
+                    <select clrSelect required [(ngModel)]="waterSource" name="waterSource" style="width: 155px;"
+                        class="clr-col-xs-12 clr-col-md-12" (change)="getWaterSelect($event.target.value)">
+                        <option size="200">
+                            well water
+                        </option>
+                        <option size="200">
+                            public water system
+                        </option>
+                    </select>
+                </clr-select-container>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline" (click)="close()">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)='submit();show = false;'>save</button>
+        </div>
+    </clr-modal>
+</form>

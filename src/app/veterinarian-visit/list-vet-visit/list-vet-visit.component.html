@@ -1,0 +1,856 @@
+<div class="main-container" style="background:#fff;">
+  <div class="container">
+    <div class="content-container">
+      <h2>
+        <img src="../../../assets/visit.png" width="38" height="40" style="margin-top: -20px;  margin-right: 10px;">
+        Veterinarian Visits
+      </h2>
+    </div>
+    <!-- Actions Button -->
+    <div class="addbtn">
+
+      <button (click)="modal.open()" class="btn btn-primary">
+        <img src="../../../assets/newVisit.png" width="26" height="26" style="margin-top: -5px; margin-right: 10px;">
+        Add Visit
+      </button>
+
+      <app-new-vetvisit></app-new-vetvisit>
+
+    </div>
+    <!-- /list of visits -->
+    <!-- /Actions Buttons -->
+    <div class="content-area">
+      <clr-datagrid class="table_view " [clrDgLoading]="loading" style="width:100%">
+        <clr-dg-column>Visit Date</clr-dg-column>
+        <clr-dg-column>Farm</clr-dg-column>
+        <clr-dg-column>House</clr-dg-column>
+        <clr-dg-column>Flock</clr-dg-column>
+        <clr-dg-column>Breed</clr-dg-column>
+        <clr-dg-column>Hatch date</clr-dg-column>
+        <clr-dg-column>Age of the flock</clr-dg-column>
+        <clr-dg-column>Chick placed</clr-dg-column>
+        <clr-dg-column>PS origin</clr-dg-column>
+        <clr-dg-column>Morbidity</clr-dg-column>
+        <clr-dg-column>Total mortality</clr-dg-column>
+        <clr-dg-column>DWG</clr-dg-column>
+        <clr-dg-column>EEP</clr-dg-column>
+        <clr-dg-column>FCR</clr-dg-column>
+        <!-- ... -->
+        <clr-dg-row *clrDgItems="let visit of visits" [clrDgItem]="visit" class="tablecolor">
+          <clr-dg-cell style="width: 110px;"> {{visit.visitDate}}</clr-dg-cell>
+          <clr-dg-cell style="width: 100px;"> {{visit.flock.house.farm.name}} </clr-dg-cell>
+          <clr-dg-cell style="width: 120px;">
+            {{visit.flock.house.farm.name}}-{{gethouse_id(visit.flock.house.houseId)}} </clr-dg-cell>
+          <clr-dg-cell style="width: 100px;"> {{visit.flock.startOfCycle}} </clr-dg-cell>
+          <clr-dg-cell style="width: 100px;"> {{visit.flock.breedObject.description}} </clr-dg-cell>
+          <clr-dg-cell style="width: 100px;"> {{visit.flock.hatchDate}} </clr-dg-cell>
+          <clr-dg-cell style="width: 100px;"> {{visit.ageFlock}} </clr-dg-cell>
+          <clr-dg-cell style="width: 100px;"> {{visit.flock.chikedPlaced}} </clr-dg-cell>
+          <clr-dg-cell style="width: 100px;"> {{visit.flock.psOrigin}} </clr-dg-cell>
+          <clr-dg-cell style="width: 100px;"> {{visit.morbidity}} </clr-dg-cell>
+          <clr-dg-cell style="width: 100px;"> {{visit.mortality}} </clr-dg-cell>
+          <clr-dg-cell style="width: 80px;"> {{visit.dwg}} </clr-dg-cell>
+          <clr-dg-cell style="width: 80px;"> {{visit.eep}} </clr-dg-cell>
+          <clr-dg-cell style="width: 80px;"> {{visit.fcr}} </clr-dg-cell>
+        </clr-dg-row>
+        <clr-dg-footer>
+          <clr-dg-pagination #pagination [clrDgPageSize]="15">
+            {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+            of {{pagination.totalItems}} visits
+          </clr-dg-pagination>
+        </clr-dg-footer>
+        <!-- / end list of visits -->
+
+        <ng-template clrIfDetail let-detail (clrIfDetailChange)="onDetailOpen($event)">
+          <!-- / Details list of visits -->
+          <clr-dg-detail *clrIfDetail="let detail">
+            <clr-dg-detail-body>
+              <div class="separator"></div>
+              <form clrForm>
+
+
+                <h3 class="modal-title" style="color: #02675c;     margin-left: 13px;">
+                  Date of visit <strong>{{detail.visitDate}}</strong>
+                </h3>
+
+
+                <div class="modal-body">
+                  <div class="container clr-row">
+
+                    <div class="tableTask clr-col-md-6" style="    border-right: 1px solid #ececec;">
+                      <div class="taskV-title clr-col-12">
+                        <h4>Health status of the bird</h4>
+                      </div>
+                      <!-- General -->
+                      <div class="container-taskpart1 ">
+                        <div class="taskV-subtitle clr-col-12">
+                          <h5><img src="../../../assets/Icones veter/doctors-bag.png" class="imgIcon" width="22"
+                              height="22" />
+                            General</h5>
+                        </div>
+
+                        <div class="form-visitResult visitContent">
+                          <div class="labelVisit clr-col-md-8 ">
+                            <label for="prostration" class="clr-control-label clr-col-12 clr-col-md-12">
+                              Prostration </label>
+                          </div>
+                          <div class="clr-control-container clr-col-md-4 visitContentD">
+                            <div class="resultVisit">
+
+                              <div class="resultMeasure">
+                                <p>{{prostration}}</p>
+
+
+                              </div>
+
+
+
+
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="form-visitResult visitContent">
+                          <div class="labelVisit clr-col-md-8 ">
+                            <label for="anorexia" class="clr-control-label clr-col-12 clr-col-md-12">
+                              Anorexia </label>
+                          </div>
+                          <div class="clr-control-container clr-col-md-4 visitContentD">
+                            <div class="resultVisit">
+
+                              <div class="resultMeasure">
+                                <p>{{anorexiaMeasure}}</p>
+
+                              </div>
+
+
+
+
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="form-visitResult visitContent">
+                          <div class="labelVisit clr-col-md-8 ">
+                            <label for="ruffledFeather" class="clr-control-label clr-col-12 clr-col-md-12">
+                              Ruffled feather </label>
+                          </div>
+                          <div class="clr-control-container clr-col-md-4 visitContentD">
+                            <div class="resultVisit">
+
+                              <div class="resultMeasure">
+                                <p>{{ruffledFeatherMeasure}}</p>
+
+                              </div>
+
+
+
+
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="form-visitResult visitContent ">
+                          <div class="labelVisit clr-col-md-8 ">
+                            <label for="dehydratation" class="clr-control-label clr-col-12 clr-col-md-12">
+                              Dehydratation </label>
+                          </div>
+                          <div class="clr-control-container clr-col-md-4 visitContentD">
+                            <div class="resultVisit">
+
+                              <div class="resultMeasure">
+                                <p>{{dehydratationMeasure}}</p>
+
+                              </div>
+
+
+
+
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
+                          <clr-textarea-container class="clr-form-control clr-row ng-star-inserted">
+                            <textarea clrTextarea rows="4" [(ngModel)]="generalObservation" name="generalObservation"
+                              style="width:100%  !important; border-color: #b9b8b8" readonly></textarea>
+                          </clr-textarea-container>
+                        </div>
+
+
+                      </div>
+                      <!-- Respiratory -->
+                      <div class="container-taskpart2 ">
+                        <div class="taskV-subtitle clr-col-12">
+                          <h5><img src="../../../assets/Icones veter/Respiratory.png" class="imgIcon" width="22"
+                              height="22" />
+                            Respiratory</h5>
+                        </div>
+
+                        <div class="form-visitResult visitContent">
+                          <div class="labelVisit clr-col-md-8 ">
+                            <label for="Coughing" class="clr-control-label clr-col-12 clr-col-md-12">
+                              Coughing </label>
+                          </div>
+                          <div class="clr-control-container clr-col-md-4 visitContentD">
+                            <div class="resultVisit">
+
+                              <div class="resultMeasure">
+                                <p>{{coughingnMeasure}}</p>
+
+                              </div>
+
+
+
+
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="form-visitResult visitContent">
+                          <div class="labelVisit clr-col-md-8 ">
+                            <label for="nasalExsudate" class="clr-control-label clr-col-12 clr-col-md-12">
+                              Nasal exsudate </label>
+                          </div>
+                          <div class="clr-control-container clr-col-md-4 visitContentD">
+                            <div class="resultVisit">
+
+                              <div class="resultMeasure">
+                                <p>{{nasalExsudateMeasure}}</p>
+
+                              </div>
+
+
+
+
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="form-visitResult visitContent">
+                          <div class="labelVisit clr-col-md-8 ">
+                            <label for="Sneezing" class="clr-control-label clr-col-12 clr-col-md-12">
+                              Sneezing </label>
+                          </div>
+                          <div class="clr-control-container clr-col-md-4 visitContentD">
+                            <div class="resultVisit">
+
+                              <div class="resultMeasure">
+                                <p>{{sneezingMeasure}}</p>
+
+                              </div>
+
+
+
+
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="form-visitResult visitContent">
+                          <div class="labelVisit clr-col-md-8 ">
+                            <label for="trachealRales" class="clr-control-label clr-col-12 clr-col-md-12">
+                              Tracheal rales </label>
+                          </div>
+                          <div class="clr-control-container clr-col-md-4 visitContentD">
+                            <div class="resultVisit">
+
+                              <div class="resultMeasure">
+                                <p>{{trachealRalesMeasure}}</p>
+
+                              </div>
+
+
+
+
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="form-visitResult visitContent">
+                          <div class="labelVisit clr-col-md-8 ">
+                            <label for="ocularDischarge" class="clr-control-label clr-col-12 clr-col-md-12">
+                              Ocular discharge </label>
+                          </div>
+                          <div class="clr-control-container clr-col-md-4 visitContentD">
+                            <div class="resultVisit">
+
+                              <div class="resultMeasure">
+                                <p>{{ocularDischargeMeasure}}</p>
+
+                              </div>
+
+
+
+
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="form-visitResult visitContent">
+                          <div class="labelVisit clr-col-md-8">
+                            <label for="conjonctivitis" class="clr-control-label clr-col-12 clr-col-md-12">
+                              Conjonctivitis </label>
+                          </div>
+                          <div class="clr-control-container clr-col-md-4 visitContentD">
+                            <div class="resultVisit">
+
+                              <div class="resultMeasure">
+                                <p>{{conjonctivitisMeasure}}</p>
+
+                              </div>
+
+
+
+
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="form-visitResult visitContent">
+                          <div class="labelVisit clr-col-md-8">
+                            <label for="oedema" class="clr-control-label clr-col-12 clr-col-md-12">
+                              Oedema </label>
+                          </div>
+                          <div class="clr-control-container clr-col-md-4 visitContentD">
+                            <div class="resultVisit">
+
+                              <div class="resultMeasure">
+                                <p>{{oedemaMeasure}}</p>
+
+                              </div>
+
+
+
+
+
+                            </div>
+
+                          </div>
+                        </div>
+                        <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
+
+
+                          <textarea clrTextarea rows="4" [(ngModel)]="respiratoryObservation"
+                            name="respiratoryObservation" style="width:100%  !important; border-color: #b9b8b8"
+                            readonly></textarea>
+
+                        </div>
+                      </div>
+                      <!-- Digestive -->
+                      <div class="container-taskpart3 ">
+                        <div class="taskV-subtitle clr-col-12">
+                          <h5><img src="../../../assets/Icones veter/digestive.png" class="imgIcon" width="22"
+                              height="22" />
+                            Digestive</h5>
+                        </div>
+
+                        <div class="form-visitResult visitContent">
+                          <div class="labelVisit clr-col-md-8 ">
+                            <label for="Diarrhoea" class="clr-control-label clr-col-12 clr-col-md-12">
+                              Diarrhoea </label>
+                          </div>
+                          <div class="clr-control-container clr-col-md-4 visitContentD">
+                            <div class="resultVisit">
+
+                              <div class="resultMeasure">
+                                <p>{{DiarrhoeaMeasure}}</p>
+
+                              </div>
+
+
+
+
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="form-visitResult visitContent">
+                          <div class="labelVisit clr-col-md-8 ">
+                            <label for="Whitish" class="clr-control-label clr-col-12 clr-col-md-12">
+                              Whitish </label>
+                          </div>
+                          <div class="clr-control-container clr-col-md-4 visitContentD">
+                            <div class="resultVisit">
+
+                              <div class="resultMeasure">
+                                <p>{{whitishMeasure}}</p>
+
+                              </div>
+
+
+
+
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="form-visitResult visitContent">
+                          <div class="labelVisit clr-col-md-8">
+                            <label for="Watery" class="clr-control-label clr-col-12 clr-col-md-12">
+                              Watery </label>
+                          </div>
+                          <div class="clr-control-container clr-col-md-4 visitContentD">
+                            <div class="resultVisit">
+
+                              <div class="resultMeasure">
+                                <p>{{WateryMeasure}}</p>
+
+                              </div>
+
+
+
+
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="form-visitResult visitContent">
+                          <div class="labelVisit clr-col-md-8 ">
+                            <label for="Mucoid" class="clr-control-label clr-col-12 clr-col-md-12">
+                              Mucoid </label>
+                          </div>
+                          <div class="clr-control-container clr-col-md-4 visitContentD">
+                            <div class="resultVisit">
+
+                              <div class="resultMeasure">
+                                <p>{{MucoidMeasure}}</p>
+
+                              </div>
+
+
+
+
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="form-visitResult visitContent">
+                          <div class="labelVisit clr-col-md-8 ">
+                            <label for="Greenish" class="clr-control-label clr-col-12 clr-col-md-12">
+                              Greenish </label>
+                          </div>
+                          <div class="clr-control-container clr-col-md-4 visitContentD">
+                            <div class="resultVisit">
+
+                              <div class="resultMeasure">
+                                <p>{{greenishMeasure}}</p>
+
+                              </div>
+
+
+
+
+
+                            </div>
+
+                          </div>
+                        </div>
+
+
+                        <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
+
+
+                          <textarea clrTextarea rows="4" [(ngModel)]="digestiveObservation" name="digestiveObservation"
+                            style="width:100%  !important; border-color: #b9b8b8" readonly></textarea>
+
+                        </div>
+
+
+
+                      </div>
+
+                      <div class="form-checkVpart4">
+                        <h4> <img src="../../../assets/Icones veter/locomotion.png" class="imgIcon" width="22"
+                            height="22" style="margin-right: 8px;" />
+                          Locomotion
+                        </h4>
+
+                        <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
+
+
+
+                          <textarea clrTextarea rows="4" [(ngModel)]="locomotionObservation"
+                            name="locomotionObservation" style="width:100%  !important; border-color: #b9b8b8"
+                            readonly></textarea>
+                        </div>
+
+
+
+                      </div>
+                      <div class="form-checkVpart5">
+                        <h4> <img src="../../../assets/Icones veter/others.png" class="imgIcon" width="22" height="22"
+                            style="margin-right: 8px;" />
+                          Other clinical signs
+                        </h4>
+
+
+
+
+
+                        <div class="form-visitResult visitContent">
+                          <div class="labelVisit clr-col-md-8 ">
+                            <label for="Greenish" class="clr-control-label clr-col-12 clr-col-md-12">
+                              Nervous </label>
+                          </div>
+                          <div class="clr-control-container clr-col-md-4 visitContentD">
+                            <div class="resultVisit">
+                              <div class="resultMeasure">
+                                <p>{{NervousMeasure}}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-visitResult visitContent">
+                          <div class="labelVisit clr-col-md-8 ">
+                            <label for="Greenish" class="clr-control-label clr-col-12 clr-col-md-12">
+                              Dermatitis </label>
+                          </div>
+                          <div class="clr-control-container clr-col-md-4 visitContentD">
+                            <div class="resultVisit">
+                              <div class="resultMeasure">
+                                <p>{{DermatitisMeasure}}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
+                          <textarea clrTextarea rows="4" [(ngModel)]="otherObservation" name="description"
+                            style="width:100%  !important; border-color: #b9b8b8" readonly></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Necropsy observation -->
+                    <div class="tableTask clr-col-md-6">
+                      <div class="taskV-title clr-col-12">
+                        <h4> Necropsy observation</h4>
+                      </div>
+
+
+                      <div class="form-visitResult form-visitV  visitContent">
+                        <div class="labelVisit">
+                          <label for="ExternalExamination" class="clr-control-label clr-col-12 clr-col-md-12">
+                            External examination </label>
+                        </div>
+                        <div class="clr-control-container clr-col-md-12 visitContentD">
+                          <div class="resultV">
+
+                            <div class="resultMeasure">
+                              <p>{{ExternalComment}}</p>
+
+                            </div>
+
+
+
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+
+                      <div class="form-visitResult form-visitV  visitContent">
+                        <div class="labelVisit">
+                          <label for="Greenish" class="clr-control-label clr-col-12 clr-col-md-12">
+                            Bones</label>
+                        </div>
+                        <div class="clr-control-container clr-col-md-12 visitContentD">
+                          <div class="resultV">
+
+                            <div class="resultMeasure">
+                              <p>{{BonesComment}}</p>
+
+                            </div>
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+
+                      <div class="form-visitResult form-visitV  visitContent">
+                        <div class="labelVisit">
+                          <label for="LegFeet" class="clr-control-label clr-col-12 clr-col-md-12">
+                            Leg and feet</label>
+                        </div>
+                        <div class="clr-control-container clr-col-md-12 visitContentD">
+                          <div class="resultV">
+
+                            <div class="resultMeasure">
+                              <p>{{LegFeetComment}}</p>
+
+                            </div>
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+
+                      <div class="form-visitResult form-visitV  visitContent">
+                        <div class="labelVisit">
+                          <label for="Trachea" class="clr-control-label clr-col-12 clr-col-md-12">
+                            Trachea</label>
+                        </div>
+                        <div class="clr-control-container clr-col-md-12 visitContentD">
+                          <div class="resultV">
+
+                            <div class="resultMeasure">
+                              <p>{{TracheaComment}}</p>
+
+                            </div>
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="form-visitResult form-visitV  visitContent">
+                        <div class="labelVisit">
+                          <label for="Crop" class="clr-control-label clr-col-12 clr-col-md-12">
+                            Crop</label>
+                        </div>
+                        <div class="clr-control-container clr-col-md-12 visitContentD">
+                          <div class="resultV">
+
+                            <div class="resultMeasure">
+                              <p>{{CropComment}}</p>
+
+                            </div>
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="form-visitResult form-visitV  visitContent">
+                        <div class="labelVisit">
+                          <label for="thymus" class="clr-control-label clr-col-12 clr-col-md-12">
+                            Thymus</label>
+                        </div>
+                        <div class="clr-control-container clr-col-md-12 visitContentD">
+                          <div class="resultV">
+
+                            <div class="resultMeasure">
+                              <p>{{thymusComment}}</p>
+
+                            </div>
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+
+                      <div class="form-visitResult form-visitV  visitContent">
+                        <div class="labelVisit">
+                          <label for="liver" class="clr-control-label clr-col-12 clr-col-md-12">
+                            Liver</label>
+                        </div>
+                        <div class="clr-control-container clr-col-md-12 visitContentD">
+                          <div class="resultV">
+
+                            <div class="resultMeasure">
+                              <p>{{liverComment}}</p>
+
+                            </div>
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="form-visitResult form-visitV  visitContent">
+                        <div class="labelVisit">
+                          <label for="Spleen" class="clr-control-label clr-col-12 clr-col-md-12">
+                            Spleen</label>
+                        </div>
+                        <div class="clr-control-container clr-col-md-12 visitContentD">
+                          <div class="resultV">
+
+                            <div class="resultMeasure">
+                              <p>{{SpleenComment}}</p>
+
+                            </div>
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="form-visitResult form-visitV  visitContent">
+                        <div class="labelVisit">
+                          <label for="kidney" class="clr-control-label clr-col-12 clr-col-md-12">
+                            Kidney</label>
+                        </div>
+                        <div class="clr-control-container clr-col-md-12 visitContentD">
+                          <div class="resultV">
+
+                            <div class="resultMeasure">
+                              <p>{{kidneyComment}}</p>
+
+                            </div>
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="form-visitResult form-visitV  visitContent">
+                        <div class="labelVisit">
+                          <label for="heart" class="clr-control-label clr-col-12 clr-col-md-12">
+                            Heart</label>
+                        </div>
+                        <div class="clr-control-container clr-col-md-12 visitContentD">
+                          <div class="resultV">
+
+                            <div class="resultMeasure">
+                              <p>{{heartComment}}</p>
+
+                            </div>
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="form-visitResult form-visitV  visitContent">
+                        <div class="labelVisit">
+                          <label for="lung" class="clr-control-label clr-col-12 clr-col-md-12">
+                            Lung</label>
+                        </div>
+                        <div class="clr-control-container clr-col-md-12 visitContentD">
+                          <div class="resultV">
+
+                            <div class="resultMeasure">
+                              <p>{{lungComment}}</p>
+
+                            </div>
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="form-visitResult form-visitV  visitContent">
+                        <div class="labelVisit">
+                          <label for="gastroIntestinalTract" class="clr-control-label clr-col-12 clr-col-md-12">
+                            Gastro intestinal tract</label>
+                        </div>
+                        <div class="clr-control-container clr-col-md-12 visitContentD">
+                          <div class="resultV">
+
+                            <div class="resultMeasure">
+                              <p>{{gastroIntestinalTractComment}}</p>
+
+                            </div>
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="form-visitResult form-visitV  visitContent">
+                        <div class="labelVisit">
+                          <label for="bursaFabricius" class="clr-control-label clr-col-12 clr-col-md-12">
+                            Bursa of Fabricius</label>
+                        </div>
+                        <div class="clr-control-container clr-col-md-12 visitContentD">
+                          <div class="resultV">
+
+                            <div class="resultMeasure">
+                              <p>{{bursaFabriciusComment}}</p>
+
+                            </div>
+
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="form-visitResult form-visitV  visitContent">
+                        <div class="labelVisit">
+                          <label for="brain" class="clr-control-label clr-col-12 clr-col-md-12">
+                            Brain</label>
+                        </div>
+                        <div class="clr-control-container clr-col-md-12 visitContentD">
+                          <div class="resultV">
+
+                            <div class="resultMeasure">
+                              <p>{{brainComment}}</p>
+
+                            </div>
+
+
+                          </div>
+
+                        </div>
+                      </div>
+                      <div class="taskV-title clr-col-12">
+                        <h4> Analyses <img
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAADdElEQVRoge2YzW8UZRzHP8+87OxOty/4hpU3Q1MSCCRgqG1dOEAkDVE42BjDgYAHSbz5D3j1LgexBwkaE7lIYsQQo0YDVsREEkxUBNIitdJh7dLusq+dmYfDxDUEgWH6PNsY93OaTJ7n+f4+O8/s88wDbdq0+U8j4jSSH597AeQYsGKxgYVjR8Yf/fT9bYsd52+MeM3kuygoHsCfvJyb3XPgWxVjQWwBVqoKNDOZSGLvq2dVjBdXQBmGk4okJn4bUiGxJAIqJVouIExLqUTrn4BlKpVouQCmoVSi9QKgVKL1U6ijM7q4j0ThpddirxMtF3Cee/6BEguXfs7FlYi5lfheJi85OWJ06IH1WTqC65d+Zf7EcYLiPJ27dpPdMaIjBtA0heaOf4Cf95D1GsXPPiGYv6kjBtAgEFbKzYJTff0gQxamp1THNFEuIBwHjGjqhuWy6uHvQr2AaWH3RptX35sBwOzqUR3TRMs7kNm8NbqQIRgG1hNP6ogBNAm4gzmEFf3B2StWI1IpHTGAJgGjI4uzbj0AwjRA6ltG9KzEoaQx9TsAjasTlM+e0RIDmgTqVy4SlooIM5pGxZMnCGbzOqL0CFTP/wBAdscu0hs3I+s1ZscOE5aKyrOUbyXC8i2qF86DIXCHtiOcNH/lPXzvOoWjR+jcvRc/P4Pv3UAGPsIQ2GvW4m55FsyH/z2VC5TPfI1s1Elv2IS57BH8mWmcvn587zqNa5PMjr19d6fvTtO4fJGefQcfOk+pgKzXKI9/A0RbCu+tN++Y+8K0kIH/T/jjy8G08GemqV74cWkFZOBT+vwkYSXaPjSuTkQBy3tJr9+Es2EjqTVrKZ/+itKXp5D1Gn7ea/ZP9fUnyl28gAypnBun9MUpgrkCAMJJk9kyQMfwduyVq+9ont05gju0jdovP+H/OY30F7CfWkXmmYHWC/g3POY+Okbj2mTznr3qaR57/Q2Ek75nP8PtwN06vJjoJokFGpNXKLz3DmG10rwnTIueV/bft3jVJFsHQsnND48SViuYXd0gomE6R17E7lVyBhybRE9ABn5zUQqK8wC4A8Nkd+r7dLwXiZ6AsG26R/dhdnVjdi+ja88oPS/vBxHrjEApid8BdzCHO5hTWUsiluZkTiH/G4E/tFbx78Q6yognYMhDtFZiChEeamFemzZtlorb+oIyI4Q5NRoAAAAASUVORK5CYII="
+                            style="width: 30px; height: 30px;" (click)="showAnalyse()">
+                        </h4>
+                      </div>
+
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+              </form>
+
+
+            </clr-dg-detail-body>
+          </clr-dg-detail>
+          <!-- / end Details list of visits -->
+        </ng-template>
+      </clr-datagrid>
+
+    </div>
+  </div>
+</div>

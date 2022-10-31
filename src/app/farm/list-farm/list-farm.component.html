@@ -1,0 +1,228 @@
+<div class="main-container">
+    <div class="container">
+        <div class="content-container">
+            <h2>
+                <img src="../../../assets/Center.png" width="48" height="48"
+                    style="margin-bottom:12px; margin-right: 10px;">
+                FARMS
+            </h2>
+        </div>
+        <!-- Actions Button -->
+        <div class="addbtn">
+
+            <button (click)="modal.open()" class="btn btn-primary">
+                <img src="../../../assets/farm-add.png" width="35" height="30"
+                    style="margin-top: -2px; margin-right: 10px;">
+                Add Farm
+            </button>
+
+            <app-newfarm></app-newfarm>
+
+        </div>
+        <!-- /Actions Buttons -->
+        <div class="content-area">
+            <clr-datagrid class="table_view " [clrDgLoading]="loading" style="width:100%">
+                <clr-dg-column>Name of Farm</clr-dg-column>
+                <clr-dg-column>Production type</clr-dg-column>
+                <clr-dg-column>Breed</clr-dg-column>
+                <clr-dg-column>Address</clr-dg-column>
+                <clr-dg-column>Zone</clr-dg-column>
+                <clr-dg-column>Number of breeding center</clr-dg-column>
+                <clr-dg-column>Nombre of houses</clr-dg-column>
+                <clr-dg-column>Results </clr-dg-column>
+                <clr-dg-column>Rotation </clr-dg-column>
+                <clr-dg-row *clrDgItems="let farm of farms" [clrDgItem]="farm" class="tablecolor">
+                    <clr-dg-cell> {{farm.farmName}}</clr-dg-cell>
+                    <clr-dg-cell> {{farm.typeProduction}}</clr-dg-cell>
+                    <clr-dg-cell> {{farm.breed}} </clr-dg-cell>
+                    <clr-dg-cell style="width: 180px;"> {{farm.address}} </clr-dg-cell>
+                    <clr-dg-cell style="width: 180px;"> {{farm.area}} </clr-dg-cell>
+                    <clr-dg-cell style="width: 180px;"> {{farm.bridsNumberPerCenter}} </clr-dg-cell>
+                    <clr-dg-cell style="width: 180px;"> {{farm.housesNumber}} </clr-dg-cell>
+                    <clr-dg-cell style="width: 180px;"> {{farm.result}} </clr-dg-cell>
+                    <clr-dg-cell style="width: 180px;"> {{farm.rotation}} </clr-dg-cell>
+
+                </clr-dg-row>
+
+                <clr-dg-footer>
+                    <clr-dg-pagination #pagination [clrDgPageSize]="15">
+                        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+                        of {{pagination.totalItems}} farms
+                    </clr-dg-pagination>
+                </clr-dg-footer>
+
+                <clr-dg-detail *clrIfDetail="let detail" class="details">
+                    <clr-dg-detail-header>
+
+                        <img src="../../../assets/icon-detail.png" width="40" style="margin-bottom: 8px;">
+
+                        <span class="internal-title"> {{detail.name}}</span>
+                    </clr-dg-detail-header>
+                    <clr-dg-detail-body>
+                        <div class="separator"></div>
+                        <form clrForm>
+
+
+
+                            <clr-select-container>
+                                <label class="clr-col-md-3">Company:</label>
+                                <select class="clr-col-md-9" clrSelect name="companyID"
+                                    [(ngModel)]="detail.company.name" style="width: 270px;"
+                                    (change)="getCompanyId($event.target.value)" required>
+                                    <option *ngFor="let companydata of companies" [value]='detail.company.name'
+                                        size="25">
+                                        {{companydata.name}}
+                                    </option>
+                                </select>
+
+                            </clr-select-container>
+                            <clr-input-container>
+                                <label class="clr-col-md-3">Farm Name: </label>
+                                <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.farmName"
+                                    name="housesNumber" size="35" />
+                            </clr-input-container>
+
+
+                            <clr-input-container>
+                                <label class="clr-col-md-3">Number of Houses: </label>
+                                <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.housesNumber"
+                                    name="housesNumber" size="35" />
+                            </clr-input-container>
+
+
+                            <clr-select-container>
+                                <label class="clr-col-md-3">Breed *</label>
+                                <select class="clr-col-md-9" clrSelect name="breed" [(ngModel)]="detail.breed"
+                                    style="width: 270px;" required>
+                                    <option>Hubbard</option>
+                                    <option>Cobb 500</option>
+                                    <option>Ross</option>
+                                    <option>Arbor Acres plus</option>
+                                </select>
+
+                            </clr-select-container>
+
+
+                            <clr-select-container>
+                                <label class="clr-col-md-3">Production type * </label>
+                                <select class="clr-col-md-9" clrSelect [(ngModel)]="detail.productionType"
+                                    style="width: 270px;" name="productionType" required>
+                                    <option>Broilers</option>
+                                    <option>Pullets</option>
+                                    <option>Laying hens</option>
+                                    <option>breeders</option>
+                                </select>
+
+                            </clr-select-container>
+
+                            <clr-input-container>
+                                <label class="clr-col-md-3">Address: </label>
+                                <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.address"
+                                    name="address" size="35" />
+                            </clr-input-container>
+
+                            <clr-input-container>
+                                <label class="clr-col-md-3">Zone: </label>
+                                <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.zone" name="zone"
+                                    size="35" />
+                            </clr-input-container>
+
+
+                            <clr-input-container>
+                                <label class="clr-col-md-3">Farm Manager Name: </label>
+                                <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.FarmMangerName"
+                                    name="FarmMangerName" size="35" />
+                            </clr-input-container>
+
+
+                            <clr-input-container>
+                                <label class="clr-col-md-3">Farm Manager Email: </label>
+                                <input class="clr-col-md-9" clrInput type="email" [(ngModel)]="detail.FarmMangerEmail"
+                                    name="FarmMangerEmail" size="35" />
+                            </clr-input-container>
+
+
+                            <clr-input-container>
+                                <label class="clr-col-md-3">Farm Manager tel: </label>
+                                <input class="clr-col-md-9" clrInput type="number" [(ngModel)]="detail.FarmMangerTel"
+                                    name="FarmMangerEmail" size="35" style="width: 270px;" />
+                            </clr-input-container>
+
+
+                            <clr-input-container>
+                                <label class="clr-col-md-3">Number of center: </label>
+                                <input class="clr-col-md-9" clrInput type="number" [(ngModel)]="detail.nbrCenter"
+                                    name="nbrCenter" size="35" style="width: 270px;" />
+                            </clr-input-container>
+
+
+                            <clr-input-container>
+                                <label class="clr-col-md-3">Number of breeding centers: </label>
+                                <input class="clr-col-md-9" clrInput type="number" [(ngModel)]="detail.nbrBreedCenter"
+                                    name="nbrBreedCenter" size="35" style="width: 270px;" />
+                            </clr-input-container>
+
+
+                            <clr-input-container>
+                                <label class="clr-col-md-3">Result: </label>
+                                <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.Result"
+                                    name="Result" size="35" />
+                            </clr-input-container>
+
+
+                            <clr-input-container>
+                                <label class="clr-col-md-3">Average Mortality Rate: </label>
+                                <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.AverageMortRate"
+                                    name="AverageMortRate" size="35" />
+                            </clr-input-container>
+
+                            <clr-input-container>
+                                <label class="clr-col-md-3">FCR: </label>
+                                <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.fcr" name="fcr"
+                                    size="35" />
+                            </clr-input-container>
+
+
+                            <clr-input-container>
+                                <label class="clr-col-md-3">Epef: </label>
+                                <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.epef" name="epef"
+                                    size="35" />
+                            </clr-input-container>
+
+
+                            <clr-input-container>
+                                <label class="clr-col-md-3">Average lay rate: </label>
+                                <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.avLayRate"
+                                    name="avLayRate" size="35" />
+                            </clr-input-container>
+
+
+                            <clr-input-container>
+                                <label class="clr-col-md-3">Rotation: </label>
+                                <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.rotation"
+                                    name="rotation" size="35" />
+                            </clr-input-container>
+
+
+                        </form>
+                        <br>
+                        <button class="btn btn-primary" (click)="sauvegarder(detail);">Save</button>
+                    </clr-dg-detail-body>
+                </clr-dg-detail>
+                <!-- ... -->
+            </clr-datagrid>
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+    </div>
+</div>

@@ -1,0 +1,35 @@
+.labelV {
+    margin-top: 3.5px;
+    width: 45%
+}
+
+.form-check h4 {
+    color: #02675c;
+    font-weight: 500;
+}
+
+.form-visit-title h4 {
+    color: #02675c;
+    font-weight: 500;
+}
+
+.modalV .tabs-vertical>.nav {
+    background-color: #c0d6de69;
+}
+
+.taskUnit {
+    font-size: 10px;
+    color: grey
+}
+
+.modal-dialog {
+    position: relative;
+    z-index: 1050;
+    width: 37rem !important;
+    max-width: 102%;
+}
+
+.clr-wizard.wizard-md .clr-wizard-stepnav-wrapper {
+    min-width: 12.8rem !important;
+    max-width: 12rem;
+}

@@ -1,0 +1,22 @@
+<div class="clr-col-md-6" style="background-color: white ;margin: 20px;">
+    <div class="clr-row">
+        <div class="clr-col-1">
+            <label>Flock</label>
+        </div>
+        <div class="clr-col-5">
+            <select clrSelect required name="flock" [(ngModel)]="flock" style="width: 165px"
+             (change)="getflockbyid();getweeklyweightbyBreed()">
+            <option *ngFor="let flack of flocks" [value]='flack.flockID'>
+                {{flack.flockName}}
+            </option>
+            </select>
+        </div>
+        <div class="clr-col-1">
+            <label>Breed</label>
+        </div>
+        <div class="clr-col-5">
+            <input clrInput placeholder="Breed" disabled name="name" [(ngModel)]="breed" />
+        </div>
+    </div>
+    <div echarts style="margin-top: 20px;" [options]="options"></div>
+</div>

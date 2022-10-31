@@ -1,0 +1,480 @@
+<div class="main-container" style="background:#fff;">
+    <div class="container">
+        <div class="content-container">
+            <h2>
+                <img src="../../../assets/House.png" width="48" height="48"
+                    style="margin-bottom:12px; margin-right: 10px;">
+                Houses
+            </h2>
+        </div>
+        <!-- Actions Button -->
+        <div class="addbtn">
+
+            <button (click)="modal.open()" class="btn btn-primary">
+                <img src="../../../assets/addHouse.png" width="35" height="30"
+                    style="margin-top: -2px; margin-right: 10px;">
+                Add House
+            </button>
+
+            <app-new-house></app-new-house>
+        </div>
+        <!-- /list of house -->
+        <!-- /Actions Buttons -->
+        <div class="content-area">
+
+            <clr-datagrid class="table_view " [clrDgLoading]="loading" style="width:100%">
+
+                <clr-dg-column>House Name</clr-dg-column>
+                <clr-dg-column>Birds Number</clr-dg-column>
+                <clr-dg-column>Area</clr-dg-column>
+                <clr-dg-column>Ventilation</clr-dg-column>
+                <clr-dg-column>Density</clr-dg-column>
+                <clr-dg-column>Feeder</clr-dg-column>
+                <clr-dg-column>Cycles Number per year</clr-dg-column>
+                <clr-dg-column>Duration Of Rotation</clr-dg-column>
+                <clr-dg-column>Water Source</clr-dg-column>
+                <clr-dg-column>Edit</clr-dg-column>
+
+                <!-- ... -->
+                <clr-dg-row *clrDgItems="let house of houses" [clrDgItem]="house" class="tablecolor">
+
+                    <clr-dg-cell style="width: 180px;"> {{house.houseName}}</clr-dg-cell>
+                    <clr-dg-cell style="width: 80px;"> {{house.birdsNumber}}</clr-dg-cell>
+                    <clr-dg-cell style="width: 60px;"> {{house.area}} </clr-dg-cell>
+                    <clr-dg-cell style="width: 100px;"> {{house.ventilation}} </clr-dg-cell>
+                    <clr-dg-cell style="width: 100px;"> {{house.density}} </clr-dg-cell>
+                    <clr-dg-cell style="width: 100px;"> {{house.feeder}} </clr-dg-cell>
+                    <clr-dg-cell style="width: 100px;"> {{house.nbrCyclesPerYear}} </clr-dg-cell>
+                    <clr-dg-cell style="width: 100px;"> {{house.durationOfRotation}} </clr-dg-cell>
+                    <clr-dg-cell style="width: 120px;"> {{house.waterSource}} </clr-dg-cell>
+                    <clr-dg-cell>
+                        <button class="btn btn-sm btn-link" (click)="showupdate(house)">
+                            <img src="../../../assets/edit.png" height="20" />
+                        </button>
+                    </clr-dg-cell>
+
+                </clr-dg-row>
+
+
+                <clr-dg-footer>
+                    <clr-dg-pagination #pagination [clrDgPageSize]="15">
+                        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+                        of {{pagination.totalItems}} houses
+                    </clr-dg-pagination>
+                </clr-dg-footer>
+                <!-- / end list of house -->
+                <!-- / list  of flock -->
+                <ng-template clrIfDetail let-detail (clrIfDetailChange)="onDetailOpen($event)" class="tooltip">
+
+                    <clr-dg-detail *clrIfDetail="let detail">
+                        <clr-dg-detail-body>
+                        </clr-dg-detail-body>
+                        <!-- Actions Button -->
+                        <div class="addbtn" style="    padding-top: 20px; padding-left: 20px;">
+                            <h3 style="float: left; color: #02675c;">
+                                <img src="../../../assets/flock.png" width="30" style="margin-right: 11px; ">
+                                Flocks
+                            </h3>
+
+                            <button (click)="showFlockManager(detail)" class="btn btn-primary" style="float: right;
+                                background-color: white; color: #02675c; border: none;  border-radius: 0;
+                                 border-bottom: 2px solid #02675c;">
+
+                                <img src="../../../assets/add.png" width="18" style="margin-right: 10px; ">
+                                Add Flock
+                            </button>
+                        </div>
+                        <!-- /list of flock -->
+                        <clr-tabs>
+                            <!-- list of exists flock-->
+                            <clr-tab>
+                                <button clrTabLink id="link1">Exisits Flocks</button>
+                                <clr-tab-content id="content1" *clrIfActive="true">
+                                    <div class="content-area">
+                                        <clr-datagrid class="table_view " [clrDgLoading]="loading" style="width:100%">
+                                            <clr-dg-column>Breed</clr-dg-column>
+                                            <clr-dg-column>Cycle</clr-dg-column>
+                                            <clr-dg-column>Start of Cycle</clr-dg-column>
+                                            <clr-dg-column>Hatch Date</clr-dg-column>
+                                            <clr-dg-column>Chiked Placed</clr-dg-column>
+                                            <clr-dg-column>PS origin</clr-dg-column>
+                                            <clr-dg-column>Edit</clr-dg-column>
+                                            <!-- ... -->
+                                            <clr-dg-row *clrDgItems="let flock of existsFlocks" [clrDgItem]="flock"
+                                                class="tablecolor">
+                                                <clr-dg-cell style="width: 100px;"> {{flock.breedObject.description}}
+                                                </clr-dg-cell>
+                                                <clr-dg-cell style="width: 100px;"> {{flock.cycle}} </clr-dg-cell>
+                                                <clr-dg-cell style="width: 160px;"> {{flock.startOfCycle}}
+                                                </clr-dg-cell>
+                                                <clr-dg-cell style="width: 160px;"> {{flock.hatchDate}} </clr-dg-cell>
+                                                <clr-dg-cell style="width: 140px;"> {{flock.chikedPlaced}}
+                                                </clr-dg-cell>
+                                                <clr-dg-cell style="width: 140px;"> {{flock.psOrigin}} </clr-dg-cell>
+                                                <clr-dg-cell style="width: 100px;">
+                                                    <button class="btn btn-sm btn-link"
+                                                        (click)="showupdateflock(flock)">
+                                                        <img src="../../../assets/edit.png" height="20" />
+                                                    </button>
+                                                </clr-dg-cell>
+                                            </clr-dg-row>
+                                            <!-- / end list of flock -->
+                                        </clr-datagrid>
+                                    </div>
+                                </clr-tab-content>
+                            </clr-tab>
+                            <clr-tab>
+                                <button clrTabLink>Outgoing Flocks</button>
+                                <clr-tab-content *clrIfActive>
+                                    <div class="content-area">
+                                        <clr-datagrid class="table_view " [clrDgLoading]="loading" style="width:100%">
+                                            <clr-dg-column>Breed</clr-dg-column>
+                                            <clr-dg-column>Cycle</clr-dg-column>
+                                            <clr-dg-column>Start of Cycle</clr-dg-column>
+                                            <clr-dg-column>Hatch Date</clr-dg-column>
+                                            <clr-dg-column>Chiked Placed</clr-dg-column>
+                                            <clr-dg-column>PS origin</clr-dg-column>
+                                            <clr-dg-column>Details</clr-dg-column>
+                                            <!-- ... -->
+                                            <clr-dg-row *clrDgItems="let flock of outgoFlocks" [clrDgItem]="flock"
+                                                class="tablecolor">
+                                                <clr-dg-cell style="width: 100px;"> {{flock.breedObject.description}}
+                                                </clr-dg-cell>
+                                                <clr-dg-cell style="width: 100px;"> {{flock.cycle}} </clr-dg-cell>
+                                                <clr-dg-cell style="width: 160px;"> {{flock.startOfCycle}}
+                                                </clr-dg-cell>
+                                                <clr-dg-cell style="width: 160px;"> {{flock.hatchDate}} </clr-dg-cell>
+                                                <clr-dg-cell style="width: 140px;"> {{flock.chikedPlaced}}
+                                                </clr-dg-cell>
+                                                <clr-dg-cell style="width: 140px;"> {{flock.psOrigin}} </clr-dg-cell>
+                                                <clr-dg-cell style="width: 100px;">
+                                                    <button class="btn btn-sm btn-link"
+                                                        (click)="modalReport.openModel(flock.flockID)">
+                                                        <img src="../../../assets/report_.png" height="20" />
+                                                    </button>
+                                                </clr-dg-cell>
+                                            </clr-dg-row>
+                                            <!-- / end list of flock -->
+                                        </clr-datagrid>
+                                    </div>
+                                </clr-tab-content>
+                            </clr-tab>
+                        </clr-tabs>
+                    </clr-dg-detail>
+                </ng-template>
+                <!-- / end list of flock -->
+
+
+
+
+
+
+
+
+            </clr-datagrid>
+            <!-- Dialog for update House -->
+            <form clrForm class="clr-form clr-form-horizontal">
+                <clr-modal title="update" [(clrModalOpen)]="updateOpened" [clrModalStaticBackdrop]="true">
+                    <h3 class="modal-title" style="color: #02675c;">
+                        <img src="../../../assets/updateHouse.png" width="22" height="22"
+                            style="margin-bottom: 8px; margin-right: 10px;">
+                        Update House
+                    </h3>
+                    <div class="modal-body" style="overflow-y: auto;">
+                        <!-- /Spinner-->
+                        <div class="form clr-col-md-12" style=" display: inline-block;">
+
+
+                            <clr-input-container>
+                                <label for="housesNumber"
+                                    class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">Brids number
+                                </label>
+                                <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-6" size="35" type="number"
+                                    [(ngModel)]="birdsNumber" name="birdsNumber" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label for="housesNumber"
+                                    class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">Area </label>
+                                <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-6" size="35" type="number"
+                                    [(ngModel)]="area" name="area" />
+                            </clr-input-container>
+                            <clr-select-container>
+                                <label class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">Ventilation </label>
+                                <select clrSelect [(ngModel)]="ventilation" name="ventilation" style="width: 155px;"
+                                    class="clr-col-xs-12 clr-col-md-6"
+                                    (change)="getventilationSelect($event.target.value)">
+                                    <option size="200">
+                                        static
+                                    </option>
+                                    <option size="200">
+                                        dynamic
+                                    </option>
+                                </select>
+                            </clr-select-container>
+                            <clr-input-container>
+                                <label for="housesNumber" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                                    Density per meter
+                                </label>
+                                <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-6" size="30" type="number"
+                                    [(ngModel)]="density" name="density" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label for="housesNumber"
+                                    class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">Feeder
+                                </label>
+                                <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-6" size="30" type="text"
+                                    [(ngModel)]="feeder" name="feeder" style="width: 155px;" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label for="housesNumber" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                                    Cycles Number per year
+                                </label>
+                                <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-6" size="35" type="number" n="1"
+                                    [(ngModel)]="nbrCyclesPerYear" name="nbrCyclesPerYear" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label for="housesNumber" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                                    Duration Of Rotation </label>
+                                <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-6" size="30" type="number" n="1"
+                                    [(ngModel)]="durationOfRotation" name="durationOfRotation" />
+                            </clr-input-container>
+                            <clr-select-container>
+                                <label class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">Water Source
+                                </label>
+                                <select clrSelect [(ngModel)]="waterSource" name="waterSource" style="width: 155px; 
+                    background-color: #f9f9f9; border-bottom: 1px solid #b3b3b3;" class="clr-col-xs-12 clr-col-md-6"
+                                    (change)="getWaterSelect($event.target.value)">
+                                    <option size="200">
+                                        well water
+                                    </option>
+                                    <option size="200">
+                                        public water system
+                                    </option>
+                                </select>
+                            </clr-select-container>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline" (click)="updateOpened = false">Cancel</button>
+                        <button type="button" class="btn btn-primary "
+                            (click)='saveupdate();updateOpened = false'>save</button>
+                    </div>
+                </clr-modal>
+            </form>
+            <!-- Dialog for add Flock -->
+            <form novalidate name="myForm" #myForm='ngForm'>
+                <clr-modal [(clrModalOpen)]="FlockManagerOpened">
+                    <h3 class="modal-title" style="color: #02675c;">
+                        <img src="../../../assets/AddFlock.png" width="22" height="22"
+                            style="margin-right: 8px; margin-bottom: 3px;">
+                        Add Flock
+                    </h3>
+                    <div class="modal-body" style="overflow-y: auto;">
+                        <!-- /Spinner-->
+
+                        <div class="form clr-col-md-12" style=" display: inline-block;">
+                            <clr-select-container style="display: -webkit-box;">
+                                <label for="breed" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">Breed
+                                    *</label>
+                                <select class="clr-col-xs-12-sm-12 clr-col-md-6" clrSelect required [(ngModel)]="breed"
+                                    name="breed" (change)="getBreed($event.target.value)" style="width: 234px;">
+                                    <option *ngFor="let breed of breeds" [value]='breed.breedID'>
+                                        {{breed.description}}
+                                    </option>
+                                </select>
+                            </clr-select-container>
+                            <clr-input-container style="display: -webkit-box;">
+                                <label for="cycle" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                                    Name
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" size="30" type="text"
+                                    n="1" [(ngModel)]="flockName" name="flockName" style="width: 234px;" />
+                                <clr-control-helper></clr-control-helper>
+                            </clr-input-container>
+                            <clr-input-container style="display: -webkit-box;">
+                                <label for="cycle" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                                    Cycle
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" size="30"
+                                    type="number" n="1" [(ngModel)]="cycle" name="cycle" style="width: 234px;" />
+                                <clr-control-helper></clr-control-helper>
+                            </clr-input-container>
+                            <clr-date-container style="display: -webkit-box;">
+                                <label for="startOfCycle" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                                    Start of Cycle
+                                </label>
+                                <input clrDate required class="clr-col-xs-12-sm-12 clr-col-md-6" size="45" type="date"
+                                    n="1" [(ngModel)]="startOfCycle" name="startOfCycle" />
+                            </clr-date-container>
+                            <clr-input-container style="display: -webkit-box;">
+                                <label for="psOrigin" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                                    PS origin
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" size="20" type="text"
+                                    n="1" [(ngModel)]="psOrigin" name="psOrigin" style="width: 234px;" />
+                                <clr-control-helper></clr-control-helper>
+                            </clr-input-container>
+                            <clr-date-container style="display: -webkit-box;">
+                                <label for="hatchDate" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                                    Hatch date
+                                </label>
+                                <input clrDate required class="clr-col-xs-12-sm-12 clr-col-md-6" size="45" type="date"
+                                    n="1" [(ngModel)]="hatchDate" name="hatchDate" />
+                            </clr-date-container>
+                            <clr-input-container style="display: -webkit-box;">
+                                <label for="chikedPlaced" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                                    Chicked placed
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" size="30"
+                                    type="number" n="1" [(ngModel)]="chikedPlaced" name="chikedPlaced"
+                                    style="width: 234px;" />
+                            </clr-input-container>
+
+                            <clr-input-container style="display: -webkit-box;">
+                                <label for="chikedPlaced" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                                    Flock Number
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" size="30"
+                                    type="number" n="1" [(ngModel)]="flockNumber" name="flockNumber"
+                                    style="width: 234px;" />
+                            </clr-input-container>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline"
+                            (click)="FlockManagerOpened = false">Cancel</button>
+                        <button type="button" class="btn btn-primary" (click)="submitFlock();">save</button>
+                    </div>
+                </clr-modal>
+            </form>
+
+            <!-- Dialog for update Flock -->
+            <form clrForm class="clr-form clr-form-horizontal">
+                <clr-modal title="update" [(clrModalOpen)]="updateflockOpened" [clrModalStaticBackdrop]="true">
+                    <h3 class="modal-title" style="color: #02675c;">
+                        <img src="../../../assets/updateHouse.png" width="24" height="24"
+                            style="margin-bottom: 8px; margin-right: 10px;">
+                        Update Flock
+                    </h3>
+                    <div class="modal-body" style="overflow-y: auto;">
+                        <!-- /Spinner-->
+                        <div class="form clr-col-md-12" style=" display: inline-block;">
+
+
+                            <clr-select-container>
+                                <label for="breed" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                                    Breed </label>
+                                <select class="clr-col-xs-12-sm-12 clr-col-md-6" clrSelect [(ngModel)]="breed"
+                                    name="breed" (change)="getBreed($event.target.value)" style="width: 155px;">
+                                    <option *ngFor="let breed of breeds" [value]='breed.breedID'>
+                                        {{breed.description}}
+                                    </option>
+                                </select>
+                            </clr-select-container>
+                            <clr-input-container>
+                                <label for="cycle" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                                    Name
+                                </label>
+                                <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-6" size="30" type="text" n="1"
+                                    [(ngModel)]="flockName" name="flockName" />
+
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label for="cycle" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                                    Cycle
+                                </label>
+                                <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-6" size="30" type="number" n="1"
+                                    [(ngModel)]="cycle" name="cycle" />
+
+                            </clr-input-container>
+
+
+                            <clr-date-container>
+                                <label for="startOfCycle" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                                    Start of Cycle
+                                </label>
+                                <input clrDate class="clr-col-xs-12-sm-12 clr-col-md-6" size="45" type="date" n="1"
+                                    [(ngModel)]="startOfCycle" name="startOfCycle" style="width: 126px;" />
+                            </clr-date-container>
+
+                            <clr-input-container>
+                                <label for="psOrigin" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                                    PS origin
+                                </label>
+                                <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-6" size="20" type="text" n="1"
+                                    [(ngModel)]="psOrigin" name="psOrigin" />
+                                <clr-control-helper></clr-control-helper>
+                            </clr-input-container>
+
+                            <clr-date-container>
+                                <label for="hatchDate" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                                    Hatch date
+                                </label>
+                                <input clrDate class="clr-col-xs-12-sm-12 clr-col-md-6" size="45" type="date" n="1"
+                                    [(ngModel)]="hatchDate" name="hatchDate" style="width: 126px;" />
+                            </clr-date-container>
+
+                            <clr-input-container>
+                                <label for="chikedPlaced" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                                    Chicked placed
+                                </label>
+                                <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-6" size="30" type="number" n="1"
+                                    [(ngModel)]="chikedPlaced" name="chikedPlaced" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label for="chikedPlaced" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                                    Flock Number
+                                </label>
+                                <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-6" size="30" type="number" n="1"
+                                    [(ngModel)]="flockNumber" name="flockNumber" />
+                            </clr-input-container>
+                            <div class="clr-form-control clr-row" *ngIf="disabledCheck==false">
+                                <label class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">End Of Cycle</label>
+                                <clr-toggle-wrapper>
+                                    <input type="checkbox" clrToggle name="checkEndOfCycle" required
+                                        value="checkEndOfCycle" [(ngModel)]="checkEndOfCycle"
+                                        class="clr-col-xs-12-sm-12 clr-col-md-3" />
+
+                                </clr-toggle-wrapper>
+
+                                <input type="date" value="2020-11-30" *ngIf="checkEndOfCycle" [(ngModel)]="endOfCycle"
+                                    [ngModelOptions]="{standalone: true}" />
+                            </div>
+
+
+                            <div class="clr-form-control clr-row" *ngIf="disabledCheck">
+                                <label class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">End Of Cycle</label>
+                                <clr-toggle-wrapper>
+                                    <input type="checkbox" clrToggle name="checkEndOfCycle" required
+                                        value="checkEndOfCycle" [(ngModel)]="checkEndOfCycle"
+                                        class="clr-col-xs-12-sm-12 clr-col-md-3" disabled />
+
+                                </clr-toggle-wrapper>
+
+                                <input type="date" value="2020-11-30" *ngIf="checkEndOfCycle" [(ngModel)]="endOfCycle"
+                                    [ngModelOptions]="{standalone: true}" readonly />
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline"
+                            (click)="updateflockOpened = false">Cancel</button>
+                        <button type="button" class="btn btn-primary "
+                            (click)='saveupdateFlock();updateflockOpened = false;refreshDataFlockGrid();'>save</button>
+                    </div>
+                </clr-modal>
+            </form>
+        </div>
+
+
+
+
+
+
+
+    </div>
+</div>
+<app-flock-report></app-flock-report>

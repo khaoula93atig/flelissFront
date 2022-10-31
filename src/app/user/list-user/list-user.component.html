@@ -1,0 +1,167 @@
+<div class="main-container" style="background:#fff;">
+  <div class="container">
+          <div class="content-container">
+                  <h2>      <img src="../../../assets/IconUser.png" width="48" height="48" 
+                    style="  margin-right: 10px;     margin-top: -8px;">
+                     Users 
+                  </h2>
+              </div> 
+         <!-- Actions Button -->
+         <div class="addbtn">
+             
+          <button (click)="modal.open()" class="btn btn-primary">
+            <img src="../../../assets/AddUser.png" width="30"
+             style="margin-bottom: 3px;margin-right: 10px;">
+              Add User
+              </button>
+          
+            <app-new-user></app-new-user>
+                  
+      </div>  
+            <!-- /Actions Buttons -->
+              <div class="content-area"> 
+                  <clr-datagrid class="table_view " [clrDgLoading]="loading"  style="width:100%">
+                      <clr-dg-column>Name</clr-dg-column>
+                      <clr-dg-column>User Name</clr-dg-column>
+                      <clr-dg-column>Password</clr-dg-column>
+                      <clr-dg-column>Job</clr-dg-column>
+                      <clr-dg-column>Email</clr-dg-column>
+                      <clr-dg-column>Phone Number </clr-dg-column>
+                      <clr-dg-column>Role </clr-dg-column>
+               
+                      <!-- ... -->
+                  <clr-dg-row  *clrDgItems="let user of users" [clrDgItem]="user" class="tablecolor" >
+                  
+                          <clr-dg-cell style="width: 200px;" > {{user.name}} </clr-dg-cell>
+                         <clr-dg-cell>{{user.username}}</clr-dg-cell>
+                          <clr-dg-cell> {{user.password}}</clr-dg-cell>
+                          <clr-dg-cell> {{user.job}}</clr-dg-cell>
+                          <clr-dg-cell> {{user.email}} </clr-dg-cell>
+                          <clr-dg-cell> {{user.telNumber}}</clr-dg-cell>
+                          <clr-dg-cell > {{user.role}}</clr-dg-cell>
+                       
+                    
+                    
+  
+                      </clr-dg-row>
+      
+                      <clr-dg-footer>
+                          <clr-dg-pagination #pagination [clrDgPageSize]="15">
+                              {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+                              of {{pagination.totalItems}} users
+                          </clr-dg-pagination>
+                      </clr-dg-footer>
+                      <ng-template clrIfDetail let-detail>
+                      <clr-dg-detail *clrIfDetail="let detail">
+                          <clr-dg-detail-header>
+                                  <clr-icon shape="user" size="25" style="margin-right: 15px;"></clr-icon>
+                             
+                              <span class="internal-title">{{detail.username}}</span>
+                          </clr-dg-detail-header>
+                          <clr-dg-detail-body>
+                              <div class="separator"></div>
+                              <form clrForm>
+                         
+                              
+                                <clr-select-container>
+                                  <label class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-3">Farm * </label>
+                                  <select clrSelect required [(ngModel)]="detail.farmID" name="farmID"   class="clr-col-xs-12 clr-col-md-9" (change)="getFarmId($event.target.value)" style="width: 253px;">
+                                    <option *ngFor="let farm of farms" [value]='farm.farmId'>
+                                      {{farm.zone}}-{{farm.farmId}}
+                                    </option>
+                                  </select>
+                                
+                                
+                                </clr-select-container>
+                                <clr-select-container>
+                                <label class="clr-control-label clr-col-12 clr-col-md-3">Role * </label>
+                                <select clrSelect  [(ngModel)]="detail.role" name="role" required class="clr-col-xs-12-sm-12 clr-col-md-9"  (change)="getRole($event.target.value)" style="width: 253px;">
+                                  <option *ngFor="let role of roles" [value]='role.description'>
+                                    {{role.description}}
+                                  </option>
+                                </select>
+                              
+                              </clr-select-container>
+                                      <clr-input-container>
+                                              <label class="clr-control-label clr-col-12 clr-col-md-3">Name: </label>
+                                              <input clrInput type="text" [(ngModel)]="detail.name" name="name" class="clr-col-xs-12 clr-col-md-9" size="35" />
+                                          </clr-input-container>
+                                         
+                                          <clr-input-container>
+                                                  <label class="clr-control-label clr-col-12 clr-col-md-3">Password: </label>
+                                                  <input clrInput type="text" [(ngModel)]="detail.password" type="password" name="password"
+                                                  class="clr-col-xs-12 clr-col-md-9" minlength="8" required size="35" />
+                                              </clr-input-container>
+                                  
+                                            <clr-input-container>
+                                      <label class="clr-control-label clr-col-12 clr-col-md-3">Job: </label>
+                                      <input clrInput type="text" [(ngModel)]="detail.job" name="job" class="clr-col-xs-12 clr-col-md-9" size="35" />
+                                    </clr-input-container>
+                                  
+                                  <clr-input-container>
+                                      <label class="clr-control-label clr-col-12 clr-col-md-3">Email: </label>
+                                      <input clrInput type="text" [(ngModel)]="detail.email" name="email" class="clr-col-xs-12 clr-col-md-9" size="35" />
+                                  </clr-input-container>
+                        
+                                  <clr-input-container>
+                                      <label class="clr-control-label clr-col-12 clr-col-md-3">Phone Number: </label>
+                                      <input clrInput type="text" [(ngModel)]="detail.telNumber" name="telNumber" class="clr-col-xs-12 clr-col-md-9" size="35" />
+                                  </clr-input-container>
+   
+                      </form>
+                              <br>
+                              <button class="btn btn-primary" (click)="sauvegarder(detail);">Save</button>
+                          </clr-dg-detail-body>
+                      </clr-dg-detail>
+                    </ng-template>
+                      <!-- ... -->
+                  </clr-datagrid>
+  
+  
+  
+          
+              </div>
+          
+  <div class="create_area card" *ngIf='create_mode'>
+  
+  
+          <header class="header header-5">
+            <div class="branding">
+              <span class="title">
+                <clr-icon shape="add-text"></clr-icon> Add New User 
+              </span>
+            </div>
+        
+            <div class="header-actions">
+        
+              <a class="nav-link nav-icon" (click)="hideCreatePanel()" title="Fermer">
+                <clr-icon shape="times-circle"></clr-icon>
+              </a>
+        
+            </div>
+          </header>
+        
+        
+          <div class="card-block">
+        
+            <div class="card-text">
+        
+              <!-- Injection Area-->
+              <app-newuser></app-newuser>
+        
+            </div>
+            <div class="card-footer">
+                  <button class="btn btn-sm btn-link" type="button" (click)='hideCreatePanel()' style="float:right">
+                    <clr-icon shape="window-close"></clr-icon>
+                    Close
+                  </button>
+                </div>
+        
+          </div>
+      
+        
+        
+        
+        </div>
+      </div>
+  </div>

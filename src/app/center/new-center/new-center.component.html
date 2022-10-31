@@ -1,0 +1,228 @@
+<form novalidate name="myForm" #myForm='ngForm' (ngSubmit)="onSubmit();">
+    <clr-modal [(clrModalOpen)]="show">
+
+        <h3 class="modal-title" style="color: #02675c;">Add Center</h3>
+        <div class="modal-body">
+
+            <!-- /Spinner-->
+            <div class="form" style=" display: inline-block;">
+                <clr-select-container>
+                    <label class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-7">Farm * </label>
+                    <select clrSelect required [(ngModel)]="farmId" name="farmId" class="clr-col-xs-6 clr-col-md-6"
+                        (change)="getFarmId($event.target.value)" style="background-color: #f9f9f9;">
+                        <option *ngFor="let farm of farms" [value]='farm.farmId' size="30">
+                            {{farm.farmName}}
+                        </option>
+                    </select>
+
+
+                </clr-select-container>
+                <clr-input-container>
+                    <label for="centerName" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-7">Center Name *
+                    </label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="25" type="text" n="1"
+                        [(ngModel)]="centerName" name="centerName" />
+                </clr-input-container>
+                <clr-input-container>
+                    <label for="housesNumber" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-7">Number of
+                        Houses * </label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" n="1" min="0"
+                        [(ngModel)]="housesNumber" name="housesNumber" style=" width: 198px;" />
+
+
+                </clr-input-container>
+
+                <clr-select-container>
+                    <label class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-7">Breed *</label>
+                    <select clrSelect name="breed" [(ngModel)]="breed" required class="clr-col-xs-6 clr-col-md-6"
+                        style="background-color: #f9f9f9; width: 198px;">
+                        <option>Hubbard</option>
+                        <option>Cobb 500</option>
+                        <option>Ross</option>
+                        <option>Arbor Acres plus</option>
+                    </select>
+
+                </clr-select-container>
+                <clr-select-container>
+                    <label class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-7">Production Density * </label>
+                    <select clrSelect [(ngModel)]="productionDensity" name="productionDensity" required
+                        style=" width: 198px; background-color: #f9f9f9;" class="clr-col-xs-6 clr-col-md-6">
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                    </select>
+
+                </clr-select-container>
+
+
+
+                <clr-input-container>
+                    <label for="address" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-7">Address *</label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="25" type="text"
+                        [(ngModel)]="address" name="address" />
+                </clr-input-container>
+
+
+                <clr-input-container>
+                    <label for="zone" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-7">Zone * </label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="25" type="text" [(ngModel)]="zone"
+                        name="zone" />
+                </clr-input-container>
+
+                <clr-input-container>
+                    <label for="centerManagerName" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-7">Center
+                        Manager Name *
+                    </label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="25" type="text"
+                        [(ngModel)]="centerManagerName" name="centerManagerName" />
+                </clr-input-container>
+                <clr-input-container>
+                    <label for="centerManagerEmail" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-7">
+                        Center Manager Email *
+                    </label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="25" type="text"
+                        [(ngModel)]="centerManagerEmail" name="centerManagerEmail" />
+                </clr-input-container>
+                <clr-input-container>
+                    <label for="centerManagerTel" class="clr-control-label clr-col-xs-6 clr-col-md-7">Center
+                        Manager Tel *
+                    </label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="25" type="text"
+                        [(ngModel)]="centerManagerTel" name="centerManagerTel" />
+                </clr-input-container>
+                <clr-input-container>
+                    <label for="nutritionSupervisor" class="clr-control-label clr-col-xs-6 clr-col-md-7">Nutrition
+                        Supervisor *
+                    </label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="25" type="text"
+                        [(ngModel)]="nutritionSupervisor" name="nutritionSupervisor" />
+                </clr-input-container>
+
+                <clr-input-container>
+                    <label for="sanitarySupervisor" class="clr-control-label clr-col-xs-6 clr-col-md-7">Sanitary
+                        Supervisor *
+                    </label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="25" type="text"
+                        [(ngModel)]="sanitarySupervisor" name="sanitarySupervisor" />
+                </clr-input-container>
+
+
+                <clr-input-container>
+                    <label for="bridsNumberPerHouse" class="clr-control-label clr-col-xs-6 clr-col-md-7">Brids
+                        number per House *
+                    </label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" min="0"
+                        [(ngModel)]="bridsNumberPerHouse" name="bridsNumberPerHouse" style="width: 197px;" />
+                </clr-input-container>
+                <clr-input-container>
+                    <label for="centerMultiage" class="clr-control-label clr-col-xs-6 clr-col-md-7">Center
+                        Multiage
+                        *
+                    </label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" min="0"
+                        [(ngModel)]="centerMultiage" name="centerMultiage" style="width: 197px;" />
+                </clr-input-container>
+
+                <clr-input-container>
+                    <label for="town" class="clr-control-label clr-col-xs-6 clr-col-md-7">Average Mortality Per
+                        Flock
+                        *
+                    </label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" min="0"
+                        [(ngModel)]="avMortalityPerFlock" name="avMortalityPerFlock" style="width: 197px;" />
+                </clr-input-container>
+                <clr-input-container>
+                    <label for="avWaterConsumption" class="clr-control-label clr-col-xs-6 clr-col-md-7">Average
+                        Water
+                        Consumption
+                    </label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" min="0"
+                        [(ngModel)]="avWaterConsumption" name="avWaterConsumption" style="width: 197px;" />
+                </clr-input-container>
+                <clr-input-container>
+                    <label for="avFeedConsumption" class="clr-control-label clr-col-xs-6 clr-col-md-7">Average
+                        Feed
+                        Consumption
+                    </label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" min="0"
+                        [(ngModel)]="avFeedConsumption" name="avFeedConsumption" style="width: 197px;" />
+                </clr-input-container>
+                <clr-input-container>
+                    <label for="eggProduction" class="clr-control-label clr-col-xs-6 clr-col-md-7">Egg
+                        Production
+                    </label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" min="0"
+                        [(ngModel)]="eggProduction" name="eggProduction" style="width: 197px;" />
+                </clr-input-container>
+                <clr-input-container>
+                    <label for="avFcr" class="clr-control-label clr-col-xs-6 clr-col-md-7">Average FCR
+                    </label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" min="0"
+                        [(ngModel)]="avFcr" name="avFcr" style="width: 197px;" />
+                </clr-input-container>
+
+                <clr-input-container>
+                    <label for="avEef" class="clr-control-label clr-col-xs-6 clr-col-md-7">Average EEF
+                    </label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" min="0"
+                        [(ngModel)]="avEef" name="avEef" style="width: 197px;" />
+                </clr-input-container>
+
+                <clr-input-container>
+                    <label for="mainDiseases" class="clr-control-label clr-col-xs-6 clr-col-md-7">Main Diseases
+                    </label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="text"
+                        [(ngModel)]="mainDiseases" name="mainDiseases" style="width: 197px;" />
+                </clr-input-container>
+
+                <clr-input-container>
+                    <label for="species" class="clr-control-label clr-col-xs-6 clr-col-md-7">Species
+                    </label>
+                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="text"
+                        [(ngModel)]="species" name="species" style="width: 197px;" />
+                </clr-input-container>
+
+
+            </div>
+
+
+
+
+        </div>
+
+        <div class="modal-footer">
+            <div class="clr-col-6">
+
+                <div class="alert alert-succes" role="alert" *ngIf="message != null" style="margin-top: 0px;">
+                    <div class="alert-items">
+                        <div class="alert-item static">
+                            <div class="alert-icon-wrapper">
+                                <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                            </div>
+                            <span class="alert-text">
+                                {{message}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="dangerMsg != null" style="margin-top: 0px;">
+                    <div class="alert-items">
+                        <div class="alert-item static">
+                            <div class="alert-icon-wrapper">
+                                <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                            </div>
+                            <span class="alert-text">
+                                {{dangerMsg}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <button type="button" class="btn btn-outline" (click)="close()">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)='submit()'>save</button>
+
+        </div>
+
+    </clr-modal>
+</form>

@@ -1,0 +1,445 @@
+<div class="container-box-add">
+    <form novalidate name="myForm" #myForm='ngForm'>
+        <h3 class="modal-title" style="padding: 15px 16px 8px; box-shadow: 1px 1px 8px #888888;">
+            <img src="../../../assets/chick.png" width="40" style="margin-bottom: 8px;">
+            Chick reception
+        </h3>
+        <div class="modal-body">
+
+            <!-- /Spinner-->
+            <div class="check-form">
+                <div class="form-recep">
+                    <!-- check-form date -->
+                    <div class="formVdate form-visit0 ">
+                        <clr-date-container class="formDate clr-col-md-12" style="display: -webkit-inline-box;">
+                            <label for="dailyVisit" class="clr-control-label clr-col-md-2">
+                                Visit date * </label>
+                            <input type="date" clrDate name="dailyVisit" [(ngModel)]="visitDate" required
+                                class="clr-col-md-4" style=" padding-left: 20px;">
+
+                        </clr-date-container>
+                    </div>
+                    <!-- check-form part 1 -->
+                    <div class="formV form-visit1 ">
+
+                        <clr-select-container class="clr-col-md-6 " style="display: -webkit-inline-box;">
+                            <label for="farm" class="clr-control-label clr-col-md-5">Center *</label>
+                            <select clrSelect name="farm" required name="centerId" [(ngModel)]="centerId"
+                                style="width: 130px;" (change)="getCenterId($event.target.value)">
+                                <option *ngFor="let center of centers" [value]='center.centerId'>
+                                    {{center.centerName}}
+                                </option>
+                            </select>
+                        </clr-select-container>
+                        <clr-select-container class="clr-col-md-6 " style="display: -webkit-inline-box;">
+                            <label for="house" class="clr-control-label clr-col-md-7">House *</label>
+                            <select clrSelect name="houseId" required style="width: 105px;" [(ngModel)]="houseId"
+                                (change)="getHouseId($event.target.value)">
+                                <option *ngFor="let house of houses" [value]='house.houseId'>
+                                    {{house.houseName}}
+                                </option>
+                            </select>
+                        </clr-select-container>
+                    </div>
+                    <div class="formV form-visit1 ">
+
+
+                    </div>
+
+                    <!-- check-form part 2 -->
+                    <div class="formV form-visit2 ">
+                        <clr-select-container class="clr-col-md-6 clr-form-control "
+                            style="display: -webkit-inline-box;">
+                            <label for="breed" class="clr-control-label clr-col-md-4">
+                                Flock *
+                            </label>
+                            <select clrSelect name="flockId" required style="width: 105px;" [(ngModel)]="flockId"
+                                (change)="getFlockId($event.target.value)">
+                                <option *ngFor="let flock of flocks" [value]='flock.flockID'>
+                                    {{flock.startOfCycle}}
+                                </option>
+                            </select>
+                        </clr-select-container>
+
+                        <clr-input-container class="formDate clr-form-control clr-col-md-6"
+                            style="display: -webkit-inline-box;">
+                            <label for="breeddescription" class="clr-control-label clr-col-md-6">
+                                Breed </label>
+                            <input type="text" clrInput name="breeddescription" class="clr-col-md-6"
+                                [(ngModel)]="breeddescription" readonly />
+                        </clr-input-container>
+                    </div>
+                    <!-- check-form part 3 -->
+                    <div class="formVdate form-visit3 clr-col-md-12">
+                        <clr-input-container class="formDate clr-form-control clr-col-md-6"
+                            style="display: -webkit-inline-box;">
+                            <label for="hatchDate" class="clr-control-label">
+                                Hatch date * </label>
+                            <input type="text" clrInput name="hatchDate" [(ngModel)]="hatchDate" class="clr-col-md-8"
+                                readonly />
+                        </clr-input-container>
+
+                        <clr-input-container class=" clr-col-md-6" style="display: -webkit-inline-box;">
+                            <label for="ageFlock" class="clr-control-label clr-col-md-6">
+                                Hatchery </label>
+                            <input clrInput required size="12" type="text" name="ageFlock" readonly />
+                            day
+                        </clr-input-container>
+                    </div>
+                    <!-- check-form part4 -->
+                    <div class="formV form-visit4 clr-col-md-12">
+                        <clr-input-container class=" clr-col-md-6" style="display: -webkit-inline-box;">
+                            <label for="chickPlaced" class="clr-control-label">
+                                Chick placed </label>
+                            <input clrInput required size="15" type="text" name="chikedPlaced" name="chickPlaced"
+                                [(ngModel)]="chikedPlaced" readonly />
+                        </clr-input-container>
+                        <clr-input-container class=" clr-col-md-6" style="display: -webkit-inline-box;">
+                            <label for="psOrigin" class="clr-control-label clr-col-md-6">
+                                PS origin </label>
+                            <input clrInput size="15" type="text" [(ngModel)]="psOrigin" name="psOrigin" readonly />
+                        </clr-input-container>
+
+                    </div>
+                    <div class="formV form-visit4 clr-col-md-12" style="margin-bottom: 35px;">
+                        <clr-input-container style="display: -webkit-inline-box;">
+                            <label for="ageOfTheFlock" class="clr-control-label clr-col-md-6">
+                                PS Age </label>
+                            <input clrInput size="15" type="text" name="ageOfTheFlock" [(ngModel)]="ageOfTheFlock"
+                                readonly />
+                        </clr-input-container>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Visual inspection  -->
+
+            <div class="form-check">
+
+                <div class="form-checkVpart1" style=" padding: 10px 0px;">
+                    <h4 style=" font-weight: 500; margin-left: 10px;"> <img src="../../../assets/Vinspect.png"
+                            class="imgIcon" width="30 " style="margin-right: 8px;" />
+                        Visual inspection
+                    </h4>
+
+                    <div class="clr-radio-container form-visit9 clr-row" clrInline
+                        style="display: -webkit-box; margin-top: 20px;  padding: 0px 14px;">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                            Eyes clear and bright</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper style="margin-right: 20px;"
+                                (change)="getEyes_clear_bright($event.target.value)">
+                                <input type="radio" clrRadio name="options0" required value='Yes' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+
+                            <clr-radio-wrapper (change)="getEyes_clear_bright($event.target.value)">
+                                <input type="radio" clrRadio name="options0" required value='No' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container form-visit9 clr-row" clrInline
+                        style="display: -webkit-box; margin-top: 20px;  padding: 0px 14px;">
+                        <label for="Anorexia" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                            Body dry – not wet</label>
+                        <div class="radip-wrapper" style="display: flex;">
+                            <clr-radio-wrapper style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options1" required value='Yes'
+                                    (change)="getBody_dry_wet($event.target.value)" />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+
+                            <clr-radio-wrapper>
+                                <input type="radio" clrRadio name="options1" required value='No'
+                                    (change)="getBody_dry_wet($event.target.value)" />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+
+                        </div>
+                    </div>
+
+
+                    <div class="clr-radio-container form-visit9 clr-row" clrInline
+                        style="display: -webkit-box; margin-top: 20px;  padding: 0px 14px;">
+                        <label for="ruffledFeather " class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                            A body temperature at the vent (cloaca) 35.5°C </label>
+                        <div class="radip-wrapper" style="display: flex;">
+                            <clr-radio-wrapper style="margin-right: 20px;" (change)="getBody_temp($event.target.value)">
+                                <input type="radio" clrRadio name="options2" required value='Yes' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+
+                            <clr-radio-wrapper (change)="getBody_temp($event.target.value)">
+                                <input type="radio" clrRadio name="options2" required value='No' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+
+                        </div>
+                    </div>
+
+
+                    <div class="clr-radio-container form-visit9 clr-row" clrInline
+                        style="display: -webkit-box; margin-top: 20px;  padding: 0px 14px;">
+                        <label for="Dehydratation" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                            No cross beaks </label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper style="margin-right: 20px;"
+                                (change)="getCross_beaks($event.target.value)">
+                                <input type="radio" clrRadio name="options3" required value='Yes' />
+                                <label>Yes</label>
+
+                            </clr-radio-wrapper>
+
+                            <clr-radio-wrapper (change)="getCross_beaks($event.target.value)">
+                                <input type="radio" clrRadio name="options3" required value='No' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container form-visit9 clr-row" clrInline
+                        style="display: -webkit-box; margin-top: 20px;  padding: 0px 14px;">
+                        <label for="Dehydratation" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                            Feet properly formed </label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper style="margin-right: 20px;"
+                                (change)="getFeet_prop_formed($event.target.value)">
+                                <input type="radio" clrRadio name="options4" required value='Yes' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+
+                            <clr-radio-wrapper (change)="getFeet_prop_formed($event.target.value)">
+                                <input type="radio" clrRadio name="options4" required value='No' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+
+                        </div>
+                    </div>
+
+
+                    <div class="clr-radio-container form-visit9 clr-row" clrInline
+                        style="display: -webkit-box; margin-top: 20px;  padding: 0px 14px;">
+                        <label for="Dehydratation" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                            Legs clean, no red hocks </label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper style="margin-right: 20px;"
+                                (change)="getLegs_clean_red_hocks($event.target.value)">
+                                <input type="radio" clrRadio name="options5" required value='Yes' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+
+                            <clr-radio-wrapper (change)="getLegs_clean_red_hocks($event.target.value)">
+                                <input type="radio" clrRadio name="options5" required value='No' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container form-visit9 clr-row" clrInline
+                        style="display: -webkit-box; margin-top: 20px;  padding: 0px 14px;">
+                        <label for="Dehydratation" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                            No signs of gasping or heavy breathing </label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper style="margin-right: 20px;"
+                                (change)="getSigns_gasping_heavy($event.target.value)">
+                                <input type="radio" clrRadio name="options6" required value='Yes' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+
+                            <clr-radio-wrapper (change)="getSigns_gasping_heavy($event.target.value)">
+                                <input type="radio" clrRadio name="options6" required value='No' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container form-visit9 clr-row" clrInline
+                        style="display: -webkit-box; margin-top: 20px;  padding: 0px 14px;">
+                        <label for="Dehydratation" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                            No stringy navels </label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper style="margin-right: 20px;"
+                                (change)="getStringy_navels($event.target.value)">
+
+                                <input type="radio" clrRadio name="options7" required value='Yes' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+
+                            <clr-radio-wrapper (change)="getStringy_navels($event.target.value)">
+                                <input type="radio" clrRadio name="options7" required value='No' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+
+                        </div>
+                    </div>
+
+
+                    <div class="clr-radio-container form-visit9 clr-row" clrInline
+                        style="display: -webkit-box; margin-top: 20px;  padding: 0px 14px;">
+                        <label for="Dehydratation" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                            No black buttons </label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper style="margin-right: 20px;">
+
+                                <input type="radio" clrRadio name="options8" required value='Yes'
+                                    (change)="getBlack_buttons($event.target.value)" />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+
+                            <clr-radio-wrapper>
+                                <input type="radio" clrRadio name="options8" required value='No'
+                                    (change)="getBlack_buttons($event.target.value)" />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container form-visit9 clr-row" clrInline
+                        style="display: -webkit-box; margin-top: 20px;  padding: 0px 14px;">
+                        <label for="Dehydratation" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                            Navels properly healed </label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper style="margin-right: 20px;"
+                                (change)="getNavels_properly_healed($event.target.value)">
+
+                                <input type="radio" clrRadio name="options9" required value='Yes' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+
+                            <clr-radio-wrapper (change)="getNavels_properly_healed($event.target.value)">
+                                <input type="radio" clrRadio name="options9" required value='No' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container form-visit9 clr-row" clrInline
+                        style="display: -webkit-box; margin-top: 20px;  padding: 0px 14px;">
+                        <label for="Dehydratation" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                            Well developed legs, skin that is soft and well hydrated </label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper style="margin-right: 20px;"
+                                (change)="getDeveloped_legs_skin($event.target.value)">
+                                <input type="radio" clrRadio name="options10" required value='Yes' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+
+                            <clr-radio-wrapper (change)="getDeveloped_legs_skin($event.target.value)">
+                                <input type="radio" clrRadio name="options10" required value='No' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container form-visit9 clr-row" clrInline
+                        style="display: -webkit-box; margin-top: 20px;  padding: 0px 14px;">
+                        <label for="Dehydratation" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                            No thick/fat bellies </label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper style="margin-right: 20px;"
+                                (change)="getThick_fat_bellies($event.target.value)">
+                                <input type="radio" clrRadio name="options11" required value='Yes' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+
+                            <clr-radio-wrapper (change)="getThick_fat_bellies($event.target.value)">
+                                <input type="radio" clrRadio name="options11" required value='No' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container form-visit9 clr-row" clrInline
+                        style="display: -webkit-box; margin-top: 20px;  padding: 0px 14px;">
+                        <label for="Dehydratation" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                            Not a large amount of growth on the primaries </label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper style="margin-right: 20px;"
+                                (change)="getLarge_amount_growth($event.target.value)">
+                                <input type="radio" clrRadio name="options12" required value='Yes' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+
+                            <clr-radio-wrapper (change)="getLarge_amount_growth($event.target.value)">
+                                <input type="radio" clrRadio name="options12" required value='No' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container form-visit9 clr-row" clrInline
+                        style="display: -webkit-box; margin-top: 20px;  padding: 0px 14px;">
+                        <label for="Dehydratation" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                            Fairly even wing feather growth throughout all the chicks </label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper style="margin-right: 20px;"
+                                (change)="getFairly_even_wing_feather($event.target.value)">
+                                <input type="radio" clrRadio name="options13" required value='Yes' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+
+                            <clr-radio-wrapper (change)="getFairly_even_wing_feather($event.target.value)">
+                                <input type="radio" clrRadio name="options13" required value='No' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container form-visit9 clr-row" clrInline
+                        style="display: -webkit-box; margin-top: 20px;  padding: 0px 14px;">
+                        <label for="Dehydratation" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                            A non-stressful (contented-happy) chirp </label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper style="margin-right: 20px;"
+                                (change)="getNon_stressful($event.target.value)">
+
+                                <input type="radio" clrRadio name="options14" required value='Yes' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+
+                            <clr-radio-wrapper (change)="getNon_stressful($event.target.value)">
+                                <input type="radio" clrRadio name="options14" required value='No' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+
+
+
+            </div>
+
+            <!-- /End Visual inspection -->
+
+
+        </div>
+
+
+
+
+        <div class="modal-footer">
+
+            <button type="button" class="btn btn-outline">Refaire</button>
+            <button type="button" class="btn btn-primary" (click)="saveObject()">Sauvegarder</button>
+        </div>
+    </form>
+</div>

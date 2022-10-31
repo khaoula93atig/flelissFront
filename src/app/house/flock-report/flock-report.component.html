@@ -1,0 +1,270 @@
+<form novalidate name="myForm" #myForm='ngForm'>
+    <clr-modal [(clrModalOpen)]="open" [clrModalSize]="'xl'">
+        <div class="modal-title">
+            <img src="../../../assets/iconClose.png" alt="" class="close" (click)="open=false">
+        </div>
+        <div class="modal-body" style="overflow-y: auto;">
+            <div style="float: right;    padding-right: 25px;" (click)="generatePdf(contentToConvert)">
+                <span>Export Report </span>
+                <img src="../../../assets/export.png" style="width: 21px;
+                height:21px;
+                text-align:right;
+                float:right;" alt="">
+            </div>
+            <div #contentToConvert class="content">
+                <h1 style="text-align: center;    color: #02675c;">Flock Technical Report</h1>
+                <form class="clr-form">
+                    <div class="formV form-visit2 clr-row">
+                        <div class="clr-col-md-6">
+                            <clr-input-container class="labelRapport">
+                                <label for="farmName" class="clr-control-label clr-col-xs-12-sm-6 clr-col-md-6"> Farm
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-6 clr-col-md-6" size="30" type="text"
+                                    n="1" [(ngModel)]="flockReport.farmName" name="farmName" readonly />
+
+                            </clr-input-container>
+                        </div>
+                        <div class="clr-col-md-6">
+
+                            <clr-input-container class="labelRapport">
+                                <label for="centerName" class="clr-control-label clr-col-xs-12-sm-6 clr-col-md-6">
+                                    Center
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-6 clr-col-md-6" size="30" type="text"
+                                    n="1" [(ngModel)]="flockReport.centerName" name="centerName" readonly />
+
+                            </clr-input-container>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="formV form-visit2 clr-row">
+
+                        <div class="clr-col-md-6">
+
+                            <clr-input-container class="labelRapport">
+                                <label for="House" class="clr-control-label clr-col-xs-12-sm-6 clr-col-md-6"> House
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-6 clr-col-md-6" size="30" type="text"
+                                    n="1" [(ngModel)]="flockReport.houseName" name="House" readonly />
+
+                            </clr-input-container>
+                        </div>
+
+                        <div class="clr-col-md-6">
+                            <clr-input-container class="labelRapport">
+                                <label for="houseArea" class="clr-control-label clr-col-xs-12-sm-6 clr-col-md-6">
+                                    Surface
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-6 clr-col-md-6" size="30" type="text"
+                                    n="1" [(ngModel)]="flockReport.houseArea" name="houseArea" readonly />
+
+                            </clr-input-container>
+
+                        </div>
+
+                    </div>
+
+                    <div class="formV form-visit2 clr-row">
+
+                        <div class="clr-col-md-6">
+
+                            <clr-input-container class="labelRapport">
+                                <label for="flockNumber" class="clr-control-label clr-col-xs-12-sm-6 clr-col-md-6">
+                                    Flock
+                                    Number
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-6 clr-col-md-6" size="30" type="text"
+                                    n="1" [(ngModel)]="flockReport.flockNumber" name="flockNumber" readonly />
+
+                            </clr-input-container>
+                        </div>
+
+                        <div class="clr-col-md-6">
+                            <clr-input-container class="labelRapport">
+                                <label for="houseArea" class="clr-control-label clr-col-xs-12-sm-6 clr-col-md-6">
+                                    Breed
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-6 clr-col-md-6" size="30" type="text"
+                                    n="1" [(ngModel)]="flockReport.breed" name="breed" readonly />
+
+                            </clr-input-container>
+
+                        </div>
+
+                    </div>
+                    <div class="formV form-visit2 clr-row">
+
+                        <div class="clr-col-md-6">
+
+                            <clr-input-container class="labelRapport">
+                                <label for="ageOfTheFlock" class="clr-control-label clr-col-xs-12-sm-6 clr-col-md-6">
+                                    Age Flock
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-6 clr-col-md-6" size="30" type="text"
+                                    n="1" [(ngModel)]="ageOfTheFlock" name="ageOfTheFlock" readonly />
+
+                            </clr-input-container>
+                        </div>
+
+                        <div class="clr-col-md-6">
+                            <clr-input-container class="labelRapport">
+                                <label for="fcr" class="clr-control-label clr-col-xs-12-sm-6 clr-col-md-6">
+                                    Conversion ratio (FCR)
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-6 clr-col-md-6" size="30" type="text"
+                                    n="1" [(ngModel)]="fcr" name="fcr" readonly />
+
+                            </clr-input-container>
+
+                        </div>
+
+                    </div>
+
+                    <div class="formV form-visit2 clr-row">
+
+                        <div class="clr-col-md-6">
+
+                            <clr-input-container class="labelRapport">
+                                <label for="cycle" class="clr-control-label clr-col-xs-12-sm-6 clr-col-md-6">
+                                    Cycle
+                                    Duration
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-6 clr-col-md-6" size="30" type="text"
+                                    n="1" [(ngModel)]="flockReport.cycle" name="cycle" readonly />
+
+                            </clr-input-container>
+                        </div>
+
+                        <div class="clr-col-md-6">
+                            <clr-input-container class="labelRapport">
+                                <label for="startOfCycle" class="clr-control-label clr-col-xs-12-sm-6 clr-col-md-6">
+                                    Starting
+                                    birds
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-6 clr-col-md-6" size="30" type="text"
+                                    n="1" [(ngModel)]="flockReport.startOfCycle" name="startOfCycle" readonly />
+
+                            </clr-input-container>
+
+                        </div>
+
+                    </div>
+                    <div class="formV form-visit2 clr-row">
+
+                        <div class="clr-col-md-6">
+
+                            <clr-input-container class="labelRapport">
+                                <label for="endOfCycle" class="clr-control-label clr-col-xs-12-sm-6 clr-col-md-6">
+                                    End date
+                                    of
+                                    poultry production
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-6 clr-col-md-6" size="30" type="text"
+                                    n="1" [(ngModel)]="flockReport.endOfCycle" name="endOfCycle" readonly />
+
+                            </clr-input-container>
+                        </div>
+
+                        <div class="clr-col-md-6">
+                            <clr-input-container class="labelRapport">
+                                <label for="restFlockNumber" class="clr-control-label clr-col-xs-12-sm-6 clr-col-md-6">
+                                    Outgoing
+                                    birds
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-6 clr-col-md-6" size="30" type="text"
+                                    n="1" [(ngModel)]="flockReport.restFlockNumber" name="restFlockNumber" readonly />
+
+                            </clr-input-container>
+
+                        </div>
+
+                    </div>
+
+                    <div class="formV form-visit2 clr-row">
+
+                        <div class="clr-col-md-6">
+
+                            <clr-input-container class="labelRapport">
+                                <label for="totalMortality" class="clr-control-label clr-col-xs-12-sm-6 clr-col-md-6">
+                                    Total mortality
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-6 clr-col-md-6" size="30" type="text"
+                                    n="1" [(ngModel)]="flockReport.totalMortality" name="totalMortality" readonly />
+
+                            </clr-input-container>
+                        </div>
+                        <div class="clr-col-md-6">
+                            <clr-input-container class="labelRapport">
+                                <label for="totalWeight" class="clr-control-label clr-col-xs-12-sm-6 clr-col-md-6">
+                                    total Weight
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-6 clr-col-md-6" size="30" type="text"
+                                    n="1" [(ngModel)]="flockReport.totalWeight" name="totalWeight" readonly />
+
+                            </clr-input-container>
+                        </div>
+
+                    </div>
+
+                    <div class="formV form-visit2 clr-row">
+
+                        <div class="clr-col-md-6">
+
+                            <clr-input-container class="labelRapport">
+                                <label for="totalFeedConsumption"
+                                    class="clr-control-label clr-col-xs-12-sm-6 clr-col-md-6">
+                                    Total Feed Consumption
+                                </label>
+                                <input clrInput required class="clr-col-xs-12-sm-6 clr-col-md-6" size="30" type="text"
+                                    n="1" [(ngModel)]="flockReport.totalFeedConsumption" name="totalFeedConsumption"
+                                    readonly />
+
+                            </clr-input-container>
+                        </div>
+
+
+
+                    </div>
+
+                </form>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Feed </th>
+                            <th>Quantity ( kg)</th>
+                            <th>Quantity by bird ( kg )</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Starter feed </td>
+                            <td>{{totalStarterFeed}}</td>
+                            <td>{{starterFeedPerBird}}</td>
+
+                        </tr>
+                        <tr>
+                            <td>Grower feed </td>
+                            <td>{{totalGrowerFeed}}</td>
+                            <td>{{growerFeedPerBird}}</td>
+
+                        </tr>
+                        <tr>
+                            <td>Finisher feed </td>
+                            <td>{{totalFinisherFeed}}</td>
+                            <td>{{finisherFeedBird}}</td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </clr-modal>
+</form>

@@ -1,0 +1,149 @@
+<!-- Dialog for weight management -->
+<form clrForm class="clr-form clr-form-horizontal">
+    <clr-modal title="Weight" [(clrModalOpen)]="show" [clrModalStaticBackdrop]="true">
+
+        <h3 class="modal-title" style="color: #02675c;"><img src="../../../assets/feed.png" width="30" height="30">
+            Feed measurement
+        </h3>
+
+        <div class="modal-body">
+            <div class="container">
+                <div>
+                    <!-- form-visit part 1 -->
+                    <div class="formV clr-row">
+                        <clr-select-container class="clr-col-md-5 clr-row">
+                            <label for="farm" class="clr-control-label clr-col-md-6">Center </label>
+                            <select clrSelect name="farm" [(ngModel)]="weeklyFeed.centerId" name="farmID"
+                                (change)="getCenterId($event.target.value)"
+                                style="width: 199px;  background-color: #f5f5f5;">
+                                <option *ngFor="let center of centers " [value]='center.centerId'>
+                                    {{center.centerName}}
+                                </option>
+                            </select>
+                        </clr-select-container>
+                        <clr-select-container class="clr-col-md-5 clr-row">
+                            <label for="house" class="clr-control-label clr-col-md-8">House </label>
+                            <select clrSelect name="houseId" [(ngModel)]="weeklyFeed.houseId"
+                                style="width: 199px;     background-color: #f5f5f5;"
+                                (change)="getHouseId($event.target.value)">
+                                <option *ngFor="let house of houses" [value]='house.houseId'>
+                                    {{house.houseName}}
+                                </option>
+                            </select>
+                        </clr-select-container>
+                        <clr-select-container class="clr-col-md-2 clr-form-control clr-row">
+                            <label for="breed" class="clr-control-label clr-col-md-5">
+                                Flock
+                            </label>
+                            <select clrSelect name="flockID" [(ngModel)]="weeklyFeed.flockId"
+                                style="width: 105px;     background-color: #f5f5f5;    background-color: #f5f5f5;"
+                                (change)="getflockID($event.target.value)">
+                                <option *ngFor="let flock of flocks" [value]='flock.flockID'>
+                                    {{flock.flockName}}
+                                </option>
+                            </select>
+                        </clr-select-container>
+                    </div>
+
+                    <div class="formV clr-row">
+
+                        <clr-input-container class="formDate clr-form-control clr-col-md-5">
+                            <label for="breeddescription" class="clr-control-label clr-col-md-6">
+                                Breed </label>
+                            <input type="text" clrInput name="breeddescription" [(ngModel)]="breeddescription"
+                                class="clr-col-md-8" readonly />
+                        </clr-input-container>
+
+                        <clr-select-container class="clr-col-md-5 clr-row">
+                            <label for="week" class="clr-control-label clr-col-md-8">Week </label>
+                            <select clrSelect name="options" [(ngModel)]="weeklyFeed.week"
+                                style="    background-color: #f5f5f5;">
+                                <option value="7">7</option>
+                                <option value="14">14</option>
+                                <option value="21">21</option>
+                                <option value="28">28</option>
+                                <option value="35">35</option>
+                                <option value="42">42</option>
+                            </select>
+                        </clr-select-container>
+
+                    </div>
+                </div>
+
+                <!-- Table Feed -->
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Feed </th>
+                            <th>Quantity ( kg)</th>
+                            <th>Quantity by bird ( kg )</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Starter feed </td>
+                            <td> <input [(ngModel)]="weeklyFeed.totalStarterFeed" class="form-control"
+                                    style="  border: 0; background-color: #fafafa; padding: 6px;border-bottom: .5px solid #ececec;"
+                                    [ngModelOptions]="{standalone: true}" type="number"
+                                    (change)="calculStarterFeedPerBird($event.target.value)"
+                                    [value]='weeklyFeed.totalStarterFeed' /> </td>
+                            <td> <input [(ngModel)]="weeklyFeed.starterFeedPerBird" class="form-control"
+                                    style="  border: 0; background-color: #fafafa; padding: 6px;border-bottom: .5px solid #ececec;"
+                                    [ngModelOptions]="{standalone: true}" type="text" readonly /> </td>
+
+                        </tr>
+                        <tr>
+                            <td>Grower feed</td>
+                            <td><input [(ngModel)]="weeklyFeed.totalGrowerFeed" class="form-control"
+                                    style="  border: 0; background-color: #fafafa; padding: 6px;border-bottom: .5px solid #ececec;"
+                                    [ngModelOptions]="{standalone: true}" type="text"
+                                    (change)="calculGrowerFeedPerBird($event.target.value)"
+                                    [value]='weeklyFeed.totalGrowerFeed' /></td>
+                            <td><input [(ngModel)]="weeklyFeed.growerFeedPerBird" class="form-control"
+                                    style="  border: 0; background-color: #fafafa; padding: 6px;border-bottom: .5px solid #ececec;"
+                                    [ngModelOptions]="{standalone: true}" type="text" readonly /></td>
+
+                        </tr>
+                        <tr>
+                            <td>Grower feed</td>
+                            <td><input [(ngModel)]="weeklyFeed.totalFinisherFeed" class="form-control"
+                                    style="  border: 0; background-color: #fafafa; padding: 6px;border-bottom: .5px solid #ececec;"
+                                    [ngModelOptions]="{standalone: true}" type="text"
+                                    (change)="calculFinisherFeedBird($event.target.value)"
+                                    [value]='weeklyFeed.totalFinisherFeed' /></td>
+                            <td><input [(ngModel)]="weeklyFeed.finisherFeedBird" class="form-control"
+                                    style="  border: 0; background-color: #fafafa; padding: 6px;border-bottom: .5px solid #ececec;"
+                                    [ngModelOptions]="{standalone: true}" type="text" readonly /></td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <div class="clr-col-6">
+
+                <div class="alert alert-danger" role="alert" *ngIf="dangerMsg != null" style="margin-top: 0px;">
+                    <div class="alert-items">
+                        <div class="alert-item static">
+                            <div class="alert-icon-wrapper">
+                                <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                            </div>
+                            <span class="alert-text">
+                                {{dangerMsg}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-outline" (click)="show = false;clearForm()">Cancel</button>
+            <button type="button" class="btn btn-primary " [disabled]="disabledSave" (click)="save()">save</button>
+        </div>
+
+
+
+    </clr-modal>
+</form>

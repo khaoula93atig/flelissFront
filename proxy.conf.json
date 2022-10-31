@@ -1,0 +1,16 @@
+{
+    "/broilers": {
+        "target": "http://localhost:8084",
+        "secure": false,
+        "changeOrigin": true
+    },
+    "/farmApi/*": {
+        "target": "http://localhost:8084",
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug",
+        "pathRewrite": {
+            "^/farmApi": "http://localhost:8084"
+        }
+    }
+}

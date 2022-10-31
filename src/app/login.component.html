@@ -1,0 +1,38 @@
+<div class="login-wrapper">
+    <form class="login">
+
+        <section class="title">
+
+            <img src="../assets/logo.png" alt="" width="200">
+
+            <h6 class="hint">Developpé par Technology Trusted Advisors <a class="website"
+                    href='http://www.ttatunisia.com'><img src="../assets/urlweb.png" /></a></h6>
+        </section>
+        <div class="login-group">
+            <h5>
+                <clr-icon shape="info-circle" class="is-solid"></clr-icon> Utilisez votre login et mot de passe pour
+                acceder
+            </h5>
+
+            <clr-input-container>
+                <label class="clr-sr-only">Login</label>
+                <input type="text" name="username" clrInput placeholder="Login" [(ngModel)]="login" />
+            </clr-input-container>
+            <clr-password-container>
+                <label class="clr-sr-only">Mot de passe</label>
+                <input type="password" name="password" clrPassword placeholder="Mot de passe" [(ngModel)]="password" />
+            </clr-password-container>
+            <clr-checkbox-wrapper>
+                <label>Se souvenir de moi</label>
+                <input type="checkbox" name="rememberMe" clrCheckbox />
+            </clr-checkbox-wrapper>
+            <div class="error active" *ngIf='access_failed'>
+                Login et mot de passe invalides!
+            </div>
+
+            <button type="submit" class="btn btn-primary" (click)='authenticate()'>Acceder</button>
+
+
+        </div>
+    </form>
+</div>

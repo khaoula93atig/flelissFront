@@ -1,0 +1,30 @@
+<div class="main-container" style="background:#fff;">
+
+    <app-header></app-header>
+    <nav class="subnav" style="background-color: #f7f7f7;">
+        <ul class="nav">
+            <li class="nav-item">
+                <a routerLink="/Visits-audits/chick_reception" class="nav-link" routerLinkActive="active">
+                    <img class="iconimage" src="../../assets/Icones/list.png" alt="">
+                    Chick reception </a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/Visits-audits/brooding-check-list" class="nav-link" routerLinkActive="active">
+                    <img class="iconimage" src="../../assets/Icones/AjoutPlus.png" alt="">
+                    Brooding check list</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/Visits-audits/manager-audit-visit" class="nav-link" routerLinkActive="active">
+                    <img class="iconimage" src="../../assets/Icones/reports.png" alt="">
+                    Manager audit visit </a>
+            </li>
+
+        </ul>
+    </nav>
+    <div class="container">
+
+        <router-outlet></router-outlet>
+
+
+    </div>
+</div>

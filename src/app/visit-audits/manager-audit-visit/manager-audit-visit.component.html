@@ -1,0 +1,1069 @@
+<div class="container-box-add">
+    <form novalidate name="myForm" #myForm='ngForm'>
+        <h3 class="modal-title" style="padding: 15px 16px 8px; box-shadow: 1px 1px 8px #888888;">
+            <img src="../../../assets/managmn.png" width="35" style="margin-bottom: 8px;">
+            Breeding management
+        </h3>
+        <div class="modal-body" style=" padding: 10px 20px;">
+
+            <!-- /Spinner-->
+
+            <!-- Visual inspection  -->
+            <div class="clr-row">
+                <div class="clr-col">
+                    <div class="clr-row">
+                        <div class="clr-col-1"><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
+                                width="22" height="20"></div>
+                        <div class="left clr-col-1" style="font-weight: 600; color: #454545;">
+
+                            Date
+                        </div>
+                        <div class="radip-wrapper clr-col-10" style="display: flex">
+                            <div class="radip-wrapper" style="display: flex">
+                                <!-- Form table-->
+                                <clr-date-container class="formDate clr-col-md-12"
+                                    style="display: -webkit-inline-box;margin-top:0px !important">
+
+                                    <input type="date" clrDate name="dailyVisit" [(ngModel)]="visitDate" required>
+
+                                </clr-date-container>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clr-col">
+                    <div class="clr-row">
+                        <div class="clr-col-1"><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
+                                width="22" height="20"></div>
+                        <div class="left clr-col-1" style="font-weight: 600; color: #454545;">Center</div>
+                        <div class="radip-wrapper clr-col-10" style="display: flex">
+                            <div class="radip-wrapper" style="display: flex">
+                                <clr-select-container class="clr-col-md-12 "
+                                    style="display: -webkit-inline-box; margin-top:0px !important">
+
+                                    <select clrSelect name="farm" required name="centerId" [(ngModel)]="centerId"
+                                        style="width: 130px;" (change)="getCenterId($event.target.value)">
+                                        <option *ngFor="let center of centers" [value]='center.centerId'>
+                                            {{center.centerName}}
+                                        </option>
+                                    </select>
+                                </clr-select-container>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-check">
+
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/CleanBuild.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Cleanliness of buildings *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options1" required [value]='conform'
+                                [(ngModel)]="breedingManagement.cleanlinessBuild" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options1" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.cleanlinessBuild" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/SealBuild.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Absence of holes and sharp cracks in buildings *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options2" required [value]='conform'
+                                [(ngModel)]="breedingManagement.absenceHolesSharpCracks" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options2" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.absenceHolesSharpCracks" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/CleanTigh.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Condition of doors and windows at building level (cleanliness and tightness) *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options3" required [value]='conform'
+                                [(ngModel)]="breedingManagement.conditionDoorsWindowsBuilding" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options3" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.conditionDoorsWindowsBuilding" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/roof.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Sealing of the ceiling at building level *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options4" required [value]='conform'
+                                [(ngModel)]="breedingManagement.sealingCeilingBuilding" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options4" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.sealingCeilingBuilding" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/airQuality.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        No air leaks in buildings *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options5" required [value]='conform'
+                                [(ngModel)]="breedingManagement.airLeaksBuildings" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options5" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.airLeaksBuildings" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/hopper.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Cleanliness of hoppers *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options6" required [value]='conform'
+                                [(ngModel)]="breedingManagement.cleanlinessHoppers" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options6" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.cleanlinessHoppers" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/AvaiLocation.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Availability of wire mesh in the hopper *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options7" required [value]='conform'
+                                [(ngModel)]="availabilityWireMeshHopper" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options7" required [value]='noConform'
+                                [(ngModel)]="availabilityWireMeshHopper" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/CleanFeeder.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Cleanliness of feeders *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options8" required [value]='conform'
+                                [(ngModel)]="breedingManagement.cleanlinessFeeders" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options8" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.cleanlinessFeeders" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/hopper.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Sufficient number of feeders *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options9" required [value]='conform'
+                                [(ngModel)]="breedingManagement.sufficientNumberFeeders" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options9" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.sufficientNumberFeeders" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/hopperAdjus.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Adjustment of the height of the feeders according to age *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options10" required [value]='conform'
+                                [(ngModel)]="breedingManagement.adjustmentHeightFeedersAccording" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options10" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.adjustmentHeightFeedersAccording" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container" clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/Feeding.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        No unjustified feed leaks *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options11" required [value]='conform'
+                                [(ngModel)]="breedingManagement.unjustifiedFeedLeaks" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options11" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.unjustifiedFeedLeaks" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/Feeding.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Feed shape and size according to age *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options12" required [value]='conform'
+                                [(ngModel)]="breedingManagement.feedShapeSizeAccordingAge" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options12" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.feedShapeSizeAccordingAge" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/Feeding.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Feed transition achieved*</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options13" required [value]='conform'
+                                [(ngModel)]="breedingManagement.feedTransitionAchieved" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options13" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.feedTransitionAchieved" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/feedConsumption.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Recording of daily feed consumption *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options14" required [value]='conform'
+                                [(ngModel)]="breedingManagement.recordingDailFeedConsumption" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options14" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.recordingDailFeedConsumption" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/feedSuff.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Availability and sufficiency of feed *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options15" required [value]='conform'
+                                [(ngModel)]="breedingManagement.availabilitySufficiencyFeed" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options15" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.availabilitySufficiencyFeed" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/filters.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Cleanliness of tanks and filters *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options16" required [value]='conform'
+                                [(ngModel)]="breedingManagement.cleanlinessTanksFilters" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options16" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.cleanlinessTanksFilters" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/CleanNip.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Cleanliness of nipples *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options17" required [value]='conform'
+                                [(ngModel)]="breedingManagement.cleanlinessNipples" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options17" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.cleanlinessNipples" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/waterLines.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Correct operation of the watering lines *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options18" required [value]='conform'
+                                [(ngModel)]="breedingManagement.correctOperationWatering" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options18" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.correctOperationWatering" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/pressureReg.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Correct operation of pressure regulator *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options19" required [value]='conform'
+                                [(ngModel)]="breedingManagement.correctOperationPressureRegulator" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options19" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.correctOperationPressureRegulator" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/waterDrin.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Sufficient number of drinkers *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options20" required [value]='conform'
+                                [(ngModel)]="breedingManagement.sufficientNumberDrinkers" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options20" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.sufficientNumberDrinkers" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/adjDrin.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Adjustment of height of drinkers according to growth *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options21" required [value]='conform'
+                                [(ngModel)]="breedingManagement.adjustmentHeightDrinkersAccording" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options21" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.adjustmentHeightDrinkersAccording" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container" clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/waterLeaks.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        No water leaks *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options22" required [value]='conform'
+                                [(ngModel)]="breedingManagement.waterLeaks" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options22" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.waterLeaks" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/waterCons.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Recording of daily water consumption *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options23" required [value]='conform'
+                                [(ngModel)]="breedingManagement.recordingDailyWaterConsumption" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options23" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.recordingDailyWaterConsumption" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/waterMonit.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Monitoring the physico-chemical quality of drinking water *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options24" required [value]='conform'
+                                [(ngModel)]="breedingManagement.monitoringPhysicoDw" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options24" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.monitoringPhysicoDw" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/waterMicro.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Monitoring the bacteriological quality of drinking water *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options25" required [value]='conform'
+                                [(ngModel)]="breedingManagement.monitoringBacteriologicalDw" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options25" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.monitoringBacteriologicalDw" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/waterPump.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Dosing pump compliant *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options26" required [value]='conform'
+                                [(ngModel)]="breedingManagement.dosingPumpCompliant" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options26" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.dosingPumpCompliant" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/cleanBrooders.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Cleanliness of brooders *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options27" required [value]='conform'
+                                [(ngModel)]="breedingManagement.cleanlinessBrooders" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options27" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.cleanlinessBrooders" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/distBrooders.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Correct distribution of brooders *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options28" required [value]='conform'
+                                [(ngModel)]="breedingManagement.correctDistributionBrooders" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options28" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.correctDistributionBrooders" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/cleanBrooders.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Availability, location and functionality (thermometers and sonsors) *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options29" required [value]='conform'
+                                [(ngModel)]="breedingManagement.availLocationFunct" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options29" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.availLocationFunct" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/heaProgram.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Observance of the heating program *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options30" required [value]='conform'
+                                [(ngModel)]="breedingManagement.observanceHeatingProgram" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options30" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.observanceHeatingProgram" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/cooling.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        State of the cooling system (pad cooling) *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options31" required [value]='conform'
+                                [(ngModel)]="breedingManagement.stateCoolingSystem" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options31" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.stateCoolingSystem" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/cooliSystem.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Correct operation of the cooling system *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options32" required [value]='conform'
+                                [(ngModel)]="breedingManagement.correctOperationCoolingSystem" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options32" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.correctOperationCoolingSystem" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/fan.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Fans maintained *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options33" required [value]='conform'
+                                [(ngModel)]="breedingManagement.fansMaintained" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options33" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.fansMaintained" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/fanOpe.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Proper operation of fans *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options34" required [value]='conform'
+                                [(ngModel)]="breedingManagement.properOperationFans" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options34" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.properOperationFans" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/hatchingChick.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Hatch opening level *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options35" required [value]='conform'
+                                [(ngModel)]="breedingManagement.hatchOpeningLevel" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options35" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.hatchOpeningLevel" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/airQuality.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Observance of air flow *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options36" required [value]='conform'
+                                [(ngModel)]="breedingManagement.observanceAirFlow" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options36" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.observanceAirFlow" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/tempInside.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Daily recording of minimum and maximum temperatures *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options37" required [value]='conform'
+                                [(ngModel)]="breedingManagement.dailyRecordMinMaxTemp" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options37" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.dailyRecordMinMaxTemp" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/humidMes.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Recording of minimum and maximum daily humidity *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options38" required [value]='conform'
+                                [(ngModel)]="breedingManagement.recordMinmaxDailyHumidity" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options38" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.recordMinmaxDailyHumidity" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/humidity.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Breeding humidity conforms *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options39" required [value]='conform'
+                                [(ngModel)]="breedingManagement.breedingHumidityConfor" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options39" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.breedingHumidityConfor" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/energySaving.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Energy saving lamps *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options40" required [value]='conform'
+                                [(ngModel)]="breedingManagement.energySavingLamps" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options40" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.energySavingLamps" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/nbrLamps.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Number of working lamps *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options41" required [value]='conform'
+                                [(ngModel)]="breedingManagement.numberWorkingLamps" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options41" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.numberWorkingLamps" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/nbrLamps.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Adequate distribution of lamps *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options42" required [value]='conform'
+                                [(ngModel)]="breedingManagement.adequateDistriLamps" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options42" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.adequateDistriLamps" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/nbrLamps.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Litter quality *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options43" required [value]='conform'
+                                [(ngModel)]="breedingManagement.litterQuality" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options43" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.litterQuality" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/thermostat.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Mechanical thermostat and alarm functional *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options44" required [value]='conform'
+                                [(ngModel)]="breedingManagement.mechanicalThermostatAlarmFunct" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options44" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.mechanicalThermostatAlarmFunct" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/parameter.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Functional technical parameter display system *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options45" required [value]='conform'
+                                [(ngModel)]="breedingManagement.functionalTechParaDisplaySys" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options45" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.functionalTechParaDisplaySys" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/CleanNip.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Number of birds per cage or square meter *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options46" required [value]='conform'
+                                [(ngModel)]="breedingManagement.numberBirdCageSquareMeter" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options46" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.numberBirdCageSquareMeter" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/isolAnim.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Isolation of sick sick animals *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options47" required [value]='conform'
+                                [(ngModel)]="breedingManagement.isolationSickSickAnimals" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options47" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.isolationSickSickAnimals" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/weighing.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Compliant weighing method *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options48" required [value]='conform'
+                                [(ngModel)]="breedingManagement.compliantWeighingMethod" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options48" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.compliantWeighingMethod" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/Sampling.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Sampling compliant *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options49" required [value]='conform'
+                                [(ngModel)]="breedingManagement.samplingCompliant" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options49" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.samplingCompliant" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/weigMesure.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Weighing recording *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options50" required [value]='conform'
+                                [(ngModel)]="breedingManagement.weighingRecording" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options50" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.weighingRecording" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/evolution.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Evolution of the weight compared to standard *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options51" required [value]='conform'
+                                [(ngModel)]="breedingManagement.evolutionWeightComparedStandard" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options51" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.evolutionWeightComparedStandard" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/vaccination.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Compliance with the vaccination program *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options52" required [value]='conform'
+                                [(ngModel)]="breedingManagement.complianceVaccinProgram" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options52" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.complianceVaccinProgram" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/vaccination6.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Monitoring of vaccination age *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options53" required [value]='conform'
+                                [(ngModel)]="breedingManagement.monitoringVaccinationAge" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options53" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.monitoringVaccinationAge" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/vaccinationControl.png" class="imgIcon" width="22"
+                        height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Vaccine dose control *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options54" required [value]='conform'
+                                [(ngModel)]="breedingManagement.vaccineDoseControl" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options54" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.vaccineDoseControl" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+                <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                    <img src="../../../assets/Icones audit/techPerf.png" class="imgIcon" width="22" height="20">
+                    <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-9">
+                        Technical performance *</label>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options55" required [value]='conform'
+                                [(ngModel)]="breedingManagement.technicalPerformance" />
+                            <label>Conform</label>
+                        </clr-radio-wrapper>
+                        <clr-radio-wrapper>
+                            <input type="radio" clrRadio name="options55" required [value]='noConform'
+                                [(ngModel)]="breedingManagement.technicalPerformance" />
+                            <label>No Conform</label>
+                        </clr-radio-wrapper>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- /End Visual inspection -->
+
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button type="button" class="btn btn-outline">Refaire</button>
+            <button type="submit" class="btn btn-primary" (click)="save()">Sauvegarder</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,229 @@
+<div class="main-container" style="background:#fff;">
+    <div class="container">
+        <div class="content-container">
+            <h2>
+                <img src="../../../assets/farmicon.png" width="48" height="48"
+                    style="margin-bottom:12px; margin-right: 10px;">
+                Centers
+            </h2>
+        </div>
+        <!-- Actions Button -->
+        <div class="addbtn">
+
+            <button (click)="modal.open()" class="btn btn-primary">
+                <clr-icon shape="add-text"></clr-icon>
+                Add Center
+            </button>
+
+            <app-new-center></app-new-center>
+
+        </div>
+        <!-- /Actions Buttons -->
+        <div class="content-area">
+            <clr-datagrid class="table_view " [clrDgLoading]="loading" style="width:100%">
+                <clr-dg-column>Center Name</clr-dg-column>
+                <clr-dg-column>Address</clr-dg-column>
+                <clr-dg-column>Zone</clr-dg-column>
+                <clr-dg-column>Number of Houses</clr-dg-column>
+                <clr-dg-column>Production Density</clr-dg-column>
+                <clr-dg-column>Breed</clr-dg-column>
+                <clr-dg-column>Center Manager Name</clr-dg-column>
+                <clr-dg-column>Center Manager Email</clr-dg-column>
+                <clr-dg-column>Center Manager Tel</clr-dg-column>
+                <clr-dg-column>Nutrition Supervisor </clr-dg-column>
+                <clr-dg-column>Sanitary Supervisor </clr-dg-column>
+                <clr-dg-column>Brids Number Per House</clr-dg-column>
+                <clr-dg-column>Center Multiage</clr-dg-column>
+                <clr-dg-column>Average Mortality Per Flock </clr-dg-column>
+                <clr-dg-column>Average Water Consumption</clr-dg-column>
+                <clr-dg-column>Average Feed Consumption</clr-dg-column>
+                <clr-dg-column>Egg Production</clr-dg-column>
+                <clr-dg-column>Average Fcr</clr-dg-column>
+                <clr-dg-column>Main Diseases</clr-dg-column>
+                <clr-dg-column>Species</clr-dg-column>
+                <!-- ... -->
+                <clr-dg-row *clrDgItems="let center of centers" [clrDgItem]="center" class="tablecolor">
+                    <clr-dg-cell> {{center.centerName}}</clr-dg-cell>
+                    <clr-dg-cell style="width: 180px;"> {{center.address}} </clr-dg-cell>
+                    <clr-dg-cell style="width: 180px;"> {{center.zone}} </clr-dg-cell>
+                    <clr-dg-cell> {{center.housesNumber}}</clr-dg-cell>
+                    <clr-dg-cell> {{center.productionDensity}}</clr-dg-cell>
+                    <clr-dg-cell> {{center.breed}} </clr-dg-cell>
+                    <clr-dg-cell> {{center.centerManagerName}} </clr-dg-cell>
+                    <clr-dg-cell> {{center.centerManagerEmail}} </clr-dg-cell>
+                    <clr-dg-cell> {{center.centerManagerTel}} </clr-dg-cell>
+                    <clr-dg-cell> {{center.nutritionSupervisor}} </clr-dg-cell>
+                    <clr-dg-cell> {{center.sanitarySupervisor}} </clr-dg-cell>
+                    <clr-dg-cell> {{center.bridsNumberPerHouse}} </clr-dg-cell>
+                    <clr-dg-cell> {{center.centerMultiage}} </clr-dg-cell>
+                    <clr-dg-cell> {{center.avMortalityPerFlock}} </clr-dg-cell>
+                    <clr-dg-cell> {{center.avWaterConsumption}} </clr-dg-cell>
+                    <clr-dg-cell> {{center.avFeedConsumption}} </clr-dg-cell>
+                    <clr-dg-cell> {{center.eggProduction}} </clr-dg-cell>
+                    <clr-dg-cell> {{center.avFcr}} </clr-dg-cell>
+
+                    <clr-dg-cell> {{center.mainDiseases}} </clr-dg-cell>
+                    <clr-dg-cell> {{center.species}} </clr-dg-cell>
+
+
+
+                </clr-dg-row>
+
+                <clr-dg-footer>
+                    <clr-dg-pagination #pagination [clrDgPageSize]="15">
+                        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+                        of {{pagination.totalItems}} farms
+                    </clr-dg-pagination>
+                </clr-dg-footer>
+
+                <clr-dg-detail *clrIfDetail="let detail" class="details">
+                    <clr-dg-detail-header>
+
+                        <clr-icon shape="home" size="30"></clr-icon>
+                        <span class="internal-title"> {{detail.centerName}}</span>
+                    </clr-dg-detail-header>
+                    <clr-dg-detail-body>
+                        <div class="separator"></div>
+                        <form clrForm>
+
+                            <clr-input-container>
+                                <label>Address: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.address" name="address" size="35" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label>Zone: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.zone" name="zone" size="35" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label>Number of Houses: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.housesNumber" name="housesNumber"
+                                    size="35" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label>Production Density: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.productionDensity"
+                                    name="productionDensity" size="35" />
+                            </clr-input-container>
+
+                            <clr-input-container>
+                                <label>Breed: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.breed" name="breed" size="35" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label>Center Manager Name: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.centerManagerName"
+                                    name="centerManagerName" size="35" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label>Center Manager Email: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.centerManagerEmail"
+                                    name="centerManagerEmail" size="35" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label> Center Manager Tel: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.centerManagerTel"
+                                    name="centerManagerTel" size="35" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label> Nutrition Supervisor: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.nutritionSupervisor"
+                                    name="nutritionSupervisor" size="35" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label> Sanitary Supervisor: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.sanitarySupervisor"
+                                    name="sanitarySupervisor" size="35" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label>Brids Number Per House: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.bridsNumberPerHouse"
+                                    name="bridsNumberPerHouse" size="35" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label>Center Multiage: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.centerMultiage" name="centerMultiage"
+                                    size="35" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label>Average Mortality Per Flock: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.avMortalityPerFlock"
+                                    name="avMortalityPerFlock" size="35" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label>Average Water Consumption: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.avWaterConsumption"
+                                    name="avWaterConsumption" size="35" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label>Average Feed Consumption: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.avFeedConsumption"
+                                    name="avFeedConsumption" size="35" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label>Egg Production: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.eggProduction" name="eggProduction"
+                                    size="35" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label>Average Fcr: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.avFcr" name="avFcr" size="35" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label>Main Diseases: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.mainDiseases" name="mainDiseases"
+                                    size="35" />
+                            </clr-input-container>
+                            <clr-input-container>
+                                <label>Species: </label>
+                                <input clrInput type="text" [(ngModel)]="detail.species" name="species" size="35" />
+                            </clr-input-container>
+                        </form>
+                        <br>
+                        <button class="btn btn-primary" (click)="sauvegarder(detail);">Save</button>
+                        <div class="clr-col-6">
+                            <div class="alert alert-succes" role="alert" *ngIf="succesMsg != null"
+                                style="margin-top: 0px;">
+                                <div class="alert-items">
+                                    <div class="alert-item static">
+                                        <div class="alert-icon-wrapper">
+                                            <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                                        </div>
+                                        <span class="alert-text">
+                                            {{succesMsg}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-danger" role="alert" *ngIf="dangerMsg != null"
+                                style="margin-top: 0px;">
+                                <div class="alert-items">
+                                    <div class="alert-item static">
+                                        <div class="alert-icon-wrapper">
+                                            <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+                                        </div>
+                                        <span class="alert-text">
+                                            {{dangerMsg}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </clr-dg-detail-body>
+                </clr-dg-detail>
+                <!-- ... -->
+            </clr-datagrid>
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+    </div>
+</div>

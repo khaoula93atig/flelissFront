@@ -1,0 +1,1319 @@
+<form novalidate name="myForm" #myForm='ngForm' (ngSubmit)="onSubmit();">
+    <clr-modal [(clrModalOpen)]="show">
+        <h3 class="modal-title" style="color: #02675c;">
+            <img src="../../../assets/Icones audit/BreedManag.png" width="34" style="margin-right: 10px;">
+            Breeding management
+        </h3>
+        <div class="modal-body">
+            <!-- /Spinner-->
+            <div class="form ">
+                <div class="form-visitA">
+                    <!-- form-visit date -->
+                    <div class="formVdate form-visit0 ">
+                        <clr-date-container class="formDate clr-col-md-6">
+                            <label for="dailyVisit" class="clr-control-label clr-col-md-4" style="padding: 0;">
+                                Visit date * </label>
+                            <input type="date" clrDate name="dailyVisit" class="clr-col-md-7"
+                                style="width: 230px; padding: 0;" [(ngModel)]="visitDate">
+                        </clr-date-container>
+                    </div>
+                    <!-- form-visit 1 -->
+                    <div class="formV form-visit1 clr-row">
+                        <clr-select-container class="clr-col-md-5 ">
+                            <label for="farm" class="clr-control-label clr-col-md-6">Farm *</label>
+                            <select clrSelect name="farm" required [(ngModel)]="farmID" name="farmID"
+                                (change)="getFarmId($event.target.value)" style="width: 105px;">
+                                <option *ngFor="let farm of farms" [value]='farm.farmId'>
+                                    {{farm.zone}}
+                                </option>
+                            </select>
+                        </clr-select-container>
+                        <clr-select-container class="clr-col-md-7 ">
+                            <label for="house" class="clr-control-label clr-col-md-4">House *</label>
+                            <select clrSelect name="houseId" [(ngModel)]="houseId" required style="width: 186px;"
+                                (change)="getHouseId($event.target.value)">
+                                <option *ngFor="let house of houses" [value]='house.houseId'>
+                                    {{house.farm.name}}-{{gethouse_id(house.houseId)}}
+                                </option>
+                            </select>
+                        </clr-select-container>
+                    </div>
+                    <!-- form-visit 2 -->
+                    <div class="formV form-visit2 clr-row">
+                        <clr-select-container class="clr-col-md-5 clr-form-control ">
+                            <label for="breed" class="clr-control-label clr-col-md-6">
+                                Flock *
+                            </label>
+                            <select clrSelect name="flockID" [(ngModel)]="flockID" required style="width: 105px;"
+                                (change)="getflockID($event.target.value)">
+                                <option *ngFor="let flock of flocks" [value]='flock.flockID'>
+                                    {{flock.startOfCycle}}
+                                </option>
+                            </select>
+                        </clr-select-container>
+                        <clr-input-container class="formDate clr-form-control clr-col-md-7">
+                            <label for="breeddescription" class="clr-control-label clr-col-md-4">
+                                Breed </label>
+                            <input type="text" clrInput name="breeddescription" [(ngModel)]="breeddescription"
+                                class="clr-col-md-8" readonly style="padding-left: 0;" />
+                        </clr-input-container>
+                    </div>
+                    <!-- form-visit 3 -->
+                    <div class="formV form-visit2 clr-row">
+                        <clr-input-container class="formDate clr-form-control clr-col-md-5">
+                            <label for="breeddescription" class="clr-control-label clr-col-md-6">
+                                Age of the flock </label>
+                            <input clrInput required size="12" type="text" [(ngModel)]="ageOfTheFlock" name="ageFlock"
+                                readonly />
+                        </clr-input-container>
+                        <clr-input-container class="formDate clr-form-control clr-col-md-7">
+                            <label for="birdsNumber" class="clr-control-label clr-col-md-4" style="margin-right:4px">
+                                Birds number </label>
+                            <input clrInput required size="12" type="text" [(ngModel)]="birdsNumber" name="birdsNumber"
+                                readonly />
+                        </clr-input-container>
+                    </div>
+                </div>
+
+
+                <div class="form-check">
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/CleanBuild.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Cleanliness of buildings *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit1($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options1" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit1($event.target.value)">
+                                <input type="radio" clrRadio name="options1" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/holeSharp.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Absence of holes and sharp cracks in buildings *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit2($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options2" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit2($event.target.value)">
+                                <input type="radio" clrRadio name="options2" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/CleanTigh.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Condition of doors and windows at building level (cleanliness and tightness) *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit3($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options3" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit3($event.target.value)">
+                                <input type="radio" clrRadio name="options3" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/SealBuild.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Sealing of the ceiling at building level *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit4($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options4" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit4($event.target.value)">
+                                <input type="radio" clrRadio name="options4" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/airQuality.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            No air leaks in buildings *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit5($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options5" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit5($event.target.value)">
+                                <input type="radio" clrRadio name="options5" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/hopper.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Cleanliness of hoppers *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit6($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options6" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit6($event.target.value)">
+                                <input type="radio" clrRadio name="options6" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/AvaiLocation.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Availability of wire mesh in the hopper *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit7($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options7" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit7($event.target.value)">
+                                <input type="radio" clrRadio name="options7" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/CleanFeeder.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Cleanliness of feeders *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit8($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options8" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit8($event.target.value)">
+                                <input type="radio" clrRadio name="options8" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/hopper.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Sufficient number of feeders *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit9($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options9" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit9($event.target.value)">
+                                <input type="radio" clrRadio name="options9" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/hopperAdjus.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Adjustment of the height of the feeders according to age *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit10($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options10" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit10($event.target.value)">
+                                <input type="radio" clrRadio name="options10" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container" clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/Feeding.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            No unjustified feed leaks *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit11($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options11" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit11($event.target.value)">
+                                <input type="radio" clrRadio name="options11" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/Feeding.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Food shape and size according to age *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit12($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options12" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit12($event.target.value)">
+                                <input type="radio" clrRadio name="options12" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/Feeding.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Feed transition achieved*</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit13($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options13" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit13($event.target.value)">
+                                <input type="radio" clrRadio name="options13" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/feedConsumption.png" class="imgIcon" width="22"
+                            height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Recording of daily feed consumption *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit14($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options14" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit14($event.target.value)">
+                                <input type="radio" clrRadio name="options14" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/feedSuff.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Availability and sufficiency of feed *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit15($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options15" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit15($event.target.value)">
+                                <input type="radio" clrRadio name="options15" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/filters.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Cleanliness of tanks and filters *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit16($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options16" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit16($event.target.value)">
+                                <input type="radio" clrRadio name="options16" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/CleanNip.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Cleanliness of nipples *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit17($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options17" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit17($event.target.value)">
+                                <input type="radio" clrRadio name="options17" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/waterLines.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Correct operation of the watering lines *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit18($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options18" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit18($event.target.value)">
+                                <input type="radio" clrRadio name="options18" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/pressureReg.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Correct operation of pressure regulator *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit19($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options19" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit19($event.target.value)">
+                                <input type="radio" clrRadio name="options19" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/waterDrin.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Sufficient number of drinkers *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit20($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options20" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit20($event.target.value)">
+                                <input type="radio" clrRadio name="options20" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/adjDrin.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Adjustment of height of drinkers according to growth *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit21($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options21" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit21($event.target.value)">
+                                <input type="radio" clrRadio name="options21" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container" clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/waterLeaks.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            No water leaks *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit22($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options22" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit22($event.target.value)">
+                                <input type="radio" clrRadio name="options22" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/waterCons.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Recording of daily water consumption *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit23($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options23" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit23($event.target.value)">
+                                <input type="radio" clrRadio name="options23" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/waterMonit.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Monitoring the physico-chemical quality of drinking water *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit24($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options24" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit24($event.target.value)">
+                                <input type="radio" clrRadio name="options24" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/waterMicro.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Monitoring the bacteriological quality of drinking water *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit25($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options25" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit25($event.target.value)">
+                                <input type="radio" clrRadio name="options25" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/waterPump.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Dosing pump compliant *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit26($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options26" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit26($event.target.value)">
+                                <input type="radio" clrRadio name="options26" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/cleanBrooders.png" class="imgIcon" width="22"
+                            height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Cleanliness of brooders *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit27($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options27" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit27($event.target.value)">
+                                <input type="radio" clrRadio name="options27" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/distBrooders.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Correct distribution of brooders *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit28($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options28" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit28($event.target.value)">
+                                <input type="radio" clrRadio name="options28" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/cleanBrooders.png" class="imgIcon" width="22"
+                            height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Availability, location and functionality (thermometers and sonsors) *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit29($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options29" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit29($event.target.value)">
+                                <input type="radio" clrRadio name="options29" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/heaProgram.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Observance of the heating program *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit30($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options30" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit30($event.target.value)">
+                                <input type="radio" clrRadio name="options30" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/cooling.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            State of the cooling system (pad cooling) *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit31($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options31" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit31($event.target.value)">
+                                <input type="radio" clrRadio name="options31" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/cooliSystem.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Correct operation of the cooling system *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit32($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options32" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit32($event.target.value)">
+                                <input type="radio" clrRadio name="options32" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/fan.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Fans maintained *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit33($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options33" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit33($event.target.value)">
+                                <input type="radio" clrRadio name="options33" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/fanOpe.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Proper operation of fans *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit34($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options34" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit34($event.target.value)">
+                                <input type="radio" clrRadio name="options34" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/hatchingChick.png" class="imgIcon" width="22"
+                            height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Hatch opening level 6 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit35($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options35" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit35($event.target.value)">
+                                <input type="radio" clrRadio name="options35" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/airQuality.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Observance of air flow 6 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit36($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options36" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit36($event.target.value)">
+                                <input type="radio" clrRadio name="options36" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/tempInside.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Daily recording of minimum and maximum temperatures 20 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit37($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options37" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit37($event.target.value)">
+                                <input type="radio" clrRadio name="options37" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/tempHot.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Aging temperature conforms 40 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit38($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options38" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit38($event.target.value)">
+                                <input type="radio" clrRadio name="options38" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/humidMes.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Recording of minimum and maximum daily humidity 20 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit39($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options39" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit39($event.target.value)">
+                                <input type="radio" clrRadio name="options39" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/humidity.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Breeding humidity conforms 40 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit40($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options40" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit40($event.target.value)">
+                                <input type="radio" clrRadio name="options40" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/energySaving.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Energy saving lamps 10 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit41($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options41" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit41($event.target.value)">
+                                <input type="radio" clrRadio name="options41" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/nbrLamps.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Number of working lamps 40 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit42($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options42" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit42($event.target.value)">
+                                <input type="radio" clrRadio name="options42" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/nbrLamps.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Adequate distribution of lamps 20 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit43($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options43" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit43($event.target.value)">
+                                <input type="radio" clrRadio name="options43" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/height.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Compliant pitch height (pullets) 10 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit44($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options44" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit44($event.target.value)">
+                                <input type="radio" clrRadio name="options44" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/cleanBrooders.png" class="imgIcon" width="22"
+                            height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Compliance with the lighting program 50 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit45($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options45" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit45($event.target.value)">
+                                <input type="radio" clrRadio name="options45" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/pullet.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Compliant litter (pullets) 60 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit46($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options46" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit46($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options46" required [value]='false' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/thermostat.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Mechanical thermostat and alarm functional 6 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit47($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options47" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit47($event.target.value)">
+                                <input type="radio" clrRadio name="options47" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/parameter.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Functional technical parameter display system 30 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit48($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options48" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit48($event.target.value)">
+                                <input type="radio" clrRadio name="options48" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/CleanNip.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Number of hens per cage 40 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit49($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options49" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit49($event.target.value)">
+                                <input type="radio" clrRadio name="options49" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/battery.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Battery layout 20 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit50($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options50" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit50($event.target.value)">
+                                <input type="radio" clrRadio name="options50" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/descender.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Clean automatic descender 40 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit51($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options51" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit51($event.target.value)">
+                                <input type="radio" clrRadio name="options51" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/descender2.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Functional automatic descender 20 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit52($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options52" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit52($event.target.value)">
+                                <input type="radio" clrRadio name="options52" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/conveyorClean.png" class="imgIcon" width="22"
+                            height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Clean egg conveyor belt 40 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit53($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options53" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit53($event.target.value)">
+                                <input type="radio" clrRadio name="options53" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/eggs.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Functional egg evacuation mat 20 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit54($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options54" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit54($event.target.value)">
+                                <input type="radio" clrRadio name="options54" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/feedTrolley.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Functional feed trolleys and homogeneous distribution 60 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit55($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options55" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit55($event.target.value)">
+                                <input type="radio" clrRadio name="options55" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/heavilyEggs.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Disposal of heavily soiled, shell-free eggs 40 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit56($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options56" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit56($event.target.value)">
+                                <input type="radio" clrRadio name="options56" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/collectEggs.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            The round of collecting eggs completed 40 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit57($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options57" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit57($event.target.value)">
+                                <input type="radio" clrRadio name="options57" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/cleanBrooders.png" class="imgIcon" width="22"
+                            height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Existing and functional manure scraper 30 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit58($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options58" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit58($event.target.value)">
+                                <input type="radio" clrRadio name="options58" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/Cable.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Existing manure scraper cable 30 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit59($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options59" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit59($event.target.value)">
+                                <input type="radio" clrRadio name="options59" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/noInsect.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            No flies and mealworms in building 40 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit60($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options60" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit60($event.target.value)">
+                                <input type="radio" clrRadio name="options60" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/CleanTigh.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Clean food chain and homogeneous distribution 20 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit61($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options61" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit61($event.target.value)">
+                                <input type="radio" clrRadio name="options61" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/Feeding.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Installation of feeding belts (pullets) 20 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit62($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options62" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit62($event.target.value)">
+                                <input type="radio" clrRadio name="options62" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/control.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Controlled and compliant crop-leg test (pullets) 10 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit63($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options63" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit63($event.target.value)">
+                                <input type="radio" clrRadio name="options63" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/control.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Control of behavior and distribution of pullets / chicks 4 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit64($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options64" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit64($event.target.value)">
+                                <input type="radio" clrRadio name="options64" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/CleanNip.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            State of hens 30 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit65($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options65" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit65($event.target.value)">
+                                <input type="radio" clrRadio name="options65" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/Manure.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Manure caches clean, maintained 60 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit66($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options66" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit66($event.target.value)">
+                                <input type="radio" clrRadio name="options66" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/isolAnim.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Isolation of sick sick animals 40 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit67($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options67" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit67($event.target.value)">
+                                <input type="radio" clrRadio name="options67" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/cropse.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            No corpses in the corridors 40 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit68($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options68" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit68($event.target.value)">
+                                <input type="radio" clrRadio name="options68" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/weighing.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Compliant weighing method 10 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit69($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options69" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit69($event.target.value)">
+                                <input type="radio" clrRadio name="options69" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/Sampling.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Sampling compliant 10 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit70($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options70" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit70($event.target.value)">
+                                <input type="radio" clrRadio name="options70" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/weigMesure.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Weighing recording 20 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit71($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options71" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit71($event.target.value)">
+                                <input type="radio" clrRadio name="options71" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/evolution.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Evolution of the weight compared to standard 10 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit72($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options72" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit72($event.target.value)">
+                                <input type="radio" clrRadio name="options72" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/vaccination.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Compliance with the vaccination program 6 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit73($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options73" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit73($event.target.value)">
+                                <input type="radio" clrRadio name="options73" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/vaccination6.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Monitoring of vaccination age 6 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit74($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options74" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit74($event.target.value)">
+                                <input type="radio" clrRadio name="options74" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/vaccinationControl.png" class="imgIcon" width="22"
+                            height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Vaccine dose control 6 *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit75($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options75" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit75($event.target.value)">
+                                <input type="radio" clrRadio name="options75" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+                    <div class="clr-radio-container " clrInline style="display: -webkit-box; margin-top: 30px;">
+                        <img src="../../../assets/Icones audit/techPerf.png" class="imgIcon" width="22" height="20">
+                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            Technical performance *</label>
+                        <div class="radip-wrapper" style="display: flex">
+                            <clr-radio-wrapper (change)="getAudit76($event.target.value)" style="margin-right: 20px;">
+                                <input type="radio" clrRadio name="options76" required [value]='true' />
+                                <label>Yes</label>
+                            </clr-radio-wrapper>
+                            <clr-radio-wrapper (change)="getAudit76($event.target.value)">
+                                <input type="radio" clrRadio name="options76" required [value]='false' />
+                                <label>No</label>
+                            </clr-radio-wrapper>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" (click)="close()">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="submit();">save</button>
+            </div>
+        </div>
+    </clr-modal>
+</form>

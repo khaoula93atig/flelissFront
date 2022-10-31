@@ -1,0 +1,73 @@
+<form novalidate name="myForm" #myForm='ngForm' (ngSubmit)="onSubmit();">
+    <clr-modal [(clrModalOpen)]="show">
+        <h3 class="modal-title" style="color: #02675c;">
+            <img src="../../../assets/AddUser.png" width="44" style="margin-bottom: 8px;margin-right: 10px;">
+            Add User
+        </h3>
+        <div class="modal-body" style="margin-top: -4%;">
+            <!-- /Spinner-->
+            <div class="form clr-col-12" style=" display: inline-block;">
+                <clr-select-container>
+                    <label class="clr-control-label clr-col-xs-6-sm-6  clr-col-md-6">Farm * </label>
+                    <select clrSelect required [(ngModel)]="farmID" name="farmID" class="clr-col-xs-6-sm-6 clr-col-md-6"
+                        (change)="getFarmId($event.target.value)" style="width: 160px;">
+                        <option *ngFor="let farm of farms" [value]='farm.farmId'>
+                            {{farm.zone}}-{{farm.farmId}}
+                        </option>
+                    </select>
+                </clr-select-container>
+
+                <clr-select-container>
+                    <label class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">Role * </label>
+                    <select clrSelect [(ngModel)]="role" name="role" required class="clr-col-xs-6-sm-6  clr-col-md-12"
+                        (change)="getRole($event.target.value)" style="width: 160px;">
+                        <option *ngFor="let role of roles" [value]='role.description'>
+                            {{role.description}}
+                        </option>
+                    </select>
+                </clr-select-container>
+
+                <clr-input-container>
+                    <label for="name" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">Name * </label>
+                    <input clrInput required class="clr-col-xs-6-sm-6 clr-col-md-6" size="20" type="text"
+                        [(ngModel)]="name" name="name" />
+                </clr-input-container>
+
+                <clr-input-container>
+                    <label for="name" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">User Name * </label>
+                    <input clrInput required class="clr-col-xs-6-sm-6 clr-col-md-6" size="20" type="text"
+                        [(ngModel)]="username" name="username" />
+                </clr-input-container>
+
+                <clr-input-container>
+                    <label for="password" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">Password * </label>
+                    <input clrInput required class="clr-col-xs-6-sm-6 clr-col-md-6" size="20" type="text"
+                        [(ngModel)]="password" type="password" name="password" minlength="8" />
+                </clr-input-container>
+
+                <clr-input-container>
+                    <label for="job" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">Job * </label>
+                    <input clrInput required class="clr-col-xs-6-sm-6 clr-col-md-6" size="20" type="text"
+                        [(ngModel)]="job" name="job" />
+                </clr-input-container>
+
+                <clr-input-container>
+                    <label for="email" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">Email * </label>
+                    <input clrInput required class="clr-col-xs-6-sm-6 clr-col-md-6" size="20" type="text"
+                        [(ngModel)]="email" name="email" />
+                </clr-input-container>
+
+                <clr-input-container>
+                    <label for="telNumber" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6"> Phone Number *
+                    </label>
+                    <input clrInput required class="clr-col-xs-6-sm-6 clr-col-md-6" size="20" type="text"
+                        [(ngModel)]="telNumber" name="telNumber" />
+                </clr-input-container>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline" (click)="close()">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)='submit();show = false;'>save</button>
+        </div>
+    </clr-modal>
+</form>
