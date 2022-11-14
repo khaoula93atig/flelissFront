@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common'
 import { Component, OnInit } from '@angular/core'
 import { Toast, ToastrService } from 'ngx-toastr'
 import { VisitAuditsService } from 'src/app/services/visit-audits.service'
@@ -28,6 +29,7 @@ export class ManagerAuditVisitComponent implements OnInit {
     private HouseService: HouseService,
     private visitService: VisitAuditsService,
     private toaster: ToastrService,
+    private datepipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -54,11 +56,12 @@ export class ManagerAuditVisitComponent implements OnInit {
     )
     this.breedingManagement = new BreedingManagement()
   }
-  save() {
+  save(myForm) {
     console.log(this.breedingManagement)
     this.calculScore()
-    let visdate = new Date(this.visitDate)
-    this.breedingManagement.visitDate = visdate
+    let latest_date =this.datepipe.transform(this.visitDate, 'yyyy-MM-dd');
+    //let visdate = new Date(this.visitDate)
+    this.breedingManagement.visitDate = new Date(latest_date)
     this.breedingManagement.centerId = this.centerId
     this.breedingManagement.farmId = this.farmId
     this.breedingManagement.username = this.username
@@ -75,16 +78,15 @@ export class ManagerAuditVisitComponent implements OnInit {
       .subscribe((data) => {
         console.log('data' + data['response'])
         if (data['response'] == 'OK') {
+          myForm.reset()
           this.toaster.success('Success', 'ajout avec succés')
         } else {
           this.toaster.error('Error', 'operation echouée')
         }
+        myForm.reset()
 
-        setTimeout((_) => (this.loading = false))
       })
-    this.breedingManagement = new BreedingManagement()
-    this.visitDate = null
-    this.centerId = null
+    
   }
   calculScore() {
     this.score = 0

@@ -101,6 +101,7 @@ export class ListVisitComponent implements OnInit {
     this.subs.add(
       this.VisitService.getConsultingvisitID(this.visitId).subscribe(
         (visittasks) => {
+          console.log(visittasks)
           this.visittasks.forEach((element) => {})
           for (let i = 0; i < visittasks.length; i++) {
             if (visittasks[i].taskId == 1) {

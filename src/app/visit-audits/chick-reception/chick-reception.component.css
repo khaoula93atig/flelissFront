@@ -5,3 +5,15 @@
     position: relative;
     border-radius: 7px;
 }
+.alert-bad {
+    color: red;
+    display: inline-block;
+    animation: pulse 0.5s infinite ease-in-out;
+  }
+  
+  @keyframes pulse {
+    to {
+      transform: scale(0.8);
+      opacity: 0.5;
+    }
+  }

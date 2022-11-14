@@ -40,7 +40,7 @@ export const environment = {
   url_WeeklyFeed: '/farmApi/WeeklyFeed/',
   upload_analyseUrl: '/farmApi/upload/visit_veter/analyse/',
   test2: '/api/medecins',
-  url_breedingManagement: '/api/breedingManagement',
+  url_breedingManagement: '/farmApi/breedingManagement/',
 }
 
 /*

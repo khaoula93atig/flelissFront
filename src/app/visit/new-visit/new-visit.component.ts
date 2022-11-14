@@ -189,7 +189,7 @@ export class NewVisitComponent implements OnInit {
 
   //get getSelectedfarm
   getFarmId(event) {
-    console.log(event)
+    //console.log(event)
     this.farmID = event
 
     this.subs.add(
@@ -204,7 +204,7 @@ export class NewVisitComponent implements OnInit {
     this.subs.add(
       this.HouseService.getConsultingHouseByCenter(this.centerId).subscribe(
         (data) => {
-          console.log('' + JSON.stringify(data))
+          //console.log('' + JSON.stringify(data))
           this.houses = data
           this.loading = false
         },
@@ -278,7 +278,7 @@ export class NewVisitComponent implements OnInit {
     this.subs.add(
       this.HouseService.getConsultingCenterbyFarm(this.farmID).subscribe(
         (data) => {
-          console.log('data centers ******* ' + JSON.stringify(data))
+          //console.log('data centers ******* ' + JSON.stringify(data))
           this.centers = data
         },
       ),
@@ -370,7 +370,7 @@ export class NewVisitComponent implements OnInit {
   addRow(index) {
     this.newDynamic = { weight: 0, nbr: 0 }
     this.dynamicArray.push(this.newDynamic)
-    console.log(this.dynamicArray)
+   // console.log(this.dynamicArray)
     return true
   }
   set VisitIdNew(id) {
@@ -637,7 +637,7 @@ export class NewVisitComponent implements OnInit {
           })
 
           // weight
-          console.log('weightTask.taskId' + this.weightTask.taskId)
+          //console.log('weightTask.taskId' + this.weightTask.taskId)
           let registrationVisitTasksWeight: IRegistrationVisitTasks = new Object() as IRegistrationVisitTasks
           registrationVisitTasksWeight.ageFlock = this.ageOfTheFlock
           registrationVisitTasksWeight.taskId = this.weightTask.taskId
@@ -650,6 +650,19 @@ export class NewVisitComponent implements OnInit {
           ).subscribe((data) => {
             this.messageWeight = data['response']
           })
+
+          //homogenité
+          let registrationVisitTaskshomognite: IRegistrationVisitTasks = new Object() as IRegistrationVisitTasks
+          registrationVisitTaskshomognite.ageFlock = this.ageOfTheFlock
+          registrationVisitTaskshomognite.taskId = this.homogeneityFlockTask.taskId
+          registrationVisitTaskshomognite.visitId = this.visitIDnew
+          registrationVisitTaskshomognite.measure = this.cv
+          this.VisitService.createRegistrationVisitTasks(
+            registrationVisitTaskshomognite,
+          ).subscribe((data) => {
+            this.messageHomogeneity = data['response']
+          })
+
 
           // WaterConsumption
           let registrationVisitTasksWaterConsumption: IRegistrationVisitTasks = new Object() as IRegistrationVisitTasks
@@ -691,9 +704,9 @@ export class NewVisitComponent implements OnInit {
           this.flockID,
           this.flockNumber - this.measureMortality,
         ).subscribe((data) => {
-          console.log('success  ' + data['response'])
+          //console.log('success  ' + data['response'])
         })
-        if (
+        /*if (
           this.messageTemp &&
           this.messageHumidity &&
           this.messageWeight &&
@@ -704,7 +717,7 @@ export class NewVisitComponent implements OnInit {
           this.messageMortality == 'OK'
         ) {
           console.log('////////////////')
-        }
+        }*/
 
         this.showResult(this.visitIDnew)
       },
@@ -755,7 +768,7 @@ export class NewVisitComponent implements OnInit {
     this.centers = []
     this.flocks = []
     this.ListComponenet.refresh()
-    console.log('show' + this.show)
+    //console.log('show' + this.show)
   }
   //tasks results initialization
   initResults(): void {
@@ -764,7 +777,7 @@ export class NewVisitComponent implements OnInit {
     this.deviationTemResult = ''
     this.measureHumResult = ''
     this.standardHumResult = ''
-    this.deviationHumResult = ''
+    this.deviationHumResult = '' 
     this.measureAirSResult = ''
     this.standardAirSResult = ''
     this.deviationAirSResult = ''
@@ -812,115 +825,115 @@ export class NewVisitComponent implements OnInit {
   showResult(id): void {
     this.resultOpened = true
     // visit result by visit ID
-    console.log('idVisit for result ' + this.visitIDnew)
+    //console.log('idVisit for result ' + this.visitIDnew)
     this.subs.add(
       this.VisitService.getConsultingvisitID(this.visitIDnew).subscribe(
         (visittasks) => {
           this.visittasks.forEach((element) => {
-            console.log('visitTasks element => ', element.standard)
+            //console.log('visitTasks element => ', element.standard)
           })
-          console.log('visitTasks Result' + visittasks)
+          //console.log('visitTasks Result' + visittasks)
           for (let i = 0; i < visittasks.length; i++) {
-            console.log('controle' + visittasks[i])
+            /*console.log('controle' + visittasks[i])
             console.log('controleID *' + visittasks[i].measure)
             console.log(
               'controleDescroption *' + visittasks[i].task.description,
-            )
+            )*/
             if (visittasks[i].taskId == 1) {
-              console.log('ok1')
+              //console.log('ok1')
               this.measureTemResult = visittasks[i].measure
               this.standardTemResult = visittasks[i].standard
               this.deviationTemResult = visittasks[i].deviation
-              console.log('measureTemResult' + this.measureTemResult)
+              /*console.log('measureTemResult' + this.measureTemResult)
               console.log('standardTemResult' + this.standardTemResult)
-              console.log('deviationTemResult' + this.deviationTemResult)
+              console.log('deviationTemResult' + this.deviationTemResult)*/
             } else if (visittasks[i].taskId == 2) {
-              console.log('ok2')
+              //console.log('ok2')
               this.measureHumResult = visittasks[i].measure
               this.standardHumResult = visittasks[i].standard
               this.deviationHumResult = visittasks[i].deviation
-              console.log('measureHumResult' + this.measureHumResult)
+              /*console.log('measureHumResult' + this.measureHumResult)
               console.log('standardHumResult' + this.standardHumResult)
-              console.log('deviationHumResult' + this.deviationHumResult)
+              console.log('deviationHumResult' + this.deviationHumResult)*/
             } else if (visittasks[i].taskId == 3) {
-              console.log('ok3')
+              //console.log('ok3')
               this.measureAirSResult = visittasks[i].measure
               this.standardAirSResult = visittasks[i].standard
               this.deviationAirSResult = visittasks[i].deviation
-              console.log('measureAirSResult' + this.measureAirSResult)
+              /*console.log('measureAirSResult' + this.measureAirSResult)
               console.log('standardAirSResult' + this.standardAirSResult)
-              console.log('deviationAirSResult' + this.deviationAirSResult)
+              console.log('deviationAirSResult' + this.deviationAirSResult)*/
             } else if (visittasks[i].taskId == 4) {
-              console.log('ok4')
+              //console.log('ok4')
               this.measureAmoResult = visittasks[i].measure
               this.standardAmoResult = '< ' + visittasks[i].standard
               this.deviationAmoResult = visittasks[i].deviation
-              console.log('measureAmoResult' + this.measureAmoResult)
+              /*console.log('measureAmoResult' + this.measureAmoResult)
               console.log('standardAmoResult' + this.standardAmoResult)
-              console.log('deviationAmoResult' + this.deviationAmoResult)
+              console.log('deviationAmoResult' + this.deviationAmoResult)*/
             } else if (visittasks[i].taskId == 5) {
               this.measureLighIResult = visittasks[i].measure
               this.standardLighIResult = visittasks[i].standard
               this.deviationLighIResult = visittasks[i].deviation
-              console.log('measureLighIResult' + this.measureLighIResult)
+              /*console.log('measureLighIResult' + this.measureLighIResult)
               console.log('standardLighIResult' + this.standardLighIResult)
-              console.log('deviationLighIResult' + this.deviationLighIResult)
+              console.log('deviationLighIResult' + this.deviationLighIResult)*/
             } else if (visittasks[i].taskId == 6) {
               this.measureFeedCResult = visittasks[i].measure
               this.standardFeedCResult = visittasks[i].standard
               this.deviationFeedCResult = visittasks[i].deviation
               this.percentageFeedCResult = visittasks[i].percentage.toFixed(2)
-              console.log('measureFeedCResult' + this.measureFeedCResult)
+              /*console.log('measureFeedCResult' + this.measureFeedCResult)
               console.log('standardFeedCResult' + this.standardFeedCResult)
               console.log('deviationFeedCResult' + this.deviationFeedCResult)
-              console.log('percentageFeedCResult' + this.percentageFeedCResult)
+              console.log('percentageFeedCResult' + this.percentageFeedCResult)*/
             } else if (visittasks[i].taskId == 7) {
               this.measureWatCResult = visittasks[i].measure
               this.standardWatCResult = visittasks[i].standard
               this.deviationWatCResult = visittasks[i].deviation
               this.percentageWatCResult = visittasks[i].percentage.toFixed(2)
-              console.log('measureWatCResult' + this.measureWatCResult)
+             /* console.log('measureWatCResult' + this.measureWatCResult)
               console.log('percentageWatCResult' + this.percentageWatCResult)
               console.log('standardWatCResult' + this.standardWatCResult)
-              console.log('deviationWatCResult' + this.deviationWatCResult)
+              console.log('deviationWatCResult' + this.deviationWatCResult)*/
             } else if (visittasks[i].taskId == 8) {
               this.measureMortResult = visittasks[i].measure
               this.standardMortResult = visittasks[i].standard
               this.deviationMortResult = visittasks[i].deviation
               this.percentageMortResult = visittasks[i].percentage.toFixed(2)
-              console.log('measureMortResult' + this.measureMortResult)
+              /*console.log('measureMortResult' + this.measureMortResult)
               console.log('percentageMortResult' + this.percentageMortResult)
               console.log('standardMortResult' + this.standardMortResult)
-              console.log('deviationMortResult' + this.deviationMortResult)
+              console.log('deviationMortResult' + this.deviationMortResult)*/
             } else if (visittasks[i].taskId == 9) {
               this.measureLittCResult = visittasks[i].measure
               this.standardLittCResult = visittasks[i].standard
               this.deviationLittCResult = visittasks[i].deviation
-              console.log('measureLittCResult' + this.measureLittCResult)
+              /*console.log('measureLittCResult' + this.measureLittCResult)
               console.log('standardLittCResult' + this.standardLittCResult)
-              console.log('deviationLittCResult' + this.deviationLittCResult)
+              console.log('deviationLittCResult' + this.deviationLittCResult)*/
             } else if (visittasks[i].taskId == 10) {
               this.measureDensResult = visittasks[i].measure
               this.standardDensResult = visittasks[i].standard
               this.deviationDensResult = visittasks[i].deviation
-              console.log('measureDensResult' + this.measureDensResult)
+              /*console.log('measureDensResult' + this.measureDensResult)
               console.log('standardDensResult' + this.standardDensResult)
-              console.log('deviationDensResult' + this.deviationDensResult)
+              console.log('deviationDensResult' + this.deviationDensResult)*/
             } else if (visittasks[i].taskId == 11) {
-              console.log('ok11')
+              //console.log('ok11')
               this.measureWeightResult = visittasks[i].measure
               this.standardWeightResult = visittasks[i].standard
               this.deviationWeightResult = visittasks[i].deviation
-              console.log('measureWeightResult' + this.measureWeightResult)
+              /*console.log('measureWeightResult' + this.measureWeightResult)
               console.log('standardWeightResult' + this.standardWeightResult)
-              console.log('deviationWeightResult' + this.deviationWeightResult)
+              console.log('deviationWeightResult' + this.deviationWeightResult)*/
             } else if (visittasks[i].taskId == 12) {
               this.measureHomogResult = visittasks[i].measure
               this.standardHomogResult = visittasks[i].standard
               this.deviationHomogResult = visittasks[i].deviation
-              console.log('measureHomogResult' + this.measureHomogResult)
+              /*console.log('measureHomogResult' + this.measureHomogResult)
               console.log('standardHomogResult' + this.standardHomogResult)
-              console.log('deviationHomogResult' + this.deviationHomogResult)
+              console.log('deviationHomogResult' + this.deviationHomogResult )*/
             }
           }
         },

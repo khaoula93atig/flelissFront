@@ -244,7 +244,7 @@ export class IRegistrationVisitAudits {
 }
 export class IchickReception {
   visitDate: Date
-  chicReceptionId: number
+  chicReceptionId: string
   centerId: string
   farmId: string
   housesId: string
@@ -254,22 +254,20 @@ export class IchickReception {
   chickPlaced: String
   psOrigin: String
   psAge: number
-  eyesClearBright: String
-  bodyDryWet: String
-  bodyTemp: String
-  crossBeaks: String
-  feetPropFormed: String
-  legsCleanRedHocks: String
-
-  signsGaspingHeavy: String
-  stringyNavels: String
-  blackButtons: String
-  navelsProperlyHealed: String
-  developedLegsSkin: String
-  thickFatBellies: String
-  largeAmountGrowth: String
-  fairlyEvenWingFeather: String
-  nonstressful: String
+  navelNotclosedStrungButton: number
+	navelCleanWellHealed : number
+	navelClosedSlightAbrasiveness: number
+	legsCleanWaxy: number
+	legsDrynessPale: number
+	legsDeshydratedVienProtruding: number
+	hocksCleanNoblemishes: number
+	hocksSlightBlushing: number
+	hocksRedcolorHeavyblushing: number
+	defectsCleanNodefects: number
+	defectsMinorDefects: number
+	defectsEyeLegsSpraddled: number
+	totalScore: number
+	creationDate:Date
 }
 export interface CheckList {
   broodingCheckId: String

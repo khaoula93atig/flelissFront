@@ -789,7 +789,7 @@
                             <div class="resultMeasure">
                                 <p>{{measureHomogResult}}</p>
                                 <div class="Unite uniteRes">
-                                    <span class="taskUnit"> % </span>
+                                    <span class="taskUnit">  % </span>
                                 </div>
                             </div>
                             <div class="resultStandard">
@@ -798,7 +798,7 @@
 
                             <div class="resultDeviation">
                                 <p
-                                    [ngClass]="{'alert-low': deviationHomogResult=='low', 'alert-high':deviationHomogResult=='High' ,'normal':deviationHomogResult=='Normal' }">
+                                    [ngClass]="{'alert-low': deviationHomogResult=='Poor', 'normal':deviationHomogResult=='Execellent' || deviationHomogResult=='Average' }">
                                     {{deviationHomogResult}}</p>
                             </div>
 

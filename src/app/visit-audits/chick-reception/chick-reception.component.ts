@@ -5,7 +5,9 @@ import { FarmService } from '../../services/farm.service'
 import { HouseService } from '../../services/house.service'
 import { VisitService } from '../../services/visit.service'
 import { VisitAuditsService } from '../../services/visit-audits.service'
-import { DatePipe } from '@angular/common'
+import { DatePipe, formatDate } from '@angular/common'
+import { ToastrService } from 'ngx-toastr'
+import { NgForm } from '@angular/forms'
 
 @Component({
   selector: 'app-chick-reception',
@@ -13,6 +15,10 @@ import { DatePipe } from '@angular/common'
   styleUrls: ['./chick-reception.component.css'],
 })
 export class ChickReceptionComponent implements OnInit {
+  deviation=''
+  opened=false
+  isAllume=true;
+  checkReception = new IchickReception()
   visitDate: Date
   chicReceptionId: number
   centerId: string
@@ -24,22 +30,7 @@ export class ChickReceptionComponent implements OnInit {
   chikedPlaced: String
   psOrigin: String
   psAge: String
-  eyesClearBright: String
-  bodyDryWet: String
-  bodyTemp: String
-  crossBeaks: String
-  feetPropFormed: String
-  legsCleanRedHocks: String
-
-  signsGaspingHeavy: String
-  stringyNavels: String
-  blackButtons: String
-  navelsProperlyHealed: String
-  developedLegsSkin: String
-  thickFatBellies: String
-  largeAmountGrowth: String
-  fairlyEvenWingFeather: String
-  nonstressful: String
+  
 
   subs: SubSink = new SubSink()
   farms: any[] = []
@@ -60,6 +51,7 @@ export class ChickReceptionComponent implements OnInit {
     private datepipe: DatePipe,
     private VisitService: VisitService,
     private VisitAuditsService: VisitAuditsService,
+    private toaster: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -144,90 +136,66 @@ export class ChickReceptionComponent implements OnInit {
     )
   }
 
-  getEyes_clear_bright(event) {
-    this.eyesClearBright = event
-  }
-  getBody_dry_wet(event) {
-    this.bodyDryWet = event
-  }
-  getBody_temp(event) {
-    this.bodyTemp = event
-  }
-  getCross_beaks(event) {
-    this.crossBeaks = event
-  }
-  getFeet_prop_formed(event) {
-    this.feetPropFormed = event
-  }
-  getLegs_clean_red_hocks(event) {
-    this.legsCleanRedHocks = event
-  }
-  getBlack_buttons(event) {
-    this.blackButtons = event
-  }
-  getLarge_amount_growth(event) {
-    this.largeAmountGrowth = event
-  }
-  getSigns_gasping_heavy(event) {
-    this.signsGaspingHeavy = event
-  }
-  getStringy_navels(event) {
-    this.signsGaspingHeavy = event
-  }
-  getNavels_properly_healed(event) {
-    this.navelsProperlyHealed = event
-  }
-  getDeveloped_legs_skin(event) {
-    this.developedLegsSkin = event
-  }
-  getThick_fat_bellies(event) {
-    this.thickFatBellies = event
-  }
-  getFairly_even_wing_feather(event) {
-    this.fairlyEvenWingFeather = event
-  }
-  getNon_stressful(event) {
-    this.nonstressful = event
-  }
+  
 
-  saveObject() {
-    let chickReception: IchickReception = new Object() as IchickReception
-    chickReception.visitDate = this.visitDate
-    chickReception.chicReceptionId = this.chicReceptionId
-    chickReception.centerId = this.centerId
-    chickReception.farmId = this.farmId
-    chickReception.housesId = this.housesId
-    chickReception.flockId = this.flockId
-    chickReception.breed = this.breeddescription
-    chickReception.hatchDate = this.hatchDate
-    chickReception.chickPlaced = this.chikedPlaced
-    chickReception.psOrigin = this.psOrigin
-    chickReception.psAge = this.ageOfTheFlock
-    chickReception.eyesClearBright = this.eyesClearBright
-    chickReception.bodyDryWet = this.bodyDryWet
-    chickReception.bodyTemp = this.bodyTemp
-    chickReception.crossBeaks = this.crossBeaks
-    chickReception.feetPropFormed = this.feetPropFormed
-    chickReception.legsCleanRedHocks = this.legsCleanRedHocks
-    chickReception.signsGaspingHeavy = this.signsGaspingHeavy
-    chickReception.stringyNavels = this.stringyNavels
-    chickReception.blackButtons = this.blackButtons
-    chickReception.navelsProperlyHealed = this.navelsProperlyHealed
-    chickReception.developedLegsSkin = this.developedLegsSkin
-    chickReception.thickFatBellies = this.thickFatBellies
-    chickReception.largeAmountGrowth = this.largeAmountGrowth
-    chickReception.fairlyEvenWingFeather = this.fairlyEvenWingFeather
-    chickReception.nonstressful = this.nonstressful
+  saveObject(form:NgForm) {
+    this.calcluScore()
+    let latest_date =this.datepipe.transform(this.visitDate, 'yyyy-MM-dd');
+    this.checkReception.visitDate = new Date(latest_date)
+    this.checkReception.centerId = this.centerId
+    this.checkReception.farmId = this.farmId
+    this.checkReception.housesId = this.housesId
+    this.checkReception.flockId = this.flockId
+    this.checkReception.breed = this.breeddescription
+    this.checkReception.hatchDate = this.hatchDate
+    this.checkReception.chickPlaced = this.chikedPlaced
+    this.checkReception.psOrigin = this.psOrigin
+    this.checkReception.psAge = this.ageOfTheFlock
+    console.log(this.checkReception)
 
     //Invoking service
-    this.VisitAuditsService.createChickReception(chickReception).subscribe(
+    this.VisitAuditsService.createChickReception(this.checkReception).subscribe(
       (data) => {
         if (data['response'] == 'OK') {
-          this.succesMsg = data['message']
-          setTimeout((_) => (this.succesMsg = null), 30000)
+          this.toaster.success('Success', 'ajout avec succés')
+          this.opened=true
+          form.reset()
         } else {
+          this.toaster.error('Error', 'operation echouée')
+          this.checkReception = new IchickReception()
+          form.reset()
         }
       },
     )
+  }
+
+  calcluScore(){
+    this.checkReception.totalScore = 0
+    if(this.checkReception.navelNotclosedStrungButton==-1){
+      this.checkReception.navelNotclosedStrungButton=0
+    }
+    if(this.checkReception.legsDeshydratedVienProtruding==-1){
+      this.checkReception.legsDeshydratedVienProtruding=0
+    }
+    if(this.checkReception.hocksRedcolorHeavyblushing==-1){
+      this.checkReception.hocksRedcolorHeavyblushing=0
+    }
+    if(this.checkReception.defectsEyeLegsSpraddled==-1){
+      this.checkReception.defectsEyeLegsSpraddled=0
+    }
+
+    this.checkReception.totalScore=this.checkReception.navelCleanWellHealed+this.checkReception.navelClosedSlightAbrasiveness+this.checkReception.navelNotclosedStrungButton
+    +this.checkReception.legsCleanWaxy+this.checkReception.legsDeshydratedVienProtruding+this.checkReception.legsDrynessPale
+    +this.checkReception.hocksCleanNoblemishes+this.checkReception.hocksRedcolorHeavyblushing+this.checkReception.hocksSlightBlushing
+    +this.checkReception.defectsCleanNodefects+this.checkReception.defectsEyeLegsSpraddled+this.checkReception.defectsMinorDefects
+
+    if(this.checkReception.totalScore>=40){
+      this.deviation='execelent'
+    }else if(this.checkReception.totalScore>=20 && this.checkReception.totalScore<=39){
+      this.deviation='acceptable'
+    }
+    else if(this.checkReception.totalScore<=19){
+      this.deviation='bad'
+    }
   }
 }

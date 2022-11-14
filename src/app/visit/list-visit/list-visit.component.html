@@ -513,7 +513,7 @@
 
                                                     <div class="resultDeviation">
                                                         <p
-                                                            [ngClass]="{'alert-low': deviationHomogResult=='Low', 'alert-high':deviationHomogResult=='High' ,'normal':deviationHomogResult=='Normal' }">
+                                                            [ngClass]="{'alert-low': deviationHomogResult=='Poor', 'normal':deviationHomogResult=='Execellent' || deviationHomogResult=='Average' }">
                                                             {{deviationHomogResult}}</p>
                                                     </div>
 
