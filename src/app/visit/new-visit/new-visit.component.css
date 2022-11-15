@@ -45,7 +45,7 @@ clr-input-container{
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
 }
 
-.taskUnit {font-size:10px ; color:grey}
+.taskUnit {font-size:10px ; color:grey} 
 
 .clr-form-control{display: -webkit-inline-box;}
 .imgIcon {margin-right: 20px}

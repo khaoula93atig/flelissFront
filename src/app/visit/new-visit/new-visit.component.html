@@ -363,7 +363,8 @@
                             <td>
                                 <input [(ngModel)]="dynamicArray[i].nbr" class="form-control"
                                     style="  border: 0; background-color: #fafafa; padding: 6px;border-bottom: .5px solid #ececec;"
-                                    [ngModelOptions]="{standalone: true}" type="text" />
+                                    [ngModelOptions]="{standalone: true}" type="number" min="50" value="50" />
+                                    <span class="clr-subtext">Must be more than 50</span>
                             </td>
                             <td (click)="addRow(i)">
                                 <img src="https://img.icons8.com/color/48/000000/add.png" width="22" height="22" />
@@ -385,7 +386,7 @@
         <div class="modal-footer">
 
             <button type="button" class="btn btn-outline" (click)="WeightOpened = false">Cancel</button>
-            <button type="button" class="btn btn-primary " (click)='submitWeight();'>save</button>
+            <button type="button" class="btn btn-primary " [disabled]="" (click)='submitWeight();'>save</button>
         </div>
 
 

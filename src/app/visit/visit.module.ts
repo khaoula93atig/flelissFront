@@ -13,6 +13,7 @@ import { ToastrModule } from 'ngx-toastr'
 import { AuthGuardGuard } from '../services/auth-guard.guard'
 import { WeeklyWeightComponent } from './weekly-weight/weekly-weight.component'
 import { WeeklyFeedComponent } from './weekly-feed/weekly-feed.component'
+import { NgxEchartsModule } from 'ngx-echarts'
 
 const routes: Routes = [
   {
@@ -51,6 +52,7 @@ const routes: Routes = [
     SharedModule,
     RouterModule.forRoot(routes),
     ToastrModule.forRoot(),
+    NgxEchartsModule
   ],
 })
 export class VisitModule {}

@@ -174,7 +174,7 @@ export class NewVisitComponent implements OnInit {
   weightcalcul: number
   visitID: string = ''
   weightMeasure: number = 0
-  nbrbirds: number = 0
+  nbrbirds: number 
   dynamicArray: Array<DynamicGrid> = []
   newDynamic: any = {}
   sommeWeight: number = 0
@@ -328,7 +328,7 @@ export class NewVisitComponent implements OnInit {
         }
       }),
     )
-    this.newDynamic = { weight: '', nbr: '' }
+    this.newDynamic = { weight: '', nbr: 50 }
     this.dynamicArray.push(this.newDynamic)
   }
 
@@ -396,6 +396,7 @@ export class NewVisitComponent implements OnInit {
       this.weightcalcul = this.dynamicArray[i].weight * this.dynamicArray[i].nbr
       this.weightMeasure = +this.weightMeasure + this.weightcalcul
       this.nbrbirds = +this.nbrbirds + +this.dynamicArray[i].nbr
+      
     }
 
     this.measureWeight = (this.weightMeasure / this.nbrbirds).toFixed(2)

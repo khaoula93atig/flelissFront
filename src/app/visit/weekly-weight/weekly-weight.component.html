@@ -56,7 +56,7 @@
                         </clr-input-container>
 
                         <clr-select-container class="clr-col-md-5 clr-row">
-                            <label for="week" class="clr-control-label clr-col-md-8">Week </label>
+                            <label for="week" class="clr-control-label clr-col-md-8">Day </label>
                             <select clrSelect name="options" [(ngModel)]="week" style="    background-color: #f5f5f5;">
                                 <option value="7">7</option>
                                 <option value="14">14</option>
@@ -138,7 +138,7 @@
     </clr-modal>
 </form>
 
-<form clrForm class="clr-form clr-form-horizontal">
+<form clrForm class="clr-form clr-form-horizontal" style="margin-top: 0px;">
     <clr-modal title="Weight" [(clrModalOpen)]="showDeviation">
 
         <h3 class="modal-title" style="color: #02675c;">
@@ -146,7 +146,16 @@
             Weight measurement
         </h3>
         <div class="modal-body">
-            <p>But not much to say...</p>
+            <div class="clr-row">
+                <div class="clr-col-1">
+                    <label>Breed</label>
+                </div>
+                <div class="clr-col-5">
+                    <input placeholder="Breed" disabled name="name" [(ngModel)]="breed"
+                        style="margin-top:0px ; border: none; margin-left: 10%;" />
+                </div>
+            </div>
+            <div echarts class="clr-col-12" style="margin-top: 20px;" [options]="options"></div>
         </div>
         <div class="modal-footer">
             <button class="btn btn-outline" type="button"

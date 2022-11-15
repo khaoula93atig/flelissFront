@@ -4,3 +4,12 @@
     width: 37rem !important;
     max-width: 102%;
 }
+
+.test .clr-form-control{
+    margin-top: 0px;
+}
+
+.clrInput{
+    margin-top: 0px;
+}
+
