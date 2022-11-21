@@ -41,6 +41,7 @@ export const environment = {
   upload_analyseUrl: '/farmApi/upload/visit_veter/analyse/',
   test2: '/api/medecins',
   url_breedingManagement: '/farmApi/breedingManagement/',
+  url_mortaliteDash: '/farmApi/mortalitedashboard'
 }
 
 /*

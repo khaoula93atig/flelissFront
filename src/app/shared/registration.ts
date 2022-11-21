@@ -174,6 +174,7 @@ export class IRegistrationFlocks {
   checkEndOfCycle: boolean
   endOfCycle: Date = new Date()
   flockName: string
+  restFlockNumber:number
 }
 export class IRegistrationHealthStatus {
   health_status_id: number

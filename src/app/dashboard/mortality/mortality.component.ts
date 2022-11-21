@@ -1,6 +1,7 @@
 import { array } from '@amcharts/amcharts5';
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
+import { DashboardService } from 'src/app/services/dashboard.service';
 import { SubSink } from 'subsink';
 
 import { UserService } from '../../services/user.service';
@@ -12,10 +13,13 @@ import { UserService } from '../../services/user.service';
 export class MortalityComponent implements OnInit {
   public optionsPie: any;
   public optionsChart: any;
+  public optionsChart1: any;
 
-  constructor(private UserService: UserService) { }
+  constructor(private UserService: UserService,
+    private dashboardService: DashboardService) { }
   subs: SubSink = new SubSink();
   dataList: any[];
+  date= new Date();
 
   dynamicArrayFlock: Array<FlockWeight> = [];
   dynamicArrayFlock2: Array<FlockWeight> = [];
@@ -103,7 +107,35 @@ export class MortalityComponent implements OnInit {
 
 
   mortalityBreed() {
-    this.optionsChart = {
+    let category:any[]=[]
+    let mortality:any[]=[]
+    this.dashboardService.getMortalityByBreed().subscribe(data=>{
+      console.log(data)
+      for(let res of data){
+        switch(res.breed) { 
+          case 1: { 
+             category.push("Hubbard")
+             break; 
+          } 
+          case 2: { 
+            category.push("Cobb 500") 
+             break; 
+          } 
+          case 3: { 
+            category.push("Ross") 
+            break; 
+         } 
+         case 4: { 
+          category.push("Arbor Acres plus") 
+          break; 
+       } 
+       } 
+        mortality.push(res.mortality)
+
+      }
+      console.log(category)
+      console.log(mortality)
+    this.optionsChart1 = {
       chart: {
         type: "bar",
         zoomType: "y",
@@ -114,19 +146,15 @@ export class MortalityComponent implements OnInit {
       },
 
       xAxis: {
-        categories: [
-          "Ross",
-          "Cobb 500",
-          "Hubbard",
-
-        ],
+        categories: category,
+        type: "category",
         title: {
           text: null
         }
       },
       yAxis: {
-        min: 0,
-        max: 30,
+        //min: 0,
+        //max: 30,
         tickInterval: 10,
         title: {
           text: null
@@ -155,12 +183,14 @@ export class MortalityComponent implements OnInit {
           name: "Mortality",
           color: "#a5d6a7",
           borderColor: '#60A465',
-          data: [24.1, 20.6, 20.3]
+          data: mortality
         }
       ]
     }
-    Highcharts.chart('chartBarCenterMortality', this.optionsChart);
-
+    console.log(this.optionsChart1.series)
+    console.log(this.optionsChart1.xAxis.categories)
+    Highcharts.chart('chartBarCenterMortality', this.optionsChart1);
+  })
   }
 
   mortalityHouse() {

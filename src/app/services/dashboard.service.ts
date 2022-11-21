@@ -22,7 +22,20 @@ export class DashboardService {
   }
 
   getweeklyweightByBreed(breed:number, flock:string, farmid:string){
-    return this.http.get<any>(environment.url_WeeklyWeightMeasurement+'weeklyweightBybreed/'+breed+'/'+flock+'/'+farmid)  }
+    return this.http.get<any>(environment.url_WeeklyWeightMeasurement+'weeklyweightBybreed/'+breed+'/'+flock+'/'+farmid)
+  }
+
+  getweeklyWeightByNombreOfOieaux(breed:number, flock:string, farmid:string, week:number){
+    return this.http.get<any>(environment.url_WeeklyWeightMeasurement+'weeklyweightBynbreOiseau/'+breed+'/'+flock+'/'+farmid+'/'+week)
+  }
+
+  getstandardweeklyWeightByBreedAndage(breed:number, week:number){
+    return this.http.get<any>(environment.url_WeeklyWeightMeasurement+'standardweight/'+breed+'/'+week)
+  }
+
+  getMortalityByBreed(){
+    return this.http.get<any>(environment.url_mortaliteDash)
+  }
 
   //get weight by breed by centerId
   getWeightperBreed(centerID: string) {

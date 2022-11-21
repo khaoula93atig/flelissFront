@@ -10,6 +10,7 @@ import { SubSink } from 'subsink'
 import { HouseService } from '../../services/house.service'
 import { VisitService } from '../../services/visit.service'
 import { DashboardService } from '../../services/dashboard.service';
+import { position } from 'html2canvas/dist/types/css/property-descriptors/position'
 
 @Component({
   selector: 'app-weekly-weight',
@@ -279,8 +280,9 @@ getweeklyweightbyBreed(){
           }
         },
         legend: {
-          data: ['Standard', 'Exist'],
-          left: 'center'
+          orient: 'vertical',
+    right: 10,
+    top: 'center'
 
         },
         grid: {

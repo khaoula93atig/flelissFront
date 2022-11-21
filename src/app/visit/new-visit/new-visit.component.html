@@ -232,9 +232,12 @@
                         </div>
                         <div class="clr-control-container clr-col-md-6" style="display: flex;">
                             <div class="clr-input-wrapper">
-                                <input clrInput required size="30" type="number" name="mortality"
+                                <input clrInput required type="number" name="mortality" [max]="max" onkeyup="if(value>max) value=max;"
                                     [(ngModel)]="measureMortality" />
                             </div>
+                           
+                            
+                            
                             <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
                                 <span class="taskUnit"> dead birds </span>
                             </div>
@@ -323,7 +326,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline" (click)="ngOnInit()">Cancel</button>
-                    <button type="button" class="btn btn-primary" (click)='submitAll();'>save</button>
+                    <button type="button" class="btn btn-primary" [disabled]="!myForm.valid" (click)='submitAll()'>save</button>
 
                 </div>
             </div>
@@ -671,7 +674,7 @@
                                     </div>
                                 </div>
                                 <div class="measurePerc2" style="    display: flex;">
-                                    <p style="    margin: 0;">{{measureMortResult}}</p>
+                                    <p style="margin: 0;">{{measureMortResult}}</p>
                                     <div class="Unite uniteRes" style="    margin-right: 0;    margin-top: 0;">
                                         <span class="taskUnit"> dead birds </span>
                                     </div>

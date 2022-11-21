@@ -28,6 +28,7 @@ export class NewVisitComponent implements OnInit {
     sample: new FormControl('', Validators.required),
   })
 
+  max:number
   date: Date
   latest_date: String
   taskId: string
@@ -262,6 +263,12 @@ export class NewVisitComponent implements OnInit {
               this.breeddescription = i.breedObject.description
               this.breedId = i.breedObject.breedID
             }
+            if(i.restFlockNumber==0){
+              this.max=i.flockNumber
+            }else if(i.flockNumber>0){
+              this.max=i.restFlockNumber
+            }
+            console.log(this.max)
           }
         },
       ),
@@ -551,6 +558,7 @@ export class NewVisitComponent implements OnInit {
     registrationVisit.typeVisit = 'daily_visit'
     registrationVisit.centerID = this.centerId
     registrationVisit.farmId = this.farmID
+    registrationVisit.mortality= this.measureMortality
     //Invoking service
     this.VisitService.createRegistrationVisits(registrationVisit).subscribe(
       (data) => {
@@ -699,9 +707,9 @@ export class NewVisitComponent implements OnInit {
             this.messageMortality = data['response']
           })
         }
-        let totale = this.flockNumber - this.measureMortality
+        //let totale = this.flockNumber - this.measureMortality
 
-        this.FlockService.updateRestNumberFlock(
+        /*this.FlockService.updateRestNumberFlock(
           this.flockID,
           this.flockNumber - this.measureMortality,
         ).subscribe((data) => {
@@ -742,6 +750,7 @@ export class NewVisitComponent implements OnInit {
   initVisit(): void {
     // this.visitDate = new Date();
     this.visitDate = this.reverseDate('yyyy-MM-DD', new Date())
+    this.centerId=''
     this.measureTemp = null
     this.farmID = ''
     this.measureHumidity = null
@@ -940,5 +949,16 @@ export class NewVisitComponent implements OnInit {
         },
       ),
     )
+  }
+
+  enforceMinMax(el) {
+    if (el.value != "") {
+      if (parseInt(el.value) < parseInt(el.min)) {
+        el.value = el.min;
+      }
+      if (parseInt(el.value) > parseInt(el.max)) {
+        el.value = el.max;
+      }
+    }
   }
 }
