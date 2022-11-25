@@ -314,6 +314,8 @@ export class WeeklyWeightMeasurement {
   week: number
   flockNbr: number
   average: number
+  cv : number
+  uniformity : number
 }
 export class WeeklyFeed {
   breed: number

@@ -1,12 +1,12 @@
 <!-- Dialog for weight management -->
 <form clrForm class="clr-form clr-form-horizontal">
     <clr-modal title="Weight" [(clrModalOpen)]="show" [clrModalStaticBackdrop]="true">
-
-        <h3 class="modal-title" style="color: #02675c;"><img src="../../../assets/icons8-weight-96.png" width="22"
+<div class="modal-header">
+        <h3 class="modal-title" style="color: #02675c; padding-bottom: 0;"><img src="../../../assets/icons8-weight-96.png" width="22"
                 height="22">
             Weight measurement
         </h3>
-
+</div>
         <div class="modal-body">
             <div class="container">
                 <div>
@@ -89,14 +89,9 @@
                             <td>
                                 <input [(ngModel)]="dynamicArray[i].weight" class="form-control"
                                     style="  border: 0; background-color: #fafafa; padding: 6px;border-bottom: .5px solid #ececec;"
-                                    [ngModelOptions]="{standalone: true}" type="text" (change)="showButtonSave()" />
+                                    [ngModelOptions]="{standalone: true}" type="number" (change)="showButtonSave()" />
                             </td>
-                            <!--<td>
-                                <input [(ngModel)]="dynamicArray[i].nbr" class="form-control"
-                                    style="  border: 0; background-color: #fafafa; padding: 6px;border-bottom: .5px solid #ececec;"
-                                    [ngModelOptions]="{standalone: true}" type="text" />
-                            </td>-->
-                            <td (click)="addRow(i+1)">
+                            <td (click)="addRow()">
                                 <img src="https://img.icons8.com/color/48/000000/add.png" width="22" height="22" />
                             </td>
                             <td (click)="deleteRow(i)"> <img
@@ -113,21 +108,12 @@
 
         </div>
         <div class="modal-footer">
-            <div class="clr-col-6">
-
-                <div class="alert alert-danger" role="alert" *ngIf="dangerMsg != null" style="margin-top: 0px;">
-                    <div class="alert-items">
-                        <div class="alert-item static">
-                            <div class="alert-icon-wrapper">
-                                <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
-                            </div>
-                            <span class="alert-text">
-                                {{dangerMsg}}
-                            </span>
-                        </div>
-                    </div>
-                </div>
+            <div class="clr-row">
+                
+                <span style="font-size:small ; margin-right: 49px;"><clr-icon class="alert-icon" shape="exclamation-circle" style="color:red"></clr-icon>The minimum number of birds measured must be <span style="font-weight:bold ; color:red">50</span> .</span>
             </div>
+          
+            
             <button type="button" class="btn btn-outline" (click)="show = false;initForm()">Cancel</button>
             <button type="button" class="btn btn-primary " (click)='submitWeight();'
                 [disabled]="disabledSave">save</button>
@@ -145,21 +131,93 @@
 
             Weight measurement
         </h3>
+       
         <div class="modal-body">
             <div class="clr-row">
-                <div class="clr-col-1">
-                    <label>Breed</label>
+                <div class="clr-col-12 clr-col-lg-6 clr-col-xl-6">
+            <table class="table table-vertical table-border table-compact floatedTable ">
+                <tbody>
+                    <tr>
+                        <th>Number of birds weighed	</th>
+                        <td>{{dynamicArray.length}}</td>
+                        
+                        
+                    </tr>
+                   
+                    <tr>
+                        <th>Average + 10%	</th>
+                        <td>{{bornSup}}</td>
+                        
+                        
+                    </tr>
+                    <tr>
+                        <th>Uniformity</th>
+                        <td>{{uniformity}}</td>
+                        
+                    </tr>
+                    <tr>
+                        <th>Number of birds off the range</th>
+                        <td>{{outOff}}</td>
+                    </tr>
+                </tbody>
+            </table>
                 </div>
-                <div class="clr-col-5">
-                    <input placeholder="Breed" disabled name="name" [(ngModel)]="breed"
-                        style="margin-top:0px ; border: none; margin-left: 10%;" />
-                </div>
-            </div>
-            <div echarts class="clr-col-12" style="margin-top: 20px;" [options]="options"></div>
+                <div class="clr-col-12 clr-col-lg-6 clr-col-xl-6"> 
+            <table class="table table-vertical table-border table-compact floatedTable ">
+                <tbody>
+                    <tr>
+                        <th>Average Body Weight(g)</th>
+                        <td>{{average}}</td>
+                        
+                    </tr>
+                   
+                    <tr>
+                        <th>Average - 10%	</th>
+                        <td>{{bornInf}}</td>
+                        
+                    </tr>
+                    <tr>
+                        <th>CV</th>
+                        <td>{{cv}}</td>
+                    </tr>
+                    <tr>
+                        <th>Number of birds off the range</th>
+                        <td>{{outOff}}</td>
+                    </tr>
+                </tbody>
+            </table>
+              </div>
+              </div>
+                
+                    <table class="table table-compact table-border " *ngIf="weeklyWeightOfFlock.length>0">
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>Comptage</th>
+                                <th>g</th>
+                                <th>CV%</th>
+                                <th>Unif%</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let mesure of weeklyWeightOfFlock">
+                                <td>{{mesure.week}}</td>
+                                <td>{{mesure.count}}</td>
+                                <td>{{mesure.average}}</td>
+                                <td>{{mesure.cv}}</td>
+                                <td>{{mesure.uniformity}}</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+           
+                <div id="container" class="content box1" style="margin-top: 50px;"></div>
+           
+            
         </div>
         <div class="modal-footer">
             <button class="btn btn-outline" type="button"
-                (click)=" showDeviation= false;show = false;initForm()">Close</button>
+                (click)=" showDeviation= false;show = false; initForm() ">Close</button>
         </div>
 
     </clr-modal>

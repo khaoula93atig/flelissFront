@@ -16,11 +16,15 @@ import { FormGroup, Validators, FormArray, FormControl } from '@angular/forms'
 
 import { DatePipe } from '@angular/common'
 import { ClrDatagrid } from '@clr/angular'
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 
 @Component({
   selector: 'app-new-visit',
   templateUrl: './new-visit.component.html',
   styleUrls: ['./new-visit.component.css'],
+  
 })
 export class NewVisitComponent implements OnInit {
   visitIDnew: any = ''
@@ -28,7 +32,9 @@ export class NewVisitComponent implements OnInit {
     sample: new FormControl('', Validators.required),
   })
 
+  
   max:number
+  input:number
   date: Date
   latest_date: String
   taskId: string
@@ -54,7 +60,13 @@ export class NewVisitComponent implements OnInit {
     private datepipe: DatePipe,
     private ListComponenet: ListVisitComponent,
     private FlockService: FlockService,
-  ) {}
+    library: FaIconLibrary
+  ) {
+    library.addIconPacks(far);
+  }
+
+  faExclamation = faExclamationCircle;
+  
 
   // Spinner display visit
   loading: boolean
@@ -335,7 +347,7 @@ export class NewVisitComponent implements OnInit {
         }
       }),
     )
-    this.newDynamic = { weight: '', nbr: 50 }
+    this.newDynamic = { weight: 0, nbr: 1 }
     this.dynamicArray.push(this.newDynamic)
   }
 
@@ -374,10 +386,10 @@ export class NewVisitComponent implements OnInit {
   }
 
   // Weight measurement
-  addRow(index) {
-    this.newDynamic = { weight: 0, nbr: 0 }
+  addRow() {
+    this.newDynamic = { weight: 0, nbr: this.dynamicArray.length+1}
     this.dynamicArray.push(this.newDynamic)
-   // console.log(this.dynamicArray)
+   console.log('test',this.dynamicArray)
     return true
   }
   set VisitIdNew(id) {
@@ -391,6 +403,10 @@ export class NewVisitComponent implements OnInit {
       return false
     } else {
       this.dynamicArray.splice(index, 1)
+      
+      for(let i=index; i<this.dynamicArray.length ;i++){
+        this.dynamicArray[i].nbr=this.dynamicArray[i].nbr-1
+      }
 
       return true
     }
@@ -399,14 +415,12 @@ export class NewVisitComponent implements OnInit {
   //save weight
   Weightclosed: boolean = true
   submitWeight(): void {
+    console.log(this.dynamicArray)
     for (var i = 0; i < this.dynamicArray.length; i++) {
-      this.weightcalcul = this.dynamicArray[i].weight * this.dynamicArray[i].nbr
-      this.weightMeasure = +this.weightMeasure + this.weightcalcul
-      this.nbrbirds = +this.nbrbirds + +this.dynamicArray[i].nbr
-      
+      this.weightMeasure = this.weightMeasure +this.dynamicArray[i].weight
     }
 
-    this.measureWeight = (this.weightMeasure / this.nbrbirds).toFixed(2)
+    this.measureWeight = (this.weightMeasure / this.dynamicArray.length).toFixed(2)
     this.VisitService.getStndardWeigth(
       this.ageOfTheFlock,
       this.breedId,
@@ -559,9 +573,11 @@ export class NewVisitComponent implements OnInit {
     registrationVisit.centerID = this.centerId
     registrationVisit.farmId = this.farmID
     registrationVisit.mortality= this.measureMortality
+    console.log("visit",registrationVisit)
     //Invoking service
     this.VisitService.createRegistrationVisits(registrationVisit).subscribe(
       (data) => {
+        console.log("visit",data)
         var alldata = data
         sessionStorage.setItem('visitId', JSON.stringify(data))
         this.visitIDnew = alldata.visitId
@@ -696,8 +712,7 @@ export class NewVisitComponent implements OnInit {
           registrationVisitTasksMortality.taskId = this.mortalityTask.taskId
           registrationVisitTasksMortality.visitId = this.visitIDnew
           registrationVisitTasksMortality.measure = this.measureMortality
-          this.calculpercentage =
-            (this.measureMortality * 100) / this.birdsNumberDay0
+          this.calculpercentage =(this.measureMortality * 100) / this.flockNumber
           registrationVisitTasksMortality.percentage = this.calculpercentage
           registrationVisitTasksMortality.breedId = this.breedId
           // Invoking service
@@ -827,9 +842,9 @@ export class NewVisitComponent implements OnInit {
   }
   //weight initialization
   initWeight(): void {
-    this.weightMeasure = null
-    this.measureWeight = null
-    this.nbrbirds = null
+    this.weightMeasure = 0
+    this.measureWeight = 0
+    this.nbrbirds = 0
   }
   //open tasks Results  after save
   showResult(id): void {
@@ -949,16 +964,5 @@ export class NewVisitComponent implements OnInit {
         },
       ),
     )
-  }
-
-  enforceMinMax(el) {
-    if (el.value != "") {
-      if (parseInt(el.value) < parseInt(el.min)) {
-        el.value = el.min;
-      }
-      if (parseInt(el.value) > parseInt(el.max)) {
-        el.value = el.max;
-      }
-    }
   }
 }

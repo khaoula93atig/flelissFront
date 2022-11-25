@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { SharedModule } from '../shared/shared.module'
-import { ClarityModule, ClrWizard } from '@clr/angular'
+import { ClarityModule, ClrIconModule, ClrWizard } from '@clr/angular'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { Routes, RouterModule } from '@angular/router'
 import { FormsModule } from '@angular/forms'
@@ -14,6 +14,7 @@ import { AuthGuardGuard } from '../services/auth-guard.guard'
 import { WeeklyWeightComponent } from './weekly-weight/weekly-weight.component'
 import { WeeklyFeedComponent } from './weekly-feed/weekly-feed.component'
 import { NgxEchartsModule } from 'ngx-echarts'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 const routes: Routes = [
   {
@@ -52,7 +53,10 @@ const routes: Routes = [
     SharedModule,
     RouterModule.forRoot(routes),
     ToastrModule.forRoot(),
-    NgxEchartsModule
+    NgxEchartsModule,
+    ClrIconModule,
+    FontAwesomeModule
+    
   ],
 })
 export class VisitModule {}

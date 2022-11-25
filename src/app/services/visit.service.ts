@@ -119,6 +119,14 @@ export class VisitService {
       weeklyWeightMeasurement,
     )
   }
+  //getweeklyweightofFlock
+  getweeklyWeightOfFlock(flockId){
+    return this.http.get<any>(
+      environment.url_WeeklyWeightMeasurement + 'weeklyWeightMesurementOfFlock/' + flockId ,
+      this.httpOptions,
+    )
+
+  }
   //post weekly feed
   saveWeeklyFeed(weeklyFeed) {
     return this.http.post<WeeklyFeed>(

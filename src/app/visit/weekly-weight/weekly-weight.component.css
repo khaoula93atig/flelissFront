@@ -12,4 +12,12 @@
 .clrInput{
     margin-top: 0px;
 }
-
+.floatedTable {
+    float:left;
+}
+.modal-footer{
+    padding: 0.5rem 0px 0px 0px;
+}
+.modal-header .ng-tns-c188-1{
+    padding: 0 0 0rem 0;
+}
