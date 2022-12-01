@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -33,9 +34,25 @@ export class DashboardService {
     return this.http.get<any>(environment.url_WeeklyWeightMeasurement+'standardweight/'+breed+'/'+week)
   }
 
-  getMortalityByBreed(){
-    return this.http.get<any>(environment.url_mortaliteDash)
+  getMortalityByBreed(companyId:string){
+    return this.http.get<any>(environment.url_mortaliteDash+'/breed/'+companyId, this.httpOptions)
   }
+  //daily percentage mortality by farm
+  getMortalityByFarm(task:number,visitDate:string, companyId:string){
+    return this.http.get<any>(environment.url_mortaliteDash+'/farm/'+task+'/'+visitDate+'/'+companyId, this.httpOptions)
+  }
+
+  //general percentage mortality by farm
+  getGeneralMortalityByFarm(companyId:string){
+    return this.http.get<any>(environment.url_mortaliteDash+'/farmgeneral/'+companyId, this.httpOptions)
+  }
+
+  //weekly weight mesurement by company for farm 
+  getweeklyweightbycompanyforfarms(companyId:string){
+    return this.http.get<any>(environment.url_dashboard+'/weeklyweight/company/'+companyId, this.httpOptions)
+  }
+
+
 
   //get weight by breed by centerId
   getWeightperBreed(centerID: string) {

@@ -163,6 +163,7 @@ export class Morbidity {
 export class IRegistrationFlocks {
   flockID: string
   houseId: string
+  farmId:string
   breed: number
   cycle: number
 

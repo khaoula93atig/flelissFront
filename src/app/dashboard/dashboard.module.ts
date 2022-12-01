@@ -11,6 +11,7 @@ import { DashboardComponent } from './dashboard.component';
 import { MortalityComponent } from './mortality/mortality.component';
 import { WeightComponent } from './weight/weight.component';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { GeneralComponent } from './general/general.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
     children: [
       { path: 'mortality', component: MortalityComponent },
       { path: 'weight', component: WeightComponent },
+      { path:'general', component:GeneralComponent}
 
 
     ]
@@ -30,7 +32,7 @@ const routes: Routes = [
 
 
 @NgModule({
-  declarations: [MortalityComponent, WeightComponent],
+  declarations: [MortalityComponent, WeightComponent, GeneralComponent],
   imports: [
     CommonModule, FormsModule, BrowserModule, BrowserAnimationsModule,
     ClarityModule, SharedModule, RouterModule.forRoot(routes),

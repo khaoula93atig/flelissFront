@@ -107,7 +107,7 @@ export class MortalityComponent implements OnInit {
 
 
   mortalityBreed() {
-    let category:any[]=[]
+   /* let category:any[]=[]
     let mortality:any[]=[]
     this.dashboardService.getMortalityByBreed().subscribe(data=>{
       console.log(data)
@@ -190,7 +190,7 @@ export class MortalityComponent implements OnInit {
     console.log(this.optionsChart1.series)
     console.log(this.optionsChart1.xAxis.categories)
     Highcharts.chart('chartBarCenterMortality', this.optionsChart1);
-  })
+  })*/
   }
 
   mortalityHouse() {

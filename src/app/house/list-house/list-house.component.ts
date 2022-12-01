@@ -290,8 +290,9 @@ export class ListHouseComponent implements OnInit {
     registrationFlock.flockNumber = this.flockNumber
     registrationFlock.checkEndOfCycle = false
     registrationFlock.flockName = this.flockName
+    registrationFlock.farmId = sessionStorage.getItem('farmID')
     // Invoking service
-
+console.log(registrationFlock)
     this.FlockService.createRegistrationFlocks(registrationFlock).subscribe(
       (data) => {
         if (data['response'] == 'OK') {

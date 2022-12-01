@@ -145,17 +145,17 @@ export class WeightComponent implements OnInit {
 
   getweeklyweightnbreOfOiseaux(){
     this.weights=[]
-    this.beards=[]
+    this.beards=[] 
     this. counts=[{'value':'0-0.6' , 'count':0},{'value':'0.6-0.67' , 'count':0},{'value':'0.67-0.74' , 'count':0},{'value':'0.74-0.81' , 'count':0},{'value':'0.81-0.88' , 'count':0}
     ,{'value':'0.88-0.95' , 'count':0},{'value':'0.95-0.1.02' , 'count':0},{'value':'1.02-1.09' , 'count':0},{'value':'1.09-1.16' , 'count':0},
     {'value':'1.16-1.23' , 'count':0},{'value':'1.23-1.3' , 'count':0},{'value':'>1.3' , 'count':0}
    ]
     this.DashboardService.getweeklyWeightByNombreOfOieaux(this.breedId, this.flock,this.farmId, this.day).subscribe(data=>{
       
-      console.log(data)
+     
       this.DashboardService.getstandardweeklyWeightByBreedAndage(this.breedId,this.day).subscribe(data1=>
         {
-          console.log('oiseaux',data1)
+          
       for(let w of data)
         {
 
