@@ -17,19 +17,17 @@ padding: 16px 10px;">
                 <div class="clr-row clr-col-md-12">
                     <div class="clr-col-md-6">
                         <div class="titleHeader">
-                            <h5>Title of Center</h5>
+                            <h5>Title of Farm {{farmName}}</h5>
                         </div>
                     </div>
                     <div class="clr-col-md-6">
                         <form clrForm clrLayout="horizontal" style="text-align: right;">
                             <clr-select-container>
-                                <label>CENTER</label>
-                                <select clrSelect name="options">
-                                    <option value="one"> center 1 </option>
-                                    <option value="two"> center 2 </option>
-                                    <option value="three"> center 3 </option>
-                                    <option value="four"> center 4 </option>
-
+                                <label>Farm</label>
+                                <select clrSelect name="farm" [(ngModel)]="farmId" 
+                                (change)="getAllCentersByFarm($event.target.value);getweeklyWeightMesurementbyFarm($event.target.value);
+                                getAlertByFarm(visitDate,$event.target.value);getSurvivalByFarm($event.target.value)">
+                                    <option *ngFor="let farm of farms" [value]="farm.farmId"> {{farm.farmName}} </option>
                                 </select>
                             </clr-select-container>
                         </form>
@@ -43,17 +41,28 @@ padding: 16px 10px;">
             <div class="clr-col-md-2 background ">
                 <div class="value boxContent">
                     <div class="contentText">
-                        <h4>Hatched eggs</h4>
-                        <h5>246</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="clr-col-md-2 background-box ">
-                <div class="value boxContent">
-                    <div class="contentText">
-                        <h4>Mortality</h4>
-                        <h5>20,32 <small>%</small></h5>
+                        <div class="clr-row">
+                            <div class="clr-col">
+                                <clr-icon class="alert-icon card-icon" shape="exclamation-circle" style="color:red"></clr-icon>
+                            </div>
+                            <div class="clr-col">
+                                <h4>Alert</h4>
+                            </div>
+                            <div class="clr-col">
+                                <h3>{{totalAlert}}</h3>
+                            </div>
+                        </div>
+                        <div class="clr-row">
+                            <div class="clr-col">
+                                <a style="float: left;" (click)="detailsAlert=!detailsAlert">View details</a>
+                            </div>
+                            <div class="clr-col">
+                                <span style="float: right;">></span>
+                            </div>
+                            
+                        </div>
+                        
+                        
                     </div>
                 </div>
             </div>
@@ -61,8 +70,37 @@ padding: 16px 10px;">
             <div class="clr-col-md-2 background ">
                 <div class="value boxContent">
                     <div class="contentText">
-                        <h4>Mortality </h4>
-                        <h5>456,33 <small>K</small></h5>
+                        <div class="clr-row">
+                            <div class="clr-col">
+                                <clr-icon class="alert-icon card-icon" shape="exclamation-circle" style="color:red"></clr-icon>
+                            </div>
+                            <div class="clr-col">
+                                <h4>Survival rate</h4>
+                            </div>
+                            <div class="clr-col">
+                                <h3>{{survivalByFarm}}</h3>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="clr-col-md-2 background ">
+                <div class="value boxContent">
+                    <div class="contentText">
+                        <div class="clr-row">
+                            <div class="clr-col">
+                                <clr-icon class="alert-icon card-icon" shape="exclamation-circle" style="color:red"></clr-icon>
+                            </div>
+                            <div class="clr-col">
+                                <h4>Alert</h4>
+                            </div>
+                            <div class="clr-col">
+                                <h3>{{totalAlert}}</h3>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -72,23 +110,63 @@ padding: 16px 10px;">
 
 
     <!-- Charts -->
+    <div class="clr-row clr-col-10" *ngIf="detailsAlert" 
+    style="align-items:center; background-color:rgb(255, 255, 255);margin-left:auto;margin-right:auto; margin-top: 30px;">
+        <div class="clr-row clr-col-10" style="margin-left:auto;margin-right:auto;">
+            <clr-date-container class="formDate clr-col-md-12" style="display: -webkit-inline-box;">
+                <label for="dailyVisit" class="clr-control-label clr-col-md-2">
+                    Visit date</label>
+                <input type="date" clrDate name="visitDate" [(ngModel)]="visitDate " 
+                (ngModelChange)="getAlertByFarm($event,farmId)" required>
+
+            </clr-date-container>
+        </div>
+        <div class="clr-row clr-col-12" style="margin-bottom:15px">
+        <clr-datagrid style="width:75%; margin-left:auto;margin-right:auto;">
+            <clr-dg-column>Date</clr-dg-column>
+            <clr-dg-column>Alert</clr-dg-column>
+            <clr-dg-column>Center</clr-dg-column>
+            <!--<clr-dg-column>House</clr-dg-column>-->
+            <clr-dg-row *ngFor="let alert of alerts1">
+                <clr-dg-cell >{{visitDate| date:'dd/MM/yyyy'}}</clr-dg-cell>
+                <clr-dg-cell >{{alert.houseName.length}}</clr-dg-cell>
+                <clr-dg-cell>{{alert.centerName}}</clr-dg-cell>
+                <!--<clr-dg-cell *ngFor="let alerthouse of alert.houseName">
+                        {{alerthouse.house}} 
+                </clr-dg-cell>-->
+                <clr-dg-row-detail *clrIfExpanded>
+                    <table class="table">
+                    <tr *ngFor="let alerthouse of alert.houseName">
+                        <td>{{alerthouse.house}}</td>
+                        <td> 
+                            <tr *ngFor="let aler of alerthouse.alert">
+                                <td *ngFor="let dev of aler.dev"> {{dev}}</td>
+                            </tr>
+                        </td>
+                    </tr>
+                    </table>
+                      
+                </clr-dg-row-detail>
+            </clr-dg-row>
+        </clr-datagrid>
+        </div>
+    </div>
     <div class="clr-row" style="margin-top: 28px;">
-        <div class="clr-col-md-6 background">
-            <div class="clr-col-md-12">
-
+        <div class="clr-col-md-4 background">
                 <div class="content box1" style="background:rgb(255, 255, 255)">
-                    <div id="chartBarCenterMortality"></div>
-                </div>
-
-                <div class="content box1" style="background:rgb(255, 255, 255); margin-top: 10px;">
                     <div id="chartBreedMortality"></div>
-
                 </div>
+        </div>
+        <div class="clr-col-md-4 background">
+            <div class="content box1" style="background:rgb(255, 255, 255);">
+                <div id="chartweeklyweightByFarmUniformity"></div>
+
             </div>
         </div>
-        <div class="clr-col-md-6 background">
-            <div class="content box1" style="background:rgb(255, 255, 255)">
-                <div id="chartBarYearMortality"></div>
+        <div class="clr-col-md-4 background">
+            <div class="content box1" style="background:rgb(255, 255, 255);">
+                <div id="chartweeklyweightByFarmUniformity"></div>
+
             </div>
         </div>
 

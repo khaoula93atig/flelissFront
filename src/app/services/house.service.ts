@@ -53,12 +53,6 @@ export class HouseService {
   }
   //get all center
   getConsultingCenterbyFarm(farmID: string) {
-    console.log(
-      'environment.url_house centerUrl' +
-        environment.centerUrl +
-        'getByFarmId/' +
-        farmID,
-    )
     return this.http.get<any>(
       environment.centerUrl + 'getByFarmId/' + farmID,
       this.httpOptions,
@@ -66,7 +60,6 @@ export class HouseService {
   }
   //get house by id
   gethouse(houseId: string) {
-    console.log('environment.url_house' + environment.url_house + '/' + houseId)
     return this.http.get<any>(
       environment.url_house + '/' + houseId,
       this.httpOptions,

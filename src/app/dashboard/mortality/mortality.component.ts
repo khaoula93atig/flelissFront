@@ -1,10 +1,32 @@
 import { array } from '@amcharts/amcharts5';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { DashboardService } from 'src/app/services/dashboard.service';
+import { FarmService } from 'src/app/services/farm.service';
+import { HouseService } from 'src/app/services/house.service';
 import { SubSink } from 'subsink';
 
 import { UserService } from '../../services/user.service';
+import Drilldown from 'highcharts/modules/drilldown';
+import { ClrDatagrid, ClrIfDetail } from '@clr/angular';
+import { DatePipe } from '@angular/common';
+Drilldown(Highcharts);
+
+declare var require: any;
+const More = require('highcharts/highcharts-more');
+More(Highcharts);
+
+const Exporting = require('highcharts/modules/exporting');
+Exporting(Highcharts);
+
+const ExportData = require('highcharts/modules/export-data');
+ExportData(Highcharts);
+
+const Accessibility = require('highcharts/modules/accessibility');
+Accessibility(Highcharts);
+
+
+
 @Component({
   selector: 'app-mortality',
   templateUrl: './mortality.component.html',
@@ -14,12 +36,41 @@ export class MortalityComponent implements OnInit {
   public optionsPie: any;
   public optionsChart: any;
   public optionsChart1: any;
+  public optionsChart4: any;
 
   constructor(private UserService: UserService,
-    private dashboardService: DashboardService) { }
+    private dashboardService: DashboardService,
+    private farmService:FarmService,
+    private houseService:HouseService,
+    public datepipe: DatePipe) { }
+  
+  farms:any[]=[]  
+  farmId:string
+  farmName:string
+  centers:any[]=[]
+  centerID: string;
+  categories:any[]=[]
+  details:any[]=[]
+  weeklyWeightcenter:any[]=[]
+  weeklyWeighthouse:any[]=[]
+  categories2:any[]=[]
+  details2:any[]=[]
+  totalAlert:number
+  detailsAlert=false
+  alerts:any[]=[]
+  alerts1:any[]=[]
+  find=false
+  find2=false
+  mortalityFarm:number=0
+  survivalByFarm:number=0
+  
+
+
+
   subs: SubSink = new SubSink();
   dataList: any[];
   date= new Date();
+  visitDate=this.datepipe.transform(this.date, 'MM-dd-yyyy')
 
   dynamicArrayFlock: Array<FlockWeight> = [];
   dynamicArrayFlock2: Array<FlockWeight> = [];
@@ -28,311 +79,388 @@ export class MortalityComponent implements OnInit {
   ageFlock: Array<any> = [];
   weight: Array<any> = [];
 
+  companyId:string;
   flockID: string;
   HouseID: string;
-  centerID: string;
+  
   j: number;
 
   ngOnInit(): void {
+
+    this.companyId = sessionStorage.getItem('companyID')
+    console.log(this.companyId)
+    this.getAllFarms()
     this.mortalityHouse();
-    this.mortalityBreed();
-    this.mortalityYear();
-
-    this.subs.add(this.UserService.getWeightByFlock().subscribe(data => {
-      this.dataList = data;
-      console.log(" this.dataList " + this.dataList);
-      let flockWeight: FlockWeight = new Object() as FlockWeight;
-
-      var uniqueArray = this.removeDuplicates(this.dataList, "flockID");
-      console.log("uniqueArray is: " + JSON.stringify(uniqueArray));
-
-
-      //this.ch = this.ch + (this.dataList[0].flockID).toString() + ",";
-      this.dynamicArrayFlock.push(this.dataList[0]);
-      let age = new Array();
-      let weight = new Array();
-      for (let index = 0; index < this.dataList.length - 1; index++) {
-
-
-
-
-
-
-
-        //}
-
-
-      }
-
-
-
-      for (let object of this.dynamicArrayFlock2) {
-        console.log("this.dynamicArrayFlock" + JSON.stringify(object));
-      }
-
-    }));
+    this.getweeklyWeightMesurementbyFarm(this.farmId)
   }
 
-
-  removeDuplicates(data, flockID) {
-    var newArray = [];
-    var lookupObject = {};
-    var age = [];
-    var weight = [];
-
-    for (var i in data) {
-      for (let index = 0; index < data.length; index++) {
-        const element = data[index];
-        let j = index - 1;
-        console.log("j" + j)
-        if (element.flockID != data[j].flockID) {
-          console.log("erreur")
-        }
-
-      }
-
-      //    lookupObject[data[index][flockID]] = data[index];
-      console.log("lookupObject " + JSON.stringify(lookupObject[data[i][flockID]]));
-      console.log(" data[i] " + JSON.stringify(data[i]));
-      age.push(data[i].ageFlock);
-      weight.push(data[i].weight);
-      lookupObject = { HouseID: data[i].houseID, centerID: data[i].centerID, flockID: data[i].flockID, ageFlock: age, weight: weight };
-    }
-
-    for (i in lookupObject) {
-      newArray.push(lookupObject[i]);
-    }
-    return newArray;
-  }
-
-
-  mortalityBreed() {
-   /* let category:any[]=[]
-    let mortality:any[]=[]
-    this.dashboardService.getMortalityByBreed().subscribe(data=>{
+  getAllFarms(){
+    this.farmService.getConsultingFarm(this.companyId).subscribe(data=>{
       console.log(data)
-      for(let res of data){
-        switch(res.breed) { 
-          case 1: { 
-             category.push("Hubbard")
-             break; 
-          } 
-          case 2: { 
-            category.push("Cobb 500") 
-             break; 
-          } 
-          case 3: { 
-            category.push("Ross") 
-            break; 
-         } 
-         case 4: { 
-          category.push("Arbor Acres plus") 
-          break; 
-       } 
-       } 
-        mortality.push(res.mortality)
+      this.farms=data
+      this.farmId=this.farms[0].farmId
+      this.farmName=this.farms[0].farmName
+      this.getAllCentersByFarm(this.farmId)
+      this.getweeklyWeightMesurementbyFarm(this.farmId)
+      this.getAlertByFarm(this.date,this.farmId)
+      this.getSurvivalByFarm(this.farmId)
+    })
+  }
+  getSurvivalByFarm(event){
+    this.dashboardService.getSurvivalByFarm(event).subscribe(res=>this.survivalByFarm=res)
+  }
 
-      }
-      console.log(category)
-      console.log(mortality)
-    this.optionsChart1 = {
-      chart: {
-        type: "bar",
-        zoomType: "y",
-        height: 250,
-      },
-      title: {
-        text: "Mortality by breed"
-      },
-
-      xAxis: {
-        categories: category,
-        type: "category",
-        title: {
-          text: null
-        }
-      },
-      yAxis: {
-        //min: 0,
-        //max: 30,
-        tickInterval: 10,
-        title: {
-          text: null
-        },
-        labels: {
-          overflow: "justify",
-          format: "{value}%"
-        }
-      },
-      plotOptions: {
-        bar: {
-          dataLabels: {
-            enabled: true,
-            format: "{y}%"
+  getAlertByFarm(date,farmId){
+    const datepipe: DatePipe = new DatePipe('en-US')
+    let formattedDate = datepipe.transform(date, 'yyyy-MM-dd')
+    this.dashboardService.getalertByFarm(formattedDate,farmId).subscribe(data=>{
+      this.totalAlert=data.length
+     this.alerts=data
+     this.alerts1=[]
+     if(data.length!=0){
+     this.alerts1=[{'centerName':this.alerts[0].centerName,'houseName':[{'house':this.alerts[0].houseName,'alert':[]}]}]
+     
+     for (let d of data){
+      this.find=false
+        for(let a1 of this.alerts1){
+          if(a1.centerName==d.centerName){
+            this.find=true
           }
         }
-      },
-      tooltip: {
-        valueSuffix: "%"
-      },
-      legend: {
-        enabled: false
-      },
-      series: [
-        {
-          name: "Mortality",
-          color: "#a5d6a7",
-          borderColor: '#60A465',
-          data: mortality
-        }
-      ]
+        if(this.find==true){
+          for(let a of this.alerts1){
+            this.find2=false
+              if(a.centerName==d.centerName){
+                for(let h of a.houseName){
+                  if(h.house==d.houseName){
+                    this.find2=true
+                  }
+                }
+                if(this.find2==true){
+                  for(let h1 of a.houseName){
+                    if(h1.house==d.houseName){
+                      h1.alert.push({'dev':[d.description,d.mesures,d.deviation]})
+                    }
+                  }
+                }else if(this.find2==false){
+                  a.houseName.push({'house':d.houseName,'alert':[{'dev':[d.description,d.mesures,d.deviation]}]})
+                }
+              }
+            }
+        }else if(this.find==false){
+            this.alerts1.push({'centerName':d.centerName,'houseName':[{'house':d.houseName,'alert':[{'deviation':d.deviation}]}]})
+          } 
+     }
     }
-    console.log(this.optionsChart1.series)
-    console.log(this.optionsChart1.xAxis.categories)
-    Highcharts.chart('chartBarCenterMortality', this.optionsChart1);
-  })*/
+      
+    })
   }
+
+  getAllCentersByFarm(event){
+    this.categories=[]
+    this.houseService.getConsultingCenterbyFarm(event).subscribe(
+      (data) => {
+        this.centers = data
+        for(let center of data){
+          this.houseService.getConsultingHouseByCenter(center.centerId).subscribe(data2=>{
+            if(data2.length==0){
+              this.categories.push({"y": 0,"name": center.centerName,"drilldown": null})
+            }
+            else{
+              this.categories.push({"y": 0,"name": center.centerName,"drilldown": center.centerId})
+              this.details.push( {name: center.centerId ,id: center.centerId,data:[]})
+            }
+    })}
+    this.farmService.findById(event).subscribe(data0=>{
+      this.farmName=data0[0].farmName})
+
+        this.dashboardService.getMortalityByCenter(event).subscribe(data1=>{
+          for(let center of data){
+            if(data1.length>0){
+              for(let d of data1){
+                if(center.centerId==d.centerId){
+                  this.getAllHousesByCenter(d.centerId)
+                  for(let cat of this.categories){
+                    if(cat.name==center.centerName){
+                      cat.y=d.percentage
+                    }
+
+                  }
+                }
+              }
+            }
+            
+          }
+        this.mortalityHouse()
+        })
+       
+      }
+    )
+    
+  }
+  getAllHousesByCenter(centerId){
+    this.houseService.getConsultingHouseByCenter(centerId).subscribe(data2=>{
+      for(let d2 of data2){
+        for(let detail of this.details){
+          if(detail.id==centerId){
+            detail.data.push([d2.houseName,0])
+          }
+        }
+        this.dashboardService.getMortalityByHouse(centerId).subscribe(data3=>{
+          for(let detail of this.details){
+            if(detail.id==centerId){
+              for(let d3 of data3 ){
+                this.houseService.gethouse(d3.houseId).subscribe(data4=>{
+                  for(let d of detail.data){
+                    if(data4[0].houseName==d[0]){
+                       d[1]=d3.percentage
+                      
+                    }
+                  }
+      })
+              }
+              
+            }
+          }
+        })
+        }
+    })
+  }
+  
 
   mortalityHouse() {
     this.optionsChart = {
       chart: {
         type: "bar",
         zoomType: "y",
-        height: 250,
       },
       title: {
-        text: "Mortality by breed"
+        align: 'left',
+        text: 'Mortality by center'
       },
-
-      xAxis: {
-        categories: [
-          "House 1",
-          "House 2",
-          "House 3",
-
-        ],
-        title: {
-          text: null
+      subtitle: {
+        align: 'left',
+        text: 'Click the columns to view details.'
+      },
+      accessibility: {
+        announceNewData: {
+          enabled: true
         }
+      },
+      xAxis: {
+        type: 'category'
       },
       yAxis: {
-        min: 0,
-        max: 30,
-        tickInterval: 10,
         title: {
-          text: null
-        },
-        labels: {
-          overflow: "justify",
-          format: "{value}%"
+          text: 'Total percent mortality'
         }
-      },
-      plotOptions: {
-        bar: {
-          dataLabels: {
-            enabled: true,
-            format: "{y}%"
-          }
-        }
-      },
-      tooltip: {
-        valueSuffix: "%"
+    
       },
       legend: {
         enabled: false
       },
+      plotOptions: {
+        series: {
+          borderWidth: 0,
+          dataLabels: {
+            enabled: true,
+            format: '{point.y:.1f}%'
+          }
+        }
+      },
+    
+      tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.data[0].name}</span><br>',
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+      },
+    
       series: [
         {
-          name: "Mortality",
-          color: "#6BAFC0",
-          borderColor: '#046288',
-          data: [24.1, 20.6, 20.3]
-        }
-      ]
-    }
+          name: "Centers",
+          colorByPoint: true,
+          data:this.categories}],
+      drilldown: {
+        breadcrumbs: {
+          position: {
+            align: 'right'
+          }
+        },
+        series: this.details
+      }}
     Highcharts.chart('chartBreedMortality', this.optionsChart);
 
   }
 
-  mortalityYear() {
-    this.optionsPie = {
-      chart: {
-        height: 510,
-      },
-      title: {
-        text: 'Mortality by month'
-      },
-
-      /*subtitle: {
-        text: 'Source: thesolarfoundation.com'
-      },*/
-
-      yAxis: {
-        title: {
-          text: 'Number of Employees'
-        }
-      },
-
-      xAxis: {
-        accessibility: {
-          rangeDescription: 'Range: 2010 to 2017'
-        }
-      },
-
-      legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'middle'
-      },
-
-      plotOptions: {
-        series: {
-          label: {
-            connectorAllowed: false
-          },
-          pointStart: 2012
-        }
-      },
-
-      series: [{
-        name: 'Installation',
-        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-      }, {
-        name: 'Sales & Distribution',
-        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-      }, {
-        name: 'Sales & Distribution',
-        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-      }, {
-        name: 'Project Development',
-        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-      }, {
-        name: 'Other',
-        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
+  gethousesofcenter(centerId){
+    this.houseService.getConsultingHouseByCenter(centerId).subscribe(data2=>{
+      for(let h of data2){
+        this.weeklyWeighthouse.push({'center':centerId,'house':h.houseId,'houseName':h.houseName,'excellent':0,'average':0 , 'poor':0})
       }
-
-
-      ],
-
-      responsive: {
-        rules: [{
-          condition: {
-            maxWidth: 500,
-          },
-          chartOptions: {
-            legend: {
-              layout: 'horizontal',
-              align: 'center',
-              verticalAlign: 'bottom'
+      this.dashboardService.getweeklyweightbyCenterforHouse(centerId).subscribe(res=>{
+        for(let d of res){
+          for(let w1 of this.weeklyWeighthouse){
+            if(w1.house==d.houseId){
+              if(d.uniformity>=80){
+                w1.excellent=w1.excellent+1
+              }else if(d.uniformity<80 && d.uniformity>=68){
+                w1.average=w1.average+1
+              }else if(d.uniformity<68){
+                w1.poor=w1.poor+1
+              }
+              
             }
           }
-        }]
-      }
 
-    }
-    Highcharts.chart('chartBarYearMortality', this.optionsPie);
+        }
+        for(let wei of this.weeklyWeighthouse){
+          for(let d of this.details2){
+            if(d.id=='excellent'+wei.center){
+              let exist=false
+              for(let d1 of d.data){
+              if(d1[0]==wei.houseName){
+                d1[1]=wei.excellent
+                exist=true
+              }
+            }
+            if(exist==false){
+               d.data.push([wei.houseName,wei.excellent])
+              }
+             
+            }else if(d.id=='average'+wei.center){
+              let exist1=false
+              for(let d1 of d.data){
+              if(d1[0]==wei.houseName){
+                d1[1]=wei.average
+                exist1=true
+              }
+            }
+            if(exist1==false){
+               d.data.push([wei.houseName,wei.average])
+              }
+            }else if(d.id=='poor'+wei.center){
+              let exist2=false
+              for(let d1 of d.data){
+              if(d1[0]==wei.houseName){
+                d1[1]=wei.poor
+                exist2=true
+              }
+            }
+            if(exist2==false){
+               d.data.push([wei.houseName,wei.poor])
+              }
+            }
+
+          }
+        }
+      })
+        
+      
+  })
 
   }
+
+getweeklyWeightMesurementbyFarm(event){
+this.weeklyWeightcenter=[]
+this.weeklyWeighthouse=[]
+this.categories2=[{name:'excellent', color:'#02675c', data:[]},
+{name:'average',color:'#ffd100',data:[]},
+{name:'poor',color:'#FF3300',data:[]}]
+this.details2=[]
+    this.dashboardService.getweeklyweightbyFarmforcenter(event).subscribe(data=>{
+      this.houseService.getConsultingCenterbyFarm(event).subscribe(
+        (data1) => {
+      for(let c of data1){
+        this.weeklyWeightcenter.push({'center':c.centerId,'centerName':c.centerName,'excellent':0,'average':0 , 'poor':0})
+        this.details2.push({name:'excellent', id:'excellent'+c.centerId, data:[]},
+        {name:'average', id:'average'+c.centerId, data:[]},
+        {name:'poor', id:'poor'+c.centerId, data:[]})
+        this.gethousesofcenter(c.centerId)
+      }
+      for(let d of data){
+        for(let w of this.weeklyWeightcenter){
+          if(w.center==d.centerId){
+            if(d.uniformity>=80){
+              w.excellent=w.excellent+1
+            }else if(d.uniformity<80 && d.uniformity>=68){
+              w.average=w.average+1
+            }else if(d.uniformity<68){
+              w.poor=w.poor+1
+            }
+            
+          }
+          
+        }
+        
+      }
+      
+    
+    
+    for(let wei of this.weeklyWeightcenter){
+      this.categories2[0].data.push({name: wei.centerName, y: wei.excellent,drilldown: 'excellent'+wei.center})
+      this.categories2[1].data.push({name: wei.centerName, y: wei.average,drilldown: 'average'+wei.center})
+      this.categories2[2].data.push({name: wei.centerName, y: wei.poor,drilldown: 'poor'+wei.center})
+    }
+    this.weeklyWeightByhouse()
+        })
+    })
+
+   }
+
+   weeklyWeightByhouse(){
+    this.optionsChart4 = {
+      chart: {
+        type: 'bar'
+      },
+      title: {
+        align: 'left',
+        text: 'Uniformity by centers'
+      },
+      subtitle: {
+        align: 'left',
+        text: 'Click the columns to view details.'
+      },
+      xAxis: {
+        type: 'category'
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Total percent uniformity'
+        }
+      },
+      legend: {
+        reversed: true
+      },
+      plotOptions: {
+          series: {
+            stacking: 'normal',
+            //borderWidth: 0,
+            dataLabels: {
+              enabled: true,
+              inside:true,
+              //format: '{point.y}',
+          
+            }
+          }
+      },
+      tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b><br/>'
+      },
+      series: this.categories2,
+    drilldown: {
+      breadcrumbs: {
+        position: {
+          align: 'right'
+        }
+      },
+      series:this.details2
+    }
+    }
+    Highcharts.chart('chartweeklyweightByFarmUniformity', this.optionsChart4);
+   }
+
+
 
 
 

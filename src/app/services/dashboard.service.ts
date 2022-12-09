@@ -47,9 +47,49 @@ export class DashboardService {
     return this.http.get<any>(environment.url_mortaliteDash+'/farmgeneral/'+companyId, this.httpOptions)
   }
 
+  //percentage Mortality by center
+  getMortalityByCenter(farmId:String){
+    return this.http.get<any>(environment.url_mortaliteDash+'/center/'+farmId, this.httpOptions)
+  }
+
+  //percentage Mortality By house
+  getMortalityByHouse(centerId:String){
+    return this.http.get<any>(environment.url_mortaliteDash+'/house/'+centerId, this.httpOptions)
+  }
+
   //weekly weight mesurement by company for farm 
   getweeklyweightbycompanyforfarms(companyId:string){
     return this.http.get<any>(environment.url_dashboard+'/weeklyweight/company/'+companyId, this.httpOptions)
+  }
+
+  //weekly weight mesurement by farm for center
+  getweeklyweightbyFarmforcenter(farmId:string){
+    return this.http.get<any>(environment.url_dashboard+'/weeklyweight/farm/'+farmId, this.httpOptions)
+  }
+
+  //weekly weight mesurement by center for house
+  getweeklyweightbyCenterforHouse(centerId:string){
+    return this.http.get<any>(environment.url_dashboard+'/weeklyweight/center/'+centerId, this.httpOptions)
+  }
+
+  //get alert by farm
+  getalertByFarm(visitDate:string, farmId:string){
+    return this.http.get<any>(environment.url_dashboard+'/alert/'+visitDate+'/'+farmId,this.httpOptions)
+  }
+
+  //get mortality by company
+  getMortalityByCompany(companyId:string){
+    return this.http.get<any>(environment.url_mortaliteDash+'/company/'+companyId, this.httpOptions)
+  }
+
+  //get survival by company
+  getSurvivalByCompany(companyId:string){
+    return this.http.get<any>(environment.url_mortaliteDash+'/company/survival/'+companyId, this.httpOptions)
+  }
+
+  //get survival by farm
+  getSurvivalByFarm(farmId:string){
+    return this.http.get<any>(environment.url_mortaliteDash+'/farm/survival/'+farmId, this.httpOptions)
   }
 
 

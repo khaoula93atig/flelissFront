@@ -27,9 +27,8 @@ export class FarmService {
 
   //get all farm
   getConsultingFarm(companyID: string) {
-    console.log('farm_url' + environment.url_farm + companyID)
     return this.http.get<any>(
-      environment.url_farm + companyID,
+      environment.url_farm +'/getByCompany/'+ companyID,
       this.httpOptions,
     )
   }
@@ -44,7 +43,6 @@ export class FarmService {
 
   // Create Registration Farm
   createRegistrationFarms(registrationFarms: IRegistrationFarms) {
-    console.log('registrationFarms', registrationFarms)
     return this.http.post<IRegistrationFarms>(
       environment.registrationFarmUrl,
       registrationFarms,
@@ -76,13 +74,17 @@ export class FarmService {
 
   // Create  center
   createCenter(center: Center) {
-    console.log('center ***** ', center)
     return this.http.post<Center>(environment.centerUrl + 'save', center)
   }
 
   //save modification
   updateCenter(center: any) {
     return this.http.put<any>(environment.centerUrl + '/update', center)
+  }
+
+  //getById
+  findById(id:string){
+    return this.http.get<any>(environment.url_farm +'/getByid/'+ id)
   }
   
 }

@@ -37,6 +37,8 @@ export class GeneralComponent implements OnInit {
   donnes1:any[]=[]
   farms:any[]=[]
   weeklyWeightFarm:any[]=[]
+  moratlityCompany:number=0
+  survivalCompany:number=0
 
 
   
@@ -47,7 +49,8 @@ export class GeneralComponent implements OnInit {
 
   ngOnInit(): void {
     this.companyId = sessionStorage.getItem('companyID')
-    console.log(this.companyId)
+    this.getMortalityByCompany()
+    this.getSurvivalByCompany()
     this.getFarms()
     this.dailyMortalityByFarm()
     this.mortalityByFarm()
@@ -58,11 +61,16 @@ export class GeneralComponent implements OnInit {
   getFarms(){
     this.farmService.getConsultingFarm(this.companyId).subscribe(data=>{this.farms=data})
   }
+  getMortalityByCompany(){
+    this.dashboardService.getMortalityByCompany(this.companyId).subscribe(res=>this.moratlityCompany=res)
+  }
+  getSurvivalByCompany(){
+    this.dashboardService.getSurvivalByCompany(this.companyId).subscribe(res=>this.survivalCompany=res)
+  }
 
   dailyMortalityByFarm() {
     const datepipe: DatePipe = new DatePipe('en-US')
     let formattedDate = datepipe.transform(this.date, 'yyyy-MM-dd')
-    console.log('string',formattedDate)
       this.dashboardService.getMortalityByFarm(8,formattedDate ,this.companyId).subscribe(data1=>{
         for(let farm of this.farms){
           this.donnes.push({
@@ -325,8 +333,6 @@ export class GeneralComponent implements OnInit {
          }
        ]
      }
-     console.log(this.optionsChart3.series)
-     console.log(this.optionsChart3.xAxis.categories)
      Highcharts.chart('chartMortalityByBreed', this.optionsChart3);
    })
    }
@@ -334,7 +340,6 @@ export class GeneralComponent implements OnInit {
    getweeklyWeightMesurementbyCompany(){
 
     this.dashboardService.getweeklyweightbycompanyforfarms(this.companyId).subscribe(data=>{
-      console.log('weight',data)
       for(let f of this.farms){
         this.weeklyWeightFarm.push({'farm':f.farmId,'farmname':f.farmName,'excellent':0,'average':0 , 'poor':0})
       }
@@ -352,13 +357,9 @@ export class GeneralComponent implements OnInit {
           }
         }
     }
-    console.log(this.weeklyWeightFarm)
-    let seri
     this.optionsChart4 = {
       chart: {
-        type: 'column',
-        inverted: true,
-        polar: true
+        type: "bar",
       },
       title: {
         text: 'Weekly weight by farm'
@@ -369,43 +370,20 @@ export class GeneralComponent implements OnInit {
       tooltip: {
         outside: true
       },
-      pane: {
-        size: '85%',
-        innerSize: '20%',
-        endAngle: 270
-      },
       xAxis: {
-        tickInterval: 1,
-        labels: {
-          align: 'right',
-          useHTML: true,
-          allowOverlap: true,
-          step: 1,
-          y: 3,
-          style: {
-            fontSize: '13px'
-          }
-        },
-        lineWidth: 0,
         categories:[]
       },
       yAxis: {
-        crosshair: {
-          enabled: true,
-          color: '#333'
-        },
-        lineWidth: 0,
-        tickInterval: 25,
-        reversedStacks: false,
-        endOnTick: true,
-        showLastLabel: true
+        title: {
+          text: 'Uniformity'
+        }
+      },
+      legend: {
+        reversed: true
       },
       plotOptions: {
-        column: {
-          stacking: 'normal',
-          borderWidth: 0,
-          pointPadding: 0,
-          groupPadding: 0.15
+        series: {
+          stacking: 'normal'
         }
       },
       series: [{name:'excellent', color:'#02675c', data:[]},
@@ -419,7 +397,6 @@ export class GeneralComponent implements OnInit {
       this.optionsChart4.series[1].data.push(wei.average)
       this.optionsChart4.series[2].data.push(wei.poor)
     }
-    console.log('series',this.optionsChart4.series)
   Highcharts.chart('chartweeklyweightByFarmUniformity', this.optionsChart4);
     })
 
