@@ -209,8 +209,8 @@ export class GeneralComponent implements OnInit {
               color: {
                 linearGradient: { x1: 0, x2: 1, y1: 0, y2: 1 },
                 stops: [
-                    [0, '#ffd100'],
-                    [1, '#c29f02']
+                    [0, '#FEEAA1'],
+                  [1, '#FFD849']
                 ]
             },
               //color: "#ffd100",
@@ -291,36 +291,36 @@ export class GeneralComponent implements OnInit {
         {
           linearGradient: { x1: 0, x2: 1, y1: 0, y2: 1 },
           stops: [
-              [0, '#fa8c70'],
-              [1, '#FF3300']
+              [0, '#1F7D77'],
+              [1, '#18534F']
           ]
         },
         {
           linearGradient: { x1: 0, x2: 1, y1: 0, y2: 1 },
           stops: [
-              [0, '#7a6f6c'],
-              [1, '#574b48']
+              [0, '#FEEAA1'],
+              [1, '#FFD849']
           ]
       },
         {
           linearGradient: { x1: 0, x2: 1, y1: 0, y2: 1 },
           stops: [
-              [0, '#ffd100'],
-              [1, '#c29f02']
+              [0, '#D6955B'],
+              [1, '#D07627']
           ]
         },
         {
           linearGradient: { x1: 0, x2: 1, y1: 0, y2: 1 },
           stops: [
-              [0, '#02b5a2'],
-              [1, '#02675c']
+              [0, '#ECF8F6'],
+              [1, '#A0FBEC']
           ]
       },
       {
         linearGradient: { x1: 0, x2: 1, y1: 0, y2: 1 },
         stops: [
-            [0, '#fa8c70'],
-            [1, '#FF3300']
+            [0, '#64605C'],
+            [1, '#392E2C']
         ]
       }
       
@@ -388,7 +388,7 @@ export class GeneralComponent implements OnInit {
       },
       series: [{name:'excellent', color:'#02675c', data:[]},
       {name:'average',color:'#ffd100',data:[]},
-      {name:'poor',color:'#FF3300',data:[]}
+      {name:'poor',color:'#D07627',data:[]}
     ]
     }
     for(let wei of this.weeklyWeightFarm){

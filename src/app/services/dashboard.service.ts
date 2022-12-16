@@ -77,6 +77,21 @@ export class DashboardService {
     return this.http.get<any>(environment.url_dashboard+'/alert/'+visitDate+'/'+farmId,this.httpOptions)
   }
 
+  //get alert by house
+  getalertByhouse(visitDate:string, houseId:string){
+    return this.http.get<any>(environment.url_dashboard+'/alert/house/'+visitDate+'/'+houseId,this.httpOptions)
+  }
+
+  //get feed consumption
+  getfeedByhouse(visitDate:string, houseId:string){
+    return this.http.get<any>(environment.url_dashboard+'/feed/house/'+visitDate+'/'+houseId,this.httpOptions)
+  }
+
+  //get feed consumption
+  gettotalFeedByhouse(visitDate:string, houseId:string){
+    return this.http.get<any>(environment.url_dashboard+'/totalfeed/house/'+visitDate+'/'+houseId,this.httpOptions)
+  }
+
   //get mortality by company
   getMortalityByCompany(companyId:string){
     return this.http.get<any>(environment.url_mortaliteDash+'/company/'+companyId, this.httpOptions)
@@ -90,6 +105,21 @@ export class DashboardService {
   //get survival by farm
   getSurvivalByFarm(farmId:string){
     return this.http.get<any>(environment.url_mortaliteDash+'/farm/survival/'+farmId, this.httpOptions)
+  } 
+  
+  //get mortality by farm
+  getMortalityCountByFarm(farmId:string){
+    return this.http.get<any>(environment.url_mortaliteDash+'/farm/mortality/'+farmId, this.httpOptions)
+  } 
+
+  //get mortality by house
+  getMortalityCountByHouse(houseId:string, date:string ){
+    return this.http.get<any>(environment.url_mortaliteDash+'/house/mortality/'+houseId+'/'+date, this.httpOptions)
+  } 
+
+  //get survival by house
+  getSurvivalByhouse(houseId:string){
+    return this.http.get<any>(environment.url_mortaliteDash+'/house/survival/'+houseId, this.httpOptions)
   }
 
 

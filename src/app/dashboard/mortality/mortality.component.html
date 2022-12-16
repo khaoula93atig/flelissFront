@@ -1,39 +1,38 @@
-<div class="container" style="background:rgba(255, 255, 255, .5);    margin: 24px 20px;
-padding: 16px 10px;">
-    <!-- Title Center-->
-    <div class="clr-col-md-12">
-    
-            <div class="DateHeader">
-                <p>{{date | date:'dd/MM/yyyy'}}</p>
+<div class="container" style="background:rgba(255, 255, 255); margin: 24px 20px; padding: 16px 10px;">
+    <!-- Title ===== Select farm + Date -->
+    <div class="clr-col-md-12" style=" margin-bottom: 20px; background-color: #f2f2f2; padding: 12px 10px;">
+        <div class="clr-row">
+            <div class="clr-col-md-6">
+                <form clrForm clrLayout="horizontal" style="text-align: left;">
+                    <clr-select-container style="margin-top: 0px">
+                        <label>Farm</label>
+                        <select clrSelect name="farm" [(ngModel)]="farmId"
+                            (change)="getAllCentersByFarm($event.target.value);getweeklyWeightMesurementbyFarm($event.target.value);
+                getAlertByFarm(visitDate,$event.target.value);getSurvivalByFarm($event.target.value);getMortalityByFarm($event.target.value);">
+                            <option *ngFor="let farm of farms" [value]="farm.farmId"> {{farm.farmName}}
+                            </option>
+                        </select>
+                    </clr-select-container>
+                </form>
             </div>
 
-    </div> 
+
+            <div class="clr-col-md-6">
+                <div class="DateHeader">
+                    <p><clr-icon shape="calendar" style=" height: 22px;
+                        width: 22px; margin-right: 5px;   margin-bottom: 5px;"></clr-icon>{{date | date:'dd/MM/yyyy'}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Select + Boxes -->
     <div class="clr-col-md-12">
-
         <div class="clr-row">
             <div class="clr-col-md-6">
-                <div class="clr-row clr-col-md-12">
-                    <div class="clr-col-md-6">
-                        <div class="titleHeader">
-                            <h5>Title of Farm {{farmName}}</h5>
-                        </div>
-                    </div>
-                    <div class="clr-col-md-6">
-                        <form clrForm clrLayout="horizontal" style="text-align: right;">
-                            <clr-select-container>
-                                <label>Farm</label>
-                                <select clrSelect name="farm" [(ngModel)]="farmId" 
-                                (change)="getAllCentersByFarm($event.target.value);getweeklyWeightMesurementbyFarm($event.target.value);
-                                getAlertByFarm(visitDate,$event.target.value);getSurvivalByFarm($event.target.value)">
-                                    <option *ngFor="let farm of farms" [value]="farm.farmId"> {{farm.farmName}} </option>
-                                </select>
-                            </clr-select-container>
-                        </form>
-                    </div>
-
-
+                <div class="titleHeader">
+                    <h5>{{farmName}}</h5>
                 </div>
             </div>
 
@@ -46,20 +45,13 @@ padding: 16px 10px;">
                                 <clr-icon class="alert-icon card-icon" shape="exclamation-circle" style="color:red"></clr-icon>
                             </div>
                             <div class="clr-col">
+                                <h3 style="color: red;">{{totalAlert}}</h3>
                                 <h4>Alert</h4>
                             </div>
                             <div class="clr-col">
-                                <h3>{{totalAlert}}</h3>
+                              
                             </div>
-                        </div>
-                        <div class="clr-row">
-                            <div class="clr-col">
-                                <a style="float: left;" (click)="detailsAlert=!detailsAlert">View details</a>
-                            </div>
-                            <div class="clr-col">
-                                <span style="float: right;">></span>
-                            </div>
-                            
+                     
                         </div>
                         
                         
@@ -67,22 +59,22 @@ padding: 16px 10px;">
                 </div>
             </div>
 
+
             <div class="clr-col-md-2 background ">
-                <div class="value boxContent">
+                <div class="value boxContent" 
+                style="background-image: linear-gradient(to bottom right, #01897a, #004840); border-radius: 4px;">
                     <div class="contentText">
-                        <div class="clr-row">
-                            <div class="clr-col">
-                                <clr-icon class="alert-icon card-icon" shape="exclamation-circle" style="color:red"></clr-icon>
+
+                        <div class="clr-col-md-12">
+                            <div class="clr-col-md-12">
+                                <h3 style="color: #fff;">{{survivalByFarm}} <small>%</small></h3>
                             </div>
-                            <div class="clr-col">
-                                <h4>Survival rate</h4>
+                            <div class="clr-col-md-12">
+                                <h4 style="color: #fff;">Survival rate</h4>
                             </div>
-                            <div class="clr-col">
-                                <h3>{{survivalByFarm}}</h3>
-                            </div>
+
                         </div>
-                        
-                        
+
                     </div>
                 </div>
             </div>
@@ -90,82 +82,89 @@ padding: 16px 10px;">
             <div class="clr-col-md-2 background ">
                 <div class="value boxContent">
                     <div class="contentText">
-                        <div class="clr-row">
-                            <div class="clr-col">
-                                <clr-icon class="alert-icon card-icon" shape="exclamation-circle" style="color:red"></clr-icon>
+
+                        <div class="clr-col-md-12">
+                            <div class="clr-col-md-12">
+                                <h3>{{mortalityFarm}}<small> %</small></h3>
                             </div>
-                            <div class="clr-col">
-                                <h4>Alert</h4>
+                            <div class="clr-col-md-12">
+                                <h4>Mortality</h4>
                             </div>
-                            <div class="clr-col">
-                                <h3>{{totalAlert}}</h3>
-                            </div>
+
                         </div>
+
+
                     </div>
                 </div>
             </div>
+
+
 
         </div>
     </div>
 
 
-    <!-- Charts -->
-    <div class="clr-row clr-col-10" *ngIf="detailsAlert" 
-    style="align-items:center; background-color:rgb(255, 255, 255);margin-left:auto;margin-right:auto; margin-top: 30px;">
+    <!-- Table details -->
+    <div class="clr-row clr-col-10" *ngIf="detailsAlert"
+        style="align-items:center; background-color:rgb(255, 255, 255);margin-left:auto;margin-right:auto; margin-top: 30px;">
         <div class="clr-row clr-col-10" style="margin-left:auto;margin-right:auto;">
             <clr-date-container class="formDate clr-col-md-12" style="display: -webkit-inline-box;">
                 <label for="dailyVisit" class="clr-control-label clr-col-md-2">
                     Visit date</label>
-                <input type="date" clrDate name="visitDate" [(ngModel)]="visitDate " 
-                (ngModelChange)="getAlertByFarm($event,farmId)" required>
+                <input type="date" clrDate name="visitDate" [(ngModel)]="visitDate "
+                    (ngModelChange)="getAlertByFarm($event,farmId)" required>
 
             </clr-date-container>
         </div>
         <div class="clr-row clr-col-12" style="margin-bottom:15px">
-        <clr-datagrid style="width:75%; margin-left:auto;margin-right:auto;">
-            <clr-dg-column>Date</clr-dg-column>
-            <clr-dg-column>Alert</clr-dg-column>
-            <clr-dg-column>Center</clr-dg-column>
-            <!--<clr-dg-column>House</clr-dg-column>-->
-            <clr-dg-row *ngFor="let alert of alerts1">
-                <clr-dg-cell >{{visitDate| date:'dd/MM/yyyy'}}</clr-dg-cell>
-                <clr-dg-cell >{{alert.houseName.length}}</clr-dg-cell>
-                <clr-dg-cell>{{alert.centerName}}</clr-dg-cell>
-                <!--<clr-dg-cell *ngFor="let alerthouse of alert.houseName">
+            <clr-datagrid style="width:75%; margin-left:auto;margin-right:auto;">
+                <clr-dg-column>Date</clr-dg-column>
+                <clr-dg-column>Alert</clr-dg-column>
+                <clr-dg-column>Center</clr-dg-column>
+                <!--<clr-dg-column>House</clr-dg-column>-->
+                <clr-dg-row *ngFor="let alert of alerts1">
+                    <clr-dg-cell>{{visitDate| date:'dd/MM/yyyy'}}</clr-dg-cell>
+                    <clr-dg-cell>{{alert.houseName.length}}</clr-dg-cell>
+                    <clr-dg-cell>{{alert.centerName}}</clr-dg-cell>
+                    <!--<clr-dg-cell *ngFor="let alerthouse of alert.houseName">
                         {{alerthouse.house}} 
                 </clr-dg-cell>-->
-                <clr-dg-row-detail *clrIfExpanded>
-                    <table class="table">
-                    <tr *ngFor="let alerthouse of alert.houseName">
-                        <td>{{alerthouse.house}}</td>
-                        <td> 
+                    <clr-dg-row-detail *clrIfExpanded>
+                        <table class="table">
+                            <tr *ngFor="let alerthouse of alert.houseName">
+                                <td>{{alerthouse.house}}</td>
+                                <td>
                             <tr *ngFor="let aler of alerthouse.alert">
                                 <td *ngFor="let dev of aler.dev"> {{dev}}</td>
                             </tr>
-                        </td>
-                    </tr>
-                    </table>
-                      
-                </clr-dg-row-detail>
-            </clr-dg-row>
-        </clr-datagrid>
+                            </td>
+                            </tr>
+                        </table>
+
+                    </clr-dg-row-detail>
+                </clr-dg-row>
+            </clr-datagrid>
         </div>
     </div>
-    <div class="clr-row" style="margin-top: 28px;">
+     <!--/ Table details -->
+
+
+    <!-- 3 Charts -->
+    <div class="clr-row" style="margin-top: 10px;">
         <div class="clr-col-md-4 background">
-                <div class="content box1" style="background:rgb(255, 255, 255)">
-                    <div id="chartBreedMortality"></div>
-                </div>
+            <div class="content box1" style="background:rgb(255, 255, 255)">
+                <div id="chartBreedMortality"  style="height: 300px;"></div>
+            </div>
         </div>
         <div class="clr-col-md-4 background">
             <div class="content box1" style="background:rgb(255, 255, 255);">
-                <div id="chartweeklyweightByFarmUniformity"></div>
+                <div id="chartweeklyweightByFarmUniformity" style="height: 300px;"></div>
 
             </div>
         </div>
         <div class="clr-col-md-4 background">
             <div class="content box1" style="background:rgb(255, 255, 255);">
-                <div id="chartweeklyweightByFarmUniformity"></div>
+                <div id="chartweeklyweightByFarmUniformity1" style="height: 300px;"></div>
 
             </div>
         </div>
@@ -177,7 +176,163 @@ padding: 16px 10px;">
 
     <!-- /Charts -->
 
+     <!-- Select -->
+    <div class=" clr-row clr-col-md-12" style="margin: auto; background-color: #f2f2f2; padding: 0px 10px 17px;">
+        <div class="clr-col-md-3">
+            <form clrForm clrLayout="horizontal" style="text-align: right;">
+                <clr-select-container>
+                    <label>Center</label>
+                    <select clrSelect name="center" [(ngModel)]="centerID"
+                        (change)="getAllhouseByCenterFordetails($event.target.value);">
+                        <option *ngFor="let center of centers" [value]="center.centerId"> {{center.centerName}}
+                        </option>
+                    </select>
+                </clr-select-container>
+            </form>
+        </div>
+
+        <div class="clr-col-md-3">
+            <form clrForm clrLayout="horizontal" style="text-align: right;"
+                (change)="getAlertbyhouse($event.target.value);getMortalityByhouseDaily($event.target.value);
+    getSurvivalByHouse($event.target.value); getfeedByhouseDaily($event.target.value) ; getTotalFood($event.target.value)">
+                <clr-select-container>
+                    <label>House</label>
+                    <select clrSelect name="house" [(ngModel)]="houseId">
+                        <option *ngFor="let house of houses" [value]="house.houseId"> {{house.houseName}}
+                        </option>
+                    </select>
+                </clr-select-container>
+            </form>
+        </div>
+    </div>
+
+
+
+   <!-- Carts -->
+    <div class="clr-row" style="margin: auto;">
+        <div class="clr-row clr-col-md-12">
+        </div>
+        <div class="clr-row clr-col-md-12">
+            <div class="clr-col-md-4">
+           
+                    <h3>Death analysis</h3>
+        
+                <div class="clr-row">
+                    <div class="basic-column w-col w-col-3">
+                        <div class="tag-wrapper">
+                            <div class="number-card">
+                                <h1 class="number-card-number">{{mortalityByHousedaily}} <small style="font-size:15px;">birds</small></h1>
+                                <div class="number-card-divider"></div>
+                                <div class="number-card-progress-wrapper">
+                                    <div class="tagline number-card-currency">Daily Mortality</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="basic-column w-col w-col-3">
+                        <div class="tag-wrapper">
+                            <div class="number-card1">
+                                <h1 class="number-card-number1">{{mortalityByHouseyestarday}} <small style="font-size:15px;">birds</small></h1>
+                                <div class="number-card-divider1"></div>
+                                <div class="number-card-progress-wrapper">
+                                    <div class="tagline number-card-currency1">Day before yestarday</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clr-row">
+                    <div class="basic-column w-col w-col-3">
+                        <div class="tag-wrapper">
+                            <div class="number-card1">
+                                <h1 class="number-card-number1">{{decreaseMortality}}</h1>
+                                <div class="number-card-divider1"></div>
+                                <div class="number-card-progress-wrapper">
+                                    <div class="tagline number-card-currency1">Increase or decrease</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="basic-column w-col w-col-3">
+                        <div class="tag-wrapper">
+                            <div class="number-card">
+                                <h1 class="number-card-number">{{survivalByhouse}} <small style="font-size:15px;">birds</small></h1>
+                                <div class="number-card-divider"></div>
+                                <div class="number-card-progress-wrapper">
+                                    <div class="tagline number-card-currency">Survival rate</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clr-col-md-4">
+        
+                <div class="clr-row" style="margin-top: 30px;">
+                    <div id="chartDetailsAlerts" style=" height: 300px;"></div>
+                </div>
+            </div>
+            <div class="clr-col-md-4">
+           
+                    <h3>Feed analysis</h3>
+      
+                <div class="clr-row">
+                    <div class="basic-column w-col w-col-3">
+                        <div class="tag-wrapper">
+                            <div class="number-card1">
+                                <h1 class="number-card-number1">{{feedhousedaily}} <small style="font-size:15px;">g/birds</small></h1>
+                                <div class="number-card-divider1"></div>
+                                <div class="number-card-progress-wrapper">
+                                    <div class="tagline number-card-currency1">Quantity material feed</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="basic-column w-col w-col-3">
+                        <div class="tag-wrapper">
+                            <div class="number-card">
+                                <h1 class="number-card-number">{{feedhouseYestrday}} <small style="font-size:15px;">g/birds</small></h1>
+                                <div class="number-card-divider"></div>
+                                <div class="number-card-progress-wrapper">
+                                    <div class="tagline number-card-currency">Quantity of yesterday</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clr-row">
+                    <div class="basic-column w-col w-col-3">
+                        <div class="tag-wrapper">
+                            <div class="number-card">
+                                <h1 class="number-card-number">{{decreasefeed}} <small style="font-size:15px;">g/birds</small></h1>
+                                <div class="number-card-divider"></div>
+                                <div class="number-card-progress-wrapper">
+                                    <div class="tagline number-card-currency">Increase or decrease</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="basic-column w-col w-col-3">
+                        <div class="tag-wrapper">
+                            <div class="number-card1">
+                                <h1 class="number-card-number1">{{totalFeed}} <small style="font-size:15px;">g/birds</small></h1>
+                                <div class="number-card-divider1"></div>
+                                <div class="number-card-progress-wrapper">
+                                    <div class="tagline number-card-currency1">Cumulative feed</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
 </div>
+
+
 
 
 <div class="container">

@@ -8,8 +8,11 @@ import { SubSink } from 'subsink';
 
 import { UserService } from '../../services/user.service';
 import Drilldown from 'highcharts/modules/drilldown';
-import { ClrDatagrid, ClrIfDetail } from '@clr/angular';
 import { DatePipe } from '@angular/common';
+
+import * as am4core from '@amcharts/amcharts4/core';
+import * as am4charts from '@amcharts/amcharts4/charts';
+import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 Drilldown(Highcharts);
 
 declare var require: any;
@@ -37,6 +40,8 @@ export class MortalityComponent implements OnInit {
   public optionsChart: any;
   public optionsChart1: any;
   public optionsChart4: any;
+  public optionsChart3: any;
+  public chart :any;
 
   constructor(private UserService: UserService,
     private dashboardService: DashboardService,
@@ -49,6 +54,8 @@ export class MortalityComponent implements OnInit {
   farmName:string
   centers:any[]=[]
   centerID: string;
+  houses:any[]=[]
+  houseId:string
   categories:any[]=[]
   details:any[]=[]
   weeklyWeightcenter:any[]=[]
@@ -63,35 +70,29 @@ export class MortalityComponent implements OnInit {
   find2=false
   mortalityFarm:number=0
   survivalByFarm:number=0
-  
+  mortalityByHousedaily:number=0
+  mortalityByHouseyestarday:number=0
+  survivalByhouse:number=0
+  decreaseMortality=0
+  feedhousedaily=0
+  feedhouseYestrday=0
+  decreasefeed=0
+  totalFeed=0
 
-
-
-  subs: SubSink = new SubSink();
-  dataList: any[];
   date= new Date();
   visitDate=this.datepipe.transform(this.date, 'MM-dd-yyyy')
-
-  dynamicArrayFlock: Array<FlockWeight> = [];
-  dynamicArrayFlock2: Array<FlockWeight> = [];
-  newDynamicEcriture: any = {};
-  ch: Array<any> = [];
-  ageFlock: Array<any> = [];
-  weight: Array<any> = [];
-
   companyId:string;
-  flockID: string;
-  HouseID: string;
   
-  j: number;
 
   ngOnInit(): void {
 
     this.companyId = sessionStorage.getItem('companyID')
     console.log(this.companyId)
+    this.getDetailsAlertsByHouse()
     this.getAllFarms()
     this.mortalityHouse();
     this.getweeklyWeightMesurementbyFarm(this.farmId)
+    
   }
 
   getAllFarms(){
@@ -104,10 +105,15 @@ export class MortalityComponent implements OnInit {
       this.getweeklyWeightMesurementbyFarm(this.farmId)
       this.getAlertByFarm(this.date,this.farmId)
       this.getSurvivalByFarm(this.farmId)
+      this.getMortalityByFarm(this.farmId)
     })
   }
   getSurvivalByFarm(event){
     this.dashboardService.getSurvivalByFarm(event).subscribe(res=>this.survivalByFarm=res)
+  }
+
+  getMortalityByFarm(event){
+    this.dashboardService.getMortalityCountByFarm(event).subscribe(res=>this.mortalityFarm=res)
   }
 
   getAlertByFarm(date,farmId){
@@ -158,9 +164,14 @@ export class MortalityComponent implements OnInit {
 
   getAllCentersByFarm(event){
     this.categories=[]
+    this.details=[]
     this.houseService.getConsultingCenterbyFarm(event).subscribe(
       (data) => {
         this.centers = data
+        if(data.length!=0){
+          this.centerID= data[0].centerId
+          this.getAllhouseByCenterFordetails(this.centerID)
+          console.log(this.centerID)
         for(let center of data){
           this.houseService.getConsultingHouseByCenter(center.centerId).subscribe(data2=>{
             if(data2.length==0){
@@ -191,10 +202,15 @@ export class MortalityComponent implements OnInit {
             }
             
           }
+          console.log('cat',this.categories)
         this.mortalityHouse()
         })
        
       }
+      else{
+        this.mortalityHouse()
+      }
+    }
     )
     
   }
@@ -242,6 +258,8 @@ export class MortalityComponent implements OnInit {
         align: 'left',
         text: 'Click the columns to view details.'
       },
+      colors: ['#004C50', '#00939C', '#10ABB4', '#9C3E00', '#502000',
+      '#f28f43', '#77a1e5', '#c42525', '#a6c96a'],
       accessibility: {
         announceNewData: {
           enabled: true
@@ -362,9 +380,9 @@ export class MortalityComponent implements OnInit {
 getweeklyWeightMesurementbyFarm(event){
 this.weeklyWeightcenter=[]
 this.weeklyWeighthouse=[]
-this.categories2=[{name:'excellent', color:'#02675c', data:[]},
-{name:'average',color:'#ffd100',data:[]},
-{name:'poor',color:'#FF3300',data:[]}]
+this.categories2=[{name:'Excellent', color:'#04A794', data:[]},
+{name:'Average',color:'#FBB94F',data:[]},
+{name:'Poor',color:'#FC7878',data:[]}]
 this.details2=[]
     this.dashboardService.getweeklyweightbyFarmforcenter(event).subscribe(data=>{
       this.houseService.getConsultingCenterbyFarm(event).subscribe(
@@ -434,12 +452,9 @@ this.details2=[]
       plotOptions: {
           series: {
             stacking: 'normal',
-            //borderWidth: 0,
             dataLabels: {
               enabled: true,
               inside:true,
-              //format: '{point.y}',
-          
             }
           }
       },
@@ -458,20 +473,141 @@ this.details2=[]
     }
     }
     Highcharts.chart('chartweeklyweightByFarmUniformity', this.optionsChart4);
+    Highcharts.chart('chartweeklyweightByFarmUniformity1', this.optionsChart4);
    }
 
+   getAlertbyhouse(event){
+    const datepipe: DatePipe = new DatePipe('en-US')
+    let formattedDate = datepipe.transform(this.date, 'yyyy-MM-dd')
+   this.dashboardService.getalertByhouse(formattedDate,event).subscribe(data=>{
+    console.log('house',data)
+    this.getDetailsAlertsByHouse()
+    this.chart.data = data
+  })
+}
 
+getDetailsAlertsByHouse(){
+  this.chart = am4core.create("chartDetailsAlerts", am4charts.PieChart)
+  
+  // Add and configure Series
+  let pieSeries = this.chart.series.push(new am4charts.PieSeries());
+  pieSeries.dataFields.value = "count";
+  pieSeries.dataFields.category = "description";
+  this.chart.innerRadius = am4core.percent(50);
+  pieSeries.colors.list = [
+    am4core.color("#e81a22"),
+    am4core.color("#ba2324"),
+    am4core.color("#ea4f54"),
+    am4core.color("#b03b3f"),
+    am4core.color("#f2686d"),
+    am4core.color("#f59a9d"),
+    am4core.color("#fab3b6"),
+    am4core.color("#faccce"),
+    am4core.color("#fce7e9"),
+  ];
 
+// Disable ticks and labels
+pieSeries.labels.template.disabled = true;
+pieSeries.ticks.template.disabled = true;
 
+// Disable tooltips
+pieSeries.slices.template.tooltipText = "{category}";
 
+var label = pieSeries.createChild(am4core.Label);
+label.text = "[fontSize:18px]Total alerts[/]:\n[bold fontSize:40px]{values.value.sum}[/] ";
+label.horizontalCenter = "middle";
+label.verticalCenter = "middle";
+label.textAlign = "middle";
+label.fontSize = 22;
+ 
+}
 
+getMortalityByhouseDaily(house){
+  this.mortalityByHousedaily=0
+  this.mortalityByHouseyestarday=0
+  this.decreaseMortality=0
+  let date1 = new Date()
+  const datepipe: DatePipe = new DatePipe('en-Fr')
+  let formatedDate = datepipe.transform(date1, 'yyyy-MM-dd')
+  this.dashboardService.getMortalityCountByHouse(house,formatedDate).subscribe(data=>{
+    console.log('todya',data)
+    this.mortalityByHousedaily=data
+  })
+  date1.setDate(date1.getDate() - 1)
+  let formatedDate1 = datepipe.transform(date1, 'yyyy-MM-dd')
+  this.dashboardService.getMortalityCountByHouse(house,formatedDate1).subscribe(data=>{
+    console.log('yest',data)
+    this.mortalityByHouseyestarday=data
+    this.decreaseMortality=this.mortalityByHousedaily-this.mortalityByHouseyestarday
+    console.log(this.decreaseMortality)
+  })
+  
+}
+
+getSurvivalByHouse(house){
+  this.survivalByhouse=0
+  this.dashboardService.getSurvivalByhouse(house).subscribe(data=>{
+    console.log(data)
+    this.survivalByhouse=data
+  })
+}
+
+getfeedByhouseDaily(house){
+  this.feedhousedaily=0
+  this.feedhouseYestrday=0
+  this.decreasefeed=0
+  let date1 = new Date()
+  const datepipe: DatePipe = new DatePipe('en-Fr')
+  let formatedDate = datepipe.transform(date1, 'yyyy-MM-dd')
+  this.dashboardService.getfeedByhouse(formatedDate,house).subscribe(data=>{
+    this.feedhousedaily=data
+    console.log('todyafeed',data)
+  })
+
+  date1.setDate(date1.getDate() - 1)
+  let formatedDate1 = datepipe.transform(date1, 'yyyy-MM-dd')
+  this.dashboardService.getfeedByhouse(formatedDate1,house).subscribe(data=>{
+    this.feedhouseYestrday=data
+    console.log('yestfeed',data)
+    this.feedhouseYestrday=data
+    this.decreasefeed=this.feedhousedaily-this.feedhouseYestrday
+    console.log(this.decreasefeed)
+  })
+}
+getTotalFood(house){
+  this.totalFeed=0
+  const datepipe: DatePipe = new DatePipe('en-Fr')
+  let formatedDate = datepipe.transform(this.date, 'yyyy-MM-dd')
+  this.dashboardService.gettotalFeedByhouse(formatedDate,house).subscribe(data=>{
+    this.totalFeed=data
+  })
+}
+
+getAllhouseByCenterFordetails(event){
+  this.mortalityByHousedaily=0
+  this.mortalityByHouseyestarday=0
+  this.survivalByhouse=0
+  this.decreaseMortality=0
+  this.feedhousedaily=0
+  this.feedhouseYestrday=0
+  this.decreasefeed=0
+  this.totalFeed=0
+  this.houseService.getConsultingHouseByCenter(event).subscribe(data=>{
+    this.houses=data
+    this.houseId=data[0].houseId
+    this.getAlertbyhouse(this.houseId)
+    this.getMortalityByhouseDaily(this.houseId)
+    this.getSurvivalByHouse(this.houseId)
+    this.getfeedByhouseDaily(this.houseId)
+    this.getTotalFood(this.houseId)
+  })
 
 }
-export interface FlockWeight {
 
-  ageFlock: Array<number>;
-  weight: Array<number>;
-  flockID: string;
-  HouseID: string;
-  centerID: string;
+  
+
+
+
+
+
 }
