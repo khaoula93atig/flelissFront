@@ -9,15 +9,22 @@ import { Router } from '../../../../node_modules/@angular/router';
 export class HeaderComponent implements OnInit {
 
   role: string;
+  login=true;
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    if(sessionStorage.getItem('user')!=null){
+      this.login=true
+    }
     this.role = sessionStorage.getItem('role');
+    console.log(this.router.routerState)
+    
   }
 
   logout() {
     sessionStorage.clear();
+    this.login=false;
     this.router.navigateByUrl('');
   }
 }

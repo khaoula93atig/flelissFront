@@ -92,7 +92,7 @@ export class LoginComponent implements OnInit {
 
             console.log("id " + this.id);
             console.log("id company " + this.company_id);
-            this.router.navigateByUrl('/Houses/list');
+            this.router.navigateByUrl('/Dashboard/general');
           }
         },
         error => {

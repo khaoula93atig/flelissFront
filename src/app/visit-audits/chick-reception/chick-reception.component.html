@@ -6,32 +6,32 @@
         </h3>
         <div class="modal-body">
             <!-- /Spinner-->
-                <div class="check-form">
+                <div class="check-form ">
                     <div class="form-recep">
                     <!-- check-form date -->
-                    <div class="formVdate form-visit0 ">
-                        <clr-date-container class="formDate clr-col-md-12" style="display: -webkit-inline-box;">
-                            <label for="dailyVisit" class="clr-control-label clr-col-md-2">
+                    <div class="formVdate form-visit0 clr-row">
+                        <clr-date-container class="formDate clr-col-lg-12 clr-col-md-12 clr-col-sm-12" style="display: -webkit-inline-box;">
+                            <label for="dailyVisit" class="clr-control-label clr-col-4">
                                 Visit date * </label>
                             <input type="date" clrDate name="visitDate" [(ngModel)]="visitDate" required>
 
                         </clr-date-container>
                     </div>
                     <!-- check-form part 1 -->
-                    <div class="formV form-visit1 ">
+                    <div class="formV form-visit1 clr-row">
 
-                        <clr-select-container class="clr-col-md-6 " style="display: -webkit-inline-box;">
-                            <label for="farm" class="clr-control-label clr-col-md-5">Center *</label>
-                            <select clrSelect name="farm" required name="centerId" [(ngModel)]="centerId"
-                                style="width: 130px;" (change)="getCenterId($event.target.value)">
+                        <clr-select-container class="clr-col-md-6 clr-col-sm-12" style="display: -webkit-inline-box;">
+                            <label for="farm" class="clr-control-label clr-col-4">Center *</label>
+                            <select clrSelect class="clr-col-sm-12" name="farm" required name="centerId" [(ngModel)]="centerId"
+                                style="width: 150px;" (change)="getCenterId($event.target.value)">
                                 <option *ngFor="let center of centers" [value]='center.centerId'>
                                     {{center.centerName}}
                                 </option>
                             </select>
                         </clr-select-container>
-                        <clr-select-container class="clr-col-md-6 " style="display: -webkit-inline-box;">
-                            <label for="house" class="clr-control-label clr-col-md-7">House *</label>
-                            <select clrSelect name="houseId" required style="width: 105px;" [(ngModel)]="houseId"
+                        <clr-select-container class="clr-col-md-6 clr-col-sm-12" style="display: -webkit-inline-box;">
+                            <label for="house" class="clr-control-label clr-col-4">House *</label>
+                            <select clrSelect class="clr-col-sm-12" name="houseId" required style="width: 150px;" [(ngModel)]="houseId"
                                 (change)="getHouseId($event.target.value)">
                                 <option *ngFor="let house of houses" [value]='house.houseId'>
                                     {{house.houseName}}
@@ -39,19 +39,16 @@
                             </select>
                         </clr-select-container>
                     </div>
-                    <div class="formV form-visit1 ">
-
-
-                    </div>
+                  
 
                     <!-- check-form part 2 -->
-                    <div class="formV form-visit2 ">
-                        <clr-select-container class="clr-col-md-6 clr-form-control "
+                    <div class="formV form-visit2 clr-row">
+                        <clr-select-container class="clr-col-md-6 clr-col-sm-12 "
                             style="display: -webkit-inline-box;">
-                            <label for="breed" class="clr-control-label clr-col-md-4">
+                            <label for="breed" class="clr-control-label clr-col-4">
                                 Flock *
                             </label>
-                            <select clrSelect name="flockId" required style="width: 105px;" [(ngModel)]="flockId"
+                            <select clrSelect class="clr-col-sm-12" name="flockId" required style="width: 150px;" [(ngModel)]="flockId"
                                 (change)="getFlockId($event.target.value)">
                                 <option *ngFor="let flock of flocks" [value]='flock.flockID'>
                                     {{flock.startOfCycle}}
@@ -59,44 +56,44 @@
                             </select>
                         </clr-select-container>
 
-                        <clr-input-container class="formDate clr-form-control clr-col-md-6"
+                        <clr-input-container class="clr-col-md-6 clr-col-sm-12"
                             style="display: -webkit-inline-box;">
-                            <label for="breeddescription" class="clr-control-label clr-col-md-6">
+                            <label for="breeddescription" class="clr-control-label clr-col-4">
                                 Breed </label>
-                            <input type="text" clrInput name="breeddescription" class="clr-col-md-6"
+                            <input type="text" clrInput name="breeddescription" class="clr-col-sm-12"
                                 [(ngModel)]="breeddescription" readonly />
                         </clr-input-container>
                     </div>
                     <!-- check-form part 3 -->
-                    <div class="formVdate form-visit3">
-                        <clr-input-container class="formDate clr-form-control clr-col-md-6"
+                    <div class="formVdate form-visit3 clr-row">
+                        <clr-input-container class="clr-col-md-6 clr-col-sm-12"
                             style="display: -webkit-inline-box;">
-                            <label for="hatchDate" class="clr-control-label clr-col-md-6">
+                            <label for="hatchDate" class="clr-control-label clr-col-4">
                                 Hatch date * </label>
-                            <input type="text" clrInput name="hatchDate" [(ngModel)]="hatchDate" class="clr-col-md-6"
+                            <input type="text" class="clr-col-sm-12" clrInput name="hatchDate" [(ngModel)]="hatchDate" class="clr-col-md-6"
                                 readonly />
                         </clr-input-container>
-                        <clr-input-container class=" clr-col-md-6" style="display: -webkit-inline-box;">
-                            <label for="chickPlaced" class="clr-control-label clr-col-md-6">
+                        <clr-input-container class="clr-col-md-6 clr-col-sm-12" style="display: -webkit-inline-box;">
+                            <label for="chickPlaced" class="clr-control-label clr-col-4">
                                 Chick placed </label>
-                            <input clrInput class="clr-col-md-6" required size="15" type="text" name="chikedPlaced" name="chickPlaced"
+                            <input clrInput class="clr-col-sm-12" required size="15" type="text" name="chikedPlaced" name="chickPlaced"
                                 [(ngModel)]="chikedPlaced" readonly />
                         </clr-input-container>
 
                         
                     </div>
                     <!-- check-form part4 -->
-                    <div class="formV form-visit4">
+                    <div class="formV form-visit4 clr-row">
                        
-                        <clr-input-container class=" clr-col-md-6" style="display: -webkit-inline-box;">
-                            <label for="psOrigin" class="clr-control-label clr-col-md-6">
+                        <clr-input-container class="clr-col-md-6 clr-col-sm-12" style="display: -webkit-inline-box;">
+                            <label for="psOrigin" class="clr-control-label clr-col-4">
                                 PS origin </label>
-                            <input clrInput size="15" class="clr-col-md-6" type="text" [(ngModel)]="psOrigin" name="psOrigin" readonly />
+                            <input clrInput size="15" class="clr-col-sm-12" type="text" [(ngModel)]="psOrigin" name="psOrigin" readonly />
                         </clr-input-container>
-                        <clr-input-container class=" clr-col-md-6" style="display: -webkit-inline-box;">
-                            <label for="ageOfTheFlock" class="clr-control-label clr-col-md-6">
+                        <clr-input-container class="clr-col-md-6 clr-col-sm-12" style="display: -webkit-inline-box;">
+                            <label for="ageOfTheFlock" class="clr-control-label clr-col-4">
                                 PS Age </label>
-                            <input clrInput class="clr-col-md-6" size="15" type="text" name="ageOfTheFlock" [(ngModel)]="ageOfTheFlock"
+                            <input clrInput class="clr-col-sm-12" size="15" type="text" name="ageOfTheFlock" [(ngModel)]="ageOfTheFlock"
                                 readonly />
                         </clr-input-container>
 

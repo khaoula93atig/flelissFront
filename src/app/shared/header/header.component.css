@@ -1,4 +1,86 @@
+clr-header{
+  height: 60px;
+  background-color: #02675c;
+}
+.dropdown button.dropdown-toggle:not(.btn) {
+  background: 0 0;
+  border: 0;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  padding: 0.9rem 1.2rem;
+  color: #fafafa;
+  color: var(--clr-header-font-color, #fafafa);
+  opacity: .65;
+  opacity: var(--clr-header-nav-opacity, 0.65);
+}
+header .header-nav .nav-link:first-of-type::before, header .header-nav .nav-link:last-of-type::after, .header .header-nav .nav-link:first-of-type::before, .header .header-nav .nav-link:last-of-type::after {
+  display: none;
+  position: absolute;
+  background: #fafafa;
+  background: var(--clr-header-font-color, #fafafa);
+  opacity: .15;
+  opacity: var(--clr-header-divider-opacity, 0.15);
+  opacity: .15;
+  height: 2rem;
+  width: 0.05rem;
+  width: var(--clr-global-borderwidth, 0.05rem);
+  top: 0.5rem;
+  left: 0;
+  left: auto;
+}
+@media screen and (max-width: 768px){
+.main-container.open-hamburger-menu .header .header-nav.clr-nav-level-1 .nav-link, .main-container.open-hamburger-menu .header .header-nav.clr-nav-level-2 .nav-link, .main-container.open-overflow-menu .header .header-nav.clr-nav-level-1 .nav-link, .main-container.open-overflow-menu .header .header-nav.clr-nav-level-2 .nav-link {
+    flex: 0 0 auto;
+    opacity: 1;
+    color: #f2f2f2;
+}
 
+}
+
+@media screen and (max-width: 768px){
+  .dropdown{
+    text-align: center;
+      color: #f2f2f2;
+
+}
+.dropdown button.dropdown-toggle:not(.btn){
+  flex: 0 0 auto;
+    opacity: 1;
+    color: #f2f2f2;
+}
+}
+.dropdown.active{
+  border-bottom: 3px solid #f5d103;
+  background: rgba(255,255,255,.15);
+    opacity: 1;
+}
+@media screen and (max-width: 576px){
+.main-container.open-hamburger-menu .header-nav.clr-nav-level-1, .main-container.open-hamburger-menu .subnav.clr-nav-level-1, .main-container.open-hamburger-menu .sub-nav.clr-nav-level-1, .main-container.open-hamburger-menu .sidenav.clr-nav-level-1, .main-container.open-hamburger-menu .clr-vertical-nav.clr-nav-level-1 {
+    width: 14.4rem;
+    max-width: 14.4rem;
+    background-color: #02675c;
+}
+}
+
+@media screen and (max-width: 768px){
+.main-container.open-hamburger-menu .header .header-nav.clr-nav-level-1 .nav-link.active, .main-container.open-hamburger-menu .header .header-nav.clr-nav-level-2 .nav-link.active, .main-container.open-overflow-menu .header .header-nav.clr-nav-level-1 .nav-link.active, .main-container.open-overflow-menu .header .header-nav.clr-nav-level-2 .nav-link.active {
+  color: #f2f2f2;
+  background: rgba(255,255,255,.15);
+    opacity: 1;
+}}
+/*
+.drop{
+    padding: 0.9rem 1.2rem;
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    color: #fafafa;
+    color: var(--clr-header-font-color, #fafafa);
+    opacity: .65;
+    opacity: var(--clr-header-nav-opacity, 0.65);
+}
     .branding img{
         margin-right: .55rem;
       
@@ -19,10 +101,46 @@
     }
     header .settings, header .header-actions, .header .settings, .header .header-actions {
       
-        padding: 0px 25px !important;
+        padding: 0px ;
     }
     .nav-icon .dropdown-toggle{
 
         outline:0 !important;
     
       }
+      header .header-nav .nav-link:first-of-type::before, header .header-nav .nav-link:last-of-type::after, .header .header-nav .nav-link:first-of-type::before, .header .header-nav .nav-link:last-of-type::after {
+        display: none !important;
+    }
+      @media screen and (min-width: 800px) {
+        header.header-6, .header.header-6.header-nav {
+          width: 100%; 
+        }
+      }
+      @media screen and (max-width: 800px) {
+        header.header-6, .header.header-6.header-nav {
+          width: 100%; 
+        }
+      }
+      @media screen and (max-width: 500px) {
+        header.header-6, .header.header-6.header-nav {
+          width: 200%; 
+          height: 100px;
+        }
+      }
+      @media screen and (max-width: 992px){
+        .main-container .header-hamburger-trigger, .main-container .header-overflow-trigger {
+    display: inline-block;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    height: 3rem;
+    width: 3rem;
+    padding: 0 0 0.2rem 0;
+    text-align: center;
+    white-space: nowrap;
+    color: hsl(198deg, 0%, 98%);
+    color: var(--clr-header-font-color, hsl(198deg, 0%, 98%));
+    opacity: 0.65;
+    opacity: var(--clr-header-nav-opacity, 0.65);
+}}*/

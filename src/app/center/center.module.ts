@@ -9,6 +9,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ClarityModule } from '@clr/angular';
+import { AuthGuardGuard } from '../services/auth-guard.guard';
 
 
 
@@ -16,7 +17,7 @@ import { ClarityModule } from '@clr/angular';
 const routes: Routes = [
 
   {
-    path: 'Center', component: CenterComponent,
+    path: 'Center', component: CenterComponent,canActivate: [AuthGuardGuard],
     children: [
       { path: 'List-center', component: ListCenterComponent },
       { path: 'Add-center', component: NewCenterComponent }

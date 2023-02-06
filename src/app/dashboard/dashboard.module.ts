@@ -12,16 +12,19 @@ import { MortalityComponent } from './mortality/mortality.component';
 import { WeightComponent } from './weight/weight.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { GeneralComponent } from './general/general.component';
+import { AuthGuardGuard } from '../services/auth-guard.guard';
+import { FlocksComponent } from './flocks/flocks.component';
 
 
 const routes: Routes = [
 
   {
-    path: 'Dashboard', component: DashboardComponent,
+    path: 'Dashboard', component: DashboardComponent,canActivate: [AuthGuardGuard],
     children: [
       { path: 'mortality', component: MortalityComponent },
       { path: 'weight', component: WeightComponent },
-      { path:'general', component:GeneralComponent}
+      { path:'general', component:GeneralComponent},
+      { path:'flock',component:FlocksComponent}
 
 
     ]
@@ -32,7 +35,7 @@ const routes: Routes = [
 
 
 @NgModule({
-  declarations: [MortalityComponent, WeightComponent, GeneralComponent],
+  declarations: [MortalityComponent, WeightComponent, GeneralComponent, FlocksComponent],
   imports: [
     CommonModule, FormsModule, BrowserModule, BrowserAnimationsModule,
     ClarityModule, SharedModule, RouterModule.forRoot(routes),

@@ -120,9 +120,9 @@ header .header-actions .nav-link.active,
 body {
   background: url(../src/assets/bgbro.png) !important;
   background-size: cover !important;
-
-
+  /*background-repeat: no-repeat !important;*/
 }
+body::-webkit-scrollbar { width: 0 !important }
 
 .main-container {
   background: none !important;
@@ -320,4 +320,16 @@ h3 {
 }
 .toast-warning {
   background-color: #F89406 !important;
+}
+
+@media screen and (max-width: 800px) {
+  body {
+    width: 100%;
+  }
+}
+
+@media screen and (min-height: 700px) {
+  body {
+    height: 100%;
+  }
 }

@@ -4,13 +4,14 @@ import { HeaderComponent } from './header/header.component';
 import { RouterModule } from '@angular/router';
 import { ClarityModule } from '@clr/angular';
 import { AutofocusDirective } from './autofocus.directive';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 
 
 
 @NgModule({
-  declarations: [HeaderComponent, AutofocusDirective],
+  declarations: [HeaderComponent, AutofocusDirective, PageNotFoundComponent],
   imports: [
     CommonModule,
     ClarityModule, 

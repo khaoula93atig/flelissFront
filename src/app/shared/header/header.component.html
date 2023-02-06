@@ -1,21 +1,83 @@
+<clr-main-container>
+    <clr-header  *ngIf="login">
+      <div class="branding">
+        <a routerlink="/accueil" class="nav-link">
+                <img src="/assets/logo.png" alt="" style="    height: 3.8rem;
+                width: 5rem;
+                margin-top: -9px;">
+          <!--<span class="title">Project Clarity</span>-->
+        </a>
+      </div>
+      <div class="header-nav" [clr-nav-level]="1">
+        <a routerLink="/Dashboard/general" routerLinkActive="active" class="nav-link nav-text">Dashboard</a>
+        <a routerLink="/Farms/List-farm" routerLinkActive="active" class="nav-link nav-text">Farms</a>
+        <a routerLink="/Center/List-center" routerLinkActive="active" class="nav-link nav-text">Center</a>
+        <a routerLink="/Houses/list" routerLinkActive="active" class="nav-link nav-text">Houses</a>
+        <clr-dropdown routerLinkActive="active">
+            <button  clrDropdownTrigger aria-label="open user profile">
+                Visits
+                <clr-icon  shape="caret down"></clr-icon>
+            </button>
+            <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+                <a routerLink="/Visits/list" routerLinkActive="active" clrDropdownItem>Visits</a>
+                <a routerLink="/veterinarianVisit/list" routerLinkActive="active"
+                *ngIf="role=='secondary manager' || role=='Veterinary'  || role=='Farm Manager'  " clrDropdownItem>Veterinarian Visits</a>
+                <a routerLink="/Visits-audits/chick_reception" routerLinkActive="active" clrDropdownItem>Audits Visit</a>
+            </clr-dropdown-menu>
+        </clr-dropdown>
+      </div>
+      <div class="header-actions">
+        <!--<a href="javascript://" class="nav-link">
+            <clr-icon shape="cog"></clr-icon>
+        </a>-->
+        <clr-dropdown>
+            <button class="nav-icon" clrDropdownTrigger aria-label="toggle settings menu">
+                <clr-icon shape="cog"></clr-icon>
+                <clr-icon shape="caret down"></clr-icon>
+            </button>
+            <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+
+                <a clrDropdownItem routerLink="/Users/list" routerLinkActive="active" *ngIf="role=='Farm Manager'">
+                     Users
+                </a>
+                <a clrDropdownItem (click)="logout()">
+                    <clr-icon shape="lock" class="is-solid"></clr-icon> Logout
+                </a>
+            </clr-dropdown-menu>
+        </clr-dropdown>
+      </div>
+    </clr-header>
+    <router-outlet></router-outlet>
+  </clr-main-container>
+<!--<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <header class="header header-6">
     <div class="branding"><a routerlink="/accueil" class="logo-and-title" href="/Dashboard">
             <img src="/assets/logo.png" alt="" style="    height: 3.8rem;
             width: 5rem;
             margin-top: -9px;">
         </a></div>
-    <div class="header-nav">
+    <div class="header-nav clr-hide-sm">
         <a routerLink="/Dashboard/general" class="nav-link" routerLinkActive="active">Dashboard</a>
         <a routerLink="/Farms/List-farm" class="nav-link" routerLinkActive="active"
             *ngIf="role=='Farm Manager' ">Farms</a>
         <a routerLink="/Center/List-center" class="nav-link" routerLinkActive="active"
             *ngIf="role=='Farm Manager'">Center</a>
         <a routerLink="/Houses/list" class="nav-link" routerLinkActive="active">Houses</a>
-        <a routerLink="/Visits/list" class="nav-link" routerLinkActive="active">Visits</a>
-        <a routerLink="/veterinarianVisit/list" class="nav-link" routerLinkActive="active"
-            *ngIf="role=='secondary manager' || role=='Veterinary'  || role=='Farm Manager'  ">Veterinarian Visits</a>
-        <a routerLink="/Visits-audits/chick_reception" class="nav-link" routerLinkActive="active"> Audits Visit</a>
-        <a routerLink="/Users/list" class="nav-link" routerLinkActive="active" *ngIf="role=='Farm Manager'">Users</a>
+        <div class="header-actions" style="padding: 0%;">
+        <clr-dropdown>
+            <button class="nav-text" clrDropdownTrigger aria-label="open user profile">
+                Visits
+                <clr-icon  shape="caret down"></clr-icon>
+            </button>
+            <clr-dropdown-menu *clrIfOpen clrPosition="bottom-left">
+                <a routerLink="/Visits/list" routerLinkActive="active" clrDropdownItem>Visits</a>
+                <a routerLink="/veterinarianVisit/list" routerLinkActive="active"
+                *ngIf="role=='secondary manager' || role=='Veterinary'  || role=='Farm Manager'  " clrDropdownItem>Veterinarian Visits</a>
+                <a routerLink="/Visits-audits/chick_reception" routerLinkActive="active" clrDropdownItem>Audits Visit</a>
+            </clr-dropdown-menu>
+        </clr-dropdown>
+        </div>
+       
 
 
     </div>
@@ -27,6 +89,9 @@
             </button>
             <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
 
+                <a clrDropdownItem routerLink="/Users/list" routerLinkActive="active" *ngIf="role=='Farm Manager'">
+                     Users
+                </a>
                 <a clrDropdownItem (click)="logout()">
                     <clr-icon shape="lock" class="is-solid"></clr-icon> Logout
                 </a>
@@ -34,4 +99,4 @@
         </clr-dropdown>
     </div>
 
-</header>
+</header>-->

@@ -50,6 +50,7 @@
     font-size: 20px;
     margin: 5px 10px 0px;
     color: #000000;
+    font-weight: 600;
 }
 
 .card-icon {
@@ -68,19 +69,23 @@
 
   /*card details*/
   
- h1{
+ /*h3{
     font-size:2em;
     margin:.67em 0;
 }
 
- h1{
+ h3{
     font-weight:bold;
     margin-bottom:10px;
 }
- h1{
+ h3{
     font-size:38px;
     line-height:44px;
     margin-top:20px;
+}*/
+h3{
+    margin-top: 10px;
+    margin-bottom: 0px;
 }
  .w-row:before,.w-row:after{
     content:" ";
@@ -100,7 +105,7 @@
  .w-col-3{
     width:50%;
 }
-/* @media screen and (max-width:767px){
+ @media screen and (max-width:767px){
      .w-row{
         margin-left:0;
         margin-right:0;
@@ -115,7 +120,7 @@
      .w-col{
         width:100%;
     }
-}*/
+}
  h1{
     margin-top:15px;
     margin-bottom:15px;
@@ -145,21 +150,21 @@
     margin-bottom:50px;
 }
  .number-card-number{
-    font-size: 37px;
+    font-size: 35px;
     margin-top:0px;
     margin-bottom:0px;
     color:#004C50;
     font-weight:300;
 }
 .number-card-number1{
-    font-size: 37px;
+    font-size: 35px;
     margin-top:0px;
     margin-bottom:0px;
     color:white;
     font-weight:300;
 }
  .tagline{
-    font-size:11px;
+    font-size:9px;
     font-weight:500;
     letter-spacing:1px;
     text-transform:uppercase;
@@ -219,12 +224,12 @@
 }
  .number-card-divider{
     height:1px;
-    margin-bottom:8px;
+    margin-bottom:4px;
     background-color:#004C50;
 }
 .number-card-divider1{
     height:1px;
-    margin-bottom:8px;
+    margin-bottom:4px;
     background-color:white;
 }
  .number-card-dollars{
@@ -236,7 +241,7 @@
     color:#fff;
     text-align:right;
 }
- /*@media (max-width: 991px){
+ @media (max-width: 991px){
      .number-card-number{
         font-size:30px;
     }
@@ -244,4 +249,16 @@
         padding-top:12px;
         padding-bottom:16px;
     }
-}*/
+    .number-card-number1{
+        font-size:30px;
+    }
+     .number-card1{
+        padding-top:12px;
+        padding-bottom:16px;
+    }
+}
+
+
+.clr-select-wrapper select, .clr-multiselect-wrapper select{
+    width: 200px!important;
+}

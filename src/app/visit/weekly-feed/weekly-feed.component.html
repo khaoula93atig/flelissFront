@@ -82,7 +82,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Starter feed </td>
+                            <td>Starter feed <small>[0-10]days</small> </td>
                             <td> <input [(ngModel)]="weeklyFeed.totalStarterFeed" class="form-control"
                                     style="  border: 0; background-color: #fafafa; padding: 6px;border-bottom: .5px solid #ececec;"
                                     [ngModelOptions]="{standalone: true}" type="number"
@@ -94,7 +94,7 @@
 
                         </tr>
                         <tr>
-                            <td>Grower feed</td>
+                            <td>Grower feed <small>[11-21]days</small></td>
                             <td><input [(ngModel)]="weeklyFeed.totalGrowerFeed" class="form-control"
                                     style="  border: 0; background-color: #fafafa; padding: 6px;border-bottom: .5px solid #ececec;"
                                     [ngModelOptions]="{standalone: true}" type="text"
@@ -106,7 +106,7 @@
 
                         </tr>
                         <tr>
-                            <td>Grower feed</td>
+                            <td>Finisher feed <small> >22 days </small></td>
                             <td><input [(ngModel)]="weeklyFeed.totalFinisherFeed" class="form-control"
                                     style="  border: 0; background-color: #fafafa; padding: 6px;border-bottom: .5px solid #ececec;"
                                     [ngModelOptions]="{standalone: true}" type="text"
@@ -140,7 +140,7 @@
                 </div>
             </div>
             <button type="button" class="btn btn-outline" (click)="show = false;clearForm()">Cancel</button>
-            <button type="button" class="btn btn-primary " [disabled]="disabledSave" (click)="save()">save</button>
+            <button type="button" class="btn btn-primary " (click)="save()">save</button>
         </div>
 
 

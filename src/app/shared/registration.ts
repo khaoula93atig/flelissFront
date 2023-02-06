@@ -304,6 +304,16 @@ export interface CheckList {
   airQuality: String
   username: String
   date: Date
+  floorTemperature:string 
+	spotBrooding :string
+	distanceAccessWater :string
+	checkFeed :string
+	feedOnPaper :string
+	feedersTrays :string
+	drinkersNippleLines :string
+	drinkersBell :string
+	drinkersSupp :string
+	waterTemperature :string
 }
 export class WeeklyWeightMeasurement {
   breed: number
@@ -366,7 +376,7 @@ export class BreedingManagement {
   sealingCeilingBuilding: string
   airLeaksBuildings: string
   cleanlinessHoppers: string
-  availabilityWireMeshHopper: string
+  storageVaccines: string
   cleanlinessFeeders: string
   sufficientNumberFeeders: string
   adjustmentHeightFeedersAccording: string

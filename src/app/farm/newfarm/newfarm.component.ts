@@ -14,6 +14,7 @@ import { AutofocusDirective } from '../../shared/autofocus.directive'
 
 import { SubSink } from 'subsink'
 import { CompanyService } from '../../services/company.service'
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   selector: 'app-newfarm',
@@ -25,6 +26,7 @@ export class NewfarmComponent implements OnInit {
     private FarmService: FarmService,
     private CompanyService: CompanyService,
     private http: HttpClient,
+    private toaster: ToastrService
   ) {}
   percentDone: number
   uploadSuccess: boolean
@@ -127,10 +129,17 @@ export class NewfarmComponent implements OnInit {
     // Invoking service
     this.FarmService.createRegistrationFarms(registrationFarm).subscribe(
       (data) => {
-        setTimeout((_) => (this.loading = false))
+        if (data['response'] == 'OK') {
+          this.clearTheForm()
+          this.show=false
+          this.toaster.success('Success', 'Successfully added')
+        } else {
+          this.toaster.error('Error', 'Operation failed')
+        }
+        /*setTimeout((_) => (this.loading = false))
         this.FarmService.askForReload(true)
 
-        this.clearTheForm()
+        this.clearTheForm()*/
       },
     )
   }

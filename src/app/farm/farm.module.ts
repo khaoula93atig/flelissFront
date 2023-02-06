@@ -10,12 +10,13 @@ import { NewfarmComponent } from '../farm/newfarm/newfarm.component';
 
 import { BrowserModule } from '../../../node_modules/@angular/platform-browser';
 import { ListFarmComponent } from './list-farm/list-farm.component';
+import { AuthGuardGuard } from '../services/auth-guard.guard';
 
 
 const routes: Routes = [
 
   {
-    path: 'Farms', component: FarmComponent,
+    path: 'Farms', component: FarmComponent,canActivate: [AuthGuardGuard],
     
     children: [
       { path: 'List-farm', component: ListFarmComponent },

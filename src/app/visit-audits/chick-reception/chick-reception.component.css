@@ -17,3 +17,10 @@
       opacity: 0.5;
     }
   }
+
+  clr-input-container{
+    display: -webkit-box;
+  }
+  clr-select-container{
+    display: -webkit-box;
+  }

@@ -12,6 +12,8 @@ import { HouseService } from '../../services/house.service'
   styleUrls: ['./manager-audit-visit.component.css'],
 })
 export class ManagerAuditVisitComponent implements OnInit {
+  opened=false
+  deviation=''
   centers: any[] = []
   centerId: string
   visitDate: Date
@@ -24,7 +26,7 @@ export class ManagerAuditVisitComponent implements OnInit {
   noConform = 'no conform'
   score = 0
   loading: boolean
-  availabilityWireMeshHopper = ' '
+  storageVaccines = ' '
   constructor(
     private HouseService: HouseService,
     private visitService: VisitAuditsService,
@@ -66,7 +68,7 @@ export class ManagerAuditVisitComponent implements OnInit {
     this.breedingManagement.farmId = this.farmId
     this.breedingManagement.username = this.username
     this.breedingManagement.scoring = this.score
-    this.breedingManagement.availabilityWireMeshHopper = this.availabilityWireMeshHopper
+    this.breedingManagement.storageVaccines = this.storageVaccines
     console.log(
       'this.breedingManagement.cleanlinessBuild ' +
         this.breedingManagement.cleanlinessBuild,
@@ -79,9 +81,10 @@ export class ManagerAuditVisitComponent implements OnInit {
         console.log('data' + data['response'])
         if (data['response'] == 'OK') {
           myForm.reset()
-          this.toaster.success('Success', 'ajout avec succés')
+          this.opened=true
+          this.toaster.success('Success', 'Successfully added')
         } else {
-          this.toaster.error('Error', 'operation echouée')
+          this.toaster.error('Error', 'Operation failed')
         }
         myForm.reset()
 
@@ -110,8 +113,8 @@ export class ManagerAuditVisitComponent implements OnInit {
     if (this.breedingManagement.cleanlinessHoppers == this.conform) {
       this.score = this.score + 10
     }
-    if (this.breedingManagement.availabilityWireMeshHopper == this.conform) {
-      this.score = this.score + 5
+    if (this.breedingManagement.storageVaccines == this.conform) {
+      this.score = this.score + 15
     }
     if (this.breedingManagement.cleanlinessFeeders == this.conform) {
       this.score = this.score + 10
@@ -199,7 +202,7 @@ export class ManagerAuditVisitComponent implements OnInit {
       this.score = this.score + 10
     }
     if (this.breedingManagement.fansMaintained == this.conform) {
-      this.score = this.score + 15
+      this.score = this.score + 25
     }
     if (this.breedingManagement.properOperationFans == this.conform) {
       this.score = this.score + 10
@@ -214,7 +217,7 @@ export class ManagerAuditVisitComponent implements OnInit {
       this.score = this.score + 15
     }
     if (this.breedingManagement.recordMinmaxDailyHumidity == this.conform) {
-      this.score = this.score + 10
+      this.score = this.score + 15
     }
     if (this.breedingManagement.breedingHumidityConfor == this.conform) {
       this.score = this.score + 10
@@ -223,7 +226,7 @@ export class ManagerAuditVisitComponent implements OnInit {
       this.score = this.score + 5
     }
     if (this.breedingManagement.numberWorkingLamps == this.conform) {
-      this.score = this.score + 10
+      this.score = this.score + 15
     }
     if (this.breedingManagement.adequateDistriLamps == this.conform) {
       this.score = this.score + 15
@@ -246,13 +249,13 @@ export class ManagerAuditVisitComponent implements OnInit {
       this.score = this.score + 15
     }
     if (this.breedingManagement.compliantWeighingMethod == this.conform) {
-      this.score = this.score + 10
+      this.score = this.score + 15
     }
     if (this.breedingManagement.samplingCompliant == this.conform) {
-      this.score = this.score + 10
+      this.score = this.score + 15
     }
     if (this.breedingManagement.weighingRecording == this.conform) {
-      this.score = this.score + 20
+      this.score = this.score + 15
     }
     if (
       this.breedingManagement.evolutionWeightComparedStandard == this.conform
@@ -271,5 +274,18 @@ export class ManagerAuditVisitComponent implements OnInit {
     if (this.breedingManagement.technicalPerformance == this.conform) {
       this.score = this.score + 25
     }
+    if(this.score<=800 && this.score>=700){
+    this.deviation='execelent'
+    }
+    else if(this.score<700 && this.score>=600){
+      this.deviation='Good'
+    }
+    else if(this.score<600 && this.score>=500){
+      this.deviation='Acceptable'
+    }
+    else if(this.score<500 ){
+      this.deviation='Bad'
+    }
   }
+  
 }

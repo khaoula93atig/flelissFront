@@ -66,6 +66,14 @@ export class HouseService {
     )
   }
 
+   //get breed of house by id
+   getbreedofhouse(houseId: string) {
+    return this.http.get<any>(
+      environment.url_house + '/breed/' + houseId,
+      this.httpOptions,
+    )
+  }
+
   // Create Registration House
   createRegistrationHouses(registrationHouses: IRegistrationHouses) {
     console.log('registrationHouses', registrationHouses)

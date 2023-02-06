@@ -21,8 +21,9 @@ import { ManagerAuditVisitComponent } from './manager-audit-visit/manager-audit-
 const routes: Routes = [
 
   {
-    path: 'Visits-audits', component: VisitAuditsComponent,
+    path: 'Visits-audits', component: VisitAuditsComponent,canActivate: [AuthGuardGuard],
     children: [
+      { path: 'list', component: ListVisitAuditsComponent },
       { path: 'list', component: ListVisitAuditsComponent },
       { path: 'chick_reception', component: ChickReceptionComponent },
       { path: 'brooding-check-list', component: BroodingCheckListComponent },

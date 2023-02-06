@@ -122,16 +122,89 @@ export class DashboardService {
     return this.http.get<any>(environment.url_mortaliteDash+'/house/survival/'+houseId, this.httpOptions)
   }
 
+  //get age of flock
+  getAgeFlock(houseId:string, date:string){
+    return this.http.get<any>(environment.url_mortaliteDash+'/ageofFlock/'+houseId+'/'+date, this.httpOptions)
+  }
+
+  //feed by house of last days
+  getFeedByHouseOfLastDays(houseId:string){
+    return this.http.get<any>(environment.url_dashboard+'/feed/lastHouse/'+houseId, this.httpOptions)
+  }
+
+  //Weight by house of last days
+  getWeightByHouseOfLastDays(houseId:string){
+    return this.http.get<any>(environment.url_dashboard+'/weight/lastdays/'+houseId, this.httpOptions)
+  }
+
+  //water by house of last days
+  getwaterByHouseOfLastDays(houseId:string){
+    return this.http.get<any>(environment.url_dashboard+'/water/lastdays/'+houseId, this.httpOptions)
+  }
+
+  //water consumption by house daily
+  getwaterconsumptionByHouseDaily(houseId:string ,date:string){
+    return this.http.get<any>(environment.url_dashboard+'/water/house/'+houseId+'/'+date, this.httpOptions)
+  }
+
+  //weight by house daily
+  getweightByHouseDaily(houseId:string ,date:string){
+    return this.http.get<any>(environment.url_dashboard+'/weight/house/'+houseId+'/'+date, this.httpOptions)
+  }
+
+  //CV by house daily
+  getcvByHouseDaily(houseId:string ,date:string){
+    return this.http.get<any>(environment.url_dashboard+'/weight/cv/house/'+houseId+'/'+date, this.httpOptions)
+  }
+
+  //water consumption total by house
+  getwaterconsumptionTotalByHouse(houseId:string ,date:string){
+    return this.http.get<any>(environment.url_dashboard+'/totalwater/house/'+houseId+'/'+date, this.httpOptions)
+  }
+
+  //mortality by house last days 
+  getMortalityByHouseOfLastDays(houseId:string){
+    return this.http.get<any>(environment.url_mortaliteDash+'/mortalityByHouse/lastDays/'+houseId, this.httpOptions)
+  }
+
 
 
   //get weight by breed by centerId
   getWeightperBreed(centerID: string) {
-    console.log("getWeightperBreed " + this.url_getWeightperBreed + centerID)
     return this.http.get<any>(environment.url_weightByBreed + centerID, this.httpOptions);
   }
   //get flocks  by centerId
   getWeightperFlock(centerID: string) {
-    console.log("getWeightperFlock " + environment.url_weightByFlock + centerID)
     return this.http.get<any>(environment.url_weightByFlock + centerID, this.httpOptions);
+  }
+
+  //get feed total consum by company 
+  getfeedConsumTotalByCompany(companyId: string) {
+    return this.http.get<any>(environment.url_dashboard +'/feed/company/' + companyId, this.httpOptions);
+  }
+
+  //getflocks By house and year
+  getFlocksByHouseandYear(houseId:string, year:number){
+    return this.http.get<any>(environment.url_dashboard +'/flock/house/' + houseId+'/'+year);
+  }
+
+  //get weekly weight of flocks By house and year
+  getWeightFlocksByHouseandYear(houseId:string, year:number){
+    return this.http.get<any>(environment.url_dashboard +'/flock/weight/' + houseId+'/'+year);
+  }
+  //get feed of flocks By house and year
+  getFeedFlocksByHouseandYear(houseId:string, year:number){
+    return this.http.get<any>(environment.url_dashboard +'/flock/feed/' + houseId+'/'+year);
+  }
+
+  //get Water of flocks By house and year
+  getWaterFlocksByHouseandYear(houseId:string, date:string, year:number){
+    return this.http.get<any>(environment.url_dashboard +'/flock/water/' + houseId+'/'+date+'/'+year , this.httpOptions);
+  }
+
+
+  //get Mortality by Flocks and year
+  getMortalityByFlocksAndYear(houseId:string, year:number){
+    return this.http.get<any>(environment.url_mortaliteDash +'/mortalityByflock/' + houseId+'/'+year);
   }
 }

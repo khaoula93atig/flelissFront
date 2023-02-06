@@ -30,11 +30,13 @@ export class GeneralComponent implements OnInit {
   public optionsChart2: any;
   public optionsChart3: any;
   public optionsChart4: any;
+  public optionsChart5: any;
 
   date= new Date();
   companyId:string
   donnes:any[]=[]
   donnes1:any[]=[]
+  donnes2:any[]=[]
   farms:any[]=[]
   weeklyWeightFarm:any[]=[]
   moratlityCompany:number=0
@@ -56,6 +58,7 @@ export class GeneralComponent implements OnInit {
     this.mortalityByFarm()
     this.mortalityBreed()
     this.getweeklyWeightMesurementbyCompany()
+    this.getFeedConsumTotalBycompany()
   }
 
   getFarms(){
@@ -71,7 +74,7 @@ export class GeneralComponent implements OnInit {
   dailyMortalityByFarm() {
     const datepipe: DatePipe = new DatePipe('en-US')
     let formattedDate = datepipe.transform(this.date, 'yyyy-MM-dd')
-      this.dashboardService.getMortalityByFarm(8,formattedDate ,this.companyId).subscribe(data1=>{
+      this.dashboardService.getMortalityByFarm(8,'2023-01-13' ,this.companyId).subscribe(data1=>{
         for(let farm of this.farms){
           this.donnes.push({
             "y": 0,
@@ -110,7 +113,10 @@ export class GeneralComponent implements OnInit {
             labels: {
               overflow: "justify",
               format: "{value}%"
-            }
+            },
+            title: {
+              text: null
+            },
           },
           plotOptions: {
             bar: {
@@ -178,6 +184,9 @@ export class GeneralComponent implements OnInit {
           title: {
             text: "Mortality by farm"
           },
+          subtitle: {
+            text: 'Overall'
+          },
     
           xAxis: {
             //categories: category,
@@ -187,7 +196,10 @@ export class GeneralComponent implements OnInit {
             labels: {
               overflow: "justify",
               format: "{value}%"
-            }
+            },
+            title: {
+              text: null
+            },
           },
           plotOptions: {
             bar: {
@@ -230,6 +242,7 @@ export class GeneralComponent implements OnInit {
     let category:any[]=[]
      let mortality:any[]=[]
      this.dashboardService.getMortalityByBreed(this.companyId).subscribe(data=>{
+      console.log(data)
        for(let res of data){
          switch(res.breed) { 
            case 1: { 
@@ -252,6 +265,7 @@ export class GeneralComponent implements OnInit {
          mortality.push(res.percentage)
  
        }
+       console.log(mortality)
      this.optionsChart3 = {
        chart: {
          type: "column",
@@ -261,6 +275,9 @@ export class GeneralComponent implements OnInit {
        title: {
          text: "Mortality by breed"
        },
+       subtitle: {
+        text: 'Overall'
+      },
  
        xAxis: {
          categories: category,
@@ -270,7 +287,10 @@ export class GeneralComponent implements OnInit {
          labels: {
            overflow: "justify",
            format: "{value}%"
-         }
+         },
+         title: {
+          text: null
+        },
        },
        plotOptions: {
         series: {
@@ -360,12 +380,13 @@ export class GeneralComponent implements OnInit {
     this.optionsChart4 = {
       chart: {
         type: "bar",
+        height:250
       },
       title: {
         text: 'Weekly weight by farm'
       },
       subtitle: {
-        text: 'Uniformity'
+        text: 'cv'
       },
       tooltip: {
         outside: true
@@ -375,20 +396,31 @@ export class GeneralComponent implements OnInit {
       },
       yAxis: {
         title: {
-          text: 'Uniformity'
+          text: 'CV'
         }
       },
-      legend: {
+      /*legend: {
         reversed: true
-      },
+      },*/  legend: {
+    layout: 'vertical',
+    align: 'right',
+    verticalAlign: 'top',
+    x: -40,
+    y: 20,
+    floating: true,
+    borderWidth: 1,
+    backgroundColor:
+      Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+    shadow: true
+  },
       plotOptions: {
         series: {
           stacking: 'normal'
         }
       },
-      series: [{name:'excellent', color:'#02675c', data:[]},
-      {name:'average',color:'#ffd100',data:[]},
-      {name:'poor',color:'#D07627',data:[]}
+      series: [{name:'Excellent', color:'#02675c', data:[]},
+      {name:'Average',color:'#ffd100',data:[]},
+      {name:'Poor',color:'#D07627',data:[]}
     ]
     }
     for(let wei of this.weeklyWeightFarm){
@@ -400,6 +432,118 @@ export class GeneralComponent implements OnInit {
   Highcharts.chart('chartweeklyweightByFarmUniformity', this.optionsChart4);
     })
 
+   }
+
+   getFeedConsumTotalBycompany(){
+    this.dashboardService.getfeedConsumTotalByCompany(this.companyId).subscribe(data=>{console.log(data)
+      for(let farm of this.farms){
+        this.donnes2.push({
+          "y": 0,
+          "name": farm.farmName
+      })}
+      for(let farm of this.farms){
+        if(data.length>0){
+          for(let res of data){
+            if(farm.farmId==res.farmId){
+              for(let d of this.donnes2){
+                if(d.name==farm.farmName){
+                  d.y=res.percentage
+                }
+              }
+            }
+          }
+        }
+      }
+      this.donnes2=this.donnes2.sort(((a,b) => a.y - b.y) )
+      this.optionsChart5 = {
+        chart: {
+          type: "column",
+          zoomType: "y",
+          height: 250,
+        },
+        title: {
+          text: "Feed intake by farm"
+        },
+        subtitle: {
+          text: 'Overall'
+        },
+  
+        xAxis: {
+          type: "category",
+        },
+        yAxis: {
+          labels: {
+            overflow: "justify",
+            format: "{value}g"
+          },
+          title: {
+           text: null
+         },
+        },
+        plotOptions: {
+         series: {
+           borderWidth: 0,
+           dataLabels: {
+             enabled: true,
+             format: '{point.y:.1f}g'
+           }
+         }
+       },
+        tooltip: {
+          valueSuffix: "g"
+        },
+        legend: {
+          enabled: false
+        },
+        colors: [
+         {
+           linearGradient: { x1: 0, x2: 1, y1: 0, y2: 1 },
+           stops: [
+               [0, '#1F7D77'],
+               [1, '#18534F']
+           ]
+         },
+         {
+           linearGradient: { x1: 0, x2: 1, y1: 0, y2: 1 },
+           stops: [
+               [0, '#FEEAA1'],
+               [1, '#FFD849']
+           ]
+       },
+         {
+           linearGradient: { x1: 0, x2: 1, y1: 0, y2: 1 },
+           stops: [
+               [0, '#D6955B'],
+               [1, '#D07627']
+           ]
+         },
+         {
+           linearGradient: { x1: 0, x2: 1, y1: 0, y2: 1 },
+           stops: [
+               [0, '#ECF8F6'],
+               [1, '#A0FBEC']
+           ]
+       },
+       {
+         linearGradient: { x1: 0, x2: 1, y1: 0, y2: 1 },
+         stops: [
+             [0, '#64605C'],
+             [1, '#392E2C']
+         ]
+       }
+       
+     ],
+        series: [
+          {
+            name: "Feed",
+            colorByPoint: true,
+            data: this.donnes2
+          }
+        ]
+      }
+      console.log(this.optionsChart5.series)
+      Highcharts.chart('chartFeedConsumByfarm', this.optionsChart5);
+    })
    }
 
  

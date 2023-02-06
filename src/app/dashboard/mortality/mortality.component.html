@@ -1,5 +1,5 @@
-<div class="container" style="background:rgba(255, 255, 255); margin: 24px 20px; padding: 16px 10px;">
-    <!-- Title ===== Select farm + Date -->
+<div class="container " style="background:rgba(255, 255, 255); margin: 16px 20px; padding: 0px;">
+    <!-- Title ===== Select farm + Date 
     <div class="clr-col-md-12" style=" margin-bottom: 20px; background-color: #f2f2f2; padding: 12px 10px;">
         <div class="clr-row">
             <div class="clr-col-md-6">
@@ -27,7 +27,7 @@
     </div>
 
 
-    <!-- Select + Boxes -->
+     Select + Boxes 
     <div class="clr-col-md-12">
         <div class="clr-row">
             <div class="clr-col-md-6">
@@ -104,7 +104,7 @@
     </div>
 
 
-    <!-- Table details -->
+    
     <div class="clr-row clr-col-10" *ngIf="detailsAlert"
         style="align-items:center; background-color:rgb(255, 255, 255);margin-left:auto;margin-right:auto; margin-top: 30px;">
         <div class="clr-row clr-col-10" style="margin-left:auto;margin-right:auto;">
@@ -121,14 +121,14 @@
                 <clr-dg-column>Date</clr-dg-column>
                 <clr-dg-column>Alert</clr-dg-column>
                 <clr-dg-column>Center</clr-dg-column>
-                <!--<clr-dg-column>House</clr-dg-column>-->
+                
                 <clr-dg-row *ngFor="let alert of alerts1">
                     <clr-dg-cell>{{visitDate| date:'dd/MM/yyyy'}}</clr-dg-cell>
                     <clr-dg-cell>{{alert.houseName.length}}</clr-dg-cell>
                     <clr-dg-cell>{{alert.centerName}}</clr-dg-cell>
-                    <!--<clr-dg-cell *ngFor="let alerthouse of alert.houseName">
+                    
                         {{alerthouse.house}} 
-                </clr-dg-cell>-->
+                </clr-dg-cell>
                     <clr-dg-row-detail *clrIfExpanded>
                         <table class="table">
                             <tr *ngFor="let alerthouse of alert.houseName">
@@ -146,10 +146,10 @@
             </clr-datagrid>
         </div>
     </div>
-     <!--/ Table details -->
+     
 
 
-    <!-- 3 Charts -->
+    
     <div class="clr-row" style="margin-top: 10px;">
         <div class="clr-col-md-4 background">
             <div class="content box1" style="background:rgb(255, 255, 255)">
@@ -170,17 +170,31 @@
         </div>
 
     </div>
-
+-->
 
 
 
     <!-- /Charts -->
 
-     <!-- Select -->
-    <div class=" clr-row clr-col-md-12" style="margin: auto; background-color: #f2f2f2; padding: 0px 10px 17px;">
-        <div class="clr-col-md-3">
-            <form clrForm clrLayout="horizontal" style="text-align: right;">
-                <clr-select-container>
+    <!-- Select -->
+    <div class=" clr-row clr-col-lg-12 clr-col-md-12 clr-col-sm-12"
+        style="margin: auto; background-color: #f3f7f7; padding: 8px;">
+        <div class=" clr-col-lg-3 clr-col-md-6 clr-col-sm-4">
+            <form clrForm clrLayout="horizontal" style="text-align: left;">
+                <clr-select-container style="margin-top: 0px">
+                    <label>Farm</label>
+                    <select clrSelect name="farm" [(ngModel)]="farmId"
+                        (change)="getAllCentersByFarm($event.target.value);getweeklyWeightMesurementbyFarm($event.target.value);
+            getAlertByFarm(visitDate,$event.target.value);getSurvivalByFarm($event.target.value);getMortalityByFarm($event.target.value);">
+                        <option *ngFor="let farm of farms" [value]="farm.farmId"> {{farm.farmName}}
+                        </option>
+                    </select>
+                </clr-select-container>
+            </form>
+        </div>
+        <div class="clr-col-lg-3 clr-col-md-6 clr-col-sm-4">
+            <form clrForm clrLayout="horizontal" style="text-align: left;">
+                <clr-select-container style="margin-top: 0px">
                     <label>Center</label>
                     <select clrSelect name="center" [(ngModel)]="centerID"
                         (change)="getAllhouseByCenterFordetails($event.target.value);">
@@ -191,11 +205,14 @@
             </form>
         </div>
 
-        <div class="clr-col-md-3">
-            <form clrForm clrLayout="horizontal" style="text-align: right;"
+        <div class="clr-col-lg-3 clr-col-md-6 clr-col-sm-4">
+            <form clrForm clrLayout="horizontal" style="text-align: left;"
                 (change)="getAlertbyhouse($event.target.value);getMortalityByhouseDaily($event.target.value);
-    getSurvivalByHouse($event.target.value); getfeedByhouseDaily($event.target.value) ; getTotalFood($event.target.value)">
-                <clr-select-container>
+    getSurvivalByHouse($event.target.value); getfeedByhouseDaily($event.target.value) ; getTotalFood($event.target.value);
+    getageofflock($event.target.value);getFeedByHouseofLastDays($event.target.value);getMortalityByHouseofLastDays($event.target.value);
+    getWeightByHouseofLastDays($event.target.value);getwaterByHouseofLastDays($event.target.value);getWaterConsumpDaily($event.target.value);
+    getWaterTotal($event.target.value);getWeightDaily($event.target.value);getCV($event.target.value);getBreedOfHouse($event.target.value)">
+                <clr-select-container style="margin-top: 0px">
                     <label>House</label>
                     <select clrSelect name="house" [(ngModel)]="houseId">
                         <option *ngFor="let house of houses" [value]="house.houseId"> {{house.houseName}}
@@ -204,24 +221,39 @@
                 </clr-select-container>
             </form>
         </div>
+        <div class="clr-col-lg-1 clr-col-md-4 clr-col-sm-4">
+            <form clrForm>
+                <clr-input-container style="margin-top: 0px">
+                    <label class="clr-col-12 clr-col-md-1">Age</label>
+                    <input class="clr-col-md-9 clr-col-12" placeholder="--" clrInput [(ngModel)]="ageofflock" name="name" required readonly />
+                </clr-input-container>
+            </form>
+        </div>
+
+        <div class="clr-col-lg-2 clr-col-md-12 clr-col-sm-4">
+            <div class="DateHeader" style="float: right;">
+                <p><clr-icon shape="calendar" style=" height: 22px;     color: #01675c;
+                    width: 22px; margin-right: 5px;   margin-bottom: 5px;"></clr-icon>{{date | date:'dd/MM/yyyy'}}</p>
+            </div>
+        </div>
     </div>
 
 
 
-   <!-- Carts -->
+    <!-- Carts -->
     <div class="clr-row" style="margin: auto;">
-        <div class="clr-row clr-col-md-12">
-        </div>
-        <div class="clr-row clr-col-md-12">
-            <div class="clr-col-md-4">
-           
-                    <h3>Death analysis</h3>
-        
+        <div class="clr-row clr-col-lg-12 clr-col-md-12 clr-col-sm-12">
+
+            <div class="clr-col-lg-4 clr-col-md-8 clr-col-sm-8">
+
+                <h3>Death analysis <img src="../../../assets/death-chiken.png" width="45" height="45"></h3>
+
                 <div class="clr-row">
                     <div class="basic-column w-col w-col-3">
                         <div class="tag-wrapper">
                             <div class="number-card">
-                                <h1 class="number-card-number">{{mortalityByHousedaily}} <small style="font-size:15px;">birds</small></h1>
+                                <h1 class="number-card-number">{{mortalityByHousedaily}} <small
+                                        style="font-size:15px;">birds</small></h1>
                                 <div class="number-card-divider"></div>
                                 <div class="number-card-progress-wrapper">
                                     <div class="tagline number-card-currency">Daily Mortality</div>
@@ -232,16 +264,17 @@
                     <div class="basic-column w-col w-col-3">
                         <div class="tag-wrapper">
                             <div class="number-card1">
-                                <h1 class="number-card-number1">{{mortalityByHouseyestarday}} <small style="font-size:15px;">birds</small></h1>
+                                <h1 class="number-card-number1">{{survivalByhouse}} <small
+                                        style="font-size:15px;">birds</small></h1>
                                 <div class="number-card-divider1"></div>
                                 <div class="number-card-progress-wrapper">
-                                    <div class="tagline number-card-currency1">Day before yestarday</div>
+                                    <div class="tagline number-card-currency1">Survival rate</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="clr-row">
+                <!--<div class="clr-row">
                     <div class="basic-column w-col w-col-3">
                         <div class="tag-wrapper">
                             <div class="number-card1">
@@ -257,51 +290,50 @@
                     <div class="basic-column w-col w-col-3">
                         <div class="tag-wrapper">
                             <div class="number-card">
-                                <h1 class="number-card-number">{{survivalByhouse}} <small style="font-size:15px;">birds</small></h1>
+                                <h1 class="number-card-number">{{mortalityByHouseyestarday}} <small style="font-size:15px;">birds</small></h1>
                                 <div class="number-card-divider"></div>
                                 <div class="number-card-progress-wrapper">
-                                    <div class="tagline number-card-currency">Survival rate</div>
+                                    <div class="tagline number-card-currency">Day before yestarday</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="clr-col-md-4">
-        
-                <div class="clr-row" style="margin-top: 30px;">
-                    <div id="chartDetailsAlerts" style=" height: 300px;"></div>
-                </div>
-            </div>
-            <div class="clr-col-md-4">
-           
-                    <h3>Feed analysis</h3>
-      
+                </div>-->
                 <div class="clr-row">
-                    <div class="basic-column w-col w-col-3">
-                        <div class="tag-wrapper">
-                            <div class="number-card1">
-                                <h1 class="number-card-number1">{{feedhousedaily}} <small style="font-size:15px;">g/birds</small></h1>
-                                <div class="number-card-divider1"></div>
-                                <div class="number-card-progress-wrapper">
-                                    <div class="tagline number-card-currency1">Quantity material feed</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="chartMortalityByhouseofLastDays" style=" height: 200px; width: 100%;"></div>
+                </div>
+
+
+                <h3>Weight analysis <img src="../../../assets/Icones visit/weight.png" width="45" height="45" style="margin-top:-13px"
+                        class="imgIcon"></h3>
+
+                <div class="clr-row">
                     <div class="basic-column w-col w-col-3">
                         <div class="tag-wrapper">
                             <div class="number-card">
-                                <h1 class="number-card-number">{{feedhouseYestrday}} <small style="font-size:15px;">g/birds</small></h1>
+                                <h1 class="number-card-number">{{weightdaily}} <small style="font-size:15px;">g</small>
+                                </h1>
                                 <div class="number-card-divider"></div>
                                 <div class="number-card-progress-wrapper">
-                                    <div class="tagline number-card-currency">Quantity of yesterday</div>
+                                    <div class="tagline number-card-currency">Average Body weight</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="clr-row">
+                    <div class="basic-column w-col w-col-3">
+                        <div class="tag-wrapper">
+                            <div class="number-card1">
+                                <h1 class="number-card-number1">{{cv}} <small style="font-size:15px;">%</small></h1>
+                                <div class="number-card-divider1"></div>
+                                <div class="number-card-progress-wrapper">
+                                    <div class="tagline number-card-currency1">CV</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--<div class="clr-row">
                     <div class="basic-column w-col w-col-3">
                         <div class="tag-wrapper">
                             <div class="number-card">
@@ -316,16 +348,155 @@
                     <div class="basic-column w-col w-col-3">
                         <div class="tag-wrapper">
                             <div class="number-card1">
-                                <h1 class="number-card-number1">{{totalFeed}} <small style="font-size:15px;">g/birds</small></h1>
+                                <h1 class="number-card-number1">{{feedhouseYestrday}}<small style="font-size:15px;">g/birds</small></h1>
                                 <div class="number-card-divider1"></div>
                                 <div class="number-card-progress-wrapper">
-                                    <div class="tagline number-card-currency1">Cumulative feed</div>
+                                    <div class="tagline number-card-currency1"> Quantity of yesterday</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+                    <div id="chartWeightByhouseofLastDays" style=" height: 200px; width: 100%;"></div>
+
+                </div>
+            </div>
+
+            <!-- Section center -->
+            <div class="clr-col-lg-4 clr-col-md-4 clr-col-sm-8" 
+            style="background-color:rgba(1, 103, 92, .05);
+                box-shadow: rgb(0 0 0 / 10%) 0px 0px 5px 0px, rgb(0 0 0 / 10%) 0px 0px 1px 0px;">
+
+
+                <div class="clr-row" style="margin-top: 30px;">
+                    <div id="chartDetailsAlerts" style=" height: 300px; "></div>
+                </div>
+
+                <div class="clr-row">
+                </div>
+
+                <div class="clr-row" style="margin-top: 30px;">
+                    <div id="chartWeightByStandard" style=" height: 100%; margin-top: 31px; width: 100%;"></div>
+                </div>
+            </div>
+
+
+              <!-- Section 3 -->
+            <div class="clr-col-lg-4 clr-col-md-8 clr-col-sm-8">
+
+                <h3>Feed analysis <img src="../../../assets/Icones visit/feedConsumption.png" width="40" height="40"
+                        class="imgIcon"></h3>
+
+                <div class="clr-row">
+                    <div class="basic-column w-col w-col-3">
+                        <div class="tag-wrapper">
+                            <div class="number-card1">
+                                <h1 class="number-card-number1">{{feedhousedaily}} <small
+                                        style="font-size:15px;">g/birds</small></h1>
+                                <div class="number-card-divider1"></div>
+                                <div class="number-card-progress-wrapper">
+                                    <div class="tagline number-card-currency1">Quantity material feed</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="basic-column w-col w-col-3">
+                        <div class="tag-wrapper">
+                            <div class="number-card">
+                                <h1 class="number-card-number">{{totalFeed}} <small
+                                        style="font-size:15px;">g/birds</small></h1>
+                                <div class="number-card-divider"></div>
+                                <div class="number-card-progress-wrapper">
+                                    <div class="tagline number-card-currency">Cumulative feed</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!--<div class="clr-row">
+                    <div class="basic-column w-col w-col-3">
+                        <div class="tag-wrapper">
+                            <div class="number-card">
+                                <h1 class="number-card-number">{{decreasefeed}} <small style="font-size:15px;">g/birds</small></h1>
+                                <div class="number-card-divider"></div>
+                                <div class="number-card-progress-wrapper">
+                                    <div class="tagline number-card-currency">Increase or decrease</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="basic-column w-col w-col-3">
+                        <div class="tag-wrapper">
+                            <div class="number-card1">
+                                <h1 class="number-card-number1">{{feedhouseYestrday}}<small style="font-size:15px;">g/birds</small></h1>
+                                <div class="number-card-divider1"></div>
+                                <div class="number-card-progress-wrapper">
+                                    <div class="tagline number-card-currency1"> Quantity of yesterday</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+                <div id="chartfeedByhouseofLastDays" style=" height: 200px;"></div>
+                <h3>Water analysis <img src="../../../assets/Icones visit/waterConsumption.png" width="40" height="40"
+                        class="imgIcon"></h3>
+
+                <div class="clr-row">
+                    <div class="basic-column w-col w-col-3">
+                        <div class="tag-wrapper">
+                            <div class="number-card1">
+                                <h1 class="number-card-number1">{{waterConsm}} <small
+                                        style="font-size:15px;">ml/brid/day</small></h1>
+                                <div class="number-card-divider1"></div>
+                                <div class="number-card-progress-wrapper">
+                                    <div class="tagline number-card-currency1">Water consumption</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="basic-column w-col w-col-3">
+                        <div class="tag-wrapper">
+                            <div class="number-card">
+                                <h1 class="number-card-number">{{waterConsumTotal}} <small
+                                        style="font-size:15px;">ml/brid/day</small></h1>
+                                <div class="number-card-divider"></div>
+                                <div class="number-card-progress-wrapper">
+                                    <div class="tagline number-card-currency">Cumulative water</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--<div class="clr-row">
+                            <div class="basic-column w-col w-col-3">
+                                <div class="tag-wrapper">
+                                    <div class="number-card">
+                                        <h1 class="number-card-number">{{decreasefeed}} <small style="font-size:15px;">g/birds</small></h1>
+                                        <div class="number-card-divider"></div>
+                                        <div class="number-card-progress-wrapper">
+                                            <div class="tagline number-card-currency">Increase or decrease</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="basic-column w-col w-col-3">
+                                <div class="tag-wrapper">
+                                    <div class="number-card1">
+                                        <h1 class="number-card-number1">{{feedhouseYestrday}}<small style="font-size:15px;">g/birds</small></h1>
+                                        <div class="number-card-divider1"></div>
+                                        <div class="number-card-progress-wrapper">
+                                            <div class="tagline number-card-currency1"> Quantity of yesterday</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                    <div id="chartWaterByhouseofLastDays" style=" height: 200px;  width: 100%"></div>
+
+                </div>
             </div>
+
         </div>
 
 

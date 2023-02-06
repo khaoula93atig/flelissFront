@@ -1,6 +1,6 @@
 .modal-body {
-    overflow-y: scroll;
-    overflow-x: hidden;
+    /*overflow-y: scroll;
+    overflow-x: hidden;*/
 }
 
 .card-block .btn, .card-block .btn.btn-link, .card-block .card-link, .card-footer .btn, .card-footer .btn.btn-link, .card-footer .card-link {
@@ -76,4 +76,21 @@ to {
 }
 }
 
+
 .normal {color:green}
+@media screen and (max-width: 576px){
+  /*.test{
+      overflow-x: scroll;
+  }*/
+  .modal-footer {
+    /*display: flex;*/
+    justify-content: flex-end;
+    padding: 1.2rem 0 0 0;
+}
+  }
+  .row-test{
+    display: flex;
+    /* flex-wrap: wrap; */
+    margin-right: -0.6rem;
+    margin-left: -0.6rem;
+  }

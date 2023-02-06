@@ -48,10 +48,24 @@ export class BroodingCheckListComponent implements OnInit {
   centerId: string
   subs: SubSink = new SubSink()
   visitDate: Date
+  floorTemperature:string
+  spotBrooding:string
+  distanceAccessWater:string
+  checkFeedForm:string
+  feedOnPaper:string
+  feedersTrays:string
+  drinkersNipple:string
+  drinker:string
+  drinkersSupp:string
+  waterTemperature:string
+
+
   constructor(
     private HouseService: HouseService,
     private VisitAuditsService: VisitAuditsService,
   ) {}
+
+
   getHouseId(event) {
     this.housesId = event
     //get flock by house id
@@ -82,6 +96,12 @@ export class BroodingCheckListComponent implements OnInit {
   getlitterDepth(event) {
     this.litterDepth = event
   }
+  getTemperature(event) {
+    this.temperature = event
+  }
+  getfloorTemperature(event) {
+    this.floorTemperature = event
+  }
   getPreHeatLeast(event) {
     this.preHeatLeast = event
   }
@@ -95,9 +115,36 @@ export class BroodingCheckListComponent implements OnInit {
   getAirSpeed(event) {
     this.airSpeed = event
   }
+  getDistance(event) {
+    this.distanceAccessWater = event
+  }
   getPositionSuppDrink(event) {
     this.positionSuppDrink = event
   }
+  getSpotBrooding(event) {
+    this.spotBrooding = event
+  }
+  getCheckFeed(event) {
+    this.checkFeedForm = event
+  }
+  getfeedOnPaper(event) {
+    this.feedOnPaper = event
+  }
+  getfeedTrays(event) {
+    this.feedersTrays = event
+  }
+  getDrinkersNipple(event) {
+    this.drinkersNipple = event
+  }
+
+  getDrinkers(event) {
+    this.drinker = event
+  }
+  getDrinkerSupp(event) {
+    this.drinkersSupp = event
+  }
+
+
   getDeliveryVehiTemp(event) {
     this.deliveryVehiTemp = event
   }
@@ -134,6 +181,9 @@ export class BroodingCheckListComponent implements OnInit {
   getLightIntensity(event) {
     this.lightIntensity = event
   }
+  getwaterTemperature(event) {
+    this.waterTemperature = event
+  }
   getCheckChickBehavior(event) {
     this.checkChickBehavior = event
   }
@@ -159,13 +209,25 @@ export class BroodingCheckListComponent implements OnInit {
 
   save() {
     let checkList: CheckList = new Object() as CheckList
+    //before arrival
     checkList.litterDepth = this.litterDepth
-    //checkList.temperature = this.temperature;
+    checkList.temperature = this.temperature;
     checkList.preHeatLeast = this.preHeatLeast
     checkList.airTemperature = this.airTemperature
+    checkList.floorTemperature = this.floorTemperature
+    checkList.spotBrooding=this.spotBrooding
     checkList.realtiveHumidity = this.realtiveHumidity
+    checkList.distanceAccessWater=this.distanceAccessWater
     checkList.airSpeed = this.airSpeed
-    checkList.positionSuppDrink = this.positionSuppDrink
+    checkList.checkFeed=this.checkFeedForm
+    checkList.feedOnPaper=this.feedOnPaper
+    checkList.feedersTrays=this.feedersTrays
+    checkList.drinkersNippleLines=this.drinkersNipple
+    checkList.drinkersBell=this.drinker
+    checkList.drinkersSupp=this.drinkersSupp
+    //checkList.positionSuppDrink = this.positionSuppDrink
+
+    //checkdelivery
     checkList.deliveryVehiTemp = this.deliveryVehiTemp
     checkList.deliveryVehiHumi = this.deliveryVehiHumi
     checkList.deliveryVehicleHygiene = this.deliveryVehicleHygiene
@@ -173,11 +235,14 @@ export class BroodingCheckListComponent implements OnInit {
     checkList.externalEnvCond = this.externalEnvCond
     checkList.transitTime = this.transitTime
     checkList.deliveryVehicleAirExch = this.deliveryVehicleAirExch
+
+    //the arrival
     checkList.internalChickTemp = this.internalChickTemp
     checkList.weighSampleChick = this.weighSampleChick
-    checkList.placeChicksQuickly = this.placeChicksQuickly
-    checkList.ensureFeedWater = this.ensureFeedWater
+    //checkList.placeChicksQuickly = this.placeChicksQuickly
+    //checkList.ensureFeedWater = this.ensureFeedWater
     checkList.lightIntensity = this.lightIntensity
+    checkList.waterTemperature= this.waterTemperature
     checkList.checkChickBehavior = this.checkChickBehavior
     checkList.checkChickWaterSupply = this.checkChickWaterSupply
     checkList.checkFeedSupply = this.checkFeedSupply
@@ -190,6 +255,8 @@ export class BroodingCheckListComponent implements OnInit {
     checkList.housesId = this.housesId
     checkList.farmId = this.farmId
     checkList.username = this.username
+    console.log('test')
+    console.log(checkList)
     this.VisitAuditsService.createBroodingCheck(
       checkList,
     ).subscribe((data) => {})

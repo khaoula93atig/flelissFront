@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+import { FlockService } from 'src/app/services/flock.service';
 Drilldown(Highcharts);
 
 declare var require: any;
@@ -42,11 +43,17 @@ export class MortalityComponent implements OnInit {
   public optionsChart4: any;
   public optionsChart3: any;
   public chart :any;
+  public optionsChart2 :any;
+  public optionsChart5 :any;
+  public optionsChart6 :any;
+  public optionsChart7 :any;
+  public optionsChart8 :any;
 
   constructor(private UserService: UserService,
     private dashboardService: DashboardService,
     private farmService:FarmService,
     private houseService:HouseService,
+    private flockService:FlockService,
     public datepipe: DatePipe) { }
   
   farms:any[]=[]  
@@ -78,10 +85,21 @@ export class MortalityComponent implements OnInit {
   feedhouseYestrday=0
   decreasefeed=0
   totalFeed=0
+  waterConsm=0
+  waterConsumTotal=0
+  weightdaily=0
+  cv=0
 
   date= new Date();
   visitDate=this.datepipe.transform(this.date, 'MM-dd-yyyy')
   companyId:string;
+  ageofflock:number
+  standard:any[]=[]
+  exists : any[]=[]
+  ageStandard:any[]=[]
+  ageExists:any[]=[]
+  breed:number
+  flockId:string
   
 
   ngOnInit(): void {
@@ -175,16 +193,15 @@ export class MortalityComponent implements OnInit {
         for(let center of data){
           this.houseService.getConsultingHouseByCenter(center.centerId).subscribe(data2=>{
             if(data2.length==0){
-              this.categories.push({"y": 0,"name": center.centerName,"drilldown": null})
+              this.categories.push({"name": center.centerName,"y": 0,"drilldown": null})
             }
             else{
-              this.categories.push({"y": 0,"name": center.centerName,"drilldown": center.centerId})
+              this.categories.push({"name": center.centerName,"y": 0,"drilldown": center.centerId})
               this.details.push( {name: center.centerId ,id: center.centerId,data:[]})
             }
     })}
     this.farmService.findById(event).subscribe(data0=>{
       this.farmName=data0[0].farmName})
-
         this.dashboardService.getMortalityByCenter(event).subscribe(data1=>{
           for(let center of data){
             if(data1.length>0){
@@ -195,14 +212,13 @@ export class MortalityComponent implements OnInit {
                     if(cat.name==center.centerName){
                       cat.y=d.percentage
                     }
-
                   }
                 }
               }
             }
             
           }
-          console.log('cat',this.categories)
+          console.log('cat1',this.categories)
         this.mortalityHouse()
         })
        
@@ -479,7 +495,7 @@ this.details2=[]
    getAlertbyhouse(event){
     const datepipe: DatePipe = new DatePipe('en-US')
     let formattedDate = datepipe.transform(this.date, 'yyyy-MM-dd')
-   this.dashboardService.getalertByhouse(formattedDate,event).subscribe(data=>{
+   this.dashboardService.getalertByhouse('2023-01-12',event).subscribe(data=>{
     console.log('house',data)
     this.getDetailsAlertsByHouse()
     this.chart.data = data
@@ -529,13 +545,13 @@ getMortalityByhouseDaily(house){
   let date1 = new Date()
   const datepipe: DatePipe = new DatePipe('en-Fr')
   let formatedDate = datepipe.transform(date1, 'yyyy-MM-dd')
-  this.dashboardService.getMortalityCountByHouse(house,formatedDate).subscribe(data=>{
+  this.dashboardService.getMortalityCountByHouse(house,'2023-01-12').subscribe(data=>{
     console.log('todya',data)
     this.mortalityByHousedaily=data
   })
   date1.setDate(date1.getDate() - 1)
   let formatedDate1 = datepipe.transform(date1, 'yyyy-MM-dd')
-  this.dashboardService.getMortalityCountByHouse(house,formatedDate1).subscribe(data=>{
+  this.dashboardService.getMortalityCountByHouse(house,'2023-01-12').subscribe(data=>{
     console.log('yest',data)
     this.mortalityByHouseyestarday=data
     this.decreaseMortality=this.mortalityByHousedaily-this.mortalityByHouseyestarday
@@ -552,6 +568,65 @@ getSurvivalByHouse(house){
   })
 }
 
+getWaterConsumpDaily(house){
+  this.waterConsm=0
+  let date1 = new Date()
+  const datepipe: DatePipe = new DatePipe('en-Fr')
+  let formatedDate = datepipe.transform(date1, 'yyyy-MM-dd')
+  this.dashboardService.getwaterconsumptionByHouseDaily('2023-01-12',house).subscribe(data=>{
+    this.waterConsm=data
+    console.log('waterConsm',data)
+  })
+
+}
+
+getWeightDaily(house){
+  this.weightdaily=0
+  let date1 = new Date()
+  const datepipe: DatePipe = new DatePipe('en-Fr')
+  let formatedDate = datepipe.transform(date1, 'yyyy-MM-dd')
+  this.dashboardService.getweightByHouseDaily('2023-01-12',house).subscribe(data=>{
+    this.weightdaily=data
+    console.log('weight',data)
+  })
+
+}
+
+getCV(house){
+  this.cv=0
+  let date1 = new Date()
+  const datepipe: DatePipe = new DatePipe('en-Fr')
+  let formatedDate = datepipe.transform(date1, 'yyyy-MM-dd')
+  this.dashboardService.getcvByHouseDaily('2023-01-12',house).subscribe(data=>{
+    this.cv=data
+    console.log('cv',data)
+  })
+
+}
+getBreedOfHouse(house){
+  this.houseService.getbreedofhouse(house).subscribe(data=>{
+    this.breed=data
+    console.log('breed',this.breed)
+    this.flockService.getFlockExisitsByHouse(house).subscribe(data=>{
+      this.flockId=data[0].flockID
+      this.getweeklyweightbyBreed()
+      console.log('flock',this.flockId)})
+  })
+  
+}
+
+getWaterTotal(house){
+  this.waterConsumTotal=0
+  let date1 = new Date()
+  const datepipe: DatePipe = new DatePipe('en-Fr')
+  let formatedDate = datepipe.transform(date1, 'yyyy-MM-dd')
+  this.dashboardService.getwaterconsumptionTotalByHouse('2023-01-12',house).subscribe(data=>{
+    this.waterConsumTotal=data
+    console.log('waterConsmTotal',data)
+  })
+
+}
+
 getfeedByhouseDaily(house){
   this.feedhousedaily=0
   this.feedhouseYestrday=0
@@ -559,14 +634,14 @@ getfeedByhouseDaily(house){
   let date1 = new Date()
   const datepipe: DatePipe = new DatePipe('en-Fr')
   let formatedDate = datepipe.transform(date1, 'yyyy-MM-dd')
-  this.dashboardService.getfeedByhouse(formatedDate,house).subscribe(data=>{
+  this.dashboardService.getfeedByhouse('2023-01-12',house).subscribe(data=>{
     this.feedhousedaily=data
     console.log('todyafeed',data)
   })
 
   date1.setDate(date1.getDate() - 1)
   let formatedDate1 = datepipe.transform(date1, 'yyyy-MM-dd')
-  this.dashboardService.getfeedByhouse(formatedDate1,house).subscribe(data=>{
+  this.dashboardService.getfeedByhouse('2023-01-12',house).subscribe(data=>{
     this.feedhouseYestrday=data
     console.log('yestfeed',data)
     this.feedhouseYestrday=data
@@ -578,7 +653,7 @@ getTotalFood(house){
   this.totalFeed=0
   const datepipe: DatePipe = new DatePipe('en-Fr')
   let formatedDate = datepipe.transform(this.date, 'yyyy-MM-dd')
-  this.dashboardService.gettotalFeedByhouse(formatedDate,house).subscribe(data=>{
+  this.dashboardService.gettotalFeedByhouse('2023-01-12',house).subscribe(data=>{
     this.totalFeed=data
   })
 }
@@ -592,6 +667,10 @@ getAllhouseByCenterFordetails(event){
   this.feedhouseYestrday=0
   this.decreasefeed=0
   this.totalFeed=0
+  this.cv=0
+  this.waterConsm=0
+  this.waterConsumTotal=0
+  this.weightdaily=0
   this.houseService.getConsultingHouseByCenter(event).subscribe(data=>{
     this.houses=data
     this.houseId=data[0].houseId
@@ -600,9 +679,236 @@ getAllhouseByCenterFordetails(event){
     this.getSurvivalByHouse(this.houseId)
     this.getfeedByhouseDaily(this.houseId)
     this.getTotalFood(this.houseId)
+    this.getageofflock(this.houseId)
+    this.getFeedByHouseofLastDays(this.houseId)
+    this.getMortalityByHouseofLastDays(this.houseId)
+    this.getWeightByHouseofLastDays(this.houseId)
+    this.getwaterByHouseofLastDays(this.houseId)
+    this.getWaterConsumpDaily(this.houseId)
+    this.getWaterTotal(this.houseId)
+    this.getWeightDaily(this.houseId)
+    this.getCV(this.houseId)
+    this.getBreedOfHouse(this.houseId)
   })
 
 }
+
+getageofflock(event){
+  let date1 = new Date()
+  const datepipe: DatePipe = new DatePipe('en-Fr')
+  let formatedDate = datepipe.transform(date1, 'yyyy-MM-dd')
+  this.dashboardService.getAgeFlock(event,'2023-01-12').subscribe(res=>this.ageofflock=res)
+}
+getFeedByHouseofLastDays(event){
+  let categories=[]
+  let data=[]
+  this.dashboardService.getFeedByHouseOfLastDays(event).subscribe(res=>{
+    console.log("feed",res)
+    for(let r of res){
+      categories.push(r.date)
+      data.push(r.mesure)
+    }
+    this.optionsChart2 = {   
+      chart: {
+         type: "spline",
+         backgroundColor: "rgba(0, 0, 0, 0)",
+      },
+      title: {
+         text: "Measure of feed"
+      },
+      xAxis:{
+         categories:categories
+      },
+      yAxis: {          
+         title:{
+            text:"g/brid/day"
+         } 
+      },
+      tooltip: {
+         valueSuffix:"g/brid/day"
+      },
+      series: [{
+         name: 'feed',
+         data: data,
+         color:'#01897a'
+      }]
+   };
+   Highcharts.chart('chartfeedByhouseofLastDays', this.optionsChart2);
+  })
+}
+
+getMortalityByHouseofLastDays(event){
+  let categories=[]
+  let data=[]
+  this.dashboardService.getMortalityByHouseOfLastDays(event).subscribe(res=>{
+    console.log("Mortality",res)
+    for(let r of res){
+      categories.push(r.date)
+      data.push(r.mesure)
+    }
+    this.optionsChart5 = {   
+      chart: {
+         type: "spline",
+         backgroundColor: "rgba(0, 0, 0, 0)",
+      },
+      title: {
+         text: "Measure of Motality"
+      },
+      xAxis:{
+         categories:categories
+      },
+      yAxis: {          
+         title:{
+            text:"brid/day"
+         } 
+      },
+      tooltip: {
+         valueSuffix:"brid/day"
+      },
+      series: [{
+         name: 'Mortality',
+         data: data,
+         color:"red"
+      }]
+   };
+   Highcharts.chart('chartMortalityByhouseofLastDays', this.optionsChart5);
+  })
+}
+
+getWeightByHouseofLastDays(event){
+  let categories=[]
+  let data=[]
+  this.dashboardService.getWeightByHouseOfLastDays(event).subscribe(res=>{
+    console.log("Mortality",res)
+    for(let r of res){
+      categories.push(r.date)
+      data.push(r.mesure)
+    }
+    this.optionsChart6 = {   
+      chart: {
+         type: "spline",
+         backgroundColor: "rgba(0, 0, 0, 0)",
+      },
+      title: {
+         text: "Measure of Weight"
+      },
+      xAxis:{
+         categories:categories
+      },
+      yAxis: {          
+         title:{
+            text:"g"
+         } 
+      },
+      tooltip: {
+         valueSuffix:"g"
+      },
+      series: [{
+         name: 'Weight',
+         data: data,
+         color:"hsl(49deg 100% 50%)"
+      }]
+   };
+   Highcharts.chart('chartWeightByhouseofLastDays', this.optionsChart6);
+  })
+}
+
+getwaterByHouseofLastDays(event){
+  let categories=[]
+  let data=[]
+  this.dashboardService.getwaterByHouseOfLastDays(event).subscribe(res=>{
+    console.log("Mortality",res)
+    for(let r of res){
+      categories.push(r.date)
+      data.push(r.mesure)
+    }
+    this.optionsChart7 = {   
+      chart: {
+         type: "spline",
+         backgroundColor: "rgba(0, 0, 0, 0)",
+      },
+      title: {
+         text: "Measure of Water"
+      },
+      xAxis:{
+         categories:categories
+      },
+      yAxis: {          
+         title:{
+            text:"ml/brid/day"
+         } 
+      },
+      tooltip: {
+         valueSuffix:"ml/brid/day"
+      },
+      series: [{
+         name: 'Water',
+         data: data,
+      }]
+   };
+   console.log(this.optionsChart7.xAxis.categories)
+   console.log(this.optionsChart7.series[0].data)
+   Highcharts.chart('chartWaterByhouseofLastDays', this.optionsChart7);
+  })
+}
+
+getweeklyweightbyBreed(){
+  console.log('test')
+   this.standard=[]
+   this.exists=[]
+     this.dashboardService.getweeklyweightByBreed(this.breed, this.flockId,this.farmId).subscribe(data=>{console.log(data)
+       this.dashboardService.getweeklyweightStandardBybreed(this.breed).subscribe(data1=>
+         {
+           for(let w of data1)
+           {
+             this.standard.push(w.weight)
+             this.ageStandard.push(w.age)
+           }
+           
+         
+       for(let w of data)
+         {
+           this.exists.push(w.averge)
+           this.ageExists.push(w.week)
+         }
+       this.optionsChart8 = {
+        chart: {
+          type: "spline",
+          backgroundColor: "rgba(0, 0, 0, 0)",
+       },
+       title: {
+          text: "Weekly weight by breed"
+       },
+       xAxis:{
+          categories:[7 , 14 ,21 ,28 ,35 , 42 ,49]
+       },
+       yAxis: {          
+          title:{
+             text:"g"
+          } 
+       },
+       tooltip: {
+          valueSuffix:"g"
+       },
+         series: [
+           {
+             name: 'Exist',
+             data: this.exists,
+             color:"hsl(49deg 100% 50%)"
+           },
+           {
+             name: 'Standard',
+             data: this.standard,
+             color:"black"
+           }
+         ]
+       };
+       Highcharts.chart('chartWeightByStandard', this.optionsChart8);
+     })
+   })
+   
+   }
+ 
 
   
 

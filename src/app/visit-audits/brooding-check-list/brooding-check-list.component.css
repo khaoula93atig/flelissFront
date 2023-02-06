@@ -5,4 +5,8 @@
     position: relative;
     border-radius: 7px;
 }
-
+@media screen and (max-width: 576px){
+    .modal-body {
+        overflow-x: scroll;
+    }
+    }
