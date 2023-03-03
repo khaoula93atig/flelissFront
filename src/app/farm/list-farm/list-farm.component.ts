@@ -19,6 +19,7 @@ import { SubSink } from 'subsink'
 import { environment } from '../../../environments/environment'
 import { NewfarmComponent } from '../newfarm/newfarm.component'
 import { IRegistrationCompany } from 'src/app/shared/registration'
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   selector: 'app-list-farm',
@@ -33,6 +34,7 @@ export class ListFarmComponent implements OnInit, OnDestroy {
   // Reference to the included DataGrid showing the different sectors
   @ViewChild(ClrDatagrid) dg: ClrDatagrid
   @ViewChild('fileUpload', { static: false }) fileUpload: ElementRef
+  @ViewChild(NewfarmComponent) modal: NewfarmComponent
   files = []
   subs: SubSink = new SubSink()
   id: any[] = []
@@ -42,28 +44,43 @@ export class ListFarmComponent implements OnInit, OnDestroy {
   loading: boolean = true
   urlAgreement: string = ''
   companies: IRegistrationCompany[]
+  companyId:string
   constructor(
     private FarmService: FarmService,
     private router: Router,
     private CompanyService: CompanyService,
+    private toaster: ToastrService
   ) {}
 
   ngOnInit(): void {
+    this.companyId=sessionStorage.getItem("companyID")
+    this.refresh()
     this.subs.add(
-      this.FarmService.getConsultingALLFarm().subscribe((data) => {
+      this.FarmService.getConsultingFarm(this.companyId).subscribe((data) => {
         this.farms = data
+        console.log(data)
         this.loading = false
       }),
     )
+  }
+  refresh() {
+    //get house by farm id
     this.subs.add(
-      this.CompanyService.getConsultingCompany().subscribe((data) => {
-        this.companies = data
+      this.FarmService.getConsultingFarm(this.companyId).subscribe((data) => {
+        this.farms = data
+        this.loading = false
       }),
     )
   }
 
   sauvegarder(detail) {
-    this.subs.add(this.FarmService.save(detail).subscribe((data) => {}))
+    this.subs.add(this.FarmService.save(detail).subscribe((data) => {
+      if (data['response'] == 'OK') {
+        this.toaster.success('Success', 'Successfully updated')
+
+      } else {
+        this.toaster.error('Error', 'Operation failed')
+      }}))
   }
 
   ngOnDestroy(): void {
@@ -81,7 +98,7 @@ export class ListFarmComponent implements OnInit, OnDestroy {
     setTimeout(() => this.dg.resize())
   }
 
-  @ViewChild(NewfarmComponent) modal: NewfarmComponent
+
 
   ngAfterViewInit(): void {}
 }

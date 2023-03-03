@@ -5,6 +5,7 @@ import { SubSink } from 'subsink'
 import { Output, EventEmitter } from '@angular/core'
 import { WeeklyWeightComponent } from '../weekly-weight/weekly-weight.component'
 import { WeeklyFeedComponent } from '../weekly-feed/weekly-feed.component'
+import { identifierModuleUrl } from '@angular/compiler'
 @Component({
   selector: 'app-list-visit',
   templateUrl: './list-visit.component.html',
@@ -88,9 +89,17 @@ export class ListVisitComponent implements OnInit {
   role: string
 
   onDetailOpen(event) {
+    console.log(event)
     if (event != null && event != undefined) {
       this.visitId = event.visitId
-      this.showTaskResult(this.visitId)
+      this.VisitService.getConsultingvisitID(this.visitId).subscribe(data=>{this.visittasks=data
+        for (let i = 0; i < this.visittasks.length; i++) {
+          if (this.visittasks[i].taskId == 8) {
+          this.visittasks[i].measure=this.visittasks[i].percentage.toFixed(2)
+          }
+        }
+      console.log(data)})
+      //this.showTaskResult(this.visitId)
     }
     //this.visitobject=event;
     // var id=event.visitId;
@@ -99,7 +108,7 @@ export class ListVisitComponent implements OnInit {
   showTaskResult(id: string): void {
     // visit result by visit ID
     this.subs.add(
-      this.VisitService.getConsultingvisitID(this.visitId).subscribe(
+      this.VisitService.getConsultingvisitID(id).subscribe(
         (visittasks) => {
           console.log(visittasks)
           this.visittasks.forEach((element) => {})

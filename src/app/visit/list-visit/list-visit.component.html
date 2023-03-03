@@ -28,7 +28,7 @@
                 <clr-dg-column [clrDgField]="'flock.flockName'">Flock</clr-dg-column>
                 <clr-dg-column>Breed</clr-dg-column>
                 <clr-dg-column>Hatch date</clr-dg-column>
-                <clr-dg-column>Age of the flock</clr-dg-column>
+                <clr-dg-column>Age of flock</clr-dg-column>
                 <clr-dg-column>Chick placed</clr-dg-column>
                 <clr-dg-column>PS origin</clr-dg-column>
                 <!-- ... -->
@@ -52,12 +52,38 @@
                 </clr-dg-footer>
                 <!-- / end list of visits -->
 
-                <ng-template clrIfDetail let-detail (clrIfDetailChange)="onDetailOpen($event)">
+                <ng-template clrIfDetail (clrIfDetailChange)="onDetailOpen($event)">
                     <!-- / Details list of visits -->
                     <clr-dg-detail *clrIfDetail="let detail">
+                        <clr-dg-detail-header>
+                            <h3 class="modal-title" style="color: #02675c;margin-bottom: 22px;    ">
+                                Date of visit <strong>{{detail.visitDate}}</strong>
+                            </h3>
+                        </clr-dg-detail-header>
                         <clr-dg-detail-body>
-                            <div class="separator"></div>
-                            <form clrForm>
+                            
+                            <table class="table table-noborder">
+                                <thead>
+                                    <tr>
+                                        <th class="left"></th>
+                                        <th>Mesure</th>
+                                        <th>Standard</th>
+                                        <th class="left">Deviation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let vtask of visittasks; even as isEven; odd as isOdd" [ngClass]="{'even-row': isEven, 'odd-row': isOdd}">
+                                        <td class="left">{{vtask.task.description}}</td>
+                                        <td>{{vtask.measure}}  {{vtask.task.measureUnit}}</td>
+                                        <td>{{vtask.standard}}</td>
+                                        <td class="left" 
+                                        [ngClass]="{'alert-low': vtask.deviation=='Low', 'alert-high':vtask.deviation=='High' ,'normal':vtask.deviation=='Normal' }">
+                                        {{vtask.deviation}}</td>
+                                    </tr>
+                                   
+                                </tbody>
+                            </table>
+                            <!--<form clrForm>
 
 
                                 <h3 class="modal-title" style="color: #02675c;margin-bottom: 22px;    ">
@@ -104,7 +130,7 @@
                                                 <div class="resultVisit">
 
                                                     <div class="resultMeasure">
-                                                        <p>{{measureTemResult}}</p>
+                                                        <p>{{detail.measureTemResult}}</p>
                                                         <div class="Unite uniteRes">
                                                             <span class="taskUnit"> °C </span>
                                                         </div>
@@ -528,7 +554,7 @@
                                 </div>
 
 
-                            </form>
+                            </form>-->
 
 
                         </clr-dg-detail-body>

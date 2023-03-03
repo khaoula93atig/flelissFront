@@ -101,6 +101,7 @@ export interface Center {
   species: String
   String: String
   farmId: String
+  companyId:string
 }
 export interface IRegistrationVisitTasks {
   taskId: string

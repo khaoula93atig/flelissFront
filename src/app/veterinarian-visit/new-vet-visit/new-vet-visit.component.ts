@@ -17,6 +17,8 @@ import {
 } from 'src/app/shared/registration'
 import { ListVetVisitComponent } from '../list-vet-visit/list-vet-visit.component'
 import { ClrWizard, ClrWizardPage } from '@clr/angular'
+import { FlockService } from 'src/app/services/flock.service'
+import { ToastrService } from 'ngx-toastr'
 @Component({
   selector: 'app-new-vetvisit',
   templateUrl: './new-vet-visit.component.html',
@@ -41,7 +43,6 @@ export class NewVetVisitComponent implements OnInit {
   alldata: any[] = []
   visitDate = this.datepipe.transform(new Date(), 'yyyy/MM/DD')
   frequency: string
-  breed: BigInteger
   flockID: string
   userID: string
   psOrigin: string
@@ -52,8 +53,10 @@ export class NewVetVisitComponent implements OnInit {
   farmID: string = ''
   houseId: string = ''
   description: string
-  ageOfTheFlock: any
+  ageOfTheFlock: number
   datevisit: Date
+  breedId:number
+  flockName:string
   /*********visit fields***********/
   morbidity: number
   mortality: number
@@ -110,7 +113,7 @@ export class NewVetVisitComponent implements OnInit {
   TotalmeasureWaterConsumption: number
   weightVariationForFcr: number
   weightVariationForDWG: number
-  flockAge: number
+  //ageOfTheFlock: number
   averageWeight: number
   FCR: any
   DWG: any
@@ -148,6 +151,8 @@ export class NewVetVisitComponent implements OnInit {
   ID: string
   dangerMsg: string = null
   succesMsg: string = null
+  breed:string
+
   constructor(
     private datepipe: DatePipe,
     private FarmService: FarmService,
@@ -155,16 +160,75 @@ export class NewVetVisitComponent implements OnInit {
     private VisitService: VisitService,
     private VisitVeterinarianService: VisitVeterinarianService,
     private ListComponenet: ListVetVisitComponent,
+    private flockService: FlockService,
+    private toastr: ToastrService,
   ) {}
 
   gethouse_id(id: string) {
     return id.substr(10, id.length)
   }
-  getMorbidityPercentage() {}
   getCenterId(event) {
     this.centerId = event
+    this.houseId=null
+    this.houses=[]
+    this.flocks = []
+    this.flockID= null
+    this.flockName=null
+    this.breedId=null
+    this.breed = ''
+    this.hatchDate = null
+    this.ageOfTheFlock = null
+    this.chikedPlaced = ''
+    this.psOrigin = ''
+    this.MorbidityPercentage = null
+    this.MortalityPercentage = null
+    this.FeedConsumptionPercentage = null
+
+    this.WaterConsumptionPercentage = null
+    this.FCR = null
+    this.DWG = null
+    this.eep = null
+    this.DWG = null
+    this.WaterConsumptionPercentage = null
+
+    this.ProstrationMeasure = null
+    this.AnorexiaMeasure = null
+    this.RuffledMeasure = null
+    this.DehydratationMeasure = null
+    this.CoughingMeasure = null
+    this.NasalExsudateMeasure = null
+    this.SneezingMeasure = null
+    this.TrachealMeasure = null
+    this.OcularMeasure = null
+    this.ConjonctivitisMeasure = null
+    this.OedemaMeasure = null
+    this.DiarrhoeaMeasure = null
+    this.WhitishnMeasure = null
+    this.WateryMeasure = null
+    this.MucoidMeasure = null
+    this.GreenishMeasure = null
+    this.NervousMeasure = null
+    this.DermatitisMeasure = null
+    this.examinationMeasure = null
+    this.bonesMeasure = null
+    this.legFeetMeasure = null
+    this.tracheaMeasure = null
+    this.cropMeasure = null
+    this.thymusMeasure = null
+    this.liverMeasure = null
+    this.spleenMeasure = null
+    this.kidneyMeasure = null
+    this.heartMeasure = null
+    this.lungMeasure = null
+    this.gastroIntestMeasure = null
+    this.bursaFabriMeasure = null
+    this.brainMeasure = null
+    this.getHouseId(event)
+    
+  }
+  getHouseId(event){
     this.subs.add(
-      this.HouseService.getConsultingHouseByCenter(this.centerId).subscribe(
+      this.HouseService.getConsultingHouseByCenter(event).subscribe(
         (data) => {
           console.log('' + JSON.stringify(data))
           this.houses = data
@@ -172,7 +236,9 @@ export class NewVetVisitComponent implements OnInit {
         },
       ),
     )
+
   }
+
   // Morbidity Management!
   MorbidityOpened: boolean = false
   submitMorbidity(): void {
@@ -264,87 +330,131 @@ export class NewVetVisitComponent implements OnInit {
   getGreenish(event) {
     this.GreenishMeasure = event
   }
+ 
 
   //get getSelectedhouse
-  getHouseId(event) {
-    console.log(event)
+  getflockId(event) {
+    console.log('house',event)
     this.houseId = event
-    this.flocks = new Array()
-    this.subs.add(
-      this.HouseService.gethouse(this.houseId).subscribe((data) => {
-        this.house = data
-        for (let i of this.house) {
-          this.birdsNumber = i.birdsNumber
-          this.birdsNumberDay0 = i.birdsNumber
-        }
-      }),
-    )
-    this.subs.add(
-      this.VisitService.getConsultingFlock(this.houseId).subscribe((data) => {
-        for (let element of data) {
-          if (element.checkEndOfCycle == false) this.flocks.push(element)
-        }
-        this.loading = false
-      }),
-    )
-  }
-  //get getSelectedFlock
-  getflockID(event) {
-    console.log('getSelectedflock ' + event)
-    this.flockID = event
-    this.subs.add(
-      this.VisitService.getConsultingFlockbyId(this.flockID).subscribe(
-        (data) => {
-          console.log('data flock' + data)
-          this.flocks = data
-          this.loading = false
+    this.flocks = []
+    this.flockID= null
+    this.flockName=null
+    this.breedId=null
+    this.breed = ''
+    this.hatchDate = null
+    this.ageOfTheFlock = null
+    this.chikedPlaced = ''
+    this.psOrigin = ''
+    this.MorbidityPercentage = null
+    this.MortalityPercentage = null
+    this.FeedConsumptionPercentage = null
 
-          for (let i of this.flocks) {
-            this.hatchDate = i.hatchDate
-            this.chikedPlaced = i.chikedPlaced
-            this.chikedPlaced = i.chikedPlaced
-            this.psOrigin = i.psOrigin
+    this.WaterConsumptionPercentage = null
+    this.FCR = null
+    this.DWG = null
+    this.eep = null
+    this.DWG = null
+    this.WaterConsumptionPercentage = null
 
-            console.log('---------------------i.hatchDate' + i.hatchDate)
+    this.ProstrationMeasure = null
+    this.AnorexiaMeasure = null
+    this.RuffledMeasure = null
+    this.DehydratationMeasure = null
+    this.CoughingMeasure = null
+    this.NasalExsudateMeasure = null
+    this.SneezingMeasure = null
+    this.TrachealMeasure = null
+    this.OcularMeasure = null
+    this.ConjonctivitisMeasure = null
+    this.OedemaMeasure = null
+    this.DiarrhoeaMeasure = null
+    this.WhitishnMeasure = null
+    this.WateryMeasure = null
+    this.MucoidMeasure = null
+    this.GreenishMeasure = null
+    this.NervousMeasure = null
+    this.DermatitisMeasure = null
+    this.examinationMeasure = null
+    this.bonesMeasure = null
+    this.legFeetMeasure = null
+    this.tracheaMeasure = null
+    this.cropMeasure = null
+    this.thymusMeasure = null
+    this.liverMeasure = null
+    this.spleenMeasure = null
+    this.kidneyMeasure = null
+    this.heartMeasure = null
+    this.lungMeasure = null
+    this.gastroIntestMeasure = null
+    this.bursaFabriMeasure = null
+    this.brainMeasure = null
+    this.flockService.getFlockExisitsByHouse(this.houseId).subscribe(data=>{
+      this.flocks=data
+      console.log('flock',this.flocks)
+      this.flockID=this.flocks[0].flockID
+      this.flockName=this.flocks[0].flockName
+      this.breedId=this.flocks[0].breed
+      this.birdsNumber=this.flocks[0].flockNumber
+      switch(this.breedId) { 
+        case 1: { 
+           this.breed="Hubbard"
+           break; 
+        } 
+        case 2: { 
+          this.breed="Cobb 500" 
+           break; 
+        } 
+        case 3: { 
+          this.breed="Ross 308" 
+          break; 
+       } 
+       case 4: { 
+        this.breed="Arbor Acres plus" 
+        break; 
+     } 
+     }
+     this.hatchDate = this.flocks[0].hatchDate
+            this.chikedPlaced = this.flocks[0].chikedPlaced
+            this.chikedPlaced = this.flocks[0].chikedPlaced
+            this.psOrigin = this.flocks[0].psOrigin
+
+            console.log('---------------------i.hatchDate' + this.flocks[0].hatchDate)
 
             // To set two dates to two variables
-            var date1 = new Date(i.hatchDate)
+            var date1 = new Date(this.flocks[0].hatchDate)
             var date2 = new Date()
             console.log('-------------------hatchDate' + date1)
             console.log('-------------------new date' + date2)
             // To calculate the time difference of two dates
             this.ageOfTheFlock = date2.getTime() - date1.getTime()
-
-            // To calculate the no. of days between two dates
-            this.ageOfTheFlock = Math.round(
-              Math.abs(this.ageOfTheFlock / (1000 * 3600 * 24)),
-            )
-            console.log(
-              '-------------------Difference_In_Days' + this.ageOfTheFlock,
-            )
-
-            // get breed
-            if ((i.breed = i.breedObject.breedID)) {
-              this.breeddescription = i.breedObject.description
-              console.log('breeddescription' + this.breeddescription)
-            }
-          }
-
-          console.log('hatch date' + this.hatchDate)
-        },
-      ),
-    )
-    this.GetTotalMeasure()
+            this.GetTotalMeasure()
+    })
   }
+  
 
   GetTotalMeasure(): void {
+    console.log(this.flockID)
+    var visitDateFormatter = this.getDate('MM/DD/yyyy', this.visitDate)
+    // get Total Measures of mortality
+    this.subs.add(
+      this.VisitVeterinarianService.getConsultingTotalMeasure(
+        visitDateFormatter,
+        8,
+        this.flockID,
+      ).subscribe((data) => {
+        this.TotalmeasureMortality = data
+        this.MortalityPercentage =
+          (this.TotalmeasureMortality * 100) / this.birdsNumber
+        this.Liveability = 100 - this.MortalityPercentage
+      }),
+    )
     this.subs.add(
       this.VisitVeterinarianService.getWeightVariationByFlock(
         this.flockID,
-      ).subscribe((data) => {
+      ).subscribe((data) => {console.log('weight',data)
         this.weightVariationForFcr = data.weightVariationFCR.toFixed(3)
-        this.flockAge = data.ageFlock
-        this.averageWeight = this.weightVariationForFcr / this.flockAge
+        this.ageOfTheFlock = data.ageFlock
+        this.averageWeight = this.weightVariationForFcr / this.ageOfTheFlock
         console.log('averageWeight' + this.averageWeight)
         this.FCR = (
           (this.TotalmeasureFeedConsumption) /
@@ -360,26 +470,12 @@ export class NewVetVisitComponent implements OnInit {
         console.log('DWG' + this.DWG)
         this.eep = (
           (this.Liveability * (data.lastWeightMeasure / 1000) * 100) /
-          (this.flockAge * this.FCR)
+          (this.ageOfTheFlock * this.FCR)
         ).toFixed(2)
         console.log(' this.eep' + this.eep)
       }),
     )
-    var visitDateFormatter = this.getDate('MM/DD/yyyy', this.visitDate)
-    // get Total Measures of mortality
-    this.subs.add(
-      this.VisitVeterinarianService.getConsultingTotalMeasure(
-        visitDateFormatter,
-        8,
-        this.flockID,
-      ).subscribe((data) => {
-        this.TotalmeasureMortality = data
-        console.log('TotalmeasureMortality' + this.TotalmeasureMortality)
-        this.MortalityPercentage =
-          (this.TotalmeasureMortality * 100) / this.birdsNumber
-        this.Liveability = 100 - this.MortalityPercentage
-      }),
-    )
+    
     // get Total Measures of Feed consumption
     this.subs.add(
       this.VisitVeterinarianService.getConsultingTotalMeasure(
@@ -388,14 +484,8 @@ export class NewVetVisitComponent implements OnInit {
         this.flockID,
       ).subscribe((data) => {
         this.TotalmeasureFeedConsumption = data
-        console.log(
-          'TotalmeasureFeedConsumption' + this.TotalmeasureFeedConsumption,
-        )
         this.FeedConsumptionPercentage =
           (this.TotalmeasureFeedConsumption * 25 * 1000) / this.birdsNumber
-        console.log(
-          'FeedConsumptionPercentage' + this.FeedConsumptionPercentage,
-        )
       }),
     )
     // get Total Measures of Water consumption
@@ -406,14 +496,8 @@ export class NewVetVisitComponent implements OnInit {
         this.flockID,
       ).subscribe((data) => {
         this.TotalmeasureWaterConsumption = data
-        console.log(
-          'TotalmeasureWaterConsumption' + this.TotalmeasureWaterConsumption,
-        )
         this.WaterConsumptionPercentage =
           (this.TotalmeasureWaterConsumption * 1000000) / this.birdsNumber
-        console.log(
-          'WaterConsumptionPercentage' + this.WaterConsumptionPercentage,
-        )
       }),
     )
   }
@@ -435,13 +519,13 @@ export class NewVetVisitComponent implements OnInit {
         },
       ),
     )
-    this.subs.add(
+    /*this.subs.add(
       this.HouseService.getConsultingHouse(this.farmID).subscribe((data) => {
         console.log('data house++++++++++' + data)
         this.houses = data
         this.loading = false
       }),
-    )
+    )*/
     this.subs.add(
       this.VisitVeterinarianService.getConsultingHealthStatus().subscribe(
         (data) => {
@@ -531,7 +615,7 @@ export class NewVetVisitComponent implements OnInit {
     registrationVisitvet.flockID = this.flockID
     registrationVisitvet.houseID = this.houseId
     registrationVisitvet.username = sessionStorage.getItem('user')
-    registrationVisitvet.ageFlock = this.flockAge
+    registrationVisitvet.ageFlock = this.ageOfTheFlock
     registrationVisitvet.morbidity = this.MorbidityPercentage
     registrationVisitvet.mortality = this.MortalityPercentage
     registrationVisitvet.dwg = this.DWG
@@ -613,14 +697,19 @@ export class NewVetVisitComponent implements OnInit {
           console.log('data response, visitNecropsy' + data['response'])
         })
         this.uploadFile(date, this.visitIDnew)
-        this.succesMsg = 'Success'
+        this.toastr.success('Success', 'Successfully added')
+        this.initForm()
+        this.ListComponenet.refresh()
+
+        //this.succesMsg = 'Success' 
       } else {
-        this.dangerMsg = 'Erreur'
+        this.toastr.error('Error', 'Operation failed')
+        //this.dangerMsg = 'Erreur'
       }
     })
 
     //this.GetData();
-    this.ListComponenet.refresh()
+    
   }
 
   initForm(): void {
@@ -629,9 +718,9 @@ export class NewVetVisitComponent implements OnInit {
     this.houseId = ''
     this.flockID = ''
 
-    this.breeddescription = ''
+    this.breed = ''
     this.hatchDate = null
-    this.flockAge = null
+    this.ageOfTheFlock = null
     this.chikedPlaced = ''
     this.psOrigin = ''
     this.MorbidityPercentage = null

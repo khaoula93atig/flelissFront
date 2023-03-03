@@ -11,6 +11,7 @@ import { SubSink } from 'subsink'
 import { NewCenterComponent } from '../new-center/new-center.component'
 import { FlockService } from '../../services/flock.service'
 import { FarmService } from '../../services/farm.service'
+import { ToastrService } from 'ngx-toastr'
 @Component({
   selector: 'app-list-center',
   templateUrl: './list-center.component.html',
@@ -39,7 +40,9 @@ export class ListCenterComponent implements OnInit {
   farmIdUser: string
   companyIdUser: string
   roleID: string
-  constructor(private FarmService: FarmService, private router: Router) {}
+  constructor(private FarmService: FarmService,
+     private router: Router,
+     private toaster: ToastrService) {}
 
   ngOnInit(): void {
     this.role = sessionStorage.getItem('role')
@@ -65,11 +68,10 @@ export class ListCenterComponent implements OnInit {
     this.subs.add(
       this.FarmService.updateCenter(detail).subscribe((data) => {
         if (data['response'] == 'OK') {
-          this.succesMsg = 'Center updated'
-          setTimeout((_) => (this.succesMsg = null), 10000)
+          this.toaster.success('Success', 'Successfully updated')
+          
         } else {
-          this.succesMsg = 'Erreur'
-          setTimeout((_) => (this.succesMsg = null), 10000)
+          this.toaster.error('Error', 'Operation failed')
         }
       }),
     )

@@ -66,108 +66,124 @@
                 <!-- / list  of flock -->
                 <ng-template clrIfDetail let-detail (clrIfDetailChange)="onDetailOpen($event)" class="tooltip">
 
-                    <clr-dg-detail *clrIfDetail="let detail">
-                        <clr-dg-detail-body>
-                        </clr-dg-detail-body>
-                        <!-- Actions Button -->
-                        <div class="addbtn" style="    padding-top: 20px; padding-left: 20px;">
-                            <h3 style="float: left; color: #02675c;">
-                                <img src="../../../assets/flock.png" width="30" style="margin-right: 11px; ">
-                                Flocks
-                            </h3>
 
-                            <button (click)="showFlockManager(detail)" class="btn btn-primary" style="float: right;
+                    <clr-dg-detail *clrIfDetail="let detail">
+                        <clr-dg-detail-header>
+                        </clr-dg-detail-header>
+                        <div class="addbtn clr-row" style="    padding-top: 20px; padding-left: 20px;">
+                            <div class="clr-col-6" style="float: left !important;">
+                                <h3 style="float: left; color: #02675c;">
+                                    <img src="../../../assets/flock.png" width="30" style="margin-right: 11px; ">
+                                    Flocks
+                                </h3>
+                            </div>
+                            <div class="clr-col-6" style="float: right;">
+                                <button (click)="showFlockManager(detail)" class="btn btn-primary" style="float: right;
                                 background-color: white; color: #02675c; border: none;  border-radius: 0;
                                  border-bottom: 2px solid #02675c;">
 
-                                <img src="../../../assets/add.png" width="18" style="margin-right: 10px; ">
-                                Add Flock
-                            </button>
+                                    <img src="../../../assets/add.png" width="18" style="margin-right: 10px; ">
+                                    Add Flock
+                                </button>
+                            </div>
                         </div>
-                        <!-- /list of flock -->
-                        <clr-tabs>
-                            <!-- list of exists flock-->
-                            <clr-tab>
-                                <button clrTabLink id="link1">Exisits Flocks</button>
-                                <clr-tab-content id="content1" *clrIfActive="true">
-                                    <div class="content-area">
-                                        <clr-datagrid class="table_view " [clrDgLoading]="loading" style="width:100%">
-                                            <clr-dg-column>Breed</clr-dg-column>
-                                            <clr-dg-column>Cycle</clr-dg-column>
-                                            <clr-dg-column>Start of Cycle</clr-dg-column>
-                                            <clr-dg-column>Hatch Date</clr-dg-column>
-                                            <clr-dg-column>Chiked Placed</clr-dg-column>
-                                            <clr-dg-column>PS origin</clr-dg-column>
-                                            <clr-dg-column>Edit</clr-dg-column>
-                                            <!-- ... -->
-                                            <clr-dg-row *clrDgItems="let flock of existsFlocks" [clrDgItem]="flock"
-                                                class="tablecolor">
-                                                <clr-dg-cell style="width: 100px;"> {{flock.breedObject.description}}
-                                                </clr-dg-cell>
-                                                <clr-dg-cell style="width: 100px;"> {{flock.cycle}} </clr-dg-cell>
-                                                <clr-dg-cell style="width: 160px;"> {{flock.startOfCycle}}
-                                                </clr-dg-cell>
-                                                <clr-dg-cell style="width: 160px;"> {{flock.hatchDate}} </clr-dg-cell>
-                                                <clr-dg-cell style="width: 140px;"> {{flock.chikedPlaced}}
-                                                </clr-dg-cell>
-                                                <clr-dg-cell style="width: 140px;"> {{flock.psOrigin}} </clr-dg-cell>
-                                                <clr-dg-cell style="width: 100px;">
-                                                    <button class="btn btn-sm btn-link"
-                                                        (click)="showupdateflock(flock)">
-                                                        <img src="../../../assets/edit.png" height="20" />
-                                                    </button>
-                                                </clr-dg-cell>
-                                            </clr-dg-row>
-                                            <!-- / end list of flock -->
-                                        </clr-datagrid>
-                                    </div>
-                                </clr-tab-content>
-                            </clr-tab>
-                            <clr-tab>
-                                <button clrTabLink>Outgoing Flocks</button>
-                                <clr-tab-content *clrIfActive>
-                                    <div class="content-area">
-                                        <clr-datagrid class="table_view " [clrDgLoading]="loading" style="width:100%">
-                                            <clr-dg-column>Breed</clr-dg-column>
-                                            <clr-dg-column>Cycle</clr-dg-column>
-                                            <clr-dg-column>Start of Cycle</clr-dg-column>
-                                            <clr-dg-column>Hatch Date</clr-dg-column>
-                                            <clr-dg-column>Chiked Placed</clr-dg-column>
-                                            <clr-dg-column>PS origin</clr-dg-column>
-                                            <clr-dg-column>Details</clr-dg-column>
-                                            <!-- ... -->
-                                            <clr-dg-row *clrDgItems="let flock of outgoFlocks" [clrDgItem]="flock"
-                                                class="tablecolor">
-                                                <clr-dg-cell style="width: 100px;"> {{flock.breedObject.description}}
-                                                </clr-dg-cell>
-                                                <clr-dg-cell style="width: 100px;"> {{flock.cycle}} </clr-dg-cell>
-                                                <clr-dg-cell style="width: 160px;"> {{flock.startOfCycle}}
-                                                </clr-dg-cell>
-                                                <clr-dg-cell style="width: 160px;"> {{flock.hatchDate}} </clr-dg-cell>
-                                                <clr-dg-cell style="width: 140px;"> {{flock.chikedPlaced}}
-                                                </clr-dg-cell>
-                                                <clr-dg-cell style="width: 140px;"> {{flock.psOrigin}} </clr-dg-cell>
-                                                <clr-dg-cell style="width: 100px;">
-                                                    <button class="btn btn-sm btn-link"
-                                                        (click)="modalReport.openModel(flock.flockID)">
-                                                        <img src="../../../assets/report_.png" height="20" />
-                                                    </button>
-                                                </clr-dg-cell>
-                                            </clr-dg-row>
-                                            <!-- / end list of flock -->
-                                        </clr-datagrid>
-                                    </div>
-                                </clr-tab-content>
-                            </clr-tab>
-                        </clr-tabs>
+                        <clr-dg-detail-body>
+
+                            <!-- /list of flock -->
+                            <clr-tabs>
+                                <!-- list of exists flock-->
+                                <clr-tab>
+                                    <button clrTabLink id="link1">Exisits Flocks</button>
+                                    <clr-tab-content id="content1" *clrIfActive="true">
+                                        <div class="content-area">
+                                            <clr-datagrid class="table_view " [clrDgLoading]="loading"
+                                                style="width:100%">
+                                                <clr-dg-column>Breed</clr-dg-column>
+                                                <clr-dg-column>Cycle</clr-dg-column>
+                                                <clr-dg-column>Start of Cycle</clr-dg-column>
+                                                <clr-dg-column>Hatch Date</clr-dg-column>
+                                                <clr-dg-column>Chiked Placed</clr-dg-column>
+                                                <clr-dg-column>Breeder origin/hatchery</clr-dg-column>
+                                                <clr-dg-column>Edit</clr-dg-column>
+                                                <!-- ... -->
+                                                <clr-dg-row *clrDgItems="let flock of existsFlocks" [clrDgItem]="flock"
+                                                    class="tablecolor">
+                                                    <clr-dg-cell style="width: 100px;">
+                                                        {{flock.breedObject.description}}
+                                                    </clr-dg-cell>
+                                                    <clr-dg-cell style="width: 100px;"> {{flock.cycle}} </clr-dg-cell>
+                                                    <clr-dg-cell style="width: 160px;"> {{flock.startOfCycle}}
+                                                    </clr-dg-cell>
+                                                    <clr-dg-cell style="width: 160px;"> {{flock.hatchDate}}
+                                                    </clr-dg-cell>
+                                                    <clr-dg-cell style="width: 140px;"> {{flock.chikedPlaced}}
+                                                    </clr-dg-cell>
+                                                    <clr-dg-cell style="width: 140px;"> {{flock.psOrigin}}
+                                                    </clr-dg-cell>
+                                                    <clr-dg-cell style="width: 100px;">
+                                                        <button class="btn btn-sm btn-link"
+                                                            (click)="showupdateflock(flock)">
+                                                            <img src="../../../assets/edit.png" height="20" />
+                                                        </button>
+                                                    </clr-dg-cell>
+                                                </clr-dg-row>
+                                                <!-- / end list of flock -->
+                                            </clr-datagrid>
+                                        </div>
+                                    </clr-tab-content>
+                                </clr-tab>
+                                <clr-tab>
+                                    <button clrTabLink>Outgoing Flocks</button>
+                                    <clr-tab-content *clrIfActive>
+                                        <div class="content-area">
+                                            <clr-datagrid class="table_view " [clrDgLoading]="loading"
+                                                style="width:100%">
+                                                <clr-dg-column>Breed</clr-dg-column>
+                                                <clr-dg-column>Cycle</clr-dg-column>
+                                                <clr-dg-column>Start of Cycle</clr-dg-column>
+                                                <clr-dg-column>Hatch Date</clr-dg-column>
+                                                <clr-dg-column>Chiked Placed</clr-dg-column>
+                                                <clr-dg-column>Breeder origin/hatchery</clr-dg-column>
+                                                <clr-dg-column>Details</clr-dg-column>
+                                                <!-- ... -->
+                                                <clr-dg-row *clrDgItems="let flock of outgoFlocks" [clrDgItem]="flock"
+                                                    class="tablecolor">
+                                                    <clr-dg-cell style="width: 100px;">
+                                                        {{flock.breedObject.description}}
+                                                    </clr-dg-cell>
+                                                    <clr-dg-cell style="width: 100px;"> {{flock.cycle}} </clr-dg-cell>
+                                                    <clr-dg-cell style="width: 160px;"> {{flock.startOfCycle}}
+                                                    </clr-dg-cell>
+                                                    <clr-dg-cell style="width: 160px;"> {{flock.hatchDate}}
+                                                    </clr-dg-cell>
+                                                    <clr-dg-cell style="width: 140px;"> {{flock.chikedPlaced}}
+                                                    </clr-dg-cell>
+                                                    <clr-dg-cell style="width: 140px;"> {{flock.psOrigin}}
+                                                    </clr-dg-cell>
+                                                    <clr-dg-cell style="width: 100px;">
+                                                        <button class="btn btn-sm btn-link"
+                                                            (click)="modalReport.openModel(flock.flockID)">
+                                                            <img src="../../../assets/report_.png" height="20" />
+                                                        </button>
+                                                    </clr-dg-cell>
+                                                </clr-dg-row>
+                                                <!-- / end list of flock -->
+                                            </clr-datagrid>
+                                        </div>
+                                    </clr-tab-content>
+                                </clr-tab>
+                            </clr-tabs>
+
+                            <!-- / end list of flock -->
+
+
+                        </clr-dg-detail-body>
+                        <!-- Actions Button -->
+
+
+
                     </clr-dg-detail>
                 </ng-template>
-                <!-- / end list of flock -->
-
-
-
-
-
 
 
 
@@ -308,7 +324,7 @@
                             </clr-date-container>
                             <clr-input-container style="display: -webkit-box;">
                                 <label for="psOrigin" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
-                                    PS origin
+                                    Breeder origin/hatchery
                                 </label>
                                 <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" size="20" type="text"
                                     n="1" [(ngModel)]="psOrigin" name="psOrigin" style="width: 234px;" />
@@ -350,7 +366,7 @@
             </form>
 
             <!-- Dialog for update Flock -->
-            <form clrForm class="clr-form clr-form-horizontal">
+            <form clrForm name="myFormUp" class="clr-form clr-form-horizontal">
                 <clr-modal title="update" [(clrModalOpen)]="updateflockOpened" [clrModalStaticBackdrop]="true">
                     <h3 class="modal-title" style="color: #02675c;">
                         <img src="../../../assets/updateHouse.png" width="24" height="24"
@@ -398,9 +414,10 @@
                                     [(ngModel)]="startOfCycle" name="startOfCycle" style="width: 126px;" />
                             </clr-date-container>
 
+                            <!--Breeder origin/hatchery-->
                             <clr-input-container>
                                 <label for="psOrigin" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
-                                    PS origin
+                                    Breeder origin/hatchery
                                 </label>
                                 <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-6" size="20" type="text" n="1"
                                     [(ngModel)]="psOrigin" name="psOrigin" />
@@ -461,7 +478,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline"
-                            (click)="updateflockOpened = false">Cancel</button>
+                            (click)="updateflockOpened = false;clearTheForm()">Cancel</button>
                         <button type="button" class="btn btn-primary "
                             (click)='saveupdateFlock();updateflockOpened = false;refreshDataFlockGrid();'>save</button>
                     </div>

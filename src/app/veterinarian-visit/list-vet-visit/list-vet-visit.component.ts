@@ -82,6 +82,7 @@ export class ListVetVisitComponent implements OnInit {
         farmId,
       ).subscribe((data) => {
         this.visits = data
+        console.log('visits',this.visits)
         this.loading = false
       }),
     )

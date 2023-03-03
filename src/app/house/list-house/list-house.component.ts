@@ -23,6 +23,7 @@ import { NewHouseComponent } from '../new-house/new-house.component'
 import { FlockService } from '../../services/flock.service'
 import { DatePipe } from '@angular/common'
 import { FlockReportComponent } from '../flock-report/flock-report.component'
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   selector: 'app-list-house',
@@ -88,6 +89,7 @@ export class ListHouseComponent implements OnInit {
     private router: Router,
     private FlockService: FlockService,
     private datepipe: DatePipe,
+    private toaster: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -125,6 +127,8 @@ export class ListHouseComponent implements OnInit {
     this.breedId = event
   }
   onDetailOpen(event) {
+    this.house=event
+    console.log(event)
     this.existsFlocks = []
     this.outgoFlocks = []
     if (event != null && event != undefined) {
@@ -271,8 +275,18 @@ export class ListHouseComponent implements OnInit {
     this.updtateHouse.waterSource = this.waterSource
     this.updtateHouse.area = this.area
     this.updtateHouse.feeder = this.feeder
+    this.updtateHouse.durationOfRotation=this.durationOfRotation
+    this.updtateHouse.nbrCyclesPerYear=this.nbrCyclesPerYear
     this.subs.add(
-      this.HouseService.save(this.updtateHouse).subscribe((data) => {}),
+      this.HouseService.save(this.updtateHouse).subscribe((data) => {
+        if (data['response'] == 'OK') {
+          this.toaster.success('Success', 'Successfully added')
+          this.refresh()
+        } else {
+          this.toaster.error('Error', 'Operation failed')
+        }
+
+      }),
     )
   }
   // flock creation
@@ -296,18 +310,25 @@ console.log(registrationFlock)
     this.FlockService.createRegistrationFlocks(registrationFlock).subscribe(
       (data) => {
         if (data['response'] == 'OK') {
+          console.log(this.houseIddetail)
           this.FlockManagerOpened = false
-          this.refreshDataFlockGrid()
-          setTimeout((_) => (this.loading = false))
-          this.FlockService.askForReload(true)
+          this.toaster.success('Success', 'Successfully added')
+          //this.refreshDataFlockGrid()
+          /*setTimeout((_) => (this.loading = false))
+          this.FlockService.askForReload(true)*/
 
           // We clear the form!
           this.clearTheForm()
-          this.refreshFlock(this.houseIdforflock)
+          this.onDetailOpen(this.house)
+          this.refreshDataFlockGrid()
+          this.refresh()
+        }
+        else{
+          this.toaster.error('Error', 'Operation failed')
         }
       },
     )
-    this.refreshFlock(this.houseIdforflock)
+    
   }
   //show updated flock
   updateflockOpened: boolean = false
@@ -344,12 +365,23 @@ console.log(registrationFlock)
     this.updtateFlock.endOfCycle = this.endOfCycle
     this.updtateFlock.flockName = this.flockName
     this.subs.add(
-      this.FlockService.save(this.updtateFlock).subscribe((data) => {}),
+      this.FlockService.save(this.updtateFlock).subscribe((data) => {
+        if (data['response'] == 'OK') {
+          console.log(this.houseIddetail)
+          this.FlockManagerOpened = false
+          this.toaster.success('Success', 'Successfully updated')
+          this.clearTheForm()
+          this.onDetailOpen(this.house)
+        }
+        else{
+          this.toaster.error('Error', 'Operation failed')
+        }
+      }),
     )
     if (this.checkEndOfCycle == true) {
       this.modalReport.openModel(this.flockID)
     }
-    this.refreshDataFlockGrid()
-    this.onDetailOpen(this.houseId)
+    //this.refreshDataFlockGrid()
+    //this.onDetailOpen(this.houseId)
   }
 }

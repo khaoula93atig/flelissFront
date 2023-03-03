@@ -4,6 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HeaderComponent } from './shared/header/header.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +40,11 @@ export class LoginComponent implements OnInit {
   };
   @ViewChild('recaptcha', { static: true }) recaptchaElement: ElementRef;
   protected aFormGroup: FormGroup;
-  constructor(private formBuilder: FormBuilder, private router: Router, private http: HttpClient) { }
+  constructor(private formBuilder: FormBuilder,
+     private router: Router,
+      private http: HttpClient,
+    private headerComponent:HeaderComponent,
+    private toaster : ToastrService) { }
 
 
   code: any;
@@ -62,13 +68,10 @@ export class LoginComponent implements OnInit {
 
 
   authenticate() {
-    console.log("ok1");
-    // if(window['grecaptcha'].getResponse().length!=0){
-    console.log("user");
     this.http.post<any>("/farmApi/user/authenticate",
       { 'username': this.login, 'password': this.password }, this.httpOptions).subscribe(
         data => {
-          console.log("ok2");
+          console.log(data)
           this.alldata = data
           if (data.length !== 0) {
             for (let data of this.alldata) {
@@ -92,7 +95,13 @@ export class LoginComponent implements OnInit {
 
             console.log("id " + this.id);
             console.log("id company " + this.company_id);
+            this.headerComponent.login=true
+            this.headerComponent.role=sessionStorage.getItem("role")
             this.router.navigateByUrl('/Dashboard/general');
+            this.toaster.success("","Welcome")
+          }
+          else{
+            this.toaster.error("wrong password or login","Error")
           }
         },
         error => {

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http'
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core'
 import { AutofocusDirective } from 'src/app/shared/autofocus.directive'
 import {
   Center,
@@ -11,16 +11,19 @@ import {
 import { SubSink } from 'subsink/dist/subsink'
 import { FarmService } from '../../services/farm.service'
 import { CompanyService } from '../../services/company.service'
+import { ToastrService } from 'ngx-toastr'
 @Component({
   selector: 'app-new-center',
   templateUrl: './new-center.component.html',
   styleUrls: ['./new-center.component.css'],
 })
 export class NewCenterComponent implements OnInit {
+  @Output() refreshList = new EventEmitter();
   constructor(
     private FarmService: FarmService,
     private CompanyService: CompanyService,
     private http: HttpClient,
+    private toaster: ToastrService
   ) {}
   percentDone: number
   uploadSuccess: boolean
@@ -64,8 +67,9 @@ export class NewCenterComponent implements OnInit {
   message: string = null
   dangerMsg: string = null
   ngOnInit() {
+    this.companyId=sessionStorage.getItem("companyID")
     this.subs.add(
-      this.FarmService.getConsultingAllFarm().subscribe((data) => {
+      this.FarmService. getConsultingFarm(this.companyId).subscribe((data) => {
         this.farms = data
       }),
     )
@@ -104,6 +108,7 @@ export class NewCenterComponent implements OnInit {
     // Show the spinner for loading process ....
     setTimeout((_) => (this.loading = true))
     let center: Center = new Object() as Center
+    center.companyId = this.companyId
     center.centerName = this.centerName
     center.address = this.address
     center.breed = this.breed
@@ -130,20 +135,14 @@ export class NewCenterComponent implements OnInit {
     // Invoking service
     this.FarmService.createCenter(center).subscribe((data) => {
       if (data['response'] == 'OK') {
-        this.message = 'Center saved'
-        setTimeout((_) => (this.message = null), 10000)
-        setTimeout((_) => (this.loading = false))
-        //this.show = false;
         this.clearTheForm()
-        //this.cleanForm();
+          this.show=false
+          this.toaster.success('Success', 'Successfully added')
+          this.refreshList.emit()
+        
       } else {
-        this.dangerMsg = 'Erreur Try Again !'
-        setTimeout((_) => (this.message = null), 10000)
+        this.toaster.error('Error', 'Operation failed')
       }
-
-      // this.FarmService.askForReload(true);
-
-      //   this.clearTheForm();
     })
   }
   cleanForm() {

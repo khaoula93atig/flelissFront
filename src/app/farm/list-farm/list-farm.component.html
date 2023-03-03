@@ -16,7 +16,7 @@
                 Add Farm
             </button>
 
-            <app-newfarm></app-newfarm>
+            <app-newfarm (refreshList)="refresh()"></app-newfarm>
 
         </div>
         <!-- /Actions Buttons -->
@@ -27,7 +27,7 @@
                 <clr-dg-column>Breed</clr-dg-column>
                 <clr-dg-column>Address</clr-dg-column>
                 <clr-dg-column>Zone</clr-dg-column>
-                <clr-dg-column>Number of breeding center</clr-dg-column>
+                <clr-dg-column>Number of center</clr-dg-column>
                 <clr-dg-column>Nombre of houses</clr-dg-column>
                 <clr-dg-column>Results </clr-dg-column>
                 <clr-dg-column>Rotation </clr-dg-column>
@@ -37,7 +37,7 @@
                     <clr-dg-cell> {{farm.breed}} </clr-dg-cell>
                     <clr-dg-cell style="width: 180px;"> {{farm.address}} </clr-dg-cell>
                     <clr-dg-cell style="width: 180px;"> {{farm.area}} </clr-dg-cell>
-                    <clr-dg-cell style="width: 180px;"> {{farm.bridsNumberPerCenter}} </clr-dg-cell>
+                    <clr-dg-cell style="width: 180px;"> {{farm.numberCenter}} </clr-dg-cell>
                     <clr-dg-cell style="width: 180px;"> {{farm.housesNumber}} </clr-dg-cell>
                     <clr-dg-cell style="width: 180px;"> {{farm.result}} </clr-dg-cell>
                     <clr-dg-cell style="width: 180px;"> {{farm.rotation}} </clr-dg-cell>
@@ -64,7 +64,7 @@
 
 
 
-                            <clr-select-container>
+                           <!--<clr-select-container>
                                 <label class="clr-col-md-3">Company:</label>
                                 <select class="clr-col-md-9" clrSelect name="companyID"
                                     [(ngModel)]="detail.company.name" style="width: 270px;"
@@ -76,17 +76,11 @@
                                 </select>
 
                             </clr-select-container>
+                        -->
                             <clr-input-container>
                                 <label class="clr-col-md-3">Farm Name: </label>
                                 <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.farmName"
-                                    name="housesNumber" size="35" />
-                            </clr-input-container>
-
-
-                            <clr-input-container>
-                                <label class="clr-col-md-3">Number of Houses: </label>
-                                <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.housesNumber"
-                                    name="housesNumber" size="35" />
+                                    name="farmName" size="35" />
                             </clr-input-container>
 
 
@@ -103,7 +97,7 @@
                             </clr-select-container>
 
 
-                            <clr-select-container>
+                            <!--<clr-select-container>
                                 <label class="clr-col-md-3">Production type * </label>
                                 <select class="clr-col-md-9" clrSelect [(ngModel)]="detail.productionType"
                                     style="width: 270px;" name="productionType" required>
@@ -113,7 +107,7 @@
                                     <option>breeders</option>
                                 </select>
 
-                            </clr-select-container>
+                            </clr-select-container>-->
 
                             <clr-input-container>
                                 <label class="clr-col-md-3">Address: </label>
@@ -123,40 +117,46 @@
 
                             <clr-input-container>
                                 <label class="clr-col-md-3">Zone: </label>
-                                <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.zone" name="zone"
+                                <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.area" name="zone"
                                     size="35" />
                             </clr-input-container>
 
 
                             <clr-input-container>
                                 <label class="clr-col-md-3">Farm Manager Name: </label>
-                                <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.FarmMangerName"
+                                <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.farmManageName"
                                     name="FarmMangerName" size="35" />
                             </clr-input-container>
 
 
                             <clr-input-container>
                                 <label class="clr-col-md-3">Farm Manager Email: </label>
-                                <input class="clr-col-md-9" clrInput type="email" [(ngModel)]="detail.FarmMangerEmail"
+                                <input class="clr-col-md-9" clrInput type="email" [(ngModel)]="detail.farmManageEmail"
                                     name="FarmMangerEmail" size="35" />
                             </clr-input-container>
 
 
                             <clr-input-container>
                                 <label class="clr-col-md-3">Farm Manager tel: </label>
-                                <input class="clr-col-md-9" clrInput type="number" [(ngModel)]="detail.FarmMangerTel"
-                                    name="FarmMangerEmail" size="35" style="width: 270px;" />
+                                <input class="clr-col-md-9" clrInput type="number" [(ngModel)]="detail.farmManageTel"
+                                    name="FarmMangetel" size="35" style="width: 270px;" />
                             </clr-input-container>
 
 
                             <clr-input-container>
                                 <label class="clr-col-md-3">Number of center: </label>
-                                <input class="clr-col-md-9" clrInput type="number" [(ngModel)]="detail.nbrCenter"
+                                <input class="clr-col-md-9" clrInput type="number" [(ngModel)]="detail.numberCenter"
                                     name="nbrCenter" size="35" style="width: 270px;" />
                             </clr-input-container>
 
-
                             <clr-input-container>
+                                <label class="clr-col-md-3">Number of Houses: </label>
+                                <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.housesNumber"
+                                    name="housesNumber" size="35" />
+                            </clr-input-container>
+
+
+                            <!--<clr-input-container>
                                 <label class="clr-col-md-3">Number of breeding centers: </label>
                                 <input class="clr-col-md-9" clrInput type="number" [(ngModel)]="detail.nbrBreedCenter"
                                     name="nbrBreedCenter" size="35" style="width: 270px;" />
@@ -194,7 +194,7 @@
                                 <label class="clr-col-md-3">Average lay rate: </label>
                                 <input class="clr-col-md-9" clrInput type="text" [(ngModel)]="detail.avLayRate"
                                     name="avLayRate" size="35" />
-                            </clr-input-container>
+                            </clr-input-container>-->
 
 
                             <clr-input-container>

@@ -72,7 +72,7 @@
 
                         <clr-input-container class="clr-col-md-6 clr-col-sm-12">
                             <label for="ageFlock" class="clr-control-label clr-col-7">
-                                Age of the flock * </label>
+                                Age of flock * </label>
                             <input clrInput required size="12" type="text" [(ngModel)]="ageOfTheFlock" name="ageFlock"
                             class="clr-col-sm-12" readonly />
                             day
@@ -99,13 +99,13 @@
 
 
                     <div class="form-visit1 clr-col-md-12 clr-row">
-                        <div class="labelVisit clr-col-md-6 clr-row" style="margin-top: 30px;">
+                        <div class="labelVisit clr-col-lg-6 clr-col-md-6 clr-col-8 clr-row" style="margin-top: 30px;">
                             <img src="../../../assets/Icones visit/thermometer.png" class="imgIcon" width="22"
                                 height="20">
-                            <label for="temperature" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                            <label for="temperature" class="clr-control-label">
                                 Temperature * </label>
                         </div>
-                        <div class="clr-control-container clr-col-md-6" style="display: flex;">
+                        <div class="clr-control-container clr-col-lg-6 clr-col-md-6 clr-col-4" style="display: flex;">
                             <div class="clr-input-wrapper">
                                 <input clrInput required name="shortEnName" name="shortEnName" size="30" type="number"
                                     name="temperature" [(ngModel)]="measureTemp" />
@@ -117,12 +117,12 @@
                     </div>
 
                     <div class="form-visit2 clr-col-md-12 clr-row">
-                        <div class="labelVisit clr-col-md-6 clr-row" style="margin-top: 30px;">
+                        <div class="labelVisit clr-col-lg-6 clr-col-md-6 clr-col-8 clr-row" style="margin-top: 30px;">
                             <img src="../../../assets/Icones visit/humidity.png" class="imgIcon" width="21" height="21">
-                            <label for="humidity" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-5">
+                            <label for="humidity" class="clr-control-label ">
                                 Humidity * </label>
                         </div>
-                        <div class="clr-control-container clr-col-md-6" style="display: flex;">
+                        <div class="clr-control-container clr-col-lg-6 clr-col-md-6 clr-col-4 " style="display: flex;">
                             <div class="clr-input-wrapper">
                                 <input clrInput required size="30" type="number" name="humidity"
                                     [(ngModel)]="measureHumidity" />
@@ -134,12 +134,12 @@
                     </div>
 
                     <div class="form-visit3 clr-col-md-12 clr-row">
-                        <div class="labelVisit clr-col-md-6 clr-row" style="margin-top: 30px;">
+                        <div class="labelVisit clr-col-lg-6 clr-col-md-6 clr-col-8 clr-row" style="margin-top: 30px;">
                             <img src="../../../assets/Icones visit/windsock.png" width="22" height="22" class="imgIcon">
-                            <label for="airSpeed" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-5">
+                            <label for="airSpeed" class="clr-control-label ">
                                 Air speed *</label>
                         </div>
-                        <div class="clr-control-container clr-col-md-6" style="display: flex;">
+                        <div class="clr-control-container clr-col-lg-6 clr-col-md-6 clr-col-4" style="display: flex;">
                             <div class="clr-input-wrapper">
                                 <input clrInput required size="30" type="number" name="airSpeed"
                                     [(ngModel)]="measureAirSpeed" />
@@ -151,12 +151,12 @@
                     </div>
 
                     <div class="form-visit4 clr-col-md-12 clr-row">
-                        <div class="labelVisit clr-col-md-6 clr-row" style="margin-top: 30px;">
+                        <div class="labelVisit clr-col-lg-6 clr-col-md-6 clr-col-8 clr-row" style="margin-top: 30px;">
                             <img src="../../../assets/Icones visit/amoniac.png" width="21" height="21" class="imgIcon">
-                            <label for="amoniac" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-5">
+                            <label for="amoniac" class="clr-control-label">
                                 Amoniac *</label>
                         </div>
-                        <div class="clr-control-container clr-col-md-6" style="display: flex;">
+                        <div class="clr-control-container clr-col-lg-6 clr-col-md-6 clr-col-4" style="display: flex;">
                             <div class="clr-input-wrapper">
                                 <input clrInput required size="30" type="number" name="amoniac"
                                     [(ngModel)]="measureAmoniac" />
@@ -168,68 +168,68 @@
                     </div>
 
                     <div class="form-visit5 clr-col-md-12 clr-row">
-                        <div class="labelVisit clr-col-md-6 clr-row" style="margin-top: 30px;">
+                        <div class="labelVisit clr-col-lg-6 clr-col-md-6 clr-col-8 clr-row" style="margin-top: 30px;">
                             <img src="../../../assets/Icones visit/lightIntensity.png" width="21" height="21"
                                 class="imgIcon">
-                            <label for="lightIntensity" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                            <label for="lightIntensity" class="clr-control-label">
                                 Light intensity *</label>
                         </div>
-                        <div class="clr-control-container clr-col-md-6" style="display: flex;">
+                        <div class="clr-control-container clr-col-lg-6 clr-col-md-6 clr-col-4" style="display: flex;">
                             <div class="clr-input-wrapper">
                                 <input clrInput required size="30" type="number" name="lightIntensity"
                                     [(ngModel)]="measurelightIntensity" />
                             </div>
                             <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
-                                <span class="taskUnit"> ppm </span>
+                                <span class="taskUnit"> Lux </span>
                             </div>
                         </div>
                     </div>
 
 
                     <div class="form-visit6 clr-col-md-12 clr-row">
-                        <div class="labelVisit clr-col-md-6 clr-row" style="margin-top: 30px;">
+                        <div class="labelVisit clr-col-lg-6 clr-col-md-6 clr-col-8 clr-row" style="margin-top: 30px;">
                             <img src="../../../assets/Icones visit/feedConsumption.png" width="24" height="24"
-                                class="imgIcon">
-                            <label for="feedConsumption" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                                class="imgIcon test">
+                            <label for="feedConsumption" class="clr-control-label">
                                 Total Feed consumption *</label>
                         </div>
-                        <div class="clr-control-container clr-col-md-6" style="display: flex;">
+                        <div class="clr-control-container clr-col-lg-6 clr-col-md-6 clr-col-4" style="display: flex;">
                             <div class="clr-input-wrapper">
                                 <input clrInput required size="30" type="number" name="feedConsumption"
                                     [(ngModel)]="measurefeedConsumption" />
                             </div>
                             <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
-                                <span class="taskUnit"> feed bags </span>
+                                <span class="taskUnit"> Kg </span>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-visit7 clr-col-md-12 clr-row">
-                        <div class="labelVisit clr-col-md-6 clr-row" style="margin-top: 30px;">
+                        <div class="labelVisit clr-col-lg-6 clr-col-md-6 clr-col-8 clr-row" style="margin-top: 30px;">
                             <img src="../../../assets/Icones visit/waterConsumption.png" width="22" height="20"
                                 class="imgIcon">
-                            <label for="waterConsumption" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            <label for="waterConsumption" class="clr-control-label ">
                                 Total water consumption *</label>
                         </div>
-                        <div class="clr-control-container clr-col-md-6" style="display: flex;">
+                        <div class="clr-control-container clr-col-lg-6 clr-col-md-6 clr-col-4" style="display: flex;">
                             <div class="clr-input-wrapper">
                                 <input clrInput required size="30" type="number" name="waterConsumption"
                                     [(ngModel)]="measureWaterConsumption" />
                             </div>
                             <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
-                                <span class="taskUnit"> m³ </span>
+                                <span class="taskUnit"> L </span>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-visit8 clr-col-md-12 clr-row">
-                        <div class="labelVisit clr-col-md-6 clr-row" style="margin-top: 30px;">
+                        <div class="labelVisit clr-col-lg-6 clr-col-md-6 clr-col-8 clr-row" style="margin-top: 30px;">
                             <img src="../../../assets/Icones visit/mortality.png" width="21" height="21"
                                 class="imgIcon">
-                            <label for="mortality" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-5">
+                            <label for="mortality" class="clr-control-label">
                                 Mortality *</label>
                         </div>
-                        <div class="clr-control-container clr-col-md-6" style="display: flex;">
+                        <div class="clr-control-container clr-col-lg-6 clr-col-md-6 clr-col-4" style="display: flex;">
                             <div class="clr-input-wrapper">
                                 <input clrInput required type="number" name="mortality" 
                                 [max]="max" onkeyup="if(value>max) value=0;"
@@ -239,7 +239,7 @@
                             
                             
                             <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
-                                <span class="taskUnit"> dead birds </span>
+                                <span class="taskUnit"> birds </span>
                             </div>
                         </div>
                     </div>
@@ -248,9 +248,9 @@
                         style="display: -webkit-box; margin-top: 30px;">
                         <img src="../../../assets/Icones visit/litterCondition.png" class="imgIcon" width="22"
                             height="22" />
-                        <label for="litterCondition" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-5">
+                        <label for="litterCondition" class="clr-control-label">
                             Litter condition *</label>
-                        <div class="radip-wrapper" style="display: flex; margin-left: -10px;">
+                        <div class="radip-wrapper radio" >
                             <clr-radio-wrapper style="margin-right: 10px;">
                                 <input type="radio" clrRadio name="options" required />
                                 <label>aerate</label>
@@ -267,12 +267,12 @@
                     </div>
 
                     <div class="form-visit9 clr-col-md-12 clr-row">
-                        <div class="labelVisit clr-col-md-6 clr-row" style="margin-top: 30px;">
+                        <div class="labelVisit clr-col-lg-6 clr-col-md-6 clr-col-5 clr-row" style="margin-top: 30px;">
                             <img src="../../../assets/Icones visit/density.png" width="23" height="23" class="imgIcon">
-                            <label for="density" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-5">
+                            <label for="density" class="clr-control-label ">
                                 Density *</label>
                         </div>
-                        <div class="clr-control-container clr-col-md-6" style="display: flex;">
+                        <div class="clr-control-container clr-col-lg-6 clr-col-md-6 clr-col-7 " style="display: flex;">
                             <div class="clr-input-wrapper">
                                 <input clrInput required size="30" type="number" name="density"
                                     [(ngModel)]="measureDensity" />
@@ -284,33 +284,33 @@
                     </div>
 
                     <div class="form-visit10 clr-col-md-12 clr-row">
-                        <div class="labelVisit clr-col-md-6 clr-row" style="margin-top: 30px;">
+                        <div class="labelVisit clr-col-lg-6 clr-col-md-6 clr-col-8 clr-row" style="margin-top: 30px;">
                             <img src="../../../assets/Icones visit/weight.png" width="22" height="22" class="imgIcon">
-                            <label for="weight" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-8">
+                            <label for="weight" class="clr-control-label">
                                 Average body weight*</label>
                         </div>
-                        <div class="clr-control-container clr-col-md-6" style="display: flex;">
+                        <div class="clr-control-container clr-col-lg-6 clr-col-md-6 clr-col-4" style="display: flex;">
                             <div class="clr-input-wrapper">
-                                <input clrInput required size="30" type="number" name="weight"
+                                <input class=" weight" clrInput required size="30" type="number" name="weight"
                                     [(ngModel)]="measureWeight" readonly />
                             </div>
                             <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
                                 <span class="taskUnit"> g </span>
                             </div>
-                            <button class="btn btn-sm btn-link" (click)="showWeight()" style="margin-top: 24px;">
+                            <button *ngIf="weightCalcul" class="btn btn-sm btn-link" (click)="showWeight()" style="margin-top: 24px;">
                                 <img src="https://img.icons8.com/color/48/000000/edit.png" width="20" height="20" />
                             </button>
                         </div>
                     </div>
 
                     <div class="form-visit9 clr-col-md-12 clr-row">
-                        <div class="labelVisit clr-col-md-6 clr-row" style="margin-top: 30px;">
+                        <div class="labelVisit clr-col-lg-6 clr-col-md-6 clr-col-8 clr-row" style="margin-top: 30px;">
                             <img src="../../../assets/Icones visit/homogeneityFlock.png" width="22" height="22"
                                 class="imgIcon">
-                            <label for="homogeneityFlock" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
+                            <label for="homogeneityFlock" class="clr-control-label">
                                 CV *</label>
                         </div>
-                        <div class="clr-control-container clr-col-md-6" style="display: flex;">
+                        <div class="clr-control-container clr-col-lg-6 clr-col-md-6 clr-col-4" style="display: flex;">
                             <div class="clr-input-wrapper">
                                 <input clrInput required size="30" type="number" name="cv" [(ngModel)]="cv" readonly />
                             </div>
@@ -390,9 +390,9 @@
         </div>
         <div class="modal-footer">
             <div class="clr-row">
-            <span class="clr-col-sm-12" style="font-size:small ; margin-right: 49px;"><clr-icon class="alert-icon" shape="exclamation-circle" style="color:red"></clr-icon>The minimum number of birds measured must be <span style="font-weight:bold ; color:red">50</span> .</span>
+                <span class="alertspan"><clr-icon class="alert-icon" shape="exclamation-circle" style="color:red"></clr-icon>The minimum number of birds measured must be <span style="font-weight:bold ; color:red">50</span> .</span>
         </div>
-        <div class="row-test">
+        <div class="clr-row clr-col-xs-12-sm-12 buttonfooter">
             <button type="button" class="btn btn-outline" (click)="WeightOpened = false">Cancel</button>
             <button type="button" class="btn btn-primary" [disabled]="dynamicArray.length<3" (click)='submitWeight();'>save</button>
         </div>
@@ -412,7 +412,28 @@
         </h3>
 
         <div class="modal-body">
-            <div class="container">
+            <table class="table table-noborder">
+                <thead>
+                    <tr>
+                        <th class="left"></th>
+                        <th>Mesure</th>
+                        <th>Standard</th>
+                        <th class="left">Deviation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let vtask of visittasks; even as isEven; odd as isOdd" [ngClass]="{'even-row': isEven, 'odd-row': isOdd}">
+                        <td class="left">{{vtask.task.description}}</td>
+                        <td>{{vtask.measure}}  {{vtask.task.measureUnit}}</td>
+                        <td>{{vtask.standard}}</td>
+                        <td class="left" 
+                        [ngClass]="{'alert-low': vtask.deviation=='Low', 'alert-high':vtask.deviation=='High' ,'normal':vtask.deviation=='Normal' }">
+                        {{vtask.deviation}}</td>
+                    </tr>
+                   
+                </tbody>
+            </table>
+            <!--<div class="container">
                 <div class="headerResult">
                     <div class="clr-offset-md-5 clr-col-md-7 ">
                         <div class="resultVisit">
@@ -818,7 +839,7 @@
                     </div>
                 </div>
 
-            </div>
+            </div>-->
 
         </div>
 

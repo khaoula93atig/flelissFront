@@ -11,10 +11,11 @@ import {
   IRegistrationTask,
   IRegistrationVisitTasks,
   DynamicGrid,
+  WeeklyWeightMeasurement,
 } from 'src/app/shared/registration'
 import { FormGroup, Validators, FormArray, FormControl } from '@angular/forms'
 
-import { DatePipe } from '@angular/common'
+import { DatePipe, NumberSymbol } from '@angular/common'
 import { ClrDatagrid } from '@clr/angular'
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -53,6 +54,7 @@ export class NewVisitComponent implements OnInit {
   username: string
   rows: FormArray
   itemForm: FormGroup
+  weightCalcul=true
   constructor(
     private FarmService: FarmService,
     private VisitService: VisitService,
@@ -108,6 +110,8 @@ export class NewVisitComponent implements OnInit {
   densityTask: IRegistrationTask
   weightTask: IRegistrationTask
   homogeneityFlockTask: IRegistrationTask
+  maxWeight:number 
+  minWeight: number
   //humidity fields
   measureHumResult: string
   standardHumResult: string
@@ -214,6 +218,16 @@ export class NewVisitComponent implements OnInit {
   }
   getCenterId(event) {
     this.centerId = event
+    this.houses=[]
+    this.houseId=null
+    this.flockID=null
+    this.flocks=[]
+    this.startOfCycle = null
+    this.breeddescription = ''
+    this.hatchDate = null
+    this.ageOfTheFlock = null
+    this.chikedPlaced = null
+    this.psOrigin = null
     this.subs.add(
       this.HouseService.getConsultingHouseByCenter(this.centerId).subscribe(
         (data) => {
@@ -227,6 +241,14 @@ export class NewVisitComponent implements OnInit {
   //get getSelectedhouse
   getHouseId(event) {
     this.houseId = event
+    this.flockID=null
+    this.flocks=[]
+    this.startOfCycle = null
+    this.breeddescription = ''
+    this.hatchDate = null
+    this.ageOfTheFlock = null
+    this.chikedPlaced = null
+    this.psOrigin = null
     this.subs.add(
       this.HouseService.gethouse(this.houseId).subscribe((data) => {
         this.house = data
@@ -281,6 +303,23 @@ export class NewVisitComponent implements OnInit {
               this.max=i.restFlockNumber
             }
             console.log(this.max)
+            this.VisitService.getweeklyWeightByFlockAndAge(this.ageOfTheFlock, this.flockID).subscribe(
+              data=>{console.log('weekly', data)
+              if(data.length!=0){
+                this.weightCalcul=false
+                this.cv=data[0].cv
+                this.measureWeight=data[0].average
+              }
+              
+            })
+            this.VisitService.getweeklyfeedByFlockAndAge(this.ageOfTheFlock, this.flockID).subscribe(
+              data=>{console.log('feed', data)
+              if(data.length!=0){
+                this.measurefeedConsumption=data[0]
+                
+              }
+              
+            })
           }
         },
       ),
@@ -415,24 +454,30 @@ export class NewVisitComponent implements OnInit {
   //save weight
   Weightclosed: boolean = true
   submitWeight(): void {
+    this.maxWeight=this.dynamicArray[0].weight
+    this.minWeight=this.dynamicArray[0].weight
+    this.weightMeasure=0
+    this.cv=0
     console.log(this.dynamicArray)
     for (var i = 0; i < this.dynamicArray.length; i++) {
       this.weightMeasure = this.weightMeasure +this.dynamicArray[i].weight
+      if(this.maxWeight<this.dynamicArray[i].weight){
+        this.maxWeight=this.dynamicArray[i].weight
+      }
+      if(this.minWeight>this.dynamicArray[i].weight){
+        this.minWeight=this.dynamicArray[i].weight
+      }
     }
 
     this.measureWeight = (this.weightMeasure / this.dynamicArray.length).toFixed(2)
-    this.VisitService.getStndardWeigth(
-      this.ageOfTheFlock,
-      this.breedId,
-    ).subscribe((data) => {
-      this.standardWeightResult = data.weight
-      if (data != null) {
-        this.cv = (this.standardWeightResult / this.measureWeight) * 100
-        this.cv = parseFloat(this.cv.toFixed(3))
-        // this.Weightclosed = false
-        this.WeightOpened = false
-      }
-    })
+    this.cv = ((this.maxWeight-this.minWeight) / this.measureWeight) * 100
+    this.cv = parseFloat(this.cv.toFixed(3))
+    // this.Weightclosed = false
+    this.WeightOpened = false
+    this.dynamicArray=[]
+    this.newDynamic = { weight: 0, nbr: 1 }
+    this.dynamicArray.push(this.newDynamic)
+    
   }
 
   reverseDate(format: string, date: Date) {
@@ -743,7 +788,10 @@ export class NewVisitComponent implements OnInit {
           console.log('////////////////')
         }*/
 
-        this.showResult(this.visitIDnew)
+        //this.showResult(this.visitIDnew)
+        this.resultOpened = true
+        this.VisitService.getConsultingvisitID(this.visitIDnew).subscribe(
+          (data) => {this.visittasks=data})
       },
     )
 

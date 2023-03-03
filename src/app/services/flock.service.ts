@@ -48,7 +48,7 @@ findbyFarm(farmid: string) {
 
   //get exists flock of house
   getFlockExisitsByHouse(houseId: string) {
-    return this.http.get<FlockReport>(
+    return this.http.get<any>(
       environment.url_flock + '/house/exists/' + houseId,
       this.httpOptions,
     )

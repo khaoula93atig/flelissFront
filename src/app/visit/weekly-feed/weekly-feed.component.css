@@ -1,0 +1,19 @@
+@media screen and (max-width: 576px){
+    .table th, .table td {
+        font-size: .65rem;
+        line-height: .7rem;
+        border-top-style: solid;
+        border-top-width: 0.05rem;
+        border-top-width: var(--clr-table-borderwidth, 0.05rem);
+        border-top-color: #e8e8e8;
+        border-top-color: var(--clr-tablerow-bordercolor, #e8e8e8);
+        padding: 0.55rem 0.6rem 0.55rem;
+        text-align: center;
+        vertical-align: top;
+        max-width: 100px;
+      }
+      .table td input {
+        border-radius: 0;
+        max-width: 90px;
+    }
+    }

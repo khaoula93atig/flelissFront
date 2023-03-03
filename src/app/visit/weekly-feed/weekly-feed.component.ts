@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { ToastrService } from 'ngx-toastr'
+import { FlockService } from 'src/app/services/flock.service'
 import { AutofocusDirective } from 'src/app/shared/autofocus.directive'
 import { WeeklyFeed } from 'src/app/shared/registration'
 import { SubSink } from 'subsink'
@@ -13,7 +14,7 @@ import { VisitService } from '../../services/visit.service'
 export class WeeklyFeedComponent implements OnInit {
   week: number = null
   nbrbirds: number
-  breed: number
+  breed: string
   visitDate: string
   farmID: string
   centers: any[] = []
@@ -31,11 +32,16 @@ export class WeeklyFeedComponent implements OnInit {
   subs: SubSink = new SubSink()
   weeklyFeed = new WeeklyFeed()
   disabledSave: Boolean = true
+  flockName:string
+  exist=false
+  totalfeed=0
+  
 
   constructor(
     private HouseService: HouseService,
     private VisitService: VisitService,
     private toastr: ToastrService,
+    private flockService: FlockService
   ) {}
 
   ngOnInit(): void {
@@ -98,13 +104,47 @@ export class WeeklyFeedComponent implements OnInit {
     console.log('ok2')
   }
 
+  verfication(){
+    this.VisitService.getweeklyfeedByFlockAndAge(this.weeklyFeed.week, this.flockID).subscribe(data=>
+      {
+        console.log('exist',data)
+        
+        if(data.length!=0){
+          this.exist=true
+          this.totalfeed=data[0]
+          console.log(this.exist)
+        }
+        else{
+          this.exist=false
+        }
+      })
+      this.VisitService.getVisitTasksVerification(this.flockID , this.weeklyFeed.week, 6).subscribe(data=>{
+        console.log('exist',data)
+          
+          if(data.length!=0){
+            this.exist=true
+            this.totalfeed=data[0].measure
+            console.log(this.exist)
+          }
+          else{
+            this.exist=false
+          }
+      })    
+  }
+
   getCenterId(event) {
     this.centerId = event
     this.weeklyFeed.centerId = event
+    this.weeklyFeed.houseId=' '
+    console.log('weeklyFeed',this.weeklyFeed)
+    this.houses=[]
+    this.houseId=''
+    this.flockName=''
+    this.flockID=''
+    this.breed=''
     this.subs.add(
       this.HouseService.getConsultingHouseByCenter(this.centerId).subscribe(
         (data) => {
-          console.log('' + JSON.stringify(data))
           this.houses = data
         },
       ),
@@ -115,42 +155,41 @@ export class WeeklyFeedComponent implements OnInit {
     console.log(event)
     this.houseId = event
     this.weeklyFeed.houseId = event
+    this.flockName=''
+    this.flockID=''
+    this.breed=''
     console.log('this.weeklyFeed.houseId ' + this.weeklyFeed.houseId)
-    this.flocks = new Array()
+    this.flocks = []
     //get flock by house id
-    console.log('house++++++++++++' + this.houseId)
-    this.subs.add(
-      this.VisitService.getConsultingFlock(this.houseId).subscribe((data) => {
-        console.log('data flock' + data)
-        for (let element of data) {
-          if (element.checkEndOfCycle == false) this.flocks.push(element)
-        }
-      }),
-    )
+    this.flockService.getFlockExisitsByHouse(this.houseId).subscribe(data=>{
+      this.flocks=data
+      console.log('flock',this.flocks)
+      this.flockID=this.flocks[0].flockID
+      this.flockName=this.flocks[0].flockName
+      this.breedId=this.flocks[0].breed
+      this.nbrbirds= this.flocks[0].restFlockNumber
+      switch(this.breedId) { 
+        case 1: { 
+           this.breed="Hubbard"
+           break; 
+        } 
+        case 2: { 
+          this.breed="Cobb 500" 
+           break; 
+        } 
+        case 3: { 
+          this.breed="Ross 308" 
+          break; 
+       } 
+       case 4: { 
+        this.breed="Arbor Acres plus" 
+        break; 
+     } 
+     }
+    })
+    
   }
-  //get getSelectedFlock
-  getflockID(event) {
-    console.log('getSelectedflock')
-    console.log(event)
-    this.flockID = event
-    this.subs.add(
-      this.VisitService.getConsultingFlockbyId(this.flockID).subscribe(
-        (data) => {
-          console.log('data flock' + data)
-          this.flocks = data
-
-          for (let i of this.flocks) {
-            // get breed
-            if ((i.breed = i.breedObject.breedID)) {
-              this.breeddescription = i.breedObject.description
-              this.weeklyFeed.breed = i.breedObject.breedID
-              this.nbrbirds = i.flockNumber
-            }
-          }
-        },
-      ),
-    )
-  }
+ 
 
   calculStarterFeedPerBird(event) {
     console.log('event ' + event)
@@ -184,17 +223,6 @@ export class WeeklyFeedComponent implements OnInit {
     this.showButtonSave()
   }
   showButtonSave() {
-    console.log('showButtonSave')
-    console.log(
-      'this.weeklyFeed.centerId  ' +
-        this.weeklyFeed.centerId +
-        this.weeklyFeed.houseId +
-        this.weeklyFeed.flockId +
-        this.weeklyFeed.week +
-        this.weeklyFeed.starterFeedPerBird +
-        this.weeklyFeed.growerFeedPerBird +
-        this.weeklyFeed.finisherFeedBird,
-    )
     if (
       this.weeklyFeed.centerId &&
       this.weeklyFeed.houseId &&

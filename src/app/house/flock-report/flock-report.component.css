@@ -44,9 +44,54 @@ clr-select-container {
 }
 .table th,
 .table td {
-  text-align: left !important;
+  text-align: center !important;
 }
+.table tr:nth-child(even) {
+  background-color: #ffffff26;
+}
+.table th, .table td{
+  border: #ffffff30;
+}
+.table tr:nth-child(1) th{
+  font-size: 13px;
+  letter-spacing: 1px;
+  background-color: #ffffff2b;
+  border-bottom: 1px solid #bfbfbf;
+}
+
 .modal-body > :last-child {
   margin-bottom: 0;
   margin-top: -20px;
 }
+.tab-mortality{
+  background-color: #ad0003;
+  color: white;
+}
+.tab-mortality-header{
+  background-color: #c80003;
+  color: white;
+  font-weight: bolder !important;
+}
+.tab-fcr{
+  background-color: #405d3a;
+  color: white;
+}
+.tab-abw{
+ /* background-color: #87a72e;*/
+ background-color: #00567a;
+  color: white;
+}
+.tab-epef{
+  background-color: #bc3901;
+  color: white;
+}
+
+@media screen and (max-width: 700px){
+h1 {
+  font-weight: 100;
+  font-size: large;
+  margin-top: 45px;
+}
+}
+
+

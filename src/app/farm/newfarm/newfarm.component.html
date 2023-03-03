@@ -6,8 +6,8 @@
     <div class="modal-body">
 
       <!-- /Spinner-->
-      <div class="form">
-        <clr-select-container class="clr-row">
+      <div class="form" style="margin-top: -5px;">
+        <!--<clr-select-container class="clr-row">
           <label class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">Company * </label>
           <select clrSelect required [(ngModel)]="farm.companyID" name="companyID" class="clr-col-xs-6 clr-col-md-6"
             style="width: 233px;" (change)="getCompanyId($event.target.value)">
@@ -20,7 +20,7 @@
 
 
 
-        </clr-select-container>
+        </clr-select-container>-->
 
         <clr-input-container class="clr-row">
           <label for="housesNumber" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">Farm Name * </label>
@@ -32,14 +32,7 @@
 
         </clr-input-container>
 
-        <clr-input-container class="clr-row">
-          <label for="housesNumber" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">Number of Houses *
-          </label>
-          <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" n="1" style="width: 233px;"
-            [(ngModel)]="housesNumber" name="housesNumber" />
-
-
-        </clr-input-container>
+        
 
         <clr-input-container class="clr-row">
           <label for="country" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">Address *</label>
@@ -100,8 +93,16 @@
           <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" n="1" style="width: 233px;"
             [(ngModel)]="numberCenter" name="numberCenter" />
         </clr-input-container>
-
         <clr-input-container class="clr-row">
+          <label for="housesNumber" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">Number of Houses *
+          </label>
+          <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" n="1" style="width: 233px;"
+            [(ngModel)]="housesNumber" name="housesNumber" />
+
+
+        </clr-input-container>
+
+       <!--<clr-input-container class="clr-row">
           <label for="bridsNumberPerCenter" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">
             Number of breeding centers *
           </label>
@@ -150,7 +151,7 @@
           <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" n="1" style="width: 233px;"
             [(ngModel)]="avLayRate" name="avLayRate" />
         </clr-input-container>
-
+      -->
         <clr-input-container class="clr-row">
           <label for="rotation" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">
             Rotation

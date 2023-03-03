@@ -15,6 +15,7 @@ import {
 import { AutofocusDirective } from 'src/app/shared/autofocus.directive'
 import { NgForm } from '@angular/forms'
 import { SubSink } from 'subsink'
+import { ToastrService } from 'ngx-toastr'
 @Component({
   selector: 'app-new-house',
   templateUrl: './new-house.component.html',
@@ -25,6 +26,7 @@ export class NewHouseComponent implements OnInit {
     private HouseService: HouseService,
     private http: HttpClient,
     private ListComponenet: ListHouseComponent,
+    private toaster: ToastrService
   ) {}
 
   percentDone: number
@@ -136,12 +138,22 @@ export class NewHouseComponent implements OnInit {
     // Invoking service
     this.HouseService.createRegistrationHouses(registrationHouse).subscribe(
       (data) => {
-        setTimeout((_) => (this.loading = false))
-        this.HouseService.askForReload(true)
+        if (data['response'] == 'OK') {
+          this.clearTheForm()
+          this.show=false
+          this.toaster.success('Success', 'Successfully added')
+          this.HouseService.askForReload(true)
 
         // We clear the form!
         this.clearTheForm()
         this.ListComponenet.refresh()
+          
+
+        } else {
+          this.toaster.error('Error', 'Operation failed')
+        }
+
+        
       },
     )
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core'
 import { FarmService } from '../../services/farm.service'
 import {
   IRegistrationFarms,
@@ -15,6 +15,7 @@ import { AutofocusDirective } from '../../shared/autofocus.directive'
 import { SubSink } from 'subsink'
 import { CompanyService } from '../../services/company.service'
 import { ToastrService } from 'ngx-toastr'
+import { ListFarmComponent } from '../list-farm/list-farm.component'
 
 @Component({
   selector: 'app-newfarm',
@@ -28,6 +29,7 @@ export class NewfarmComponent implements OnInit {
     private http: HttpClient,
     private toaster: ToastrService
   ) {}
+  @Output() refreshList = new EventEmitter();
   percentDone: number
   uploadSuccess: boolean
   subs: SubSink = new SubSink()
@@ -117,14 +119,14 @@ export class NewfarmComponent implements OnInit {
     registrationFarm.farmManageName = this.farmManageName
     registrationFarm.farmManageEmail = this.farmManageEmail
     registrationFarm.farmManageTel = this.farmManageTel
-    registrationFarm.companyID = this.companyID
+    registrationFarm.companyID = sessionStorage.getItem("companyID")
     registrationFarm.bridsNumberPerCenter = this.bridsNumberPerCenter
     registrationFarm.numberCenter = this.numberCenter
-    registrationFarm.result = this.result
+    /*registrationFarm.result = this.result
     registrationFarm.avLayRate = this.avLayRate
     registrationFarm.avMortalityRate = this.avMortalityRate
     registrationFarm.fcr = this.fcr
-    registrationFarm.epef = this.epef
+    registrationFarm.epef = this.epef*/
     registrationFarm.rotation = this.rotation
     // Invoking service
     this.FarmService.createRegistrationFarms(registrationFarm).subscribe(
@@ -133,15 +135,14 @@ export class NewfarmComponent implements OnInit {
           this.clearTheForm()
           this.show=false
           this.toaster.success('Success', 'Successfully added')
+          this.refreshList.emit()
+
         } else {
           this.toaster.error('Error', 'Operation failed')
         }
-        /*setTimeout((_) => (this.loading = false))
-        this.FarmService.askForReload(true)
-
-        this.clearTheForm()*/
       },
     )
+    
   }
   getproductionType(event) {
     this.typeProduction = event

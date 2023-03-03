@@ -4,6 +4,7 @@ import { FarmService } from 'src/app/services/farm.service';
 import { UserService } from '../../services/user.service';
 import * as Highcharts from 'highcharts';
 import { DatePipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 declare var require: any;
 const More = require('highcharts/highcharts-more');
@@ -47,9 +48,11 @@ export class GeneralComponent implements OnInit {
 
   constructor(private UserService: UserService,
     private dashboardService: DashboardService,
-    private farmService: FarmService) { }
+    private farmService: FarmService,
+    private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.getData()
     this.companyId = sessionStorage.getItem('companyID')
     this.getMortalityByCompany()
     this.getSurvivalByCompany()
@@ -59,6 +62,9 @@ export class GeneralComponent implements OnInit {
     this.mortalityBreed()
     this.getweeklyWeightMesurementbyCompany()
     this.getFeedConsumTotalBycompany()
+  }
+  getData() {
+    return this.http.get('https://www.biat.tn/biat/Fr/cours-de-change_66_127').subscribe(data=>console.log('donees site',data));
   }
 
   getFarms(){

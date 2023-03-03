@@ -2,10 +2,9 @@
     <clr-header  *ngIf="login">
       <div class="branding">
         <a routerlink="/accueil" class="nav-link">
-                <img src="/assets/logo.png" alt="" style="    height: 3.8rem;
+                <img src="/assets/logo.png" alt="" style="height: 3.8rem;
                 width: 5rem;
                 margin-top: -9px;">
-          <!--<span class="title">Project Clarity</span>-->
         </a>
       </div>
       <div class="header-nav" [clr-nav-level]="1">
@@ -14,15 +13,16 @@
         <a routerLink="/Center/List-center" routerLinkActive="active" class="nav-link nav-text">Center</a>
         <a routerLink="/Houses/list" routerLinkActive="active" class="nav-link nav-text">Houses</a>
         <clr-dropdown routerLinkActive="active">
-            <button  clrDropdownTrigger aria-label="open user profile">
+            <button clrDropdownTrigger aria-label="open user profile">
                 Visits
                 <clr-icon  shape="caret down"></clr-icon>
             </button>
             <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-                <a routerLink="/Visits/list" routerLinkActive="active" clrDropdownItem>Visits</a>
+                <a routerLink="/Visits/list" routerLinkActive="active" style="color:#666; padding:0;" class="nav-link nav-text" clrDropdownItem>Visits</a>
                 <a routerLink="/veterinarianVisit/list" routerLinkActive="active"
-                *ngIf="role=='secondary manager' || role=='Veterinary'  || role=='Farm Manager'  " clrDropdownItem>Veterinarian Visits</a>
-                <a routerLink="/Visits-audits/chick_reception" routerLinkActive="active" clrDropdownItem>Audits Visit</a>
+                *ngIf="role=='secondary manager' || role=='Veterinary'  || role=='Farm Manager'  "
+                 style="color:#666; padding:0;" class="nav-link nav-text" clrDropdownItem>Veterinarian Visits</a>
+                <a routerLink="/Visits-audits/chick_reception" routerLinkActive="active" style="color:#666; padding:0;" class="nav-link nav-text" clrDropdownItem>Audits Visit</a>
             </clr-dropdown-menu>
         </clr-dropdown>
       </div>
@@ -36,10 +36,6 @@
                 <clr-icon shape="caret down"></clr-icon>
             </button>
             <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-
-                <a clrDropdownItem routerLink="/Users/list" routerLinkActive="active" *ngIf="role=='Farm Manager'">
-                     Users
-                </a>
                 <a clrDropdownItem (click)="logout()">
                     <clr-icon shape="lock" class="is-solid"></clr-icon> Logout
                 </a>

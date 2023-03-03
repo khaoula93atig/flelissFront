@@ -1,3 +1,14 @@
+.tr:nth-child(even) {
+  background-color: #ffffff26;
+}
+
+.table tr:nth-child(1) th{
+  font-size: 13px;
+  letter-spacing: 1px;
+  background-color: #ffffff2b;
+  border-bottom: 1px solid #bfbfbf;
+}
+
 .container {
   overflow: hidden;
 
@@ -146,7 +157,13 @@ clr-icon {
 .tablecolor:nth-child(even) {
   background-color: #f5f5f5;
 }
+.even-row {
+  background-color: #02675c0f;
+}
 
+.odd-row {
+  background-color: transparent;
+}
 
 
 /*icon add  new farm icon*/

@@ -12,52 +12,49 @@
                 <div>
                     <!-- form-visit part 1 -->
                     <div class="formV clr-row">
-                        <clr-select-container class="clr-col-md-5 clr-row">
-                            <label for="farm" class="clr-control-label clr-col-md-6">Center </label>
-                            <select clrSelect name="farm" [(ngModel)]="centerId" name="farmID"
+                        <clr-select-container class="clr-col-md-6 clr-row">
+                            <label for="farm" class="clr-control-label clr-col-3">Center </label>
+                            <select class="clr-col-7" clrSelect name="farm" [(ngModel)]="centerId" name="farmID"
                                 (change)="getCenterId($event.target.value)"
-                                style="width: 199px;  background-color: #f5f5f5;">
+                                style="width: 190px;  background-color: #f5f5f5;">
                                 <option *ngFor="let center of centers " [value]='center.centerId'>
                                     {{center.centerName}}
                                 </option>
                             </select>
                         </clr-select-container>
-                        <clr-select-container class="clr-col-md-5 clr-row">
-                            <label for="house" class="clr-control-label clr-col-md-8">House </label>
-                            <select clrSelect name="houseId" [(ngModel)]="houseId"
-                                style="width: 199px;     background-color: #f5f5f5;"
+                        <clr-select-container class="clr-col-md-6 clr-row">
+                            <label for="house" class="clr-control-label clr-col-3">House </label>
+                            <select class="clr-col-7" clrSelect name="houseId" [(ngModel)]="houseId"
+                                style="width: 190px;     background-color: #f5f5f5;"
                                 (change)="getHouseId($event.target.value)">
                                 <option *ngFor="let house of houses" [value]='house.houseId'>
                                     {{house.houseName}}
                                 </option>
                             </select>
                         </clr-select-container>
-                        <clr-select-container class="clr-col-md-2 clr-form-control clr-row">
-                            <label for="breed" class="clr-control-label clr-col-md-5">
-                                Flock
-                            </label>
-                            <select clrSelect name="flockID" [(ngModel)]="flockID"
-                                style="width: 105px;     background-color: #f5f5f5;    background-color: #f5f5f5;"
-                                (change)="getflockID($event.target.value)">
-                                <option *ngFor="let flock of flocks" [value]='flock.flockID'>
-                                    {{flock.flockName}}
-                                </option>
-                            </select>
-                        </clr-select-container>
+                        
                     </div>
 
                     <div class="formV clr-row">
-
-                        <clr-input-container class="formDate clr-form-control clr-col-md-5">
-                            <label for="breeddescription" class="clr-control-label clr-col-md-6">
+                        <clr-input-container class="clr-col-md-4 clr-form-control clr-row">
+                            <label for="flock" class="clr-control-label clr-col-3">
+                                Flock
+                            </label>
+                            <input type="text" clrInput name="flockName" [(ngModel)]="flockName"
+                                class="clr-col-7" readonly />
+                        </clr-input-container>
+                        <clr-input-container class="formDate clr-form-control clr-col-md-4">
+                            <label for="breed" class="clr-control-label clr-col-3">
                                 Breed </label>
-                            <input type="text" clrInput name="breeddescription" [(ngModel)]="breeddescription"
-                                class="clr-col-md-8" readonly />
+                            <input type="text" clrInput name="breeddescription" [(ngModel)]="breed"
+                                class="clr-col-7" readonly />
                         </clr-input-container>
 
-                        <clr-select-container class="clr-col-md-5 clr-row">
-                            <label for="week" class="clr-control-label clr-col-md-8">Day </label>
-                            <select clrSelect name="options" [(ngModel)]="week" style="    background-color: #f5f5f5;">
+                        <clr-select-container class="clr-col-md-4 clr-row">
+                            <label for="week" class="clr-control-label clr-col-3">Day </label>
+                            <select class="clr-col-7" clrSelect name="options" [(ngModel)]="week"
+                             style="background-color: #f5f5f5;" (change)="verification()">
+                                <option value="0">0</option>
                                 <option value="7">7</option>
                                 <option value="14">14</option>
                                 <option value="21">21</option>
@@ -71,7 +68,11 @@
                 </div>
 
                 <!-- Table Weight -->
-                <table class="table table-striped table-bordered">
+                <div *ngIf="exist" style="background-color:  rgb(217,237,247)">
+                <p style="color: rgb(58,135,173);padding: 10px;"><clr-icon class="alert-icon" shape="info-standard"></clr-icon> The measure of the <span style="font-weight: bold;"> {{week}}th </span> day is already computed and has a value of 
+                <span style="font-weight: bold;">{{weightMeasure}} g </span> .</p>
+            </div>
+                <table *ngIf="!exist" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>Number</th>
@@ -108,15 +109,16 @@
 
         </div>
         <div class="modal-footer">
-            <div class="clr-row">
+            <div class="clr-row" *ngIf="!exist">
                 
-                <span style="font-size:small ; margin-right: 49px;"><clr-icon class="alert-icon" shape="exclamation-circle" style="color:red"></clr-icon>The minimum number of birds measured must be <span style="font-weight:bold ; color:red">50</span> .</span>
+                <span class="alertspan"><clr-icon class="alert-icon" shape="exclamation-circle" style="color:red"></clr-icon>The minimum number of birds measured must be <span style="font-weight:bold ; color:red">50</span> .</span>
             </div>
           
-            
+            <div class="clr-row clr-col-xs-12-sm-12 buttonfooter">
             <button type="button" class="btn btn-outline" (click)="show = false;initForm()">Cancel</button>
-            <button type="button" class="btn btn-primary " (click)='submitWeight();'
+            <button *ngIf="!exist" type="button" class="btn btn-primary " (click)='submitWeight();'
                 [disabled]="disabledSave">save</button>
+            </div>
         </div>
 
 

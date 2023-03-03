@@ -1,6 +1,6 @@
 .labelV {
     margin-top: 3.5px;
-    width: 45%
+    width: 50%
 }
 
 .form-check h4 {
@@ -29,7 +29,27 @@
     max-width: 102%;
 }
 
-.clr-wizard.wizard-md .clr-wizard-stepnav-wrapper {
-    min-width: 12.8rem !important;
-    max-width: 12rem;
+
+@media (max-width: 767px) {
+    .clr-wizard.wizard-md {
+      display: none;
+    }
+    .clr-wizard.wizard-sm {
+      display: block;
+    }
+  }
+  @media (min-width: 767px) {
+    .clr-form-control{
+        display: -webkit-flex;
+        flex-direction: inherit;
+    } 
+  }
+  @media screen and (max-width: 576px){
+.modal-body {
+    max-height: 55vh;
+    overflow-x: scroll;
 }
+
+  }
+ 
+    

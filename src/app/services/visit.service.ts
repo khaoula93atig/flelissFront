@@ -134,4 +134,32 @@ export class VisitService {
       weeklyFeed,
     )
   }
+
+  //weekly weight by flock and age
+  getweeklyWeightByFlockAndAge(age, flockId){
+    return this.http.get<WeeklyWeightMeasurement[]>(
+      environment.url_WeeklyWeightMeasurement + 'weeklyWeightByFlockAndAge/' +age +'/'+ flockId ,
+      this.httpOptions,
+    )
+
+  }
+
+  //weekly feed by flock and age
+  getweeklyfeedByFlockAndAge(age, flockId){
+    return this.http.get<number[]>(
+      environment.url_WeeklyFeed + 'byflockandage/' +age +'/'+ flockId ,
+      this.httpOptions,
+    )
+
+  }
+
+  //get visit tasks verification
+  getVisitTasksVerification(flockId, age, task){
+    return this.http.get<any[]>(
+      environment.url_visit + '/vistTaskVerif/' + flockId + '/'+ age +'/'+ task ,
+      this.httpOptions,
+    )
+  }
+
+
 }

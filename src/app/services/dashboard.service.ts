@@ -206,5 +206,10 @@ export class DashboardService {
   //get Mortality by Flocks and year
   getMortalityByFlocksAndYear(houseId:string, year:number){
     return this.http.get<any>(environment.url_mortaliteDash +'/mortalityByflock/' + houseId+'/'+year);
+  } 
+
+  //get Mortality by age of flock
+  getMortalityByage(flockId:string){
+    return this.http.get<any>(environment.url_mortaliteDash +'/flock/' + flockId);
   }
 }

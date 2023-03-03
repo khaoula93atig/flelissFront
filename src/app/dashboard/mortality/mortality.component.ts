@@ -14,6 +14,7 @@ import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { FlockService } from 'src/app/services/flock.service';
+am4core.useTheme(am4themes_animated);
 Drilldown(Highcharts);
 
 declare var require: any;
@@ -528,6 +529,9 @@ pieSeries.ticks.template.disabled = true;
 
 // Disable tooltips
 pieSeries.slices.template.tooltipText = "{category}";
+pieSeries.tooltip.label.interactionsEnabled = true;
+pieSeries.tooltip.keepTargetHover = true;
+
 
 var label = pieSeries.createChild(am4core.Label);
 label.text = "[fontSize:18px]Total alerts[/]:\n[bold fontSize:40px]{values.value.sum}[/] ";
@@ -535,6 +539,11 @@ label.horizontalCenter = "middle";
 label.verticalCenter = "middle";
 label.textAlign = "middle";
 label.fontSize = 22;
+
+
+
+
+
  
 }
 
@@ -877,7 +886,7 @@ getweeklyweightbyBreed(){
           backgroundColor: "rgba(0, 0, 0, 0)",
        },
        title: {
-          text: "Weekly weight by breed"
+          text: "Weekly weight"
        },
        xAxis:{
           categories:[7 , 14 ,21 ,28 ,35 , 42 ,49]

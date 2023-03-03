@@ -9,7 +9,7 @@ import { Router } from '../../../../node_modules/@angular/router';
 export class HeaderComponent implements OnInit {
 
   role: string;
-  login=true;
+  login=false;
 
   constructor(private router: Router) { }
 

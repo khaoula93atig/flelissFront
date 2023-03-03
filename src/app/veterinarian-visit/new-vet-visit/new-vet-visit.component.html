@@ -1,10 +1,10 @@
-<form novalidate name="myForm" #myForm='ngForm' (ngSubmit)="onSubmit();">
+<form class="foot" novalidate name="myForm" #myForm='ngForm' (ngSubmit)="onSubmit();">
 
 
 
     <!-- Table -->
 
-    <clr-wizard #wizard [(clrWizardOpen)]="openWZ" [clrWizardSize]="'md'">
+    <clr-wizard  #wizard [(clrWizardOpen)]="openWZ" [clrWizardSize]="'md, sm'">
         <clr-wizard-title> <img src="../../../assets/newVisit.png" width="26" height="26"
                 style="margin-top: -5px; margin-right: 10px;"> Veterinarian visit</clr-wizard-title>
 
@@ -18,12 +18,13 @@
             <div class="form-visitV clr-row">
 
                 <!-- form-visitV1 -->
+                
 
-                <clr-date-container style="display: -webkit-box;">
-                    <label for="visitDate" class="clr-control-label labelV ">
+                <clr-date-container class="clr-row clr-col-md-12">
+                    <label for="visitDate" class="clr-control-label labelV">
                         Visit date *
                     </label>
-                    <input clrDate required class="clr-col-xs-12-sm-12 clr-col-md-7" [(ngModel)]="visitDate" size="30"
+                    <input clrDate class="clr-control-container clr-col-md-6 clr-col-xs-sm-12" required [(ngModel)]="visitDate" size="30"
                         type="date" n="1" name="visitDate" />
                 </clr-date-container>
 
@@ -53,7 +54,7 @@
                     </div>
                     <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
                         <select clrSelect name="houseId" [(ngModel)]="houseId" style="width: 166px;"
-                            (change)="getHouseId($event.target.value)">
+                            (change)="getflockId($event.target.value)">
                             <option *ngFor="let house of houses" [value]='house.houseId'>
                                 {{house.houseName}}
                             </option>
@@ -72,12 +73,11 @@
                         </label>
                     </div>
                     <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
-                        <select clrSelect required name="flockID" [(ngModel)]="flockID" style="width: 140px;"
-                            class="clr-col-xs-12-sm-12 clr-col-md-12" (change)="getflockID($event.target.value)">
-                            <option *ngFor="let flock of flocks" [value]='flock.flockID'>
-                                {{flock.flockName}}
-                            </option>
-                        </select>
+                        <div class="clr-input-wrapper">
+                            <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="text" n="1"
+                                name="flockName" style=" width: 130px;" [(ngModel)]="flockName"
+                                readonly />
+                        </div>
                     </div>
                 </div>
 
@@ -91,7 +91,7 @@
                     <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
                         <div class="clr-input-wrapper">
                             <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="text" n="1"
-                                name="breeddescription" style=" width: 130px;" [(ngModel)]="breeddescription"
+                                name="breed" style=" width: 130px;" [(ngModel)]="breed"
                                 readonly />
                         </div>
                     </div>
@@ -126,7 +126,7 @@
                     <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
                         <div class="clr-input-wrapper">
                             <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="number" n="1"
-                                name="ageFlock" style=" width: 130px;" [(ngModel)]="flockAge" readonly />
+                                name="ageFlock" style=" width: 130px;" [(ngModel)]="ageOfTheFlock" readonly />
                         </div>
                         <div class="Unite" style="margin-top: 24px;  margin-left: -40px;">
                             <span class="taskUnit"> days </span>
@@ -203,7 +203,7 @@
                     <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
                         <div class="clr-input-wrapper">
                             <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="number" n="1"
-                                name="totalMorbidity" style=" width: 140px;" [(ngModel)]="MortalityPercentage"
+                                name="MortalityPercentage" style=" width: 140px;" [(ngModel)]="MortalityPercentage"
                                 readonly />
                         </div>
                         <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
@@ -696,19 +696,19 @@
 
 
 
-                    <clr-input-container class="clr-col-md-12" style="display: -webkit-box; padding-left: 0;">
+                    <clr-input-container class="clr-col-md-12 clr-row" style="padding-left: 0;">
                         <label for="nervous" class="clr-control-label labelV ">
                             Nervous *
                         </label>
-                        <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-7" type="text" n="1"
+                        <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" type="text" n="1"
                             name="nervous" [(ngModel)]="NervousMeasure" />
                     </clr-input-container>
 
-                    <clr-input-container class="clr-col-md-12" style="display: -webkit-box;padding-left: 0">
+                    <clr-input-container class="clr-col-md-12 clr-row" style="padding-left: 0">
                         <label for="dermatitis" class="clr-control-label labelV ">
                             Dermatitis *
                         </label>
-                        <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-7" type="text" n="1"
+                        <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" type="text" n="1"
                             name="dermatitis" [(ngModel)]="DermatitisMeasure" />
                     </clr-input-container>
 
@@ -950,38 +950,16 @@
                     </h4>
                 </div>
                 <label>
-                    <input type="file" (change)="onFileChange($event)" placeholder="Upload file" accept="*" multiple
-                        class=" clr-col-xs-12-sm-122 clr-col-md-12" />
+                    <input type="file" id="myfile" name="myfile" (change)="onFileChange($event)" placeholder="Upload file" accept="*" multiple
+                        class=" clr-col-xs-12-sm-12 clr-col-md-12" value="Choisir un fichier" />  
+                        <span class=" clr-col-xs-12-sm-12 clr-col-md-12" style="font-size:small ; margin-right: 49px;"><clr-icon class="alert-icon" shape="exclamation-circle" style="color:red"></clr-icon>A <span style="font-weight:bold ; color:red">pdf</span> file should be uploaded.</span>
+                       
 
                 </label>
+                
+                
 
 
-            </div>
-            <div class="clr-col-6">
-                <div class="alert alert-succes" role="alert" *ngIf="succesMsg != null" style="margin-top: 0px;">
-                    <div class="alert-items">
-                        <div class="alert-item static">
-                            <div class="alert-icon-wrapper">
-                                <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
-                            </div>
-                            <span class="alert-text">
-                                {{succesMsg}}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="alert alert-danger" role="alert" *ngIf="dangerMsg != null" style="margin-top: 0px;">
-                    <div class="alert-items">
-                        <div class="alert-item static">
-                            <div class="alert-icon-wrapper">
-                                <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
-                            </div>
-                            <span class="alert-text">
-                                {{dangerMsg}}
-                            </span>
-                        </div>
-                    </div>
-                </div>
             </div>
         </clr-wizard-page>
     </clr-wizard>

@@ -27,7 +27,7 @@
         <clr-dg-column>Flock</clr-dg-column>
         <clr-dg-column>Breed</clr-dg-column>
         <clr-dg-column>Hatch date</clr-dg-column>
-        <clr-dg-column>Age of the flock</clr-dg-column>
+        <clr-dg-column>Age of flock</clr-dg-column>
         <clr-dg-column>Chick placed</clr-dg-column>
         <clr-dg-column>PS origin</clr-dg-column>
         <clr-dg-column>Morbidity</clr-dg-column>
@@ -37,14 +37,14 @@
         <clr-dg-column>FCR</clr-dg-column>
         <!-- ... -->
         <clr-dg-row *clrDgItems="let visit of visits" [clrDgItem]="visit" class="tablecolor">
-          <clr-dg-cell style="width: 110px;"> {{visit.visitDate}}</clr-dg-cell>
-          <clr-dg-cell style="width: 100px;"> {{visit.flock.house.farm.name}} </clr-dg-cell>
-          <clr-dg-cell style="width: 120px;">
-            {{visit.flock.house.farm.name}}-{{gethouse_id(visit.flock.house.houseId)}} </clr-dg-cell>
+          <clr-dg-cell style="width: 120px;"> {{visit.visitDate | date:'yyyy-MM-dd'}}</clr-dg-cell>
+          <clr-dg-cell style="width: 100px;"> {{visit.flock.house.farm.farmName}} </clr-dg-cell>
+          <clr-dg-cell style="width: 150px;">
+            {{visit.flock.house.houseName}} </clr-dg-cell>
           <clr-dg-cell style="width: 100px;"> {{visit.flock.startOfCycle}} </clr-dg-cell>
           <clr-dg-cell style="width: 100px;"> {{visit.flock.breedObject.description}} </clr-dg-cell>
-          <clr-dg-cell style="width: 100px;"> {{visit.flock.hatchDate}} </clr-dg-cell>
-          <clr-dg-cell style="width: 100px;"> {{visit.ageFlock}} </clr-dg-cell>
+          <clr-dg-cell style="width: 120px;"> {{visit.flock.hatchDate}} </clr-dg-cell>
+          <clr-dg-cell style="width: 80px;"> {{visit.ageFlock}} </clr-dg-cell>
           <clr-dg-cell style="width: 100px;"> {{visit.flock.chikedPlaced}} </clr-dg-cell>
           <clr-dg-cell style="width: 100px;"> {{visit.flock.psOrigin}} </clr-dg-cell>
           <clr-dg-cell style="width: 100px;"> {{visit.morbidity}} </clr-dg-cell>
