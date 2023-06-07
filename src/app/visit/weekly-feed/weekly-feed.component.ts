@@ -77,6 +77,10 @@ export class WeeklyFeedComponent implements OnInit {
   clearForm() {
     this.weeklyFeed = new WeeklyFeed()
     this.breeddescription = ''
+    this.breed=''
+    this.flockID=''
+    this.flockName=''
+    this.breedId=null
     this.disabledSave = true
     this.show = false
     this.ngOnInit()

@@ -12,6 +12,7 @@ import { SubSink } from 'subsink/dist/subsink'
 import { FarmService } from '../../services/farm.service'
 import { CompanyService } from '../../services/company.service'
 import { ToastrService } from 'ngx-toastr'
+import { ListCenterComponent } from '../list-center/list-center.component'
 @Component({
   selector: 'app-new-center',
   templateUrl: './new-center.component.html',
@@ -23,7 +24,8 @@ export class NewCenterComponent implements OnInit {
     private FarmService: FarmService,
     private CompanyService: CompanyService,
     private http: HttpClient,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    private listCenter: ListCenterComponent
   ) {}
   percentDone: number
   uploadSuccess: boolean
@@ -138,7 +140,7 @@ export class NewCenterComponent implements OnInit {
         this.clearTheForm()
           this.show=false
           this.toaster.success('Success', 'Successfully added')
-          this.refreshList.emit()
+          this.listCenter.ngOnInit()
         
       } else {
         this.toaster.error('Error', 'Operation failed')

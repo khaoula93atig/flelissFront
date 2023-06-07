@@ -167,6 +167,11 @@ export class DashboardService {
     return this.http.get<any>(environment.url_mortaliteDash+'/mortalityByHouse/lastDays/'+houseId, this.httpOptions)
   }
 
+  //get result of outgoing flocks body weight
+   getResultOutFlocks(companyId : string){
+    return this.http.get<any[]>(environment.url_dashboard+'/flock/out/'+companyId, this.httpOptions)
+   }
+
 
 
   //get weight by breed by centerId
@@ -207,6 +212,7 @@ export class DashboardService {
   getMortalityByFlocksAndYear(houseId:string, year:number){
     return this.http.get<any>(environment.url_mortaliteDash +'/mortalityByflock/' + houseId+'/'+year);
   } 
+  
 
   //get Mortality by age of flock
   getMortalityByage(flockId:string){

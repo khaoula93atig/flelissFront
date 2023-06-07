@@ -14,6 +14,7 @@ import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { FlockService } from 'src/app/services/flock.service';
+import { ActivatedRoute } from '@angular/router';
 am4core.useTheme(am4themes_animated);
 Drilldown(Highcharts);
 
@@ -55,7 +56,9 @@ export class MortalityComponent implements OnInit {
     private farmService:FarmService,
     private houseService:HouseService,
     private flockService:FlockService,
-    public datepipe: DatePipe) { }
+    public datepipe: DatePipe,
+    private route: ActivatedRoute,
+    ) { }
   
   farms:any[]=[]  
   farmId:string
@@ -105,6 +108,7 @@ export class MortalityComponent implements OnInit {
 
   ngOnInit(): void {
 
+    
     this.companyId = sessionStorage.getItem('companyID')
     console.log(this.companyId)
     this.getDetailsAlertsByHouse()
@@ -118,8 +122,10 @@ export class MortalityComponent implements OnInit {
     this.farmService.getConsultingFarm(this.companyId).subscribe(data=>{
       console.log(data)
       this.farms=data
+      this.farmId=this.route.snapshot.paramMap.get('farmID')
+      if(this.farmId==null){
       this.farmId=this.farms[0].farmId
-      this.farmName=this.farms[0].farmName
+      this.farmName=this.farms[0].farmName}
       this.getAllCentersByFarm(this.farmId)
       this.getweeklyWeightMesurementbyFarm(this.farmId)
       this.getAlertByFarm(this.date,this.farmId)

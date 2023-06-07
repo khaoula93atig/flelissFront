@@ -85,9 +85,9 @@ to {
   display: flex;
 }
 
-.modal-footer{
+/*.modal-footer{
   padding: 0.5rem 0px 0px 0px;
-}
+}*/
 
 
 .normal {color:green}
@@ -126,9 +126,6 @@ to {
 
 }
 @media screen and (max-width: 576px){
-  .modal-body {
-    overflow-x: scroll;
-}
   .modal-footer {
       padding: 0.6rem 1.2rem 0 0;
       display: inherit;

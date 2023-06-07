@@ -129,7 +129,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-outline" (click)="show = false;clearForm()">Cancel</button>
-            <button type="button" class="btn btn-primary " (click)="save()">save</button>
+            <button *ngIf="!exist" type="button" class="btn btn-primary " (click)="save()">save</button>
         </div>
 
 

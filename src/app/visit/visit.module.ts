@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { SharedModule } from '../shared/shared.module'
-import { ClarityModule, ClrIconModule, ClrWizard } from '@clr/angular'
+import { ClarityModule, ClrIconModule, ClrSelectModule, ClrWizard } from '@clr/angular'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { Routes, RouterModule } from '@angular/router'
 import { FormsModule } from '@angular/forms'
@@ -55,7 +55,8 @@ const routes: Routes = [
     ToastrModule.forRoot(),
     NgxEchartsModule,
     ClrIconModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ClrSelectModule
     
   ],
 })

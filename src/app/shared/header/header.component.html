@@ -13,16 +13,16 @@
         <a routerLink="/Center/List-center" routerLinkActive="active" class="nav-link nav-text">Center</a>
         <a routerLink="/Houses/list" routerLinkActive="active" class="nav-link nav-text">Houses</a>
         <clr-dropdown routerLinkActive="active">
-            <button clrDropdownTrigger aria-label="open user profile">
+            <button style="font-weight: 500;" clrDropdownTrigger aria-label="open user profile">
                 Visits
                 <clr-icon  shape="caret down"></clr-icon>
             </button>
             <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-                <a routerLink="/Visits/list" routerLinkActive="active" style="color:#666; padding:0;" class="nav-link nav-text" clrDropdownItem>Visits</a>
+                <a routerLink="/Visits/list" routerLinkActive="active" style="color:#666; padding:0px 0px 10px 0px;" class="nav-link nav-text" clrDropdownItem>Visits</a>
                 <a routerLink="/veterinarianVisit/list" routerLinkActive="active"
                 *ngIf="role=='secondary manager' || role=='Veterinary'  || role=='Farm Manager'  "
-                 style="color:#666; padding:0;" class="nav-link nav-text" clrDropdownItem>Veterinarian Visits</a>
-                <a routerLink="/Visits-audits/chick_reception" routerLinkActive="active" style="color:#666; padding:0;" class="nav-link nav-text" clrDropdownItem>Audits Visit</a>
+                 style="color:#666; padding:0px 0px 10px 0px;" class="nav-link nav-text" clrDropdownItem>Veterinarian Visits</a>
+                <a routerLink="/Visits-audits/chick_reception" routerLinkActive="active" style="color:#666; padding:0px 0px 10px 0px;" class="nav-link nav-text" clrDropdownItem>Audits Visit</a>
             </clr-dropdown-menu>
         </clr-dropdown>
       </div>
@@ -30,6 +30,9 @@
         <!--<a href="javascript://" class="nav-link">
             <clr-icon shape="cog"></clr-icon>
         </a>-->
+        <a><img style="height: 3.8rem;
+            width: 5rem;
+            margin-top: -9px;" src={{image}}></a>
         <clr-dropdown>
             <button class="nav-icon" clrDropdownTrigger aria-label="toggle settings menu">
                 <clr-icon shape="cog"></clr-icon>

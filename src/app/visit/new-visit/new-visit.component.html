@@ -25,7 +25,8 @@
                         <clr-select-container class="clr-col-md-6 clr-col-sm-12" style="display: -webkit-inline-box;">
                             <label for="farm" class="clr-control-label clr-col-4 ">Center *</label>
                             <select clrSelect class="clr-col-sm-12" name="farm" [(ngModel)]="centerId" name="farmID"
-                                (change)="getCenterId($event.target.value)" style="width: 105px;">
+                                (change)="getCenterId($event.target.value)" style="width: 105px;" clrPlaceholder="Select an option" >
+                                <option value="" disabled selected>Select center</option>
                                 <option *ngFor="let center of centers " [value]='center.centerId'>
                                     {{center.centerName}}
                                 </option>
@@ -35,6 +36,7 @@
                             <label for="house" class="clr-control-label clr-col-4">House *</label>
                             <select clrSelect class="clr-col-sm-12" name="houseId" [(ngModel)]="houseId" style="width: 105px;"
                                 (change)="getHouseId($event.target.value)">
+                                <option value="" disabled selected>Select house</option>
                                 <option *ngFor="let house of houses" [value]='house.houseId'>
                                     {{house.houseName}}
                                 </option>
@@ -390,11 +392,12 @@
         </div>
         <div class="modal-footer">
             <div class="clr-row">
-                <span class="alertspan"><clr-icon class="alert-icon" shape="exclamation-circle" style="color:red"></clr-icon>The minimum number of birds measured must be <span style="font-weight:bold ; color:red">50</span> .</span>
+                <span class="alertspan" style="margin-left: 0px;
+                margin-right: 170px;"><clr-icon class="alert-icon" shape="exclamation-circle" style="color:red"></clr-icon>Preferably weighs <span style="font-weight:bold ; color:red">50</span> birds or more. </span>
         </div>
         <div class="clr-row clr-col-xs-12-sm-12 buttonfooter">
             <button type="button" class="btn btn-outline" (click)="WeightOpened = false">Cancel</button>
-            <button type="button" class="btn btn-primary" [disabled]="dynamicArray.length<3" (click)='submitWeight();'>save</button>
+            <button type="button" class="btn btn-primary" (click)='submitWeight();'>save</button>
         </div>
         </div>
 

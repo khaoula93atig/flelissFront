@@ -3,8 +3,11 @@ import { DashboardService } from 'src/app/services/dashboard.service';
 import { FarmService } from 'src/app/services/farm.service';
 import { UserService } from '../../services/user.service';
 import * as Highcharts from 'highcharts';
-import { DatePipe } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import * as am4core from "@amcharts/amcharts4/core";
+import * as am4charts from "@amcharts/amcharts4/charts";
+import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+
 
 declare var require: any;
 const More = require('highcharts/highcharts-more');
@@ -32,6 +35,7 @@ export class GeneralComponent implements OnInit {
   public optionsChart3: any;
   public optionsChart4: any;
   public optionsChart5: any;
+  private chart: am4charts.XYChart;
 
   date= new Date();
   companyId:string
@@ -42,31 +46,25 @@ export class GeneralComponent implements OnInit {
   weeklyWeightFarm:any[]=[]
   moratlityCompany:number=0
   survivalCompany:number=0
-
-
-  
+  self = this;
 
   constructor(private UserService: UserService,
     private dashboardService: DashboardService,
     private farmService: FarmService,
-    private http: HttpClient) { }
+    private router: Router) { }
 
   ngOnInit(): void {
-    this.getData()
+    am4core.useTheme(am4themes_animated);
     this.companyId = sessionStorage.getItem('companyID')
     this.getMortalityByCompany()
     this.getSurvivalByCompany()
     this.getFarms()
-    this.dailyMortalityByFarm()
     this.mortalityByFarm()
     this.mortalityBreed()
-    this.getweeklyWeightMesurementbyCompany()
     this.getFeedConsumTotalBycompany()
+    this.getBodyWeightbyfarm35jours()
   }
-  getData() {
-    return this.http.get('https://www.biat.tn/biat/Fr/cours-de-change_66_127').subscribe(data=>console.log('donees site',data));
-  }
-
+  
   getFarms(){
     this.farmService.getConsultingFarm(this.companyId).subscribe(data=>{this.farms=data})
   }
@@ -77,88 +75,6 @@ export class GeneralComponent implements OnInit {
     this.dashboardService.getSurvivalByCompany(this.companyId).subscribe(res=>this.survivalCompany=res)
   }
 
-  dailyMortalityByFarm() {
-    const datepipe: DatePipe = new DatePipe('en-US')
-    let formattedDate = datepipe.transform(this.date, 'yyyy-MM-dd')
-      this.dashboardService.getMortalityByFarm(8,'2023-01-13' ,this.companyId).subscribe(data1=>{
-        for(let farm of this.farms){
-          this.donnes.push({
-            "y": 0,
-            "name": farm.farmName
-        })}
-        for(let farm of this.farms){
-          if(data1.length>0){
-            console.log('test2')
-            for(let res of data1){
-              if(farm.farmId==res.farmId){
-                for(let d of this.donnes){
-                  if(d.name==farm.farmName){
-                    d.y=res.percentage
-                  }
-                }
-              }
-            }
-          }
-        }
-        this.donnes=this.donnes.sort(((a,b) => a.y - b.y) )
-        this.optionsChart1 = {
-          chart: {
-            type: "bar",
-            zoomType: "y",
-            height: 250,
-          },
-          title: {
-            text: "Daily mortality by farm"
-          },
-    
-          xAxis: {
-            //categories: category,
-            type: "category",
-          },
-          yAxis: {
-            labels: {
-              overflow: "justify",
-              format: "{value}%"
-            },
-            title: {
-              text: null
-            },
-          },
-          plotOptions: {
-            bar: {
-              dataLabels: {
-                enabled: true,
-                format: "{y}%"
-              }
-            }
-          },
-          tooltip: {
-            valueSuffix: "%"
-          },
-          legend: {
-            enabled: false
-          },
-          series: [
-            {
-              name: "Mortality",
-              color: {
-                linearGradient: { x1: 0, x2: 1, y1: 0, y2: 1 },
-                stops: [
-                    [0, '#02b5a2'],
-                    [1, '#02675c']
-                ]
-            },
-              data: this.donnes
-            }
-          ]
-        }
-        Highcharts.chart('chartDailyMortalityByFarm', this.optionsChart1);
-      })
-     
-    
-    
-   
-  }
 
   mortalityByFarm() {
       this.dashboardService.getGeneralMortalityByFarm(this.companyId).subscribe(data2=>{
@@ -195,7 +111,6 @@ export class GeneralComponent implements OnInit {
           },
     
           xAxis: {
-            //categories: category,
             type: "category"
           },
           yAxis: {
@@ -212,6 +127,21 @@ export class GeneralComponent implements OnInit {
               dataLabels: {
                 enabled: true,
                 format: "{y}%"
+              },
+            },
+            series: {
+              cursor: 'pointer',
+              point: {
+                events: {
+                  click:(event) => {
+                    const category = event.point.category;
+                    const value = event.point.y;
+                    console.log('Category: ' + category + ', Value: ' + value);
+                    let selectedFarm=this.farms.find(farm => farm.farmName == event.point.name)
+                    console.log(this.farms.find(farm => farm.farmName == event.point.name))
+                    this.router.navigate(['/Dashboard/mortality',{farmID:selectedFarm.farmId}]);
+                  }
+                }
               }
             }
           },
@@ -231,8 +161,6 @@ export class GeneralComponent implements OnInit {
                   [1, '#FFD849']
                 ]
             },
-              //color: "#ffd100",
-              //borderColor: '#60A465',
               data: this.donnes1
             }
           ]
@@ -363,82 +291,180 @@ export class GeneralComponent implements OnInit {
    })
    }
 
-   getweeklyWeightMesurementbyCompany(){
-
-    this.dashboardService.getweeklyweightbycompanyforfarms(this.companyId).subscribe(data=>{
-      for(let f of this.farms){
-        this.weeklyWeightFarm.push({'farm':f.farmId,'farmname':f.farmName,'excellent':0,'average':0 , 'poor':0})
+   getBodyWeightbyfarm35jours(){
+    this.chart = am4core.create('chartdiv', am4charts.XYChart);
+    this.chart.colors.list = [
+      am4core.color("#1F7D77"),
+      am4core.color("#64605C"),
+      am4core.color("#ECF8F6"),
+      am4core.color("#D6955B"),
+      am4core.color("#FEEAA1"),
+      am4core.color("#392E2C"),
+      am4core.color("#A0FBEC"),
+      am4core.color("#D07627"),
+      am4core.color("#FFD849"),
+    ];
+  
+    this.dashboardService.getResultOutFlocks(this.companyId).subscribe(res=>{console.log(res)
+      this.chart.data=res
+      console.log('data',this.chart.data)
+    let farms=[]
+    for(let r of res){
+      if(farms.includes(r.farm)==false){
+        farms.push(r.farm)
       }
-      for(let d of data){
-        for(let w of this.weeklyWeightFarm){
-          if(w.farm==d.farmId){
-            if(d.uniformity>=80){
-              w.excellent=w.excellent+1
-            }else if(d.uniformity<80 && d.uniformity>=68){
-              w.average=w.average+1
-            }else if(d.uniformity<68){
-              w.poor=w.poor+1
-            }
-            
+      
+    }
+    console.log("farm",farms)
+    
+
+    // Create axes
+    const yAxis = this.chart.yAxes.push(new am4charts.CategoryAxis());
+    yAxis.dataFields.category = 'house';
+    yAxis.renderer.grid.template.location = 0;
+    yAxis.renderer.labels.template.fontSize = 10;
+    yAxis.renderer.minGridDistance = 10;
+
+    const xAxis = this.chart.xAxes.push(new am4charts.ValueAxis());
+
+    // Create series
+    const series = this.chart.series.push(new am4charts.ColumnSeries());
+    series.dataFields.valueX = 'weight';
+    series.dataFields.categoryY = 'house';
+    series.columns.template.tooltipText = '{categoryY}: [bold]{valueX}[/]';
+    series.columns.template.strokeWidth = 0;
+    series.columns.template.adapter.add('fill', (fill, target) => {
+      if (target.dataItem) {
+        const farm = target.dataItem['dataContext']['farm'];
+        if (farm) {
+          const index = farms.indexOf(farm);
+          if (index !== -1) {
+            return this.chart.colors.getIndex(index);;
           }
         }
-    }
-    this.optionsChart4 = {
-      chart: {
-        type: "bar",
-        height:250
-      },
-      title: {
-        text: 'Weekly weight by farm'
-      },
-      subtitle: {
-        text: 'cv'
-      },
-      tooltip: {
-        outside: true
-      },
-      xAxis: {
-        categories:[]
-      },
-      yAxis: {
-        title: {
-          text: 'CV'
-        }
-      },
-      /*legend: {
-        reversed: true
-      },*/  legend: {
-    layout: 'vertical',
-    align: 'right',
-    verticalAlign: 'top',
-    x: -40,
-    y: 20,
-    floating: true,
-    borderWidth: 1,
-    backgroundColor:
-      Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
-    shadow: true
-  },
-      plotOptions: {
-        series: {
-          stacking: 'normal'
-        }
-      },
-      series: [{name:'Excellent', color:'#02675c', data:[]},
-      {name:'Average',color:'#ffd100',data:[]},
-      {name:'Poor',color:'#D07627',data:[]}
-    ]
-    }
-    for(let wei of this.weeklyWeightFarm){
-      this.optionsChart4.xAxis.categories.push(wei.farmname)
-      this.optionsChart4.series[0].data.push(wei.excellent)
-      this.optionsChart4.series[1].data.push(wei.average)
-      this.optionsChart4.series[2].data.push(wei.poor)
-    }
-  Highcharts.chart('chartweeklyweightByFarmUniformity', this.optionsChart4);
-    })
+      }
+      return fill;
+    });
 
+    let axisBreaks = {};
+let legendData = [];
+
+//title
+const title = this.chart.titles.create();
+title.text ='Body weight of outgoing flocks'
+
+// Add ranges
+function addRange(label,start,end, color) {
+  let range = yAxis.axisRanges.create();
+  range.category = start;
+  range.endCategory = end;
+  range.label.text = label;
+  range.label.disabled = false;
+  range.label.fill = color;
+  range.label.location = 0;
+  range.label.dx = -130;
+  range.label.dy = 12;
+  range.label.fontWeight = "bold";
+  range.label.fontSize = 12;
+  range.label.horizontalCenter = "left"
+  range.label.inside = true;
+  
+  range.grid.stroke = am4core.color("#396478");
+  range.grid.strokeOpacity = 1;
+  range.tick.length = 200;
+  range.tick.disabled = false;
+  range.tick.strokeOpacity = 0.6;
+  range.tick.stroke = am4core.color("#396478");
+  range.tick.location = 0;
+  
+  range.locations.category = 1;
+  let axisBreak = yAxis.axisBreaks.create();
+  axisBreak.startCategory = start;
+  axisBreak.endCategory = end;
+  axisBreak.breakSize = 1;
+  axisBreak.fillShape.disabled = true;
+  axisBreak.startLine.disabled = true;
+  axisBreak.endLine.disabled = true;
+  axisBreaks[label] = axisBreak;  
+
+  legendData.push({name:label, fill:color});
+}
+farms.forEach((data1, index)=>{
+  let max =0
+  let min =0
+  let maxHouse=''
+  let minHouse=''
+  for (let r of res){
+    if(r.farm==data1){
+      if(max<r.weight){
+        maxHouse=r.house
+      }
+      if(min>r.weight){
+        minHouse=r.house
+      }
+    }
+  }
+  addRange(data1, maxHouse, minHouse, this.chart.colors.getIndex(index));
+
+});
+/*addRange("Central", "Texas", "North Dakota", this.chart.colors.getIndex(0));
+addRange("East", "New York", "West Virginia", this.chart.colors.getIndex(1));
+addRange("South", "Florida", "South Carolina", this.chart.colors.getIndex(2));
+addRange("West", "California", "Wyoming", this.chart.colors.getIndex(3));*/
+
+this.chart.cursor = new am4charts.XYCursor();
+
+
+let legend = new am4charts.Legend();
+legend.position = "right";
+legend.scrollable = true;
+legend.valign = "top";
+legend.reverseOrder = true;
+
+this.chart.legend = legend;
+legend.data = legendData;
+
+legend.itemContainers.template.events.on("toggled", (event) =>{
+  const region = event.target.dataItem['dataContext']['farm'];
+  let name = event.target.dataItem['dataContext']['name'];
+  let axisBreak = axisBreaks[name];
+  if(event.target.isActive){
+    axisBreak.animate({property:"breakSize", to:0}, 1000, am4core.ease.cubicOut);
+    yAxis.dataItems.each(function(dataItem){
+      if(region == name){
+        dataItem.hide(1000, 500);
+      }
+    })
+    series.dataItems.each(function(dataItem){
+      if(region == name){
+        dataItem.hide(1000, 0, 0, ["valueX"]);
+      }
+    })    
+  }
+  else{
+    axisBreak.animate({property:"breakSize", to:1}, 1000, am4core.ease.cubicOut);
+    yAxis.dataItems.each(function(dataItem){
+      if(region == name ){
+        dataItem.show(1000);
+      }
+    })  
+
+    series.dataItems.each(function(dataItem){
+      if(region == name){
+        dataItem.show(1000, 0, ["valueX"]);
+      }
+    })        
+  }
+  })
+})
    }
+  private destroyChart(): void {
+    if (this.chart) {
+      this.chart.dispose();
+    }
+  }
+
+   
 
    getFeedConsumTotalBycompany(){
     this.dashboardService.getfeedConsumTotalByCompany(this.companyId).subscribe(data=>{console.log(data)
@@ -492,7 +518,20 @@ export class GeneralComponent implements OnInit {
            dataLabels: {
              enabled: true,
              format: '{point.y:.1f}g'
-           }
+           },
+              cursor: 'pointer',
+              point: {
+                events: {
+                  click:(event) => {
+                    const category = event.point.category;
+                    const value = event.point.y;
+                    console.log('Category: ' + category + ', Value: ' + value);
+                    let selectedFarm=this.farms.find(farm => farm.farmName == event.point.name)
+                    console.log(this.farms.find(farm => farm.farmName == event.point.name))
+                    this.router.navigate(['/Dashboard/mortality',{farmID:selectedFarm.farmId}]);
+                  }
+                }
+              }
          }
        },
         tooltip: {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '../../../../node_modules/@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -10,6 +11,8 @@ export class HeaderComponent implements OnInit {
 
   role: string;
   login=false;
+  company:string
+  image:any
 
   constructor(private router: Router) { }
 
@@ -18,6 +21,9 @@ export class HeaderComponent implements OnInit {
       this.login=true
     }
     this.role = sessionStorage.getItem('role');
+    this.company= sessionStorage.getItem('companyID')
+    console.log(this.company)
+    this.image=environment.url_company+"/image/"+this.company
     console.log(this.router.routerState)
     
   }

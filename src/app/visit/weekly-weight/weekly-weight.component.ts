@@ -296,8 +296,7 @@ export class WeeklyWeightComponent implements OnInit {
       this.centerId &&
       this.houseId &&
       this.flockID &&
-      this.week != null &&
-      this.dynamicArray.length >= 3
+      this.week != null
     ){
       this.disabledSave = false
      this.getweeklyweightbyBreed()
