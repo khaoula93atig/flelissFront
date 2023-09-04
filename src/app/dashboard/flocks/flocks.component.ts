@@ -74,7 +74,7 @@ export class FlocksComponent implements OnInit {
     public datepipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.companyId = sessionStorage.getItem('companyID')
+    this.companyId = localStorage.getItem('companyID')
     this.getAllFarms()
   }
   getFlocksByHouseAndYear(event){

@@ -186,14 +186,14 @@ export class ListVisitComponent implements OnInit {
 
   ngOnInit(): void {
     this.refresh()
-    this.role = sessionStorage.getItem('role')
+    this.role = localStorage.getItem('role')
   }
   //refresh list-visit
   refresh(): void {
     //get house by farm id
-    var userName = sessionStorage.getItem('user')
-    var role = sessionStorage.getItem('role')
-    var farmId = sessionStorage.getItem('farmID')
+    var userName = localStorage.getItem('user')
+    var role = localStorage.getItem('role')
+    var farmId = localStorage.getItem('farmID')
     if (role == 'Farm Manager') {
       var roleId = 'Farm_Manager'
     }

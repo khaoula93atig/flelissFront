@@ -51,8 +51,8 @@ export class WeeklyFeedComponent implements OnInit {
 
     localStorage.setItem('getId', '') //store id
     //get all farm by company
-    var companyID = sessionStorage.getItem('companyID')
-    this.farmID = sessionStorage.getItem('farmID')
+    var companyID = localStorage.getItem('companyID')
+    this.farmID = localStorage.getItem('farmID')
     this.weeklyFeed.farmId = this.farmID
     this.subs.add(
       this.HouseService.getConsultingCenterbyFarm(this.farmID).subscribe(

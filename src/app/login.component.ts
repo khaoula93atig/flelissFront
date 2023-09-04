@@ -6,6 +6,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './shared/header/header.component';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from './services/auth.service';
+import { TokenStorgeService } from './services/token-storge.service';
+import {map} from 'rxjs/operators';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +24,9 @@ export class LoginComponent implements OnInit {
   id: string = '';
   company_id: string = '';
   alldata: any[] = [];
+
+  isLoggedIn = false;
+  isLoginFailed = false;
 
 
   public captchaIsLoaded = false;
@@ -44,7 +51,10 @@ export class LoginComponent implements OnInit {
      private router: Router,
       private http: HttpClient,
     private headerComponent:HeaderComponent,
-    private toaster : ToastrService) { }
+    private toaster : ToastrService,
+    private authService:AuthService, 
+    private tokenStorage : TokenStorgeService,
+    private userService : UserService) { }
 
 
   code: any;
@@ -68,7 +78,29 @@ export class LoginComponent implements OnInit {
 
 
   authenticate() {
-    this.http.post<any>("/farmApi/user/authenticate",
+    this.authService.login({ 'username': this.login, 'password': this.password }).subscribe((data:any)=>{
+      console.log(data)
+      if (data == null) {
+
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        localStorage.setItem('farmID', this.authService.currentUserValue.user.farmID);
+        localStorage.setItem('user', this.login);
+        localStorage.setItem('companyID', this.authService.currentUserValue.user.companyID);
+        localStorage.setItem('role', this.authService.currentUserValue.user.role);
+        this.userService.getConsultingRole().subscribe(res=>{console.log(res)
+          let roles = res.find(({ description }) => description === this.authService.currentUserValue.user.role)
+          localStorage.setItem('roleID', roles.roleID)
+        })
+        //localStorage.setItem('roleID', this.authService.currentUserValue.user.roleObject.roleID)
+            this.headerComponent.login=true
+            this.headerComponent.role=localStorage.getItem("role")
+            this.router.navigateByUrl('/Dashboard/general');
+            this.toaster.success("","Welcome")
+
+    }},(error)=>{this.toaster.error("wrong password or login","Error")})
+  
+    /*this.http.post<any>("/farmApi/user/authenticate",
       { 'username': this.login, 'password': this.password }, this.httpOptions).subscribe(
         data => {
           console.log(data)
@@ -109,7 +141,7 @@ export class LoginComponent implements OnInit {
         }
       );
     //}
-
+*/
 
   }
 

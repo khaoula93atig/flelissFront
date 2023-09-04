@@ -45,10 +45,10 @@ export class ListCenterComponent implements OnInit {
      private toaster: ToastrService) {}
 
   ngOnInit(): void {
-    this.role = sessionStorage.getItem('role')
-    this.roleID = sessionStorage.getItem('roleID')
-    this.companyIdUser = sessionStorage.getItem('companyID')
-    this.farmIdUser = sessionStorage.getItem('farmID')
+    this.role = localStorage.getItem('role')
+    this.roleID = localStorage.getItem('roleID')
+    this.companyIdUser = localStorage.getItem('companyID')
+    this.farmIdUser = localStorage.getItem('farmID')
 
     this.subs.add(
       this.FarmService.getConsultingALLCentersByRoleUser(

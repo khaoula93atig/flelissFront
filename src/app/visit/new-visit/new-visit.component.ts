@@ -331,8 +331,8 @@ export class NewVisitComponent implements OnInit {
     this.visitDate = this.reverseDate('yyyy-MM-DD', new Date())
     localStorage.setItem('getId', '') //store id
     //get all farm by company
-    var companyID = sessionStorage.getItem('companyID')
-    this.farmID = sessionStorage.getItem('farmID')
+    var companyID = localStorage.getItem('companyID')
+    this.farmID = localStorage.getItem('farmID')
     this.subs.add(
       this.HouseService.getConsultingCenterbyFarm(this.farmID).subscribe(
         (data) => {
@@ -607,12 +607,12 @@ export class NewVisitComponent implements OnInit {
       this.visitDate.substring(0, 4)
 
     registrationVisit.visitdateString = date
-    this.farmID = sessionStorage.getItem('farmID')
+    this.farmID = localStorage.getItem('farmID')
 
     registrationVisit.frequency = 'Daily'
     registrationVisit.flockID = this.flockID
     registrationVisit.houseID = this.houseId
-    registrationVisit.username = sessionStorage.getItem('user')
+    registrationVisit.username = localStorage.getItem('user')
     registrationVisit.ageFlock = this.ageOfTheFlock
     registrationVisit.typeVisit = 'daily_visit'
     registrationVisit.centerID = this.centerId
@@ -624,7 +624,7 @@ export class NewVisitComponent implements OnInit {
       (data) => {
         console.log("visit",data)
         var alldata = data
-        sessionStorage.setItem('visitId', JSON.stringify(data))
+        localStorage.setItem('visitId', JSON.stringify(data))
         this.visitIDnew = alldata.visitId
         // Store the login in the storage
 
@@ -682,7 +682,7 @@ export class NewVisitComponent implements OnInit {
           this.VisitService.createRegistrationVisitTasks(
             registrationVisitTasksAmoniacTask,
           ).subscribe((data) => {
-            var x = sessionStorage.setItem(
+            var x = localStorage.setItem(
               'visitId',
               registrationVisitTasksAmoniacTask.visitId,
             )

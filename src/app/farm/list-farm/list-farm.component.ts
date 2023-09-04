@@ -53,7 +53,7 @@ export class ListFarmComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.companyId=sessionStorage.getItem("companyID")
+    this.companyId=localStorage.getItem("companyID")
     this.refresh()
     this.subs.add(
       this.FarmService.getConsultingFarm(this.companyId).subscribe((data) => {

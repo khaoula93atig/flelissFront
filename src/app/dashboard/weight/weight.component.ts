@@ -36,7 +36,7 @@ export class WeightComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.farmId = sessionStorage.getItem('farmID')
+    this.farmId = localStorage.getItem('farmID')
     this.getflockbyfarmid()
     
     

@@ -109,7 +109,7 @@ export class MortalityComponent implements OnInit {
   ngOnInit(): void {
 
     
-    this.companyId = sessionStorage.getItem('companyID')
+    this.companyId = localStorage.getItem('companyID')
     console.log(this.companyId)
     this.getDetailsAlertsByHouse()
     this.getAllFarms()

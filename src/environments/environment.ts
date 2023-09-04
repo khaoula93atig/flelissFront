@@ -42,7 +42,8 @@ export const environment = {
   test2: '/api/medecins',
   url_breedingManagement: '/farmApi/breedingManagement/',
   url_mortaliteDash: '/farmApi/mortalitedashboard',
-  url_dashboard: '/farmApi/dashboard'
+  url_dashboard: '/farmApi/dashboard',
+  url_auth:'/farmApi/api/auth/'
 }
 
 /*

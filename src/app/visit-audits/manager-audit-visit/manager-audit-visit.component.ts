@@ -35,8 +35,8 @@ export class ManagerAuditVisitComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.farmId = sessionStorage.getItem('farmID')
-    this.username = sessionStorage.getItem('user')
+    this.farmId = localStorage.getItem('farmID')
+    this.username = localStorage.getItem('user')
     console.log('username ' + this.username)
     console.log('farmId ' + this.farmId)
     this.subs.add(

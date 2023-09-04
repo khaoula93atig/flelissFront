@@ -36,7 +36,7 @@ export class NewUserComponent implements OnInit {
 
 
   ngOnInit() {
-    var companyID = sessionStorage.getItem("companyID");
+    var companyID = localStorage.getItem("companyID");
     this.subs.add(this.FarmService.getConsultingFarm(companyID).subscribe(data => {
       this.farms = data;
       console.log("data listof farm" + this.farms);
@@ -61,7 +61,7 @@ export class NewUserComponent implements OnInit {
         this.autofocus.setFocus();
       }
     }, 0.1);
-    var companyID = sessionStorage.getItem("companyID");
+    var companyID = localStorage.getItem("companyID");
     console.log("company id " + companyID);
   }
 
@@ -106,7 +106,7 @@ export class NewUserComponent implements OnInit {
 
     // Show the spinner for loading process ....
     setTimeout(_ => this.loading = true);
-    var newCompanyId = sessionStorage.getItem("companyID");
+    var newCompanyId = localStorage.getItem("companyID");
     let registrationUser: IRegistrationUsers = new Object() as IRegistrationUsers;
     registrationUser.username = this.username;
     registrationUser.password = this.password;

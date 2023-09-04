@@ -66,11 +66,11 @@ export class ListVetVisitComponent implements OnInit {
   }
   refresh() {
     //get house by farm id
-    var userName = sessionStorage.getItem('user')
+    var userName = localStorage.getItem('user')
 
-    var userName = sessionStorage.getItem('user')
-    var role = sessionStorage.getItem('role')
-    var farmId = sessionStorage.getItem('farmID')
+    var userName = localStorage.getItem('user')
+    var role = localStorage.getItem('role')
+    var farmId = localStorage.getItem('farmID')
 
     if (role == 'Farm Manager') {
       var roleId = 'Farm_Manager'

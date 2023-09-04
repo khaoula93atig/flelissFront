@@ -97,7 +97,7 @@ export class ListHouseComponent implements OnInit {
   }
   refresh() {
     //get house by farm id
-    var farmID = sessionStorage.getItem('farmID')
+    var farmID = localStorage.getItem('farmID')
     this.subs.add(
       this.HouseService.getConsultingHouse(farmID).subscribe((data) => {
         this.houses = data
@@ -215,7 +215,7 @@ export class ListHouseComponent implements OnInit {
   submit(): void {
     // Show the spinner for loading process ....
     setTimeout((_) => (this.loading = true))
-    var x = sessionStorage.getItem('farmID')
+    var x = localStorage.getItem('farmID')
     let registrationHouse: IRegistrationHouses = new Object() as IRegistrationHouses
     registrationHouse.birdsNumber = this.birdsNumber
     registrationHouse.address = this.address
@@ -304,7 +304,7 @@ export class ListHouseComponent implements OnInit {
     registrationFlock.flockNumber = this.flockNumber
     registrationFlock.checkEndOfCycle = false
     registrationFlock.flockName = this.flockName
-    registrationFlock.farmId = sessionStorage.getItem('farmID')
+    registrationFlock.farmId = localStorage.getItem('farmID')
     // Invoking service
 console.log(registrationFlock)
     this.FlockService.createRegistrationFlocks(registrationFlock).subscribe(

@@ -69,7 +69,7 @@ export class NewCenterComponent implements OnInit {
   message: string = null
   dangerMsg: string = null
   ngOnInit() {
-    this.companyId=sessionStorage.getItem("companyID")
+    this.companyId=localStorage.getItem("companyID")
     this.subs.add(
       this.FarmService. getConsultingFarm(this.companyId).subscribe((data) => {
         this.farms = data

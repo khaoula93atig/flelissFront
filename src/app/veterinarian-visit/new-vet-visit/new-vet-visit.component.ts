@@ -507,9 +507,9 @@ export class NewVetVisitComponent implements OnInit {
     this.loading = true
     localStorage.setItem('getId', '') //store id
     //get all farm by company
-    var companyID = sessionStorage.getItem('companyID')
+    var companyID = localStorage.getItem('companyID')
     console.log('companyID' + companyID)
-    this.farmID = sessionStorage.getItem('farmID')
+    this.farmID = localStorage.getItem('farmID')
     console.log('his.farmID', this.farmID)
     this.subs.add(
       this.HouseService.getConsultingCenterbyFarm(this.farmID).subscribe(
@@ -614,7 +614,7 @@ export class NewVetVisitComponent implements OnInit {
     registrationVisitvet.frequency = 'Weekly'
     registrationVisitvet.flockID = this.flockID
     registrationVisitvet.houseID = this.houseId
-    registrationVisitvet.username = sessionStorage.getItem('user')
+    registrationVisitvet.username = localStorage.getItem('user')
     registrationVisitvet.ageFlock = this.ageOfTheFlock
     registrationVisitvet.morbidity = this.MorbidityPercentage
     registrationVisitvet.mortality = this.MortalityPercentage
@@ -635,7 +635,7 @@ export class NewVetVisitComponent implements OnInit {
       if (this.visitIDnew != null && this.visitIDnew != undefined) {
         console.log('data visit ' + alldata.visitId)
         // Store the login in the storage
-        sessionStorage.setItem('visitId', this.visitIDnew)
+        localStorage.setItem('visitId', this.visitIDnew)
         let visitHealthStatus: VisitHealthStatus = new Object() as VisitHealthStatus
         visitHealthStatus.visitId = this.visitIDnew
         visitHealthStatus.anorexia = this.AnorexiaMeasure

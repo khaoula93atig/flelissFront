@@ -149,7 +149,7 @@ export class FlockReportComponent implements OnInit {
       }
       
       
-      this.dashboardService.getweeklyweightByBreed(this.breed,flockId,sessionStorage.getItem("farmID")).subscribe(data1=>{
+      this.dashboardService.getweeklyweightByBreed(this.breed,flockId,localStorage.getItem("farmID")).subscribe(data1=>{
         this.fcrweekly=[]
         for(let d1 of data1){
           for(let s of this.Weight){

@@ -543,7 +543,7 @@ export class NewVisitAuditsComponent implements OnInit {
   ngOnInit(): void {
     localStorage.setItem('getId', '') //store id
     //get all farm by company
-    var companyID = sessionStorage.getItem('companyID')
+    var companyID = localStorage.getItem('companyID')
     this.subs.add(
       this.FarmService.getConsultingFarm(companyID).subscribe((data) => {
         this.farms = data
@@ -556,7 +556,7 @@ export class NewVisitAuditsComponent implements OnInit {
     registrationVisitAudit.frequency = 'Weekly'
     registrationVisitAudit.flockID = this.flockID
     registrationVisitAudit.houseID = this.houseId
-    registrationVisitAudit.username = sessionStorage.getItem('user')
+    registrationVisitAudit.username = localStorage.getItem('user')
     registrationVisitAudit.ageFlock = this.ageOfTheFlock
 
     //Invoking service
@@ -566,7 +566,7 @@ export class NewVisitAuditsComponent implements OnInit {
       var alldata = data
       this.visitIDnew = alldata.visitId
       // Store the login in the storage
-      sessionStorage.setItem('visitId', this.visitIDnew)
+      localStorage.setItem('visitId', this.visitIDnew)
 
       //Audit1
 

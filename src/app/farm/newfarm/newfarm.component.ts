@@ -119,7 +119,7 @@ export class NewfarmComponent implements OnInit {
     registrationFarm.farmManageName = this.farmManageName
     registrationFarm.farmManageEmail = this.farmManageEmail
     registrationFarm.farmManageTel = this.farmManageTel
-    registrationFarm.companyID = sessionStorage.getItem("companyID")
+    registrationFarm.companyID = localStorage.getItem("companyID")
     registrationFarm.bridsNumberPerCenter = this.bridsNumberPerCenter
     registrationFarm.numberCenter = this.numberCenter
     /*registrationFarm.result = this.result

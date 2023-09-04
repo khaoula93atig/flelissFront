@@ -59,7 +59,7 @@ export class NewHouseComponent implements OnInit {
       (data) => (this.Farms = data as IRegistrationFarms[]),
     )
 
-    this.farmId = sessionStorage.getItem('farmID')
+    this.farmId = localStorage.getItem('farmID')
     console.log(this.farmId)
     this.subs.add(
       this.HouseService.getConsultingCenterbyFarm(this.farmId).subscribe(
@@ -111,7 +111,7 @@ export class NewHouseComponent implements OnInit {
   submit(): void {
     // Show the spinner for loading process ....
     setTimeout((_) => (this.loading = true))
-    var x = sessionStorage.getItem('farmID')
+    var x = localStorage.getItem('farmID')
 
     let registrationHouse: IRegistrationHouses = new Object() as IRegistrationHouses
     registrationHouse.birdsNumber = this.birdsNumber

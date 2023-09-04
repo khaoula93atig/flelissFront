@@ -81,8 +81,8 @@ export class WeeklyWeightComponent implements OnInit {
     this.dynamicArray.push(this.newDynamic)
     localStorage.setItem('getId', '') //store id
     //get all farm by company
-    var companyID = sessionStorage.getItem('companyID')
-    this.farmID = sessionStorage.getItem('farmID')
+    var companyID = localStorage.getItem('companyID')
+    this.farmID = localStorage.getItem('farmID')
     this.subs.add(
       this.HouseService.getConsultingCenterbyFarm(this.farmID).subscribe(
         (data) => {

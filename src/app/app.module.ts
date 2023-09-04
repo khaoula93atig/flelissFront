@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UserModule } from './user/user.module';
 import { HouseModule } from './house/house.module';
 import { DashboardModule } from './dashboard/dashboard.module';
@@ -19,7 +19,7 @@ import { VeterinarianVisitModule } from './veterinarian-visit/veterinarian-visit
 import { CaptchaModule } from 'ng-captcha';;
 import { VisitAuditsModule } from './visit-audits/visit-audits.module';
 import { FarmModule } from './farm/farm.module';
-
+import {JwtInterceptor} from './services/jwtInterceptor';
 import { CenterModule } from './center/center.module';
 
 @NgModule({
@@ -53,7 +53,8 @@ import { CenterModule } from './center/center.module';
 
 
   ],
-  providers: [DatePipe],
+  providers: [DatePipe ,
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

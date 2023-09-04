@@ -36,8 +36,8 @@ export class ListUserComponent implements OnInit {
 
   ngOnInit(): void {
     //get user by farm id
-    var farmID = sessionStorage.getItem("farmID");
-    var companyID = sessionStorage.getItem("companyID");
+    var farmID = localStorage.getItem("farmID");
+    var companyID = localStorage.getItem("companyID");
     this.subs.add(this.UserService.getConsultingUserBycompany(companyID).subscribe(data => {
       this.users = data;
       this.userName = this.userName;

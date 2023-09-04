@@ -55,7 +55,7 @@ export class GeneralComponent implements OnInit {
 
   ngOnInit(): void {
     am4core.useTheme(am4themes_animated);
-    this.companyId = sessionStorage.getItem('companyID')
+    this.companyId = localStorage.getItem('companyID')
     this.getMortalityByCompany()
     this.getSurvivalByCompany()
     this.getFarms()

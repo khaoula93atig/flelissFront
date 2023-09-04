@@ -57,7 +57,7 @@ export class ChickReceptionComponent implements OnInit {
   ngOnInit(): void {
     this.visitDate = new Date()
     //get all farm by company
-    this.farmId = sessionStorage.getItem('farmID')
+    this.farmId = localStorage.getItem('farmID')
 
     this.subs.add(
       this.HouseService.getConsultingCenterbyFarm(this.farmId).subscribe(

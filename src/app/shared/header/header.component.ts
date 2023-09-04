@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '../../../../node_modules/@angular/router';
 import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -14,14 +15,14 @@ export class HeaderComponent implements OnInit {
   company:string
   image:any
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
-    if(sessionStorage.getItem('user')!=null){
+    if(localStorage.getItem('currentUser')!=null){
       this.login=true
     }
-    this.role = sessionStorage.getItem('role');
-    this.company= sessionStorage.getItem('companyID')
+    this.role = localStorage.getItem('role');
+    this.company= localStorage.getItem('companyID')
     console.log(this.company)
     this.image=environment.url_company+"/image/"+this.company
     console.log(this.router.routerState)
@@ -29,8 +30,8 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    sessionStorage.clear();
+    
     this.login=false;
-    this.router.navigateByUrl('');
+    this.authService.logout()
   }
 }

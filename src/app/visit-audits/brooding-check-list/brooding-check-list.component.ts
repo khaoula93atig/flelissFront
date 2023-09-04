@@ -71,8 +71,8 @@ export class BroodingCheckListComponent implements OnInit {
     //get flock by house id
   }
   ngOnInit(): void {
-    this.farmId = sessionStorage.getItem('farmID')
-    this.username = sessionStorage.getItem('user')
+    this.farmId = localStorage.getItem('farmID')
+    this.username = localStorage.getItem('user')
 
     this.subs.add(
       this.HouseService.getConsultingCenterbyFarm(this.farmId).subscribe(
