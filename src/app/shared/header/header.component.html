@@ -1,5 +1,5 @@
-<clr-main-container>
-    <clr-header  *ngIf="login">
+<clr-main-container  class="bg">
+    <clr-header>
       <div class="branding">
         <a routerlink="/accueil" class="nav-link">
                 <img src="/assets/logo.png" alt="" style="height: 3.8rem;
@@ -46,7 +46,9 @@
         </clr-dropdown>
       </div>
     </clr-header>
+    <div>
     <router-outlet></router-outlet>
+    </div>
   </clr-main-container>
 <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <header class="header header-6">

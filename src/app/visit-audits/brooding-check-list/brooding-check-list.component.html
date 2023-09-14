@@ -1,4 +1,25 @@
-<div class="container-box-add">
+<div class="main-container" style="background:#fff;">
+<nav class="subnav" [clr-nav-level]="2" style="background-color: #f7f7f7;">
+    <ul class="nav">
+        <li class="nav-item">
+            <a routerLink="/Visits-audits/chick_reception" class="nav-link" routerLinkActive="active">
+                <img class="iconimage" src="../../assets/Icones/list.png" alt="">
+                Chick reception </a>
+        </li>
+        <li class="nav-item">
+            <a routerLink="/Visits-audits/brooding-check-list" class="nav-link" routerLinkActive="active">
+                <img class="iconimage" src="../../assets/Icones/AjoutPlus.png" alt="">
+                Brooding check list</a>
+        </li>
+        <li class="nav-item">
+            <a routerLink="/Visits-audits/manager-audit-visit" class="nav-link" routerLinkActive="active">
+                <img class="iconimage" src="../../assets/Icones/reports.png" alt="">
+                Manager audit visit </a>
+        </li>
+
+    </ul>
+</nav>
+<div class="container-box-add" style="margin-bottom: 100px;">
     <form novalidate name="myForm" #myForm='ngForm'>
         <h3 class="modal-title" style="padding: 15px 16px 8px; box-shadow: 1px 1px 8px #888888;  margin-bottom: 5px;">
             <img src="../../../assets/brood-check.png" width="40" style="margin-bottom: 8px; margin-right: 10px;">
@@ -1148,44 +1169,6 @@
 
                                             </tr>
 
-                                            <!-- Place chicks quickly , gently and evenly onto paper 
-                                            <tr>
-                                                <td><img src="../../../assets/chicks.png" class="imgIcon" width="22"
-                                                        height="20"></td>
-                                                <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                    Place chicks quickly , gently and evenly onto paper </td>
-                                                <td>
-                                                    <div class="radip-wrapper" style="display: flex">
-                                                        <clr-radio-wrapper style="margin-right: 20px;"
-                                                            (change)="getPlaceChicksQuickly($event.target.value)">
-
-                                                            <input type="radio" clrRadio name="options15" required
-                                                                value='Yes' />
-                                                        </clr-radio-wrapper>
-
-
-                                                    </div>
-
-                                                </td>
-                                                <td>
-                                                    <div class="radip-wrapper" style="display: flex">
-
-                                                        <clr-radio-wrapper
-                                                            (change)="getPlaceChicksQuickly($event.target.value)">
-                                                            <input type="radio" clrRadio name="options15" required
-                                                                value='false' />
-                                                        </clr-radio-wrapper>
-
-                                                    </div>
-
-                                                </td>
-
-
-                                            </tr>
-                                        -->
-
-                                            <!--Ensure feed and water is available 
                                             <tr>
                                                 <td><img src="../../../assets/icon-feedeWater.png" class="imgIcon"
                                                         width="22" height="20"></td>
@@ -1627,4 +1610,5 @@
 
 
     </form>
+</div>
 </div>

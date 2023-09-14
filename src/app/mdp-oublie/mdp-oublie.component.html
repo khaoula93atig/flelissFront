@@ -1,0 +1,36 @@
+<div class="login-wrapper">
+    <form class="login" [formGroup]="mdpForm">
+
+        <section class="title">
+
+            <img src="../assets/logo.png" alt="" width="200">
+
+            <!--<h6 class="hint">Developpé par Technology Trusted Advisors <a class="website"
+                    href='http://www.ttatunisia.com'><img src="../assets/urlweb.png" /></a></h6>-->
+        </section>
+        <div class="login-group">
+            <h5>
+                Set your password 
+            </h5>
+                <clr-password-container>
+                    <label class="clr-sr-only">Password</label>
+                    <input type="password" name="password" clrPassword placeholder="password" formControlName="password"  />
+    <clr-control-error *ngIf="mdpForm.get('password').getError('required')">is required</clr-control-error>
+    <clr-control-error *ngIf="mdpForm.get('password').getError('minlength')">password must be at least 8 characters long</clr-control-error>
+                </clr-password-container>
+                <clr-password-container>
+                    <label class="clr-sr-only">password confirmation </label>
+                    <input type="password" clrPassword placeholder="password confirmation" name="confirmPassword" formControlName="confirmPassword"/>
+                    <clr-control-error *ngIf="mdpForm.get('confirmPassword').getError('required')">is required</clr-control-error>
+                    <!--<clr-alert *ngIf="mdpForm.get('confirmPassword').getError('MustMatch')">password must much</clr-alert>-->
+                </clr-password-container>
+                <clr-alert *ngIf="mdpForm.errors?.passwordMissmatch && mdpForm.controls.confirmPassword.touched" clrAlertType="danger" [clrAlertClosable]="false">
+                    Passwords must match.
+                  </clr-alert>
+
+            <button type="submit" class="btn btn-primary" [disabled]="!mdpForm.valid" (click)="confirmer()">Submit</button>
+
+
+        </div>
+    </form>
+</div>

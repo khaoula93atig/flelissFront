@@ -117,12 +117,12 @@ header .header-actions .nav-link.active,
   border-bottom: 3px solid #f5d103;
 }
 
-body {
+/*body {
   background: url(../src/assets/bgbro.jpg) !important;
   background-size: cover !important;
-  /*background-repeat: no-repeat !important;*/
+  /*background-repeat: no-repeat !important;
 }
-body::-webkit-scrollbar { width: 0 !important }
+body::-webkit-scrollbar { width: 0 !important }*/
 
 .main-container {
   background: none !important;
@@ -347,3 +347,18 @@ h3 {
   overflow-x: scroll;
 }
 }
+.bg .main-container {
+  display: flex;
+  flex-direction: column;
+  height: 100% !important; 
+  background: url(../src/assets/bgbro.jpg) !important;
+  background-size: cover !important; 
+  /*background: #fafafa;
+  background: var(--clr-global-app-background, #fafafa);*/
+}
+clr-main-container{
+  background: url(../src/assets/bgbro.jpg) !important;
+  background-size: cover !important; 
+}
+
+clr-main-container:-webkit-scrollbar { width: 0 !important }

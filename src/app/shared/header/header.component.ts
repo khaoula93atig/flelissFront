@@ -18,9 +18,9 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
-    if(localStorage.getItem('currentUser')!=null){
+    /*if(localStorage.getItem('currentUser')!=null){
       this.login=true
-    }
+    }*/
     this.role = localStorage.getItem('role');
     this.company= localStorage.getItem('companyID')
     console.log(this.company)
@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     
-    this.login=false;
+    //this.login=false;
     this.authService.logout()
   }
 }

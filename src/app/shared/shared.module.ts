@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { ClarityModule } from '@clr/angular';
 import { AutofocusDirective } from './autofocus.directive';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { HttpClient } from '@angular/common/http';
 
 
 
@@ -15,7 +16,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   imports: [
     CommonModule,
     ClarityModule, 
-    RouterModule
+    RouterModule 
 
   ],
   exports: [ HeaderComponent,AutofocusDirective ]

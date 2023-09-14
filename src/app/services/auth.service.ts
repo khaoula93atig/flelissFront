@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import {map} from 'rxjs/operators';
+import { ResetPassword } from '../shared/ResetPassword';
 
 @Injectable({
   providedIn: 'root'
@@ -47,13 +48,13 @@ export class AuthService {
     localStorage.removeItem('currentUser');
     this.router.navigate(['']);
   }
-  /*resetpassword(email) {
-    let params = new HttpParams();
-    params = params.append('email', email);
+  resetpassword(email) {
 
-    return this.http.post(`${CONFIG.URL}utilisateur/mpoublier`,email,{params: params});
-  }*/
-
+    return this.http.post(environment.url_auth +`mpoublier`,email);
+  }
+  public resetPassword(resetPassword:ResetPassword): Observable<string>{
+    return this.http.post<string>(environment.url_auth+`resetPassword`,resetPassword) ;
+  }
 
 
 }

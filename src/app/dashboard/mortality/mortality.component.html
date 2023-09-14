@@ -1,4 +1,27 @@
-<div class="container " style="background:rgba(255, 255, 255); margin: 16px 20px; padding: 0px;">
+<div class="main-container" style="background:#fff;">
+
+    <nav class="subnav" style="background-color: #f7f7f7;">
+        <ul class="nav">
+            <li class="nav-item">
+                <a routerLink="/Dashboard/general" class="nav-link" routerLinkActive="active">
+                    <img class="iconimage" src="../../assets/Icones/list.png" alt="">
+                    General</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/Dashboard/mortality" class="nav-link" routerLinkActive="active" >
+                    <img class="iconimage" src="../../assets/Icones/list.png" alt="">
+                    Details  </a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/Dashboard/flock" class="nav-link" routerLinkActive="active" >
+                    <img class="iconimage" src="../../assets/Icones/list.png" alt="">
+                    Flocks  </a>
+            </li>
+
+
+        </ul>
+    </nav>
+    <div class="container " style="background:rgba(255, 255, 255); margin: 16px 20px; padding: 0px;">
     
 
     <!-- /Charts -->
@@ -237,9 +260,4 @@
 
 
 
-<div class="container">
-    <router-outlet></router-outlet>
 </div>
-
-
-<!-- Chart code -->

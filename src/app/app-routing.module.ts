@@ -6,19 +6,26 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuardGuard } from './services/auth-guard.guard';
 import { AfterGuardGuard } from './services/after-guard.guard';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
+import { MdpOublieComponent } from './mdp-oublie/mdp-oublie.component';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { HttpClientModule } from '@angular/common/http';
+import { HeaderComponent } from './shared/header/header.component';
 
 
 const routes: Routes = [
-  { path:'login', component: LoginComponent,canActivate: [AfterGuardGuard] },
+  { path:'', component: LoginComponent,canActivate: [AfterGuardGuard] },
+  { path:'forgetpassword', component: MdpOublieComponent,canActivate: [AfterGuardGuard] },
+  {path: 'forgetpassword/:token', component: MdpOublieComponent},
    // home route protected by auth guard
-   { path: '', component: AppComponent, canActivate: [AuthGuardGuard] },
+   //{ path: '', component: AppComponent, canActivate: [AuthGuardGuard] },
    { path: '**', pathMatch: 'full', 
-        component: PageNotFoundComponent }
+        component: PageNotFoundComponent },
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes),
+    HttpClientModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

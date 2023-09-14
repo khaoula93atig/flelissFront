@@ -13,6 +13,8 @@ import { identifierModuleUrl } from '@angular/compiler'
 })
 export class ListVisitComponent implements OnInit {
   constructor(private VisitService: VisitService) {}
+  @ViewChild(WeeklyWeightComponent) modal2: WeeklyWeightComponent
+  @ViewChild(WeeklyFeedComponent) modal3: WeeklyFeedComponent
 
   // Spinner display visit
   loading: boolean

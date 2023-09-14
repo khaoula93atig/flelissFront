@@ -1,9 +1,11 @@
-
+.login-wrapper{
+    justify-content: center;
+}
 
 h5{
     color: #fff;
-    font-weight: 100;
-    font-size: 95%;
+    /*font-weight: 100;
+    font-size: 95%;*/
 }
 h3{
   color:  #fff;
@@ -26,17 +28,16 @@ color: #fff
     font-weight: 100;
 }
 
-/*h6 a{
+h6 a{
     letter-spacing: 3px;
-}*/
+}
 
 .login-wrapper .login{
     background:#613a0075 ;
    
 }
 .website img{
-    width: 75px !important; 
-    height: 40px;
+    width: 55px !important;
 }
 input{
     color: #ffffff;
@@ -45,14 +46,6 @@ input{
     color: #27705b;
     font-weight: 400;
     display: block;
-}
-.website{
-    color: #fff;
-    text-decoration: none;
-    display: inline-block;
-}
-.website:hover{
-    color: #0f4d93;
 }
 .btn.btn-primary, .btn-primary .btn {
  

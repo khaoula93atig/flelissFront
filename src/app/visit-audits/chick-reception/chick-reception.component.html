@@ -1,4 +1,25 @@
-<div class="container-box-add">
+<div class="main-container" style="background:#fff;">
+<nav class="subnav" [clr-nav-level]="2" style="background-color: #f7f7f7;">
+    <ul class="nav">
+        <li class="nav-item">
+            <a routerLink="/Visits-audits/chick_reception" class="nav-link" routerLinkActive="active">
+                <img class="iconimage" src="../../assets/Icones/list.png" alt="">
+                Chick reception </a>
+        </li>
+        <li class="nav-item">
+            <a routerLink="/Visits-audits/brooding-check-list" class="nav-link" routerLinkActive="active">
+                <img class="iconimage" src="../../assets/Icones/AjoutPlus.png" alt="">
+                Brooding check list</a>
+        </li>
+        <li class="nav-item">
+            <a routerLink="/Visits-audits/manager-audit-visit" class="nav-link" routerLinkActive="active">
+                <img class="iconimage" src="../../assets/Icones/reports.png" alt="">
+                Manager audit visit </a>
+        </li>
+
+    </ul>
+</nav>
+<div class="container-box-add" style="margin-bottom: 100px;">
     <form novalidate name="myForm" #myForm='ngForm'>
         <h3 class="modal-title" style="padding: 15px 16px 8px; box-shadow: 1px 1px 8px #888888;">
             <img src="../../../assets/chick.png" width="40" style="margin-bottom: 8px;">
@@ -541,6 +562,7 @@
             <button type="button" class="btn btn-primary" [disabled]="!myForm.valid" (click)="saveObject(myForm)">Sauvegarder</button>
         </div>
     </form>
+</div>
 </div>
 
 <clr-modal [(clrModalOpen)]="opened" [clrModalClosable]="false">

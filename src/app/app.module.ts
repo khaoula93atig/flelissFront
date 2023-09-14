@@ -21,12 +21,15 @@ import { VisitAuditsModule } from './visit-audits/visit-audits.module';
 import { FarmModule } from './farm/farm.module';
 import {JwtInterceptor} from './services/jwtInterceptor';
 import { CenterModule } from './center/center.module';
+import { MdpOublieComponent } from './mdp-oublie/mdp-oublie.component';
+import { HeaderComponent } from './shared/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     DashboardComponent,
+    MdpOublieComponent,
 
   ],
   imports: [
@@ -53,7 +56,7 @@ import { CenterModule } from './center/center.module';
 
 
   ],
-  providers: [DatePipe ,
+  providers: [DatePipe ,HeaderComponent,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

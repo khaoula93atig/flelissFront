@@ -5,13 +5,10 @@
 
             <img src="../assets/logo.png" alt="" width="200">
 
-            <h6 class="hint">Developpé par Technology Trusted Advisors <a class="website"
-                    href='http://www.ttatunisia.com'><img src="../assets/urlweb.png" /></a></h6>
         </section>
         <div class="login-group">
             <h5>
-                <clr-icon shape="info-circle" class="is-solid"></clr-icon> Utilisez votre login et mot de passe pour
-                acceder
+                <clr-icon shape="info-circle" class="is-solid"></clr-icon> Use your username and password to login
             </h5>
 
             <clr-input-container>
@@ -22,17 +19,38 @@
                 <label class="clr-sr-only">Mot de passe</label>
                 <input type="password" name="password" clrPassword placeholder="Mot de passe" [(ngModel)]="password" />
             </clr-password-container>
-            <clr-checkbox-wrapper>
-                <label>Se souvenir de moi</label>
-                <input type="checkbox" name="rememberMe" clrCheckbox />
-            </clr-checkbox-wrapper>
-            <div class="error active" *ngIf='access_failed'>
-                Login et mot de passe invalides!
-            </div>
+                <a (click)="basic=true">Forget password !</a>
+            
 
-            <button type="submit" class="btn btn-primary" (click)='authenticate()'>Acceder</button>
+            <button type="submit" class="btn btn-primary" (click)='authenticate()'>Login</button>
 
 
         </div>
+        <h6 class="hint">Developped by 
+            <a class="website" href='http://www.ttatunisia.com'>Technology Trusted Advisors <img src="../assets/logo-white.png" /></a>
+            </h6>
     </form>
+    
 </div>
+<clr-modal [(clrModalOpen)]="basic">
+    <h3 class="modal-title">Did You forget your password ?</h3>
+    <div class="modal-body">
+        <form clrForm [formGroup]="mdpForm" clrLayout="horizontal">
+        <clr-input-container>
+            <label>email</label>
+            <input style="color: #000;" clrInput type="text" class="form-control" formControlName="login" [ngClass]="{
+                'is-valid': mdpForm.get('login').valid,
+                'is-invalid': mdpForm.get('login').invalid  && (mdpForm.get('login').touched || mdpForm.get('login').dirty)}">
+  
+        <div *ngIf="mdpForm.get('login').invalid && (mdpForm.get('login').touched || mdpForm.get('login').dirty)"
+             Class="invalid-feedback">
+          <div *ngIf="mdpForm.get('login').getError('required')">champs obligatoire!</div>
+        </div>
+          </clr-input-container>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="basic = false">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="sendEmail()">Send</button>
+    </div>
+</clr-modal>

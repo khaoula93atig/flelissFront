@@ -1,4 +1,24 @@
 <div class="main-container" style="background:#fff;">
+    <nav class="subnav" style="background-color: #f7f7f7;">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" (click)="modal2.open()">
+                    <img class="iconimage" src="../../assets/Icones/AjoutPlus.png" alt="">
+                    Weight per week </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" (click)="modal3.open()">
+                    <img class="iconimage" src="../../assets/Icones/AjoutPlus.png" alt="">
+                    Feed per week </a>
+            </li>
+
+
+        </ul>
+    </nav>
+    <div class="container">
+        <app-weekly-weight></app-weekly-weight>
+        <app-weekly-feed></app-weekly-feed>
+    </div>
     <div class="container">
         <div class="content-container">
             <h2>
