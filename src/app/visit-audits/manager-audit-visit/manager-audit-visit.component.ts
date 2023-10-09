@@ -1,10 +1,11 @@
 import { DatePipe } from '@angular/common'
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { Toast, ToastrService } from 'ngx-toastr'
 import { VisitAuditsService } from 'src/app/services/visit-audits.service'
 import { BreedingManagement } from 'src/app/shared/registration'
 import { SubSink } from 'subsink'
 import { HouseService } from '../../services/house.service'
+import { ListManagerAuditVistComponent } from '../list-manager-audit-vist/list-manager-audit-vist.component'
 
 @Component({
   selector: 'app-manager-audit-visit',
@@ -12,6 +13,7 @@ import { HouseService } from '../../services/house.service'
   styleUrls: ['./manager-audit-visit.component.css'],
 })
 export class ManagerAuditVisitComponent implements OnInit {
+  @ViewChild(ListManagerAuditVistComponent) modal: ListManagerAuditVistComponent
   opened=false
   deviation=''
   centers: any[] = []
@@ -27,6 +29,7 @@ export class ManagerAuditVisitComponent implements OnInit {
   score = 0
   loading: boolean
   storageVaccines = ' '
+  
   constructor(
     private HouseService: HouseService,
     private visitService: VisitAuditsService,

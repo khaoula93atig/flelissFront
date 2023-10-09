@@ -19,6 +19,12 @@
 
     </ul>
 </nav>
+<div class="addbtn">
+    <button class="btn btn-primary" (click)="modal.open()" style="float: right;background-color: #02675c">
+        History
+    </button>
+    <app-list-brooding-check-list></app-list-brooding-check-list>
+    </div>
 <div class="container-box-add" style="margin-bottom: 100px;">
     <form novalidate name="myForm" #myForm='ngForm'>
         <h3 class="modal-title" style="padding: 15px 16px 8px; box-shadow: 1px 1px 8px #888888;  margin-bottom: 5px;">
@@ -1202,7 +1208,7 @@
                                                 </td>
 
 
-                                            </tr>-->
+                                            </tr>
 
                                             <!--Light intensity 30-40 lux -->
                                             <tr>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { IchickReception } from 'src/app/shared/registration'
 import { SubSink } from 'subsink'
 import { FarmService } from '../../services/farm.service'
@@ -8,6 +8,7 @@ import { VisitAuditsService } from '../../services/visit-audits.service'
 import { DatePipe, formatDate } from '@angular/common'
 import { ToastrService } from 'ngx-toastr'
 import { NgForm } from '@angular/forms'
+import { ChickReceptionListComponent } from '../chick-reception-list/chick-reception-list.component'
 
 @Component({
   selector: 'app-chick-reception',
@@ -30,6 +31,7 @@ export class ChickReceptionComponent implements OnInit {
   chikedPlaced: String
   psOrigin: String
   psAge: String
+  @ViewChild(ChickReceptionListComponent) modal: ChickReceptionListComponent
   
 
   subs: SubSink = new SubSink()

@@ -77,4 +77,8 @@ findbyFarm(farmid: string) {
       this.httpOptions,
     )
   }
+  //getById
+  findById(id:string){
+    return this.http.get<any>(environment.url_flock +'/'+ id)
+  }
 }

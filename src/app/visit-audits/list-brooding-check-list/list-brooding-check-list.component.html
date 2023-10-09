@@ -1,0 +1,606 @@
+<clr-modal [clrModalSize]="'xl'" [(clrModalOpen)]="show">
+    <h3 class="modal-title">History of brooding check list</h3>
+    <div class="modal-body">
+        <div class="content-area">
+            <clr-datagrid class="table_view " [clrDgLoading]="loading" style="width:100%">
+                <clr-dg-column>Visit date </clr-dg-column>
+                <clr-dg-column>Center</clr-dg-column>
+                <clr-dg-column>House</clr-dg-column>
+                <clr-dg-row *clrDgItems="let visit of visits" [clrDgItem]="visit" class="tablecolor">
+                    <clr-dg-cell> {{visit.creationDate}}</clr-dg-cell>
+                    <clr-dg-cell> {{visit.center.centerName}}</clr-dg-cell>
+                    <clr-dg-cell> {{visit.house.houseName}}</clr-dg-cell>
+                </clr-dg-row>
+
+                <clr-dg-footer>
+                    <clr-dg-pagination #pagination [clrDgPageSize]="15">
+                        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+                        of {{pagination.totalItems}} visits
+                    </clr-dg-pagination>
+                </clr-dg-footer>
+                <ng-template clrIfDetail (clrIfDetailChange)="onDetailOpen($event)">
+                    <clr-dg-detail *clrIfDetail="let detail">
+
+                        <clr-dg-detail-header>
+
+                        </clr-dg-detail-header>
+                        <clr-dg-detail-body>
+                            <div style="float: right;    padding-right: 25px;" (click)="export()">
+                                <span>Export Report </span>
+                                <img src="../../../assets/export.png" style="width: 21px;
+                            height:21px;
+                            text-align:right;
+                            float:right;" alt="">
+                            </div>
+                            <div #contentToConvert  class="content">
+                                <img src="../../../assets/icon-detail.png" width="40" style="margin-bottom: 8px;">
+                                <span class="internal-title" style="font-weight:bold ; font-size: large;"> Date of visit
+                                    : {{detail.creationDate}}</span>
+                                <form clrForm>
+                                    <div class="clr-row">
+                                        <clr-input-container class="clr-col-6">
+                                            <label class="clr-col-md-3">Center</label>
+                                            <input class="clr-col-md-9" clrInput readonly type="text"
+                                                [value]="detail.center.centerName" name="flock" size="35" />
+                                        </clr-input-container>
+                                        <clr-input-container class="clr-col-6">
+                                            <label class="clr-col-md-3">House </label>
+                                            <input class="clr-col-md-9" clrInput readonly type="text"
+                                                [value]="detail.house.houseName" name="House" size="35" />
+                                        </clr-input-container>
+                                    </div>
+
+                                    <table class="table  table-border table-compact">
+                                        <thead>
+                                            <tr>
+                                                <th class="left"></th>
+                                                <th class="left"></th>
+                                                <th class="left">Status</th>
+
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+                                                <td rowspan="15" style="font-weight: 700; color: #454545;">Before
+                                                    arrival</td>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Litter depth : <small>2-4 cm</small> </td>
+
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.litterDepth)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.litterDepth)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+                                                </td>
+
+
+                                            </tr>
+
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    litter temperature : <small>28-30°C </small></td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.temperature)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.temperature)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Pre-heat at least : <small>24 h ( 48h in winter )</small></td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.preHeatLeast)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.preHeatLeast)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+
+
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Air temperature : <small>30°C/86°F</small></td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.airTemperature)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.airTemperature)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Floor temperature : <small>28-30°C </small></td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.floorTemperature)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.floorTemperature)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Spot brooding:<small> 32°C under brooder / 29° at brooder
+                                                        edge</small></td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.spotBrooding)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.spotBrooding)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Realtive humidity: <small>60-70%</small></td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.relativeHumidity)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.relativeHumidity)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Distance to access water: <small> No more than 1meter/3.3
+                                                        feet</small></td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.distanceAccessWater)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.distanceAccessWater)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Air speed : <small>
+                                                        <0,15 m/s </small>
+                                                </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.airSpeed)=='Yes'" class="alert-icon solid"
+                                                        shape="success-standard" style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.airSpeed)=='No'" class="alert-icon solid"
+                                                        shape="times-circle" style="color:red"></clr-icon>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Check feed form: <small>Crumble / pellet 2mm</small></td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.checkFeed)=='Yes'" class="alert-icon solid"
+                                                        shape="success-standard" style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.checkFeed)=='No'" class="alert-icon solid"
+                                                        shape="times-circle" style="color:red"></clr-icon>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Feed on paper : <small> 80% of brooding area</small> </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.feedOnPaper)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.feedOnPaper)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Feeders Trays : <small> 1/100 chicks</small> </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.feedersTrays)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.feedersTrays)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Drinkers Nipple lines : <small> 12 birds/nipple</small> </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.drinkersNippleLines)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.drinkersNippleLines)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Drinkers (bell drinkers) : <small> 6/1000 birds</small> </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.drinkersBell)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.drinkersBell)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Drinkers supplementary : <small> 10/1000 chicks</small> </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.drinkersSupp)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.drinkersSupp)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+                                                </td>
+                                            </tr>
+
+                                            <!-- check delivery -->
+
+                                            <tr>
+                                                <td rowspan="7" style="font-weight: 700; color: #454545;">Check delivery
+                                                </td>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Delivery vehicle temperature <small>chick box :32°C outside chick
+                                                        box : 24°C</small></td>
+                                                <td><clr-icon *ngIf="(detail.deliveryVehiTemp)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.deliveryVehiTemp)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+                                                </td>
+
+
+                                            </tr>
+
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Delivery vehicle humidity: <small>60-70%</small></td>
+                                                <td><clr-icon *ngIf="(detail.deliveryVehiHumi)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.deliveryVehiHumi)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Chick confort ( rectal temperature ):<small>39.5-40.5 °C</small>
+                                                </td>
+                                                <td><clr-icon *ngIf="(detail.chickConfort)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.chickConfort)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+                                                </td>
+
+
+                                            </tr>
+
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    External environmental conditions ( Temperature , Humidity ) </td>
+                                                <td><clr-icon *ngIf="(detail.externalEnvCond)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.externalEnvCond)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Transit time ( hatchery- farm ): <small>short / long</small> </td>
+                                                <td><clr-icon *ngIf="(detail.transitTime)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.transitTime)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Delivery vehicle : air exchange </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.deliveryVehicleAirExch)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.deliveryVehicleAirExch)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+                                                </td>
+
+
+                                            </tr>
+
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Delivery vehicle : hygiene <small>disinfected</small> </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.deliveryVehicleHygiene)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.deliveryVehicleHygiene)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+                                                </td>
+
+                                            </tr>
+                                            <!--  ** Arrival ** -->
+
+                                            <tr>
+                                                <td rowspan="5" style="font-weight: 700; color: #454545;">The arrival </td>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Internal chick temperature : <small>40°C-41°C</small> </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.internalChickTemp)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.internalChickTemp)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+
+                                                </td>
+
+
+                                            </tr>
+
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Weigh a sample of chick record average live weight and CV% /
+                                                    uniformity : <small>Average 36-45g</small> </td>
+                                                <td>
+                                                    
+                                                    <clr-icon *ngIf="(detail.weighSampleChick)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.weighSampleChick)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Light intensity :<small>30-40 lux</small>  </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.lightIntensity)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.lightIntensity)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Ensure feed and water is available </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.ensureFeedWater)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.ensureFeedWater)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Water temperature :<small>18-21 °C</small>  </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.waterTemperature)=='Yes'"
+                                                        class="alert-icon solid" shape="success-standard"
+                                                        style="color:green"></clr-icon>
+                                                    <clr-icon *ngIf="(detail.waterTemperature)=='No'"
+                                                        class="alert-icon solid" shape="times-circle"
+                                                        style="color:red"></clr-icon>
+
+                                                </td>
+
+                                            </tr>
+                                            <div style="page-break-before: always;"></div>
+                                            <!--   ** After installation ** -->
+                                            <tr >
+                                                <td rowspan="7" style="font-weight: 700; color: #454545;">After installation </td>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Check chick behavior after 1-2 hours </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.checkChickBehavior)=='Yes'"
+                                                    class="alert-icon solid" shape="success-standard"
+                                                    style="color:green"></clr-icon>
+                                                <clr-icon *ngIf="(detail.checkChickBehavior)=='No'"
+                                                    class="alert-icon solid" shape="times-circle"
+                                                    style="color:red"></clr-icon>
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Check chick water supply ( fresh & clean water ) </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.checkChickWaterSupply)=='Yes'"
+                                                    class="alert-icon solid" shape="success-standard"
+                                                    style="color:green"></clr-icon>
+                                                <clr-icon *ngIf="(detail.checkChickWaterSupply)=='No'"
+                                                    class="alert-icon solid" shape="times-circle"
+                                                    style="color:red"></clr-icon>
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Check feed supply ( small & frequent ) </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.checkFeedSupply)=='Yes'"
+                                                    class="alert-icon solid" shape="success-standard"
+                                                    style="color:green"></clr-icon>
+                                                <clr-icon *ngIf="(detail.checkFeedSupply)=='No'"
+                                                    class="alert-icon solid" shape="times-circle"
+                                                    style="color:red"></clr-icon>
+
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Check chick crop fill </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.checkChickCropFill)=='Yes'"
+                                                    class="alert-icon solid" shape="success-standard"
+                                                    style="color:green"></clr-icon>
+                                                <clr-icon *ngIf="(detail.checkChickCropFill)=='No'"
+                                                    class="alert-icon solid" shape="times-circle"
+                                                    style="color:red"></clr-icon>
+
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Distribution of day old chicks </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.distributionDayOldChicks)=='Yes'"
+                                                    class="alert-icon solid" shape="success-standard"
+                                                    style="color:green"></clr-icon>
+                                                <clr-icon *ngIf="(detail.distributionDayOldChicks)=='No'"
+                                                    class="alert-icon solid" shape="times-circle"
+                                                    style="color:red"></clr-icon>
+
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Daily purges piping </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.dailyPurgesPiping)=='Yes'"
+                                                    class="alert-icon solid" shape="success-standard"
+                                                    style="color:green"></clr-icon>
+                                                <clr-icon *ngIf="(detail.dailyPurgesPiping)=='No'"
+                                                    class="alert-icon solid" shape="times-circle"
+                                                    style="color:red"></clr-icon>
+
+                                                </td>
+
+
+                                            </tr>
+                                            <tr>
+                                                <td class="left" style="font-weight: 600; color: #454545;">
+
+                                                    Air quality </td>
+                                                <td>
+                                                    <clr-icon *ngIf="(detail.airQuality)=='Yes'"
+                                                    class="alert-icon solid" shape="success-standard"
+                                                    style="color:green"></clr-icon>
+                                                <clr-icon *ngIf="(detail.airQuality)=='No'"
+                                                class="alert-icon solid" shape="times-circle"
+                                                    style="color:red"></clr-icon>
+
+                                                </td>
+
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </clr-dg-detail-body>
+                    </clr-dg-detail>
+                </ng-template>
+            </clr-datagrid>
+
+
+
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="show = false">Cancel</button>
+
+    </div>
+</clr-modal>

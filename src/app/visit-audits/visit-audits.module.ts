@@ -15,6 +15,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { AuthGuardGuard } from '../services/auth-guard.guard';
 import { BroodingCheckListComponent } from './brooding-check-list/brooding-check-list.component';
 import { ManagerAuditVisitComponent } from './manager-audit-visit/manager-audit-visit.component';
+import { ChickReceptionListComponent } from './chick-reception-list/chick-reception-list.component';
+import { ListBroodingCheckListComponent } from './list-brooding-check-list/list-brooding-check-list.component';
+import { ListManagerAuditVistComponent } from './list-manager-audit-vist/list-manager-audit-vist.component';
 
 
 
@@ -35,7 +38,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [VisitAuditsComponent, ListVisitAuditsComponent, NewVisitAuditsComponent, ChickReceptionComponent, BroodingCheckListComponent, ManagerAuditVisitComponent],
+  declarations: [VisitAuditsComponent, ListVisitAuditsComponent, NewVisitAuditsComponent, ChickReceptionComponent, BroodingCheckListComponent, ManagerAuditVisitComponent, ChickReceptionListComponent, ListBroodingCheckListComponent, ListManagerAuditVistComponent],
   imports: [
     CommonModule, FormsModule, BrowserModule, BrowserAnimationsModule,
     ClarityModule, SharedModule, RouterModule.forRoot(routes)

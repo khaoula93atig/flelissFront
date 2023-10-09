@@ -35,7 +35,14 @@
               "node_modules/@clr/icons/clr-icons.min.js",
               "node_modules/jspdf/dist/jspdf.min.js",
               "node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js"
-            ]
+            ],
+              "allowedCommonJsDependencies": [
+                "core-js",
+                "raf",
+                "xlsx",
+                "@babel/runtime"
+              ]
+            
           },
           "configurations": {
             "production": {

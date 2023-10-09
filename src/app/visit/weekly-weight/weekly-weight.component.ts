@@ -307,35 +307,27 @@ export class WeeklyWeightComponent implements OnInit {
     this.VisitService.getweeklyWeightByFlockAndAge(this.week, this.flockID).subscribe(data=>
       {
         console.log('exist',data)
-        
+        this.VisitService.getVisitTasksVerification(this.flockID , this.week, 11).subscribe(data1=>{
+      console.log('exist',data1)
         if(data.length!=0){
           this.exist=true
           this.weightMeasure=data[0].average
           console.log(this.exist)
         }
-        else{
-          this.exist=false
-        }
-      })
-    this.VisitService.getVisitTasksVerification(this.flockID , this.week, 11).subscribe(data=>{
-      console.log('exist',data)
-        
-        if(data.length!=0){
+        else if(data1.length!=0){
           this.exist=true
-          this.weightMeasure=data[0].measure
+          this.weightMeasure=data1[0].measure
           console.log(this.exist)
         }
         else{
           this.exist=false
         }
     })  
+      })
+    
   }
 
 getweeklyweightbyBreed(){
-  /*this. counts=[{'value':'0-0.6' , 'count':0},{'value':'0.6-0.67' , 'count':0},{'value':'0.67-0.74' , 'count':0},{'value':'0.74-0.81' , 'count':0},{'value':'0.81-0.88' , 'count':0}
-    ,{'value':'0.88-0.95' , 'count':0},{'value':'0.95-0.1.02' , 'count':0},{'value':'1.02-1.09' , 'count':0},{'value':'1.09-1.16' , 'count':0},
-    {'value':'1.16-1.23' , 'count':0},{'value':'1.23-1.3' , 'count':0},{'value':'>1.3' , 'count':0}
-   ]*/
    this.counts=[{'value':'0-0.2' , 'count':0},{'value':'0.2-0.4' , 'count':0},{'value':'0.4-0.6' , 'count':0},{'value':'0.6-0.8' , 'count':0},{'value':'0.8-1' , 'count':0},{'value':'1-1.2' , 'count':0},{'value':'1.2-1.4' , 'count':0}
    ,{'value':'1.4-1.6' , 'count':0},{'value':'1.8-2' , 'count':0},{'value':'2-2.2' , 'count':0},{'value':'2.2-2.4' , 'count':0},
    {'value':'2.4-2.6' , 'count':0},{'value':'2.6-2.8' , 'count':0},{'value':'2.8-3' , 'count':0},{'value':'>3' , 'count':0}

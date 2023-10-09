@@ -213,7 +213,7 @@ export class FlocksComponent implements OnInit {
   }
   getWeightByFlock(event){
     let series=[{name:'',data:[{week:7,weight:null},{week:14,weight:null},{week:21,weight:null},{week:28,weight:null},{week:35,weight:null},{week:42,weight:null},]}]
-    this.dashService.getWeightFlocksByHouseandYear(event,2022).subscribe(data=>{
+    this.dashService.getWeightFlocksByHouseandYear(event,2023).subscribe(data=>{
       console.log("Weight",data)
       for(let d of data){
         if((series.length==1)&&(series[0].name=='')){

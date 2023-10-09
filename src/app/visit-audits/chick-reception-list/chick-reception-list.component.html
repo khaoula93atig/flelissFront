@@ -1,0 +1,256 @@
+<clr-modal [clrModalSize]="'xl'" [(clrModalOpen)]="show">
+    <h3 class="modal-title">History of chick Reception</h3>
+    <div class="modal-body">
+        <div class="content-area">
+            <clr-datagrid class="table_view " [clrDgLoading]="loading" style="width:100%">
+                <clr-dg-column>Visit date </clr-dg-column>
+                <clr-dg-column>House</clr-dg-column>
+                <clr-dg-column>Flock</clr-dg-column>
+                <clr-dg-column>Breed</clr-dg-column>
+                <clr-dg-column>Hach date</clr-dg-column>
+                <clr-dg-column>psAge</clr-dg-column>
+                <clr-dg-column>psOrigin</clr-dg-column>
+                <clr-dg-column>Total score</clr-dg-column>
+                <clr-dg-row *clrDgItems="let visit of visits" [clrDgItem]="visit" class="tablecolor">
+                    <clr-dg-cell> {{visit.visitDate}}</clr-dg-cell>
+                    <clr-dg-cell> {{visit.house.houseName}}</clr-dg-cell>
+                    <clr-dg-cell> {{visit.flock.flockName}}</clr-dg-cell>
+                    <clr-dg-cell> {{visit.breed}} </clr-dg-cell>
+                    <clr-dg-cell style="width: 180px;"> {{visit.hatchDate}} </clr-dg-cell>
+                    <clr-dg-cell style="width: 180px;"> {{visit.psAge}} </clr-dg-cell>
+                    <clr-dg-cell style="width: 180px;"> {{visit.psOrigin}} </clr-dg-cell>
+                    <clr-dg-cell style="width: 180px;"> {{visit.totalScore}} </clr-dg-cell>
+                </clr-dg-row>
+
+                <clr-dg-footer>
+                    <clr-dg-pagination #pagination [clrDgPageSize]="15">
+                        {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+                        of {{pagination.totalItems}} visits
+                    </clr-dg-pagination>
+                </clr-dg-footer>
+                <ng-template clrIfDetail (clrIfDetailChange)="onDetailOpen($event)">
+                <clr-dg-detail *clrIfDetail="let detail">
+                    
+                    <clr-dg-detail-header>
+                        
+                    </clr-dg-detail-header>
+                    <clr-dg-detail-body>
+                        <div style="float: right;    padding-right: 25px;" (click)="generatePdf(contentToConvert)">
+                            <span>Export Report </span>
+                            <img src="../../../assets/export.png" style="width: 21px;
+                            height:21px;
+                            text-align:right;
+                            float:right;" alt="">
+                        </div>
+                        <div #contentToConvert class="content">
+                        <img src="../../../assets/icon-detail.png" width="40" style="margin-bottom: 8px;">
+                        <span class="internal-title" style="font-weight:bold ; font-size: large;"> Date of visit : {{detail.visitDate}}</span>
+                        <form clrForm>
+                            <div class="clr-row">
+                            <clr-input-container class="clr-col-6">
+                                <label class="clr-col-md-3">House </label>
+                                <input class="clr-col-md-9" clrInput readonly type="text" [value]="detail.house.houseName"
+                                    name="House" size="35" />
+                            </clr-input-container>
+                            <clr-input-container class="clr-col-6">
+                                <label class="clr-col-md-3">Flock </label>
+                                <input class="clr-col-md-9" clrInput readonly type="text" [value]="detail.flock.flockName"
+                                    name="flock" size="35" />
+                            </clr-input-container>
+                            </div>
+                            <div class="clr-row">
+                            <clr-input-container class="clr-col-6">
+                                <label class="clr-col-md-3">breed </label>
+                                <input class="clr-col-md-9" clrInput readonly type="text" [value]="detail.breed"
+                                    name="breed" size="35" />
+                            </clr-input-container>
+                            <clr-input-container class="clr-col-6">
+                                <label class="clr-col-md-3">HatchDate </label>
+                                <input class="clr-col-md-9" clrInput readonly type="text" [value]="detail.hatchDate"
+                                    name="hatchDate" size="35" />
+                            </clr-input-container>
+                            </div>
+                            <div class="clr-row">
+                            <clr-input-container class="clr-col-6">
+                                <label class="clr-col-md-3">psAge </label>
+                                <input class="clr-col-md-9" clrInput readonly type="text" [value]="detail.psAge"
+                                    name="psAge" size="35" />
+                            </clr-input-container>
+                            <clr-input-container class="clr-col-6">
+                                <label class="clr-col-md-3">psOrigin </label>
+                                <input class="clr-col-md-9" clrInput readonly type="text" [value]="detail.psOrigin"
+                                    name="psOrigin" size="35" />
+                            </clr-input-container>
+                            </div>
+                            <div class="clr-row"> 
+                                <p style="font-weight:bold ; font-size: large; margin-left: 12px;" >Total Score 
+                                    <span class="clr-col-md-4" style="color: green; font-weight:bold ; font-size: large;" *ngIf="detail.totalScore>=40" >{{detail.totalScore}} Excellent </span>
+                                    <span class="clr-col-md-4" style="color:#e47200; font-weight:bold ; font-size: large; " *ngIf="detail.totalScore>=20 && detail.totalScore<=39">{{detail.totalScore}} Acceptable</span>
+                                    <span class="clr-col-md-4" style="color:red;font-weight:bold; font-size: large;" *ngIf="detail.totalScore<=19" >{{detail.totalScore}} Bad </span>
+                                </p>
+                            </div>
+
+                            
+
+                            <table class="table  table-border table-compact">
+                                <!-- head Table -->
+                                <thead>
+                                    <tr>
+                                        <th class="left"></th>
+                                        <th class="left"></th>
+                                        <th class="left">Score</th>
+        
+        
+                                    </tr>
+                                </thead>
+                                <tbody>
+        
+                                    <!-- Form table-->
+                                    
+                                    <tr>
+                                       <td rowspan="3">Navel</td>
+                                        <td class="left" style="font-weight: 600; color: #454545;">
+                                            Clean and well healed</td>
+                                        <td>
+                                            {{detail.navelCleanWellHealed}}
+        
+                                        </td>
+        
+        
+                                    </tr>
+        
+                                    <tr>
+                                        <td class="left" style="font-weight: 600; color: #454545;">
+        
+                                            Closed but slight abrasiveness</td>
+                                        <td>
+                                            {{detail.navelClosedSlightAbrasiveness}}
+        
+                                        </td>
+        
+                                    </tr>
+                                    <tr>
+                                        <td class="left" style="font-weight: 600; color: #454545;">
+        
+                                            Not closed/ strung / button attached or discolored</td>
+                                        <td>
+                                            {{detail.navelNotclosedStrungButton}}
+        
+                                        </td>
+        
+                                    </tr>
+        
+                                    <tr>
+                                        <td rowspan="3">Legs </td>
+                                         <td class="left" style="font-weight: 600; color: #454545;">
+         
+                                            Clean , waxy legs</td>
+                                         <td>
+                                            {{detail.legsCleanWaxy}}
+                                         </td>
+         
+         
+                                     </tr>
+         
+                                     <tr>
+                                         <td class="left" style="font-weight: 600; color: #454545;">
+         
+                                            Some dryness/ pale</td>
+                                         <td>
+                                            {{detail.legsDrynessPale}}
+                                         </td>
+         
+         
+                                     </tr>
+                                     <tr>
+                                         <td class="left" style="font-weight: 600; color: #454545;">
+         
+                                            Deshydrated with vein protruding</td>
+                                         <td>
+                                            {{detail.legsDeshydratedVienProtruding}}
+                                         </td>
+                                       
+         
+                                     </tr>
+        
+                                     <tr>
+                                        <td rowspan="3">Hocks </td>
+                                         <td class="left" style="font-weight: 600; color: #454545;">
+                                            Clean , no blemishes</td>
+                                         <td>
+                                           {{detail.hocksCleanNoblemishes}}
+                                         </td>
+         
+         
+                                     </tr>
+         
+                                     <tr>
+                                         <td class="left" style="font-weight: 600; color: #454545;">
+         
+                                            slight blushing</td>
+                                         <td>
+                                             {{detail.hocksSlightBlushing}}
+                                         </td>
+         
+                                     </tr>
+                                     <tr>
+                                         <td class="left" style="font-weight: 600; color: #454545;">
+         
+                                            Red color / heavy blushing</td>
+                                         <td>
+                                             {{detail.hocksRedcolorHeavyblushing}}
+                                         </td>
+         
+                                     </tr>
+        
+                                     <tr>
+                                        <td rowspan="3">Defects </td>
+                                         <td class="left" style="font-weight: 600; color: #454545;">
+                                            Clean , no defects</td>
+                                         <td>
+                                            {{detail.defectsCleanNodefects}}
+                                         </td>
+         
+                                     </tr>
+         
+                                     <tr>
+                                         <td class="left" style="font-weight: 600; color: #454545;">
+         
+                                            Minor defects ( yolk staining , feather coloration,…)</td>
+                                         <td>
+                                             {{detail.defectsMinorDefects}}
+                                         </td>
+         
+         
+                                     </tr>
+                                     <tr>
+                                         <td class="left" style="font-weight: 600; color: #454545;">
+         
+                                            missing eye / blind , legs with cuts/ abrasions , spraddled legs ,cross beaks , poor feathering , clubbed down</td>
+                                         <td>
+                                             {{detail.defectsEyeLegsSpraddled}}
+         
+                                         </td>
+         
+         
+                                     </tr>
+                                </tbody>
+                            </table>
+
+</form>
+                        </div>
+                    </clr-dg-detail-body>
+                </clr-dg-detail>
+                </ng-template>
+            </clr-datagrid>
+
+
+
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="show = false">Cancel</button>
+
+    </div>
+</clr-modal>

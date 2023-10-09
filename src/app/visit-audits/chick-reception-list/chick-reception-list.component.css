@@ -1,0 +1,10 @@
+.table_view {
+    max-height: calc(100vh - 240px);
+    width: 100%;
+  }
+  .modal-dialog {
+    position: relative;
+    z-index: 1050;
+    width: 56rem !important;
+    max-width: 102%;
+}

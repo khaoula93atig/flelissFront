@@ -76,11 +76,22 @@
                     <!-- / Details list of visits -->
                     <clr-dg-detail *clrIfDetail="let detail">
                         <clr-dg-detail-header>
-                            <h3 class="modal-title" style="color: #02675c;margin-bottom: 22px;    ">
-                                Date of visit <strong>{{detail.visitDate}}</strong>
+                            <h3 class="modal-title" style="color: #8c8c8c;">
+                                Date of visit: <strong style="color: #02675c; " >{{detail.visitDate}} </strong>
                             </h3>
+                            <div class="clr-row">
+                            <h6  class="clr-col-4" class="modal-title"  style="color: #8c8c8c;">
+                                House: <strong style="color: #02675c; ">{{detail.flock.house.houseName}} </strong>
+                            </h6>
+                            <div class="clr-col-4">
+
+                            </div>
+                            <h6 class="clr-col-4" class="modal-title" style="color: #8c8c8c;">
+                                Flock: <strong style="color: #02675c; ">{{detail.flock.flockName}} </strong>
+                            </h6>
+                            </div>
                         </clr-dg-detail-header>
-                        <clr-dg-detail-body>
+                        <clr-dg-detail-body> 
                             
                             <table class="table table-noborder">
                                 <thead>

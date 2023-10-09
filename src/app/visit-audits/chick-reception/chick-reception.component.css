@@ -24,3 +24,6 @@
   clr-select-container{
     display: -webkit-box;
   }
+  .addbtn {
+    float: right
+  }

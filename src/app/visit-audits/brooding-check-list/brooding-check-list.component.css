@@ -10,3 +10,6 @@
         overflow-x: scroll;
     }
     }
+    .addbtn {
+        float: right
+      }

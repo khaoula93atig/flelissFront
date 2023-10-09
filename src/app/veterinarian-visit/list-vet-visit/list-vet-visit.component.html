@@ -69,9 +69,20 @@
               <form clrForm>
 
 
-                <h3 class="modal-title" style="color: #02675c;     margin-left: 13px;">
-                  Date of visit <strong>{{detail.visitDate}}</strong>
+                <h3 class="modal-title" style="color: #8c8c8c;   margin-left: 13px;">
+                  Date of visit: <strong style="color: #02675c;">{{detail.visitDate}}</strong>
                 </h3>
+                <div class="clr-row" style="margin-left: 13px;">
+                  <h6  class="clr-col-3" class="modal-title"  style="color: #8c8c8c;">
+                      House: <strong style="color: #02675c; ">{{detail.flock.house.houseName}} </strong>
+                  </h6>
+                  <div class="clr-col-1">
+
+                  </div>
+                  <h6 class="clr-col-3" class="modal-title" style="color: #8c8c8c;">
+                      Flock: <strong style="color: #02675c; ">{{detail.flock.flockName}} </strong>
+                  </h6>
+                  </div>
 
 
                 <div class="modal-body">

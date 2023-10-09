@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { CheckList, IRegistrationVisitTasks } from 'src/app/shared/registration'
 import { SubSink } from 'subsink'
 import { HouseService } from '../../services/house.service'
 import { VisitAuditsService } from '../../services/visit-audits.service'
+import { ListBroodingCheckListComponent } from '../list-brooding-check-list/list-brooding-check-list.component'
 @Component({
   selector: 'app-brooding-check-list',
   templateUrl: './brooding-check-list.component.html',
   styleUrls: ['./brooding-check-list.component.css'],
 })
 export class BroodingCheckListComponent implements OnInit {
+  @ViewChild(ListBroodingCheckListComponent) modal: ListBroodingCheckListComponent
   broodingCheckId: String
   litterDepth: String
 

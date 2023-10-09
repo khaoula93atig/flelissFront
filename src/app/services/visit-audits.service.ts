@@ -151,4 +151,26 @@ export class VisitAuditsService {
       breedingManagement,
     )
   }
+
+
+  //get chick Reception by farm 
+  getCheckReceptionByFarm(farmID: string) {
+    return this.http.get<any>(
+      environment.registrationChickReception+ '/getByFarm/' +farmID
+    )
+  }
+
+  //get Brooding check  by farm 
+  getBroodingCheckByFarm(farmID: string) {
+    return this.http.get<any>(
+      environment.registrationBroodingCheck+ 'getByFarm/' +farmID
+    )
+  }
+
+  //get Breeding Management by farm 
+  getBreedingManagementByFarm(farmID: string) {
+    return this.http.get<any>(
+      environment.url_breedingManagement+ '/getByFarm/' +farmID
+    )
+  }
 }

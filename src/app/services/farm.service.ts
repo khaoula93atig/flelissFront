@@ -82,9 +82,12 @@ export class FarmService {
     return this.http.put<any>(environment.centerUrl + '/update', center)
   }
 
-  //getById
+  //farm getById
   findById(id:string){
     return this.http.get<any>(environment.url_farm +'/getByid/'+ id)
   }
-  
+  //get center by id 
+  findCenterById(id:string){
+    return this.http.get<any>(environment.centerUrl +'/'+ id)
+  }
 }

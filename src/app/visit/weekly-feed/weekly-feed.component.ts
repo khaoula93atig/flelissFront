@@ -112,28 +112,24 @@ export class WeeklyFeedComponent implements OnInit {
     this.VisitService.getweeklyfeedByFlockAndAge(this.weeklyFeed.week, this.flockID).subscribe(data=>
       {
         console.log('exist',data)
-        
-        if(data.length!=0){
-          this.exist=true
-          this.totalfeed=data[0]
-          console.log(this.exist)
-        }
-        else{
-          this.exist=false
-        }
-      })
-      this.VisitService.getVisitTasksVerification(this.flockID , this.weeklyFeed.week, 6).subscribe(data=>{
-        console.log('exist',data)
-          
+        this.VisitService.getVisitTasksVerification(this.flockID , this.weeklyFeed.week, 6).subscribe(data1=>{
+          console.log('exist',data1)
           if(data.length!=0){
             this.exist=true
-            this.totalfeed=data[0].measure
+            this.totalfeed=data[0]
             console.log(this.exist)
           }
-          else{
-            this.exist=false
-          }
-      })    
+           else if(data1.length!=0){
+              this.exist=true
+              this.totalfeed=data1[0].measure
+              console.log(this.exist)
+            }
+            else{
+              this.exist=false
+            }
+        })
+      })
+          
   }
 
   getCenterId(event) {
