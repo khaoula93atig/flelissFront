@@ -30,12 +30,12 @@
                 </clr-dg-footer>
                 <ng-template clrIfDetail (clrIfDetailChange)="onDetailOpen($event)">
                 <clr-dg-detail *clrIfDetail="let detail">
-                    
+
                     <clr-dg-detail-header>
-                        
+
                     </clr-dg-detail-header>
                     <clr-dg-detail-body>
-                        <div style="float: right;    padding-right: 25px;" (click)="generatePdf(contentToConvert)">
+                        <div style="float: right;    padding-right: 25px;" (click)="export()">
                             <span>Export Report </span>
                             <img src="../../../assets/export.png" style="width: 21px;
                             height:21px;
@@ -82,15 +82,15 @@
                                     name="psOrigin" size="35" />
                             </clr-input-container>
                             </div>
-                            <div class="clr-row"> 
-                                <p style="font-weight:bold ; font-size: large; margin-left: 12px;" >Total Score 
+                            <div class="clr-row">
+                                <p style="font-weight:bold ; font-size: large; margin-left: 12px;" >Total Score
                                     <span class="clr-col-md-4" style="color: green; font-weight:bold ; font-size: large;" *ngIf="detail.totalScore>=40" >{{detail.totalScore}} Excellent </span>
                                     <span class="clr-col-md-4" style="color:#e47200; font-weight:bold ; font-size: large; " *ngIf="detail.totalScore>=20 && detail.totalScore<=39">{{detail.totalScore}} Acceptable</span>
                                     <span class="clr-col-md-4" style="color:red;font-weight:bold; font-size: large;" *ngIf="detail.totalScore<=19" >{{detail.totalScore}} Bad </span>
                                 </p>
                             </div>
 
-                            
+
 
                             <table class="table  table-border table-compact">
                                 <!-- head Table -->
@@ -99,80 +99,80 @@
                                         <th class="left"></th>
                                         <th class="left"></th>
                                         <th class="left">Score</th>
-        
-        
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
-        
+
                                     <!-- Form table-->
-                                    
+
                                     <tr>
                                        <td rowspan="3">Navel</td>
                                         <td class="left" style="font-weight: 600; color: #454545;">
                                             Clean and well healed</td>
                                         <td>
                                             {{detail.navelCleanWellHealed}}
-        
+
                                         </td>
-        
-        
+
+
                                     </tr>
-        
+
                                     <tr>
                                         <td class="left" style="font-weight: 600; color: #454545;">
-        
+
                                             Closed but slight abrasiveness</td>
                                         <td>
                                             {{detail.navelClosedSlightAbrasiveness}}
-        
+
                                         </td>
-        
+
                                     </tr>
                                     <tr>
                                         <td class="left" style="font-weight: 600; color: #454545;">
-        
+
                                             Not closed/ strung / button attached or discolored</td>
                                         <td>
                                             {{detail.navelNotclosedStrungButton}}
-        
+
                                         </td>
-        
+
                                     </tr>
-        
+
                                     <tr>
                                         <td rowspan="3">Legs </td>
                                          <td class="left" style="font-weight: 600; color: #454545;">
-         
+
                                             Clean , waxy legs</td>
                                          <td>
                                             {{detail.legsCleanWaxy}}
                                          </td>
-         
-         
+
+
                                      </tr>
-         
+
                                      <tr>
                                          <td class="left" style="font-weight: 600; color: #454545;">
-         
+
                                             Some dryness/ pale</td>
                                          <td>
                                             {{detail.legsDrynessPale}}
                                          </td>
-         
-         
+
+
                                      </tr>
                                      <tr>
                                          <td class="left" style="font-weight: 600; color: #454545;">
-         
+
                                             Deshydrated with vein protruding</td>
                                          <td>
                                             {{detail.legsDeshydratedVienProtruding}}
                                          </td>
-                                       
-         
+
+
                                      </tr>
-        
+
                                      <tr>
                                         <td rowspan="3">Hocks </td>
                                          <td class="left" style="font-weight: 600; color: #454545;">
@@ -180,29 +180,29 @@
                                          <td>
                                            {{detail.hocksCleanNoblemishes}}
                                          </td>
-         
-         
+
+
                                      </tr>
-         
+
                                      <tr>
                                          <td class="left" style="font-weight: 600; color: #454545;">
-         
+
                                             slight blushing</td>
                                          <td>
                                              {{detail.hocksSlightBlushing}}
                                          </td>
-         
+
                                      </tr>
                                      <tr>
                                          <td class="left" style="font-weight: 600; color: #454545;">
-         
+
                                             Red color / heavy blushing</td>
                                          <td>
                                              {{detail.hocksRedcolorHeavyblushing}}
                                          </td>
-         
+
                                      </tr>
-        
+
                                      <tr>
                                         <td rowspan="3">Defects </td>
                                          <td class="left" style="font-weight: 600; color: #454545;">
@@ -210,29 +210,29 @@
                                          <td>
                                             {{detail.defectsCleanNodefects}}
                                          </td>
-         
+
                                      </tr>
-         
+
                                      <tr>
                                          <td class="left" style="font-weight: 600; color: #454545;">
-         
+
                                             Minor defects ( yolk staining , feather coloration,…)</td>
                                          <td>
                                              {{detail.defectsMinorDefects}}
                                          </td>
-         
-         
+
+
                                      </tr>
                                      <tr>
                                          <td class="left" style="font-weight: 600; color: #454545;">
-         
+
                                             missing eye / blind , legs with cuts/ abrasions , spraddled legs ,cross beaks , poor feathering , clubbed down</td>
                                          <td>
                                              {{detail.defectsEyeLegsSpraddled}}
-         
+
                                          </td>
-         
-         
+
+
                                      </tr>
                                 </tbody>
                             </table>
