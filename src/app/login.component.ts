@@ -1,15 +1,15 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HeaderComponent } from './shared/header/header.component';
-import { ToastrService } from 'ngx-toastr';
-import { AuthService } from './services/auth.service';
-import { TokenStorgeService } from './services/token-storge.service';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
+import {HeaderComponent} from './shared/header/header.component';
+import {ToastrService} from 'ngx-toastr';
+import {AuthService} from './services/auth.service';
+import {TokenStorgeService} from './services/token-storge.service';
 import {map} from 'rxjs/operators';
-import { UserService } from './services/user.service';
+import {UserService} from './services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   mdpForm: FormGroup;
-  basic=false
-  email=""
+  basic = false;
+  email = '';
   public captchaIsLoaded = false;
   public captchaSuccess = false;
   public captchaIsExpired = false;
@@ -46,20 +46,22 @@ export class LoginComponent implements OnInit {
       observe: 'response',
     })
   };
-  @ViewChild('recaptcha', { static: true }) recaptchaElement: ElementRef;
+  @ViewChild('recaptcha', {static: true}) recaptchaElement: ElementRef;
   protected aFormGroup: FormGroup;
+
   constructor(private formBuilder: FormBuilder,
-     private router: Router,
-      private http: HttpClient,
-    private headerComponent:HeaderComponent,
-    private toaster : ToastrService,
-    private authService:AuthService, 
-    private tokenStorage : TokenStorgeService,
-    private userService : UserService) { }
+              private router: Router,
+              private http: HttpClient,
+              private headerComponent: HeaderComponent,
+              private toaster: ToastrService,
+              private authService: AuthService,
+              private tokenStorage: TokenStorgeService,
+              private userService: UserService) {
+  }
 
 
   code: any;
-  inputCode: any
+  inputCode: any;
 
   onGenerateCode(code) {
 
@@ -78,12 +80,9 @@ export class LoginComponent implements OnInit {
   }
 
 
-
-
-
   authenticate() {
-    this.authService.login({ 'username': this.login, 'password': this.password }).subscribe((data:any)=>{
-      console.log(data)
+    this.authService.login({'username': this.login, 'password': this.password}).subscribe((data: any) => {
+      console.log(data);
       if (data == null) {
 
         this.isLoginFailed = false;
@@ -92,37 +91,40 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('user', this.login);
         localStorage.setItem('companyID', this.authService.currentUserValue.user.companyID);
         localStorage.setItem('role', this.authService.currentUserValue.user.role);
-        this.userService.getConsultingRole().subscribe(res=>{console.log(res)
-          let roles = res.find(({ description }) => description === this.authService.currentUserValue.user.role)
-          localStorage.setItem('roleID', roles.roleID)
-        })
-        //localStorage.setItem('roleID', this.authService.currentUserValue.user.roleObject.roleID)
-            this.headerComponent.login=true
-            this.headerComponent.role=localStorage.getItem("role")
-            this.router.navigateByUrl('/Dashboard/general');
-            this.toaster.success("","Welcome")
+        this.userService.getConsultingRole().subscribe(res => {
+          console.log(res);
+          let roles = res.find(({description}) => description === this.authService.currentUserValue.user.role);
+          localStorage.setItem('roleID', roles.roleID);
+        });
+        this.headerComponent.login = true;
+        this.headerComponent.role = localStorage.getItem('role');
+        this.router.navigateByUrl('/Dashboard/general');
+        this.toaster.success('', 'Welcome');
 
-    }},(error)=>{this.toaster.error("wrong password or login","Error")})
-  
+      }
+    }, (error) => {
+      this.toaster.error('wrong password or login', 'Error');
+    });
+
   }
 
   resolved(captchaResponse: string) {
     console.log(`Resolved captcha with response: ${captchaResponse}`);
   }
 
-  sendEmail(){
-    if (this.mdpForm.invalid){
-      this.basic= false;
+  sendEmail() {
+    if (this.mdpForm.invalid) {
+      this.basic = false;
       this.toaster.warning('veuillez vérifier votre login');
       return;
     }
-    console.log(this.mdpForm.value.login)
+    console.log(this.mdpForm.value.login);
     this.authService
       .resetpassword(this.mdpForm.value.login)
       .subscribe(
         (data: any) => {
           this.toaster.success('un email est envoyé à votre adresse');
-          this.basic= false;
+          this.basic = false;
         },
         (error) => {
           console.log(error);

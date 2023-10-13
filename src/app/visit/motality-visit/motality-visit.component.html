@@ -1,0 +1,118 @@
+<!-- Dialog for weight management -->
+<form clrForm class="clr-form clr-form-horizontal">
+  <clr-modal title="Mortality" [(clrModalOpen)]="show" [clrModalStaticBackdrop]="true">
+    <h3 class="modal-title" style="color: #02675c;"><img src="../../../assets/Icones visit/mortality.png" width="30" height="30">
+      Mortality Mesurement
+    </h3>
+
+    <div class="modal-header">
+      <h3 class="modal-title" style="color: #02675c; padding-bottom: 0;"><img src="../../../assets/icons8-weight-96.png"
+                                                                              width="22"
+                                                                              height="22">
+        Moratlity
+      </h3>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div>
+          <!-- form-visit part 1 -->
+          <div class="formV clr-row">
+            <clr-select-container class="clr-col-md-6 clr-row">
+              <label for="farm" class="clr-control-label clr-col-3">Center </label>
+              <select class="clr-col-7" clrSelect name="farm" [(ngModel)]="centerId" name="farmID"
+                      (change)="getCenterId($event.target.value)"
+                      style="width: 190px;  background-color: #f5f5f5;">
+                <option value="" hidden>Select something...</option>
+                <option *ngFor="let center of centers " [value]='center.centerId'>
+                  {{center.centerName}}
+                </option>
+              </select>
+            </clr-select-container>
+            <clr-select-container class="clr-col-md-6 clr-row">
+              <label for="house" class="clr-control-label clr-col-3">House </label>
+              <select class="clr-col-7" clrSelect name="houseId" [(ngModel)]="houseId"
+                      style="width: 190px;     background-color: #f5f5f5;"
+                      (change)="getHouseId($event.target.value)">
+                <option *ngFor="let house of houses" [value]='house.houseId'>
+                  {{house.houseName}}
+                </option>
+              </select>
+            </clr-select-container>
+
+          </div>
+
+          <div class="formV clr-row">
+            <clr-input-container class="clr-col-md-4 clr-form-control clr-row">
+              <label for="flock" class="clr-control-label clr-col-3">
+                Flock
+              </label>
+              <input type="text" clrInput name="flockName" [(ngModel)]="flockName"
+                     class="clr-col-7" readonly/>
+            </clr-input-container>
+            <clr-input-container class="formDate clr-form-control clr-col-md-4">
+              <label for="breed" class="clr-control-label clr-col-3">
+                Breed </label>
+              <input type="text" clrInput name="breeddescription" [(ngModel)]="breed"
+                     class="clr-col-7" readonly/>
+            </clr-input-container>
+            <clr-input-container class="formDate clr-form-control clr-col-md-4">
+              <label for="chickPlaced" class="clr-control-label clr-col-8">
+                Chick placed </label>
+              <input type="text" clrInput name="chickPlaced" [(ngModel)]="chickPlaced"
+                     class="clr-col-4" readonly/>
+            </clr-input-container>
+
+
+          </div>
+        </div>
+        <table class="table table-noborder">
+          <thead>
+          <tr>
+            <th>Mesure</th>
+            <th>Age</th>
+            <th>Visit date</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let h of historiqueMortality; even as isEven; odd as isOdd"
+              [ngClass]="{'even-row': isEven, 'odd-row': isOdd}">
+            <td>{{h.measure}}</td>
+            <td>{{h.ageFlock}}</td>
+            <td>{{h.visitDate}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <div>
+          <button *ngIf="flockName!=null" type="button" class="btn btn-primary" (click)="add=true">Add new measure</button>
+          <div style="background-color:rgb(75 175 167 / 29%);" *ngIf="add">
+            <table class="table table-noborder">
+              <thead>
+              <tr>
+                <th>Visit date</th>
+                <th>Age</th>
+                <th>Mesure</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr  class="testmortality">
+              <td><input clrInput type="date" size="12" (change)="calculAgeOfFlock()" [(ngModel)]="visitDate" name="visitDate"></td>
+              <td><input type="text" clrInput name="ageofFlock" [(ngModel)]="ageOfTheFlock" readonly/></td>
+              <td><input type="text" clrInput name="mortality" [(ngModel)]="measureMortality" /></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+
+      <div class="clr-row clr-col-xs-12-sm-12 buttonfooter">
+        <button type="button" class="btn btn-outline" (click)="show = false">Cancel</button>
+        <button type="button" class="btn btn-primary " (click)="AddNew()" >save</button>
+      </div>
+    </div>
+
+
+  </clr-modal>
+</form>

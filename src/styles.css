@@ -71,6 +71,12 @@ button {
   outline: 0 !important;
 }
 
+.testmortality .clr-form-control {
+  margin-top: 0rem !important;
+
+}
+
+
 .datagrid-table {
   display: flex;
   flex-direction: column;
@@ -350,15 +356,15 @@ h3 {
 .bg .main-container {
   display: flex;
   flex-direction: column;
-  height: 100% !important; 
+  height: 100% !important;
   background: url(../src/assets/bgbro.jpg) !important;
-  background-size: cover !important; 
+  background-size: cover !important;
   /*background: #fafafa;
   background: var(--clr-global-app-background, #fafafa);*/
 }
 clr-main-container{
   background: url(../src/assets/bgbro.jpg) !important;
-  background-size: cover !important; 
+  background-size: cover !important;
 }
 
 clr-main-container:-webkit-scrollbar { width: 0 !important }

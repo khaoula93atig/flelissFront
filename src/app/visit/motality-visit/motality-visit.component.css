@@ -1,0 +1,14 @@
+.tablecolor:nth-child(even) {
+  background-color: #f5f5f5;
+}
+.even-row {
+  background-color: #02675c0f;
+}
+
+.odd-row {
+  background-color: transparent;
+}
+.testmortality .clr-form-control {
+  margin-top: 0rem !important;
+
+}

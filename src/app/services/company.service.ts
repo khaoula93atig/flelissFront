@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import {Injectable} from '@angular/core';
+import {HttpHeaders, HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
-import { BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,10 @@ export class CompanyService {
       'Content-Type': 'application/json; charset=UTF-8'
     })
   };
-  constructor(private http: HttpClient) { }
-  
+
+  constructor(private http: HttpClient) {
+  }
+
   private reloadRequested = new BehaviorSubject<boolean>(false);
   goForReload = this.reloadRequested.asObservable();
 
@@ -24,18 +26,24 @@ export class CompanyService {
   askForReload(reload: boolean) {
     this.reloadRequested.next(reload);
   }
+
   //**********Company***********/
 
 //get all Company
   getConsultingCompany() {
 
-    return this.http.get<any>(environment.url_company,this.httpOptions);
-   
+    return this.http.get<any>(environment.url_company, this.httpOptions);
+
   }
 
-//save modification 
-   save(company: any) {
-    return this.http.put<any>(environment.url_company + "/update", company);
+// save modification
+  save(company: any) {
+    return this.http.put<any>(environment.url_company + '/update', company);
   }
-  
+
+  // get compnay by id
+  getCompanyById(companyId: string): Observable<any>{
+    return this.http.get<any>(environment.url_company + '/' + companyId);
+  }
+
 }

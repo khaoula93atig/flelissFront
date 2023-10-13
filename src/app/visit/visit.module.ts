@@ -14,7 +14,8 @@ import { AuthGuardGuard } from '../services/auth-guard.guard'
 import { WeeklyWeightComponent } from './weekly-weight/weekly-weight.component'
 import { WeeklyFeedComponent } from './weekly-feed/weekly-feed.component'
 import { NgxEchartsModule } from 'ngx-echarts'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MotalityVisitComponent } from './motality-visit/motality-visit.component'
 
 const routes: Routes = [
   {
@@ -43,6 +44,7 @@ const routes: Routes = [
     NewVisitComponent,
     WeeklyWeightComponent,
     WeeklyFeedComponent,
+    MotalityVisitComponent,
   ],
   imports: [
     CommonModule,
