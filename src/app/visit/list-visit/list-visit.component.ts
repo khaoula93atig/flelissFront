@@ -97,7 +97,9 @@ export class ListVisitComponent implements OnInit {
     console.log(event);
     if (event != null && event != undefined) {
       this.visitId = event.visitId;
-      this.visitService.getConsultingvisitID(this.visitId).subscribe(data => {
+      console.log(this.visitId);
+      this.showTaskResult(this.visitId)
+      /*this.visitService.getConsultingvisitID(this.visitId).subscribe(data => {
         this.visittasks = data;
         for (let i = 0; i < this.visittasks.length; i++) {
           if (this.visittasks[i].taskId == 8) {
@@ -105,7 +107,7 @@ export class ListVisitComponent implements OnInit {
           }
         }
         console.log(data);
-      });
+      });*/
     }
   }
 
@@ -113,75 +115,76 @@ export class ListVisitComponent implements OnInit {
   showTaskResult(id: string): void {
     this.subs.add(
       this.visitService.getConsultingvisitID(id).subscribe(
-        (visittasks) => {
-          console.log(visittasks);
+        (data) => {
+          console.log(data);
+          this.visittasks=data;
           this.visittasks.forEach((element) => {
           });
-          for (let i = 0; i < visittasks.length; i++) {
-            if (visittasks[i].taskId == 1) {
+          for (let i = 0; i < data.length; i++) {
+            if (data[i].taskId == 1) {
 
-              this.measureTemResult = visittasks[i].measure;
-              this.standardTemResult = visittasks[i].standard;
-              this.deviationTemResult = visittasks[i].deviation;
-              this.descritptionTemResult = visittasks[i].task.description;
-            } else if (visittasks[i].taskId == 2) {
-              this.measureHumResult = visittasks[i].measure;
-              this.standardHumResult = visittasks[i].standard;
-              this.deviationHumResult = visittasks[i].deviation;
-              this.descritptionHumResult = visittasks[i].task.description;
-            } else if (visittasks[i].taskId == 3) {
-              this.measureAirSResult = visittasks[i].measure;
-              this.standardAirSResult = visittasks[i].standard;
-              this.deviationAirSResult = visittasks[i].deviation;
-              this.descritptionAirSResult = visittasks[i].task.description;
-            } else if (visittasks[i].taskId == 4) {
-              this.measureAmoResult = visittasks[i].measure;
-              this.standardAmoResult = '< ' + visittasks[i].standard;
-              this.deviationAmoResult = visittasks[i].deviation;
-              this.descritptionAmoResult = visittasks[i].task.description;
-            } else if (visittasks[i].taskId == 5) {
-              this.measureLighIResult = visittasks[i].measure;
-              this.standardLighIResult = visittasks[i].standard;
-              this.deviationLighIResult = visittasks[i].deviation;
-              this.descritptionLighIResult = visittasks[i].task.description;
-            } else if (visittasks[i].taskId == 6) {
-              this.measureFeedCResult = visittasks[i].measure;
-              this.percentageFeedCResult = visittasks[i].percentage.toFixed(2);
-              this.standardFeedCResult = visittasks[i].standard;
-              this.deviationFeedCResult = visittasks[i].deviation;
-              this.descritptionFeedCResult = visittasks[i].task.description;
-            } else if (visittasks[i].taskId == 7) {
-              this.measureWatCResult = visittasks[i].measure;
-              this.percentageWatCResult = visittasks[i].percentage.toFixed(2);
-              this.standardWatCResult = visittasks[i].standard;
-              this.deviationWatCResult = visittasks[i].deviation;
-              this.descritptionWatCResult = visittasks[i].task.description;
-            } else if (visittasks[i].taskId == 8) {
-              this.measureMortResult = visittasks[i].measure;
-              this.standardMortResult = visittasks[i].standard;
-              this.deviationMortResult = visittasks[i].deviation;
-              this.descritptionMortResult = visittasks[i].task.description;
-              this.percentageMortResult = visittasks[i].percentage.toFixed(2);
-            } else if (visittasks[i].taskId == 9) {
-              this.measureLittCResult = visittasks[i].measure;
-              this.standardLittCResult = visittasks[i].standard;
-              this.deviationLittCResult = visittasks[i].deviation;
-              this.descritptionLittCResult = visittasks[i].task.description;
-            } else if (visittasks[i].taskId == 10) {
-              this.measureDensResult = visittasks[i].measure;
-              this.standardDensResult = visittasks[i].standard;
-              this.deviationDensResult = visittasks[i].deviation;
-              this.descritptionDensResult = visittasks[i].task.description;
-            } else if (visittasks[i].taskId == 11) {
-              this.measureWeightResult = visittasks[i].measure;
-              this.standardWeightResult = visittasks[i].standard;
-              this.deviationWeightResult = visittasks[i].deviation;
-              this.descritptionWeightResult = visittasks[i].task.description;
-            } else if (visittasks[i].taskId == 12) {
-              this.measureHomogResult = visittasks[i].measure;
-              this.standardHomogResult = visittasks[i].standard;
-              this.deviationHomogResult = visittasks[i].deviation;
-              this.descritptionHomogResult = visittasks[i].task.description;
+              this.measureTemResult = data[i].measure;
+              this.standardTemResult = data[i].standard;
+              this.deviationTemResult = data[i].deviation;
+              this.descritptionTemResult = data[i].task.description;
+            } else if (data[i].taskId == 2) {
+              this.measureHumResult = data[i].measure;
+              this.standardHumResult = data[i].standard;
+              this.deviationHumResult = data[i].deviation;
+              this.descritptionHumResult = data[i].task.description;
+            } else if (data[i].taskId == 3) {
+              this.measureAirSResult = data[i].measure;
+              this.standardAirSResult = data[i].standard;
+              this.deviationAirSResult = data[i].deviation;
+              this.descritptionAirSResult = data[i].task.description;
+            } else if (data[i].taskId == 4) {
+              this.measureAmoResult = data[i].measure;
+              this.standardAmoResult = '< ' + data[i].standard;
+              this.deviationAmoResult = data[i].deviation;
+              this.descritptionAmoResult = data[i].task.description;
+            } else if (data[i].taskId == 5) {
+              this.measureLighIResult = data[i].measure;
+              this.standardLighIResult = data[i].standard;
+              this.deviationLighIResult = data[i].deviation;
+              this.descritptionLighIResult = data[i].task.description;
+            } else if (data[i].taskId == 6) {
+              this.measureFeedCResult = data[i].measure;
+              this.percentageFeedCResult = data[i].percentage.toFixed(2);
+              this.standardFeedCResult = data[i].standard;
+              this.deviationFeedCResult = data[i].deviation;
+              this.descritptionFeedCResult = data[i].task.description;
+            } else if (data[i].taskId == 7) {
+              this.measureWatCResult = data[i].measure;
+              this.percentageWatCResult = data[i].percentage.toFixed(2);
+              this.standardWatCResult = data[i].standard;
+              this.deviationWatCResult = data[i].deviation;
+              this.descritptionWatCResult = data[i].task.description;
+            } else if (data[i].taskId == 8) {
+              this.measureMortResult = data[i].measure;
+              this.standardMortResult = data[i].standard;
+              this.deviationMortResult = data[i].deviation;
+              this.descritptionMortResult = data[i].task.description;
+              this.percentageMortResult = data[i].percentage.toFixed(2);
+            } else if (data[i].taskId == 9) {
+              this.measureLittCResult = data[i].measure;
+              this.standardLittCResult = data[i].standard;
+              this.deviationLittCResult = data[i].deviation;
+              this.descritptionLittCResult = data[i].task.description;
+            } else if (data[i].taskId == 10) {
+              this.measureDensResult = data[i].measure;
+              this.standardDensResult = data[i].standard;
+              this.deviationDensResult = data[i].deviation;
+              this.descritptionDensResult = data[i].task.description;
+            } else if (data[i].taskId == 11) {
+              this.measureWeightResult = data[i].measure;
+              this.standardWeightResult = data[i].standard;
+              this.deviationWeightResult = data[i].deviation;
+              this.descritptionWeightResult = data[i].task.description;
+            } else if (data[i].taskId == 12) {
+              this.measureHomogResult = data[i].measure;
+              this.standardHomogResult = data[i].standard;
+              this.deviationHomogResult = data[i].deviation;
+              this.descritptionHomogResult = data[i].task.description;
             }
           }
         },
@@ -213,7 +216,7 @@ export class ListVisitComponent implements OnInit {
     );
   }
 
-  // get by company id
+  /* get by company id
   getCompanyId(detail) {
     this.visitId = detail;
   }
@@ -221,6 +224,6 @@ export class ListVisitComponent implements OnInit {
   // substr houseId
   gethouse_id(id: string) {
     return id.substr(10, id.length);
-  }
+  }*/
 
 }

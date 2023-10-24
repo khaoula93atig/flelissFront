@@ -10,6 +10,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import jsPDF from 'jspdf';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-chick-reception-list',
@@ -24,6 +25,8 @@ export class ChickReceptionListComponent implements OnInit {
   house: any;
   detail: any;
   variation: any;
+  company: string;
+  image: string;
   @ViewChild(ClrDatagrid) dg: ClrDatagrid;
 
   constructor(private visitAuditsService: VisitAuditsService,
@@ -32,6 +35,9 @@ export class ChickReceptionListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.company = localStorage.getItem('companyID');
+    console.log(this.company);
+    this.image = environment.url_company + '/image/' + this.company;
     this.farmId = localStorage.getItem('farmID');
     this.visitAuditsService.getCheckReceptionByFarm(this.farmId).subscribe(data => {
       this.visits = data;
@@ -73,6 +79,7 @@ export class ChickReceptionListComponent implements OnInit {
   this.variation = 'Bad';
   }
     const backgroundImage = await getBase64ImageFromURL('/assets/fleliss-v-negatif.png');
+    const logo = await getBase64ImageFromURL(this.image);
     const docDefinition = {
       background: {
         image: backgroundImage,
@@ -83,12 +90,23 @@ export class ChickReceptionListComponent implements OnInit {
         style: 'pageBackground',
       },
       content: [
-        {text: 'Chick Reception list', style: 'header'},
-        {text: 'Visit date : ' + this.detail.visitDate, style: 'subheader'},
         {
+          columns: [
+            {image: backgroundImage , width: 75 , alignment: 'left'},
+
+
+            {text: 'Chick Reception list', style: 'header'},
+
+            {image: logo , width: 75 , alignment: 'right'},
+          ],
+          columnGap: 10
+        },
+        {text: 'Visit date : ' + this.detail.visitDate, style: 'subheader'}, {
           style: 'tableHeader',
           table: {
             headerRows: 1,
+            heights: 30,
+            widths : ['auto', 200 , 'auto', 100],
             body: [
               ['House :', this.detail.house.houseName, 'Flock :', this.detail.flock.flockName],
               ['Breed :', this.detail.breed, 'Hatch date :', this.detail.hatchDate],
@@ -117,6 +135,13 @@ export class ChickReceptionListComponent implements OnInit {
               ['', 'Minor defects (yolk staining , feather coloration, ...)', this.detail.defectsMinorDefects],
               ['', 'missing eye / blind , legs with cuts/ abrasions , spraddled legs ,cross beaks , poor feathering , clubbed down', this.detail.defectsEyeLegsSpraddled]
             ],
+          }, layout: {
+            paddingTop: function (i, node) {
+              return 5;
+            },
+            paddingBottom: function (i, node) {
+              return 5;
+            }
           }
         }
       ],
@@ -131,7 +156,7 @@ export class ChickReceptionListComponent implements OnInit {
         header: {
           fontSize: 18,
           bold: true,
-          margin: [0, 0, 0, 10],
+          margin: [0, 70, 0, 10],
           alignment: 'center',
         },
         subheader: {
@@ -146,7 +171,7 @@ export class ChickReceptionListComponent implements OnInit {
           bold: true,
         },
         tableContent: {
-          margin: [0, 5, 0, 15]
+          margin: [20, 5, 0, 10],
         },
         head: {
           bold: true, fillColor: '#EEEEEE'
@@ -156,41 +181,4 @@ export class ChickReceptionListComponent implements OnInit {
 
     pdfMake.createPdf(docDefinition).download('Report-CR-' + this.detail.visitDate + '.pdf');
   }
-
-
-  /*generatePdf(data) {
-    html2canvas(data, {allowTaint: true}).then((canvas) => {
-      let HTML_Width = canvas.width;
-      let HTML_Height = canvas.height;
-      let top_left_margin = 15;
-      let PDF_Width = HTML_Width + top_left_margin * 2;
-      let PDF_Height = PDF_Width * 1.5 + top_left_margin * 2;
-      let canvas_image_width = HTML_Width;
-      let canvas_image_height = HTML_Height;
-      let totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
-      canvas.getContext('2d');
-      let imgData = canvas.toDataURL('image/jpeg', 1.0);
-      let pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
-      pdf.addImage(
-        imgData,
-        'JPG',
-        top_left_margin,
-        top_left_margin,
-        canvas_image_width,
-        canvas_image_height,
-      );
-      for (let i = 1; i <= totalPDFPages; i++) {
-        pdf.addPage([PDF_Width, PDF_Height], 'p');
-        pdf.addImage(
-          imgData,
-          'JPG',
-          top_left_margin,
-          -(PDF_Height * i) + top_left_margin * 4,
-          canvas_image_width,
-          canvas_image_height,
-        );
-      }
-      pdf.save('Report-chick-Reception.pdf');
-    });
-  }*/
 }

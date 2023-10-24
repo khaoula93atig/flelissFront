@@ -6,6 +6,7 @@ import {AutofocusDirective} from 'src/app/shared/autofocus.directive';
 import {getBase64ImageFromURL} from '../../shared/ImageFromUrl';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import {environment} from '../../../environments/environment';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -23,6 +24,8 @@ export class ListManagerAuditVistComponent implements OnInit {
   loading = true;
   deviation = '';
   breedingDetail: any;
+  company: string;
+  image: string;
 
   constructor(
     private visitAuditsService: VisitAuditsService,
@@ -39,6 +42,9 @@ export class ListManagerAuditVistComponent implements OnInit {
     });
 
     this.loading = false;
+    this.company = localStorage.getItem('companyID');
+    console.log(this.company);
+    this.image = environment.url_company + '/image/' + this.company;
   }
 
   open() {
@@ -60,6 +66,7 @@ export class ListManagerAuditVistComponent implements OnInit {
 
   public async export(): Promise<void> {
     const backgroundImage = await getBase64ImageFromURL('/assets/fleliss-v-negatif.png');
+    const logo = await getBase64ImageFromURL(this.image);
 
     const docDefinition = {
       background: {
@@ -70,8 +77,16 @@ export class ListManagerAuditVistComponent implements OnInit {
         margin: [0, 180, 0, 0],
         style: 'pageBackground',
       },
-      content: [
-        {text: 'Breeding management', style: 'header'},
+      content: [{
+          columns: [
+            {image: backgroundImage , width: 75 , alignment: 'left'},
+
+            {text: 'Breeding management', style: 'header'},
+
+            {image: logo , width: 75 , alignment: 'right'},
+          ],
+          columnGap: 10
+        },
         {text: 'Visit date : ' + this.breedingDetail.visitDate, style: 'subheader'},
         {
           text:
@@ -86,6 +101,9 @@ export class ListManagerAuditVistComponent implements OnInit {
         {
           style: 'tableExample',
           table: {
+            widths: [400, 'auto'],
+            margin: [10, 10 , 10 , 10],
+            // heights: 30,
             headerRows: 1,
             body: [['', 'Status'],
               ['Cleanliness of buildings', this.breedingDetail.cleanlinessBuild],
@@ -143,6 +161,13 @@ export class ListManagerAuditVistComponent implements OnInit {
               ['Vaccine dose control', this.breedingDetail.vaccineDoseControl],
               ['Technical performance', this.breedingDetail.technicalPerformance],
             ]
+          },layout: {
+            paddingTop: function (i, node) {
+              return 5;
+            },
+            paddingBottom: function (i, node) {
+              return 5;
+            }
           }
         }
       ],
@@ -157,7 +182,7 @@ export class ListManagerAuditVistComponent implements OnInit {
         header: {
           fontSize: 18,
           bold: true,
-          margin: [0, 0, 0, 10],
+          margin: [0, 70, 0, 10],
           alignment: 'center',
         },
         subheader: {
@@ -166,7 +191,7 @@ export class ListManagerAuditVistComponent implements OnInit {
           margin: [0, 10, 0, 5]
         },
         tableExample: {
-          margin: [0, 5, 0, 15],
+          margin: [20, 5, 0, 10],
         },
         head: {
           bold: true, fillColor: '#EEEEEE'

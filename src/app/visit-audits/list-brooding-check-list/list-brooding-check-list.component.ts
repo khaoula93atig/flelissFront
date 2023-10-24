@@ -6,6 +6,7 @@ import {AutofocusDirective} from 'src/app/shared/autofocus.directive';
 import {getBase64ImageFromURL} from '../../shared/ImageFromUrl';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import {environment} from '../../../environments/environment';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -25,6 +26,8 @@ export class ListBroodingCheckListComponent implements OnInit {
   visits = [];
   loading = true;
   breedingDetail: any;
+  company: string;
+  image: string;
 
   constructor(private visitAuditsService: VisitAuditsService,
               private houseService: HouseService,
@@ -32,6 +35,9 @@ export class ListBroodingCheckListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.company = localStorage.getItem('companyID');
+    console.log(this.company);
+    this.image = environment.url_company + '/image/' + this.company;
     this.farmId = localStorage.getItem('farmID');
     this.visitAuditsService.getBroodingCheckByFarm(this.farmId).subscribe(data => {
       console.log(data);
@@ -54,6 +60,7 @@ export class ListBroodingCheckListComponent implements OnInit {
 
   public async export(): Promise<void>{
     const backgroundImage = await getBase64ImageFromURL('/assets/fleliss-v-negatif.png');
+    const logo = await getBase64ImageFromURL(this.image);
     const docDefinition = {
       background: {
         image: backgroundImage,
@@ -64,7 +71,12 @@ export class ListBroodingCheckListComponent implements OnInit {
         style: 'pageBackground',
       },
       content: [
-        {text: 'Brooding check list', style: 'header'},
+        {columns: [{image: backgroundImage , width: 75 , alignment: 'left'},
+            {text: 'Brooding check list', style: 'header'},
+            {image: logo , width: 75 , alignment: 'right'},
+        ],
+          columnGap: 10
+        },
         {text: 'Visit date : ' + this.breedingDetail.creationDate, style: 'subheader'},
         {
           text:
@@ -99,13 +111,13 @@ export class ListBroodingCheckListComponent implements OnInit {
               [{
                 text: 'Check delivery',
                 bold: true,
-                rowSpan: 7
+                rowSpan: 5
               }, 'Delivery vehicle temperature (chick box :32°C outside chickbox : 24°C)', this.breedingDetail.deliveryVehiTemp],
               ['', 'Delivery vehicle humidity: (60-70%)', this.breedingDetail.deliveryVehiHumi],
               ['', 'Chick confort ( rectal temperature ):(39.5-40.5 °C)', this.breedingDetail.deliveryVehiTemp],
               ['', 'External environmental conditions ( Temperature , Humidity )', this.breedingDetail.externalEnvCond],
               ['', 'Transit time ( hatchery- farm ): (short / long)', this.breedingDetail.transitTime],
-              ['', 'Delivery vehicle : air exchange', this.breedingDetail.deliveryVehicleAirExch],
+              [{text: '', rowSpan: 2}, 'Delivery vehicle : air exchange', this.breedingDetail.deliveryVehicleAirExch],
               ['', 'Delivery vehicle : hygiene (disinfected)', this.breedingDetail.deliveryVehicleHygiene],
               [{
                 text: 'The arrival',
@@ -119,15 +131,22 @@ export class ListBroodingCheckListComponent implements OnInit {
               [{
                 text: 'After installation',
                 bold: true,
-                rowSpan: 4
+                rowSpan: 7
               }, 'Check chick behavior after 1-2 hours', this.breedingDetail.checkChickBehavior],
               ['', 'Check chick water supply ( fresh & clean water )', this.breedingDetail.checkChickWaterSupply],
               ['', 'Check feed supply ( small & frequent )', this.breedingDetail.checkFeedSupply],
               ['', 'Check chick crop fill', this.breedingDetail.checkChickCropFill],
-              [{text: '', rowSpan: 3}, 'Distribution of day old chicks', this.breedingDetail.distributionDayOldChicks],
+              ['', 'Distribution of day old chicks', this.breedingDetail.distributionDayOldChicks],
               ['', 'Daily purges piping', this.breedingDetail.dailyPurgesPiping],
               ['', 'Air quality', this.breedingDetail.airQuality],
             ]
+          }, layout: {
+            paddingTop: function (i, node) {
+              return 5;
+            },
+            paddingBottom: function (i, node) {
+              return 5;
+            }
           }
         }
       ],
@@ -142,7 +161,7 @@ export class ListBroodingCheckListComponent implements OnInit {
         header: {
           fontSize: 18,
           bold: true,
-          margin: [0, 0, 0, 10],
+          margin: [0, 70, 0, 10],
           alignment: 'center',
         },
         subheader: {
@@ -151,7 +170,7 @@ export class ListBroodingCheckListComponent implements OnInit {
           margin: [0, 10, 0, 5]
         },
         tableExample: {
-          margin: [0, 5, 0, 15]
+          margin: [20, 5, 0, 10]
         },
         head: {
           bold: true, fillColor: '#EEEEEE'

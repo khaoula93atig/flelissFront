@@ -29,39 +29,31 @@ import {faExclamationCircle} from '@fortawesome/free-solid-svg-icons';
 })
 export class NewVisitComponent implements OnInit {
   visitIDnew: any = '';
-  exampleForm = new FormGroup({
-    sample: new FormControl('', Validators.required),
-  });
-
-
   max: number;
   input: number;
   date: Date;
-  latest_date: String;
   taskId: string;
   visitId: string;
   measure: DoubleRange;
   standard: string;
-  actionPlan: string;
   hatchDate: Date;
   chikedPlaced: any;
   name: string;
-  dateToday: Date = new Date();
   startOfCycle: string;
-  addForm: FormGroup;
-  House_id: any[] = [];
   breeddescription: string;
   username: string;
-  rows: FormArray;
-  itemForm: FormGroup;
   weightCalcul = true;
+  totalFeed = 0;
+  totalWater = 0;
+  testFeed = 0;
+  testWater = 0;
 
   constructor(
-    private FarmService: FarmService,
-    private VisitService: VisitService,
-    private HouseService: HouseService,
+    private farmService: FarmService,
+    private visitService: VisitService,
+    private houseService: HouseService,
     private datepipe: DatePipe,
-    private ListComponenet: ListVisitComponent,
+    private listComponenet: ListVisitComponent,
     private FlockService: FlockService,
     library: FaIconLibrary
   ) {
@@ -81,13 +73,10 @@ export class NewVisitComponent implements OnInit {
   visittasks: any = [];
   house: any[] = [];
   visit: any[] = [];
-  alldata: any[] = [];
   visitDate: string;
   breedId: number;
-  frequency: string;
   breed: BigInteger;
   flockID: string;
-  userID: string;
   psOrigin: string;
   birdsNumber: number;
   birdsNumberDay0: number;
@@ -97,8 +86,7 @@ export class NewVisitComponent implements OnInit {
   houseId: string = '';
   description: string;
   ageOfTheFlock: any;
-  datevisit: Date;
-  //task fields
+  // task fields
   tempTask: IRegistrationTask;
   humidityTask: IRegistrationTask;
   airSpeedTask: IRegistrationTask;
@@ -113,64 +101,64 @@ export class NewVisitComponent implements OnInit {
   homogeneityFlockTask: IRegistrationTask;
   maxWeight: number;
   minWeight: number;
-  //humidity fields
+  // humidity fields
   measureHumResult: string;
   standardHumResult: string;
   deviationHumResult: string;
-  //temperature fields
+  // temperature fields
   measureTemResult: string;
   standardTemResult: string;
   deviationTemResult: string;
-  //airSpeedTask fields
+  // airSpeedTask fields
   measureAirSResult: string;
   standardAirSResult: string;
   deviationAirSResult: string;
-  //amoniacTask fields
+  // amoniacTask fields
   measureAmoResult: string;
   standardAmoResult: string;
   deviationAmoResult: string;
-  //lightIntensityTask fields
+  // lightIntensityTask fields
   measureLighIResult: string;
   standardLighIResult: string;
   deviationLighIResult: string;
-  //feedConsumptionTask fields
+  // feedConsumptionTask fields
   measureFeedCResult: string;
   standardFeedCResult: string;
   deviationFeedCResult: string;
   percentageFeedCResult: string;
-  //waterConsumptionTask fields
+  // waterConsumptionTask fields
   measureWatCResult: string;
   standardWatCResult: string;
   deviationWatCResult: string;
   percentageWatCResult: string;
-  //mortalityTask fields
+  // mortalityTask fields
   measureMortResult: string;
   percentageMortResult: string;
   standardMortResult: string;
   deviationMortResult: string;
-  //litterConditionTask fields
+  // litterConditionTask fields
   measureLittCResult: string;
   standardLittCResult: string;
   deviationLittCResult: string;
-  //densityTask fields
+  // densityTask fields
   measureDensResult: string;
   standardDensResult: string;
   deviationDensResult: string;
-  //weightTask fields
+  // weightTask fields
   measureWeightResult: string;
   standardWeightResult: number;
   deviationWeightResult: string;
-  //homogeneityFlockTask fields
+  // homogeneityFlockTask fields
   measureHomogResult: string;
   standardHomogResult: string;
   deviationHomogResult: string;
-  //task measures
+  // task measures
   measureTemp: number;
   measureHumidity: number;
   measureAirSpeed: number;
   measureAmoniac: number;
   measurelightIntensity: number;
-  measurefeedConsumption: number;
+  measurefeedConsumption: number = 0;
   measureWaterConsumption: number;
   measureMortality: number;
   measureDensity: number;
@@ -188,21 +176,22 @@ export class NewVisitComponent implements OnInit {
   messageWeight: string;
   messageHomogeneity: string;
   centers: any[] = [];
-  //weight fields
+  // weight fields
   weightcalcul: number;
   visitID: string = '';
   weightMeasure: number = 0;
   nbrbirds: number;
   dynamicArray: Array<DynamicGrid> = [];
   newDynamic: any = {};
-  sommeWeight: number = 0;
   centerId: string;
   cv: number;
   flockNumber: number;
+  flockName= " " ;
+  flock: any ;
   // Reference to the included DataGrid showing the different sectors
   @ViewChild(ClrDatagrid) dg: ClrDatagrid;
 
-  gethouse_id(id: string) {
+  /*gethouse_id(id: string) {
     return id.substr(10, id.length);
   }
 
@@ -217,7 +206,7 @@ export class NewVisitComponent implements OnInit {
         this.loading = false;
       }),
     );
-  }
+  }*/
 
   getCenterId(event) {
     this.centerId = event;
@@ -225,6 +214,7 @@ export class NewVisitComponent implements OnInit {
     this.houseId = null;
     this.flockID = null;
     this.flocks = [];
+    this.flockName = null;
     this.startOfCycle = null;
     this.breeddescription = '';
     this.hatchDate = null;
@@ -232,9 +222,8 @@ export class NewVisitComponent implements OnInit {
     this.chikedPlaced = null;
     this.psOrigin = null;
     this.subs.add(
-      this.HouseService.getConsultingHouseByCenter(this.centerId).subscribe(
+      this.houseService.getConsultingHouseByCenter(this.centerId).subscribe(
         (data) => {
-          //console.log('' + JSON.stringify(data))
           this.houses = data;
           this.loading = false;
         },
@@ -242,11 +231,12 @@ export class NewVisitComponent implements OnInit {
     );
   }
 
-  //get getSelectedhouse
+  // get getSelectedhouse
   getHouseId(event) {
     this.houseId = event;
     this.flockID = null;
     this.flocks = [];
+    this.flockName = null;
     this.startOfCycle = null;
     this.breeddescription = '';
     this.hatchDate = null;
@@ -254,7 +244,7 @@ export class NewVisitComponent implements OnInit {
     this.chikedPlaced = null;
     this.psOrigin = null;
     this.subs.add(
-      this.HouseService.gethouse(this.houseId).subscribe((data) => {
+      this.houseService.gethouse(this.houseId).subscribe((data) => {
         this.house = data;
         for (let i of this.house) {
           this.birdsNumber = i.birdsNumber;
@@ -264,94 +254,102 @@ export class NewVisitComponent implements OnInit {
     );
     this.flocks = new Array();
     this.subs.add(
-      this.VisitService.getConsultingFlock(this.houseId).subscribe((data) => {
+      this.visitService.getConsultingFlock(this.houseId).subscribe((data) => {
         for (let element of data) {
           if (element.checkEndOfCycle == false) {
             this.flocks.push(element);
           }
         }
-        this.loading = false;
-      }),
+        console.log(this.flocks);
+        this.flock = this.flocks[0];
+        this.flockName = this.flock.flockName;
+        this.flockID = this.flock.flockID;
+        this.hatchDate = this.flock.hatchDate;
+        this.chikedPlaced = this.flock.chikedPlaced;
+        this.chikedPlaced = this.flock.chikedPlaced;
+        this.psOrigin = this.flock.psOrigin;
+        this.flockNumber = this.flock.flockNumber;
+        this.calculAge();
+        // get breed
+        if ((this.flock.breed = this.flock.breedObject.breedID)) {
+          this.breeddescription = this.flock.breedObject.description;
+          this.breedId = this.flock.breedObject.breedID;
+        }
+        if (this.flock.restFlockNumber == 0) {
+          this.max = this.flock.flockNumber;
+        } else if (this.flock.flockNumber > 0) {
+          this.max = this.flock.restFlockNumber;
+        }
+        console.log(this.max);
+        this.visitService.getweeklyWeightByFlockAndAge(this.ageOfTheFlock, this.flockID).subscribe(
+          data1 => {
+            console.log('weekly', data1);
+            if (data1.length != 0) {
+              this.weightCalcul = false;
+              this.cv = data1[0].cv;
+              this.measureWeight = data1[0].average;
+            }
+
+          });
+        this.visitService.getweeklyfeedByFlockAndAge(this.ageOfTheFlock, this.flockID).subscribe(
+          data2 => {
+            console.log('feed', data2);
+            if (data2.length != 0) {
+              this.measurefeedConsumption = data2[0];
+
+            }
+            this.loading = false;
+          });
+        this.visitService.getVisitTasksVerification(this.flockID, this.ageOfTheFlock, 8).subscribe(data3 => {
+          console.log(data3);
+          this.measureMortality = data3[0].measure;
+        });
+        this.getTotalMeasureTask(this.flockID, this.ageOfTheFlock);
+      })
+  );
+  }
+  calculTotalTemporary(){
+    if (this.testFeed == this.totalFeed) {
+        this.totalFeed = this.totalFeed + this.measurefeedConsumption;
+    }else {
+      this.totalFeed = this.testFeed + this.measurefeedConsumption;
+    }
+  }
+    calculTotalWaterTemporary(){
+        if (this.testWater == this.totalWater) {
+            this.totalWater = this.totalWater + this.measureWaterConsumption;
+        }else {
+            this.totalWater = this.testWater + this.measureWaterConsumption;
+        }
+    }
+
+  calculAge(){
+    let date1 = new Date(this.flock.hatchDate);
+    let date2 = new Date(this.visitDate);
+    // To calculate the time difference of two dates
+    this.ageOfTheFlock = date2.getTime() - date1.getTime();
+
+    // To calculate the no. of days between two dates
+    this.ageOfTheFlock = Math.round(
+      Math.abs(this.ageOfTheFlock / (1000 * 3600 * 24)),
     );
   }
-
-  //get getSelectedFlock
-  getflockID(event) {
-    this.flockID = event;
-    this.subs.add(
-      this.VisitService.getConsultingFlockbyId(this.flockID).subscribe(
-        (data) => {
-          this.flocks = data;
-          this.loading = false;
-
-          for (let i of this.flocks) {
-            this.hatchDate = i.hatchDate;
-            this.chikedPlaced = i.chikedPlaced;
-            this.chikedPlaced = i.chikedPlaced;
-            this.psOrigin = i.psOrigin;
-            this.flockNumber = i.flockNumber;
-            var date1 = new Date(i.hatchDate);
-            var date2 = new Date(this.visitDate);
-            // To calculate the time difference of two dates
-            this.ageOfTheFlock = date2.getTime() - date1.getTime();
-
-            // To calculate the no. of days between two dates
-            this.ageOfTheFlock = Math.round(
-              Math.abs(this.ageOfTheFlock / (1000 * 3600 * 24)),
-            );
-            // get breed
-            if ((i.breed = i.breedObject.breedID)) {
-              this.breeddescription = i.breedObject.description;
-              this.breedId = i.breedObject.breedID;
-            }
-            if (i.restFlockNumber == 0) {
-              this.max = i.flockNumber;
-            } else if (i.flockNumber > 0) {
-              this.max = i.restFlockNumber;
-            }
-            console.log(this.max);
-            this.VisitService.getweeklyWeightByFlockAndAge(this.ageOfTheFlock, this.flockID).subscribe(
-              data => {
-                console.log('weekly', data);
-                if (data.length != 0) {
-                  this.weightCalcul = false;
-                  this.cv = data[0].cv;
-                  this.measureWeight = data[0].average;
-                }
-
-              });
-            this.VisitService.getweeklyfeedByFlockAndAge(this.ageOfTheFlock, this.flockID).subscribe(
-              data => {
-                console.log('feed', data);
-                if (data.length != 0) {
-                  this.measurefeedConsumption = data[0];
-
-                }
-
-              });
-          }
-        },
-      ),
-    );
-  }
-
   ngOnInit(): void {
     // this.visitDate = this.reverseDate("MM/DD/yyyy", new Date());
     this.visitDate = this.reverseDate('yyyy-MM-DD', new Date());
-    localStorage.setItem('getId', ''); //store id
-    //get all farm by company
+    localStorage.setItem('getId', ''); // store id
+    // get all farm by company
     var companyID = localStorage.getItem('companyID');
     this.farmID = localStorage.getItem('farmID');
     this.subs.add(
-      this.HouseService.getConsultingCenterbyFarm(this.farmID).subscribe(
+      this.houseService.getConsultingCenterbyFarm(this.farmID).subscribe(
         (data) => {
-          //console.log('data centers ******* ' + JSON.stringify(data))
           this.centers = data;
         },
       ),
     );
     this.subs.add(
-      this.FarmService.getConsultingFarm(companyID).subscribe((data) => {
+      this.farmService.getConsultingFarm(companyID).subscribe((data) => {
         this.farms = data;
       }),
     );
@@ -360,9 +358,9 @@ export class NewVisitComponent implements OnInit {
     this.initVisit();
     this.initWeight();
 
-    //get all Task
+    // get all Task
     this.subs.add(
-      this.VisitService.getConsultingTask().subscribe((data) => {
+      this.visitService.getConsultingTask().subscribe((data) => {
         this.tasks = data;
         // Find out from the list of types which one corresponding to the selected Code
         for (let task of this.tasks) {
@@ -403,7 +401,7 @@ export class NewVisitComponent implements OnInit {
 
   show = false;
 
-  //open Dialog Results
+  // open Dialog Results
   open() {
     this.show = true;
 
@@ -418,14 +416,6 @@ export class NewVisitComponent implements OnInit {
 
   close() {
     this.show = false;
-  }
-
-  onKeyPress(event) {
-    if (event.keyCode === 13) {
-    }
-  }
-
-  onSubmit() {
   }
 
   // Weight Management!
@@ -443,14 +433,6 @@ export class NewVisitComponent implements OnInit {
     return true;
   }
 
-  set VisitIdNew(id) {
-    this.visitIDnew = id;
-  }
-
-  get VisitIdNew() {
-    return this.visitIDnew;
-  }
-
   deleteRow(index) {
     if (this.dynamicArray.length == 1) {
       return false;
@@ -466,7 +448,7 @@ export class NewVisitComponent implements OnInit {
   }
 
   object: any[];
-  //save weight
+  // save weight
   Weightclosed: boolean = true;
 
   submitWeight(): void {
@@ -507,7 +489,7 @@ export class NewVisitComponent implements OnInit {
 
       var dateFormatted = year + '-' + smonth + '-' + sday;
       var dt = dateFormatted;
-    } //else { console.log("Format date not supported"); }
+    }
     if (format == 'yyyyMMDD') {
       const year = date.getFullYear();
       const month = date.getMonth() + 1;
@@ -529,7 +511,7 @@ export class NewVisitComponent implements OnInit {
 
       var dateFormatted = sday + '-' + smonth + '-' + year;
       var dt = dateFormatted;
-    } //else { console.log("Format date not supported"); }
+    }
 
     if (format == 'MM/DD/yyyy') {
       console.log('date ');
@@ -542,7 +524,7 @@ export class NewVisitComponent implements OnInit {
 
       var dateFormatted = sday + '/' + smonth + '/' + year;
       var dt = dateFormatted;
-    } //else { console.log("Format date not supported"); }
+    }
 
     if (format == 'MM/DD/yyyy') {
       const year = date.getFullYear();
@@ -554,13 +536,25 @@ export class NewVisitComponent implements OnInit {
 
       var dateFormatted = sday + '/' + smonth + '/' + year;
       var dt = dateFormatted;
-    } //else { console.log("Format date not supported"); }
+    }
 
     return dt;
   }
+  getTotalMeasureTask(flockId, ageFlock){
+    this.visitService.totalMeasureTaskDate(flockId, ageFlock, 6).subscribe(data => {
+      console.log(data);
+      this.totalFeed = data;
+      this.testFeed = data;
+    });
+    this.visitService.totalMeasureTaskDate(flockId, ageFlock, 7).subscribe(data => {
+      console.log(data);
+      this.totalWater = data;
+      this.testWater = data;
+    });
+  }
 
-  //date formatting
-  setDate(format: string, date: string) {
+  // date formatting
+  /*setDate(format: string, date: string) {
     if (format == 'yyyy-MM-DD') {
       var dateObj = date.split('-');
       var year = dateObj[0];
@@ -604,17 +598,14 @@ export class NewVisitComponent implements OnInit {
     } //else { console.log("Format date not supported"); }
 
     return dt;
-  }
+  }*/
 
-  //visit Creation
+  // visit Creation
   submit(): void {
     // Show the spinner for loading process ....
     setTimeout((_) => (this.loading = true));
 
     // Find out from the list of types which one corresponding to the selected Code
-
-    //let registrationTask: IRegistrationTask = new Object() as IRegistrationTask;
-    // registrationTask.description = this.description;
 
     let registrationVisit: IRegistrationVisits = new Object() as IRegistrationVisits;
 
@@ -639,7 +630,7 @@ export class NewVisitComponent implements OnInit {
     registrationVisit.mortality = this.measureMortality;
     console.log('visit', registrationVisit);
     //Invoking service
-    this.VisitService.createRegistrationVisits(registrationVisit).subscribe(
+    this.visitService.createRegistrationVisits(registrationVisit).subscribe(
       (data) => {
         console.log('visit', data);
         var alldata = data;
@@ -656,7 +647,7 @@ export class NewVisitComponent implements OnInit {
           registrationVisitTasksTemperature.measure = this.measureTemp;
           registrationVisitTasksTemperature.breedId = this.breedId;
           // Invoking service
-          this.VisitService.createRegistrationVisitTasks(
+          this.visitService.createRegistrationVisitTasks(
             registrationVisitTasksTemperature,
           ).subscribe((data) => {
             this.messageTemp = data['response'];
@@ -669,8 +660,8 @@ export class NewVisitComponent implements OnInit {
           registrationVisitTasksHumidity.visitId = this.visitIDnew;
           registrationVisitTasksHumidity.measure = this.measureHumidity;
           registrationVisitTasksHumidity.breedId = this.breedId;
-          //Invoking service
-          this.VisitService.createRegistrationVisitTasks(
+          // Invoking service
+          this.visitService.createRegistrationVisitTasks(
             registrationVisitTasksHumidity,
           ).subscribe((data) => {
             this.messageHumidity = data['response'];
@@ -684,7 +675,7 @@ export class NewVisitComponent implements OnInit {
           registrationVisitTasksAirSpeedTask.measure = this.measureAirSpeed;
           registrationVisitTasksAirSpeedTask.breedId = this.breedId;
           // Invoking service
-          this.VisitService.createRegistrationVisitTasks(
+          this.visitService.createRegistrationVisitTasks(
             registrationVisitTasksAirSpeedTask,
           ).subscribe((data) => {
             this.messageAirSpeed = data['response'];
@@ -698,7 +689,7 @@ export class NewVisitComponent implements OnInit {
           registrationVisitTasksAmoniacTask.measure = this.measureAmoniac;
           registrationVisitTasksAmoniacTask.breedId = this.breedId;
           // Invoking service
-          this.VisitService.createRegistrationVisitTasks(
+          this.visitService.createRegistrationVisitTasks(
             registrationVisitTasksAmoniacTask,
           ).subscribe((data) => {
             var x = localStorage.setItem(
@@ -719,14 +710,14 @@ export class NewVisitComponent implements OnInit {
           registrationVisitTasksfeedConsumptiont.breedId = this.breedId;
 
           // Invoking service
-          this.VisitService.createRegistrationVisitTasks(
+          this.visitService.createRegistrationVisitTasks(
             registrationVisitTasksfeedConsumptiont,
           ).subscribe((data) => {
             this.messagefeedConsumption = data['response'];
           });
 
           // weight
-          //console.log('weightTask.taskId' + this.weightTask.taskId)
+          // console.log('weightTask.taskId' + this.weightTask.taskId)
           let registrationVisitTasksWeight: IRegistrationVisitTasks = new Object() as IRegistrationVisitTasks;
           registrationVisitTasksWeight.ageFlock = this.ageOfTheFlock;
           registrationVisitTasksWeight.taskId = this.weightTask.taskId;
@@ -734,20 +725,44 @@ export class NewVisitComponent implements OnInit {
           registrationVisitTasksWeight.measure = this.measureWeight;
           registrationVisitTasksWeight.breedId = this.breedId;
           // Invoking service
-          this.VisitService.createRegistrationVisitTasks(
+          this.visitService.createRegistrationVisitTasks(
             registrationVisitTasksWeight,
           ).subscribe((data) => {
             this.messageWeight = data['response'];
           });
 
-          //homogenité
+          // homogenité
           let registrationVisitTaskshomognite: IRegistrationVisitTasks = new Object() as IRegistrationVisitTasks;
           registrationVisitTaskshomognite.ageFlock = this.ageOfTheFlock;
           registrationVisitTaskshomognite.taskId = this.homogeneityFlockTask.taskId;
           registrationVisitTaskshomognite.visitId = this.visitIDnew;
           registrationVisitTaskshomognite.measure = this.cv;
-          this.VisitService.createRegistrationVisitTasks(
+          this.visitService.createRegistrationVisitTasks(
             registrationVisitTaskshomognite,
+          ).subscribe((data) => {
+            this.messageHomogeneity = data['response'];
+          });
+
+          // light intensité
+          let registrationVisitTasklight: IRegistrationVisitTasks = new Object() as IRegistrationVisitTasks;
+          registrationVisitTasklight.ageFlock = this.ageOfTheFlock;
+          registrationVisitTasklight.taskId = this.lightIntensityTask.taskId;
+          registrationVisitTasklight.visitId = this.visitIDnew;
+          registrationVisitTasklight.measure = this.measurelightIntensity;
+          this.visitService.createRegistrationVisitTasks(
+            registrationVisitTasklight,
+          ).subscribe((data) => {
+            this.messageHomogeneity = data['response' ];
+          });
+
+          // density
+          let registrationVisitTaskDensity: IRegistrationVisitTasks = new Object() as IRegistrationVisitTasks;
+          registrationVisitTaskDensity.ageFlock = this.ageOfTheFlock;
+          registrationVisitTaskDensity.taskId = this.densityTask.taskId;
+          registrationVisitTaskDensity.visitId = this.visitIDnew;
+          registrationVisitTaskDensity.measure = this.measureDensity;
+          this.visitService.createRegistrationVisitTasks(
+            registrationVisitTaskDensity,
           ).subscribe((data) => {
             this.messageHomogeneity = data['response'];
           });
@@ -764,13 +779,13 @@ export class NewVisitComponent implements OnInit {
           registrationVisitTasksWaterConsumption.percentage = this.calculpercentageWater;
           registrationVisitTasksWaterConsumption.breedId = this.breedId;
           // Invoking service
-          this.VisitService.createRegistrationVisitTasks(
+          this.visitService.createRegistrationVisitTasks(
             registrationVisitTasksWaterConsumption,
           ).subscribe((data) => {
             this.messageWaterConsumption = data['response'];
           });
 
-          //Mortality
+          // Mortality
           let registrationVisitTasksMortality: IRegistrationVisitTasks = new Object() as IRegistrationVisitTasks;
           registrationVisitTasksMortality.ageFlock = this.ageOfTheFlock;
           registrationVisitTasksMortality.taskId = this.mortalityTask.taskId;
@@ -781,13 +796,12 @@ export class NewVisitComponent implements OnInit {
           registrationVisitTasksMortality.breedId = this.breedId;
           // Invoking service
           console.log('mortality',registrationVisitTasksMortality);
-          this.VisitService.createRegistrationVisitTasks(
+          this.visitService.createRegistrationVisitTasks(
             registrationVisitTasksMortality,
           ).subscribe((data) => {
             this.messageMortality = data['response'];
           });
         }
-        //let totale = this.flockNumber - this.measureMortality
 
         /*this.FlockService.updateRestNumberFlock(
           this.flockID,
@@ -808,9 +822,9 @@ export class NewVisitComponent implements OnInit {
           console.log('////////////////')
         }*/
 
-        //this.showResult(this.visitIDnew)
+        // this.showResult(this.visitIDnew)
         this.resultOpened = true;
-        this.VisitService.getConsultingvisitID(this.visitIDnew).subscribe(
+        this.visitService.getConsultingvisitID(this.visitIDnew).subscribe(
           (data) => {
             this.visittasks = data;
           });
@@ -835,7 +849,7 @@ export class NewVisitComponent implements OnInit {
   // result Management!
   resultOpened: boolean = false;
 
-  //visit initialization
+  // visit initialization
   initVisit(): void {
     // this.visitDate = new Date();
     this.visitDate = this.reverseDate('yyyy-MM-DD', new Date());
@@ -866,11 +880,11 @@ export class NewVisitComponent implements OnInit {
     this.houses = [];
     this.centers = [];
     this.flocks = [];
-    this.ListComponenet.refresh();
-    //console.log('show' + this.show)
+    this.listComponenet.refresh();
+    // console.log('show' + this.show)
   }
 
-  //tasks results initialization
+  // tasks results initialization
   initResults(): void {
     this.measureTemResult = '';
     this.standardTemResult = '';
@@ -916,25 +930,23 @@ export class NewVisitComponent implements OnInit {
     this.deviationHomogResult = '';
   }
 
-  //weight initialization
+  // weight initialization
   initWeight(): void {
     this.weightMeasure = 0;
     this.measureWeight = 0;
     this.nbrbirds = 0;
   }
 
-  //open tasks Results  after save
+  // open tasks Results  after save
   showResult(id): void {
     this.resultOpened = true;
-    // visit result by visit ID
-    //console.log('idVisit for result ' + this.visitIDnew)
     this.subs.add(
-      this.VisitService.getConsultingvisitID(this.visitIDnew).subscribe(
+      this.visitService.getConsultingvisitID(this.visitIDnew).subscribe(
         (visittasks) => {
           this.visittasks.forEach((element) => {
-            //console.log('visitTasks element => ', element.standard)
+            // console.log('visitTasks element => ', element.standard)
           });
-          //console.log('visitTasks Result' + visittasks)
+          // console.log('visitTasks Result' + visittasks)
           for (let i = 0; i < visittasks.length; i++) {
             /*console.log('controle' + visittasks[i])
             console.log('controleID *' + visittasks[i].measure)
@@ -1018,9 +1030,9 @@ export class NewVisitComponent implements OnInit {
               this.measureDensResult = visittasks[i].measure;
               this.standardDensResult = visittasks[i].standard;
               this.deviationDensResult = visittasks[i].deviation;
-              /*console.log('measureDensResult' + this.measureDensResult)
+              console.log('measureDensResult' + this.measureDensResult)
               console.log('standardDensResult' + this.standardDensResult)
-              console.log('deviationDensResult' + this.deviationDensResult)*/
+              console.log('deviationDensResult' + this.deviationDensResult);
             } else if (visittasks[i].taskId == 11) {
               //console.log('ok11')
               this.measureWeightResult = visittasks[i].measure;

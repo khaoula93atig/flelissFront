@@ -178,5 +178,9 @@ export class VisitService {
       this.httpOptions,
     );
   }
+  // totale measure of until visit or date
+  totalMeasureTaskDate(flockId, ageFlock , taskId){
+    return this.http.get<any>(environment.url_visit + '/Dailyvisit/TotalTaskMeasure/' + flockId + '/' + taskId + '/' + ageFlock);
+  }
 
 }

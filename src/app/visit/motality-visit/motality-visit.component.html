@@ -69,6 +69,7 @@
           <thead>
           <tr>
             <th>Mesure</th>
+            <th>Percent</th>
             <th>Age</th>
             <th>Visit date</th>
           </tr>
@@ -77,12 +78,17 @@
           <tr *ngFor="let h of historiqueMortality; even as isEven; odd as isOdd"
               [ngClass]="{'even-row': isEven, 'odd-row': isOdd}">
             <td>{{h.measure}}</td>
+            <td>{{h.percent}} %</td>
             <td>{{h.ageFlock}}</td>
             <td>{{h.visitDate}}</td>
           </tr>
           </tbody>
         </table>
         <div>
+          <div class="clr-row" style="text-align: center ; display: inline;">
+            <h4 style="font-weight: bold; color: #d17b30"> <small style="font-weight: bold;color: black">Number of bird still alive : </small>{{restNumber}} </h4>
+
+          </div>
           <button *ngIf="flockName!=null" type="button" class="btn btn-primary" (click)="add=true">Add new measure</button>
           <div style="background-color:rgb(75 175 167 / 29%);" *ngIf="add">
             <table class="table table-noborder">

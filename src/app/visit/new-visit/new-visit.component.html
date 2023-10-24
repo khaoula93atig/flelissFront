@@ -1,4 +1,4 @@
-<form novalidate name="myForm" #myForm='ngForm' (ngSubmit)="onSubmit();">
+<form novalidate name="myForm" #myForm='ngForm'>
     <clr-modal [(clrModalOpen)]="show">
 
         <h3 class="modal-title" style="color: #02675c;">
@@ -17,7 +17,7 @@
 
                         <clr-input-container class="formDate clr-col-lg-12 clr-col-md-12 clr-col-sm-12" style="padding-left:12px">
                             <label class="clr-control-label clr-col-4"> Visit date :</label>
-                            <input clrInput type="date" size="12" [(ngModel)]="visitDate" name="visitDate">
+                            <input clrInput type="date" size="12" (change)="calculAge()" [(ngModel)]="visitDate" name="visitDate">
                         </clr-input-container>
                     </div>
                     <!-- form-visit part 1 -->
@@ -45,17 +45,12 @@
                     </div>
                     <!-- form-visit part 2 -->
                     <div class="formV form-visit2 clr-row">
-                        <clr-select-container class="clr-col-md-6 clr-col-sm-12">
-                            <label for="breed" class="clr-control-label clr-col-4">
-                                Flock *
-                            </label>
-                            <select clrSelect class="clr-col-sm-12" name="flockID" [(ngModel)]="flockID"
-                                style="width: 105px;" (change)="getflockID($event.target.value)">
-                                <option *ngFor="let flock of flocks" [value]='flock.flockID'>
-                                    {{flock.flockName}}
-                                </option>
-                            </select>
-                        </clr-select-container>
+                      <clr-input-container class="clr-col-md-6 clr-col-sm-12">
+                        <label for="flock" class="clr-control-label clr-col-4">
+                          Flock * </label>
+                        <input type="text" class="clr-col-sm-12" clrInput name="flockName" [(ngModel)]="flockName"
+                               readonly />
+                      </clr-input-container>
                         <clr-input-container class="clr-col-md-6 clr-col-sm-12">
                             <label for="breeddescription" class="clr-control-label clr-col-4">
                                 Breed * </label>
@@ -193,11 +188,11 @@
                             <img src="../../../assets/Icones visit/feedConsumption.png" width="24" height="24"
                                 class="imgIcon test">
                             <label for="feedConsumption" class="clr-control-label">
-                                Total Feed consumption *</label>
+                                Daily Feed consumption *</label>
                         </div>
                         <div class="clr-control-container clr-col-lg-6 clr-col-md-6 clr-col-4" style="display: flex;">
                             <div class="clr-input-wrapper">
-                                <input clrInput required size="30" type="number" name="feedConsumption"
+                                <input clrInput (change)="calculTotalTemporary()" required size="30" type="number" name="feedConsumption"
                                     [(ngModel)]="measurefeedConsumption" />
                             </div>
                             <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
@@ -205,24 +200,34 @@
                             </div>
                         </div>
                     </div>
+                  <div class="clr-row">
+                    <span Style="font-weight: bold ; font-size: x-small ; margin-left: 54px ; color : black">
+                      Total :    {{totalFeed}} L</span>
+                  </div>
 
                     <div class="form-visit7 clr-col-md-12 clr-row">
                         <div class="labelVisit clr-col-lg-6 clr-col-md-6 clr-col-8 clr-row" style="margin-top: 30px;">
                             <img src="../../../assets/Icones visit/waterConsumption.png" width="22" height="20"
                                 class="imgIcon">
                             <label for="waterConsumption" class="clr-control-label ">
-                                Total water consumption *</label>
+                                Daily water consumption *</label>
                         </div>
                         <div class="clr-control-container clr-col-lg-6 clr-col-md-6 clr-col-4" style="display: flex;">
                             <div class="clr-input-wrapper">
-                                <input clrInput required size="30" type="number" name="waterConsumption"
+                                <input clrInput (change)="calculTotalWaterTemporary()" required size="30" type="number" name="waterConsumption"
                                     [(ngModel)]="measureWaterConsumption" />
                             </div>
                             <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
                                 <span class="taskUnit"> L </span>
+
                             </div>
+
                         </div>
+
                     </div>
+                  <div class="clr-row">
+                    <span Style="font-weight: bold ; font-size: x-small ; margin-left: 54px ; color : black"> Total :    {{totalWater}} L</span>
+                  </div>
 
                     <div class="form-visit8 clr-col-md-12 clr-row">
                         <div class="labelVisit clr-col-lg-6 clr-col-md-6 clr-col-8 clr-row" style="margin-top: 30px;">
@@ -233,13 +238,13 @@
                         </div>
                         <div class="clr-control-container clr-col-lg-6 clr-col-md-6 clr-col-4" style="display: flex;">
                             <div class="clr-input-wrapper">
-                                <input clrInput required type="number" name="mortality" 
+                                <input clrInput required type="number" name="mortality"
                                 [max]="max" onkeyup="if(value>max) value=0;"
                                     [(ngModel)]="measureMortality" />
                             </div>
-                           
-                            
-                            
+
+
+
                             <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
                                 <span class="taskUnit"> birds </span>
                             </div>
@@ -254,15 +259,15 @@
                             Litter condition *</label>
                         <div class="radip-wrapper radio" >
                             <clr-radio-wrapper style="margin-right: 10px;">
-                                <input type="radio" clrRadio name="options" required />
+                                <input type="radio" clrRadio name="options" required value="'aerate'" ngModel="measureLittCResult"/>
                                 <label>aerate</label>
                             </clr-radio-wrapper>
                             <clr-radio-wrapper style="margin-right: 10px; ">
-                                <input type="radio" clrRadio name="options" required />
+                                <input type="radio" clrRadio name="options" required value="'no aerate'" ngModel="measureLittCResult"/>
                                 <label>not aerate</label>
                             </clr-radio-wrapper>
                             <clr-radio-wrapper style="margin-right: 10px;">
-                                <input type="radio" clrRadio name="options" required />
+                                <input type="radio" clrRadio name="options" required value="'humid'" ngModel="measureLittCResult"/>
                                 <label>humid</label>
                             </clr-radio-wrapper>
                         </div>
@@ -289,7 +294,7 @@
                         <div class="labelVisit clr-col-lg-6 clr-col-md-6 clr-col-8 clr-row" style="margin-top: 30px;">
                             <img src="../../../assets/Icones visit/weight.png" width="22" height="22" class="imgIcon">
                             <label for="weight" class="clr-control-label">
-                                Average body weight*</label>
+                                Average body weight</label>
                         </div>
                         <div class="clr-control-container clr-col-lg-6 clr-col-md-6 clr-col-4" style="display: flex;">
                             <div class="clr-input-wrapper">
@@ -310,7 +315,7 @@
                             <img src="../../../assets/Icones visit/homogeneityFlock.png" width="22" height="22"
                                 class="imgIcon">
                             <label for="homogeneityFlock" class="clr-control-label">
-                                CV *</label>
+                                CV </label>
                         </div>
                         <div class="clr-control-container clr-col-lg-6 clr-col-md-6 clr-col-4" style="display: flex;">
                             <div class="clr-input-wrapper">
@@ -372,7 +377,7 @@
                                     style="  border: 0; background-color: #fafafa; padding: 6px;border-bottom: .5px solid #ececec;"
                                     [ngModelOptions]="{standalone: true}" type="number" />
                             </td>
-                            
+
                             <td (click)="addRow()">
                                 <img src="https://img.icons8.com/color/48/000000/add.png" width="22" height="22" />
                             </td>
@@ -388,7 +393,7 @@
                     </tbody>
                 </table>
         </div>
-            
+
         </div>
         <div class="modal-footer">
             <div class="clr-row">
@@ -429,11 +434,11 @@
                         <td class="left">{{vtask.task.description}}</td>
                         <td>{{vtask.measure}}  {{vtask.task.measureUnit}}</td>
                         <td>{{vtask.standard}}</td>
-                        <td class="left" 
+                        <td class="left"
                         [ngClass]="{'alert-low': vtask.deviation=='Low', 'alert-high':vtask.deviation=='High' ,'normal':vtask.deviation=='Normal' }">
                         {{vtask.deviation}}</td>
                     </tr>
-                   
+
                 </tbody>
             </table>
             <!--<div class="container">

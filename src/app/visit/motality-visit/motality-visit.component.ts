@@ -34,6 +34,7 @@ export class MotalityVisitComponent implements OnInit {
   measureMortality: number;
   calculpercentage= 0;
   visitIDnew: string;
+  restNumber=0;
   registrationVisit: IRegistrationVisits = new Object() as IRegistrationVisits;
   constructor(
     private houseService: HouseService,
@@ -97,6 +98,7 @@ export class MotalityVisitComponent implements OnInit {
       this.flockName = this.flocks[0].flockName;
       this.chickPlaced = this .flocks[0].flockNumber;
       this.hatchDate = this.flocks[0].hatchDate;
+      this.restNumber = this.flocks[0].restFlockNumber;
       this.calculAgeOfFlock();
       this.breedId = this.flocks[0].breed;
       switch (this.breedId) {
@@ -170,6 +172,8 @@ export class MotalityVisitComponent implements OnInit {
   getHistoriqueMortality(flock){
     this.visitService.getHistoriqueMortalityByFlock(flock).subscribe(data => {
       console.log(data);
+      var res= data;
+      data = res.map((i) => { i.percent = ((i.measure * 100) / this.chickPlaced).toFixed(2); return i ; });
       this.historiqueMortality = data;
     });
   }
