@@ -24,1597 +24,1524 @@
         History
     </button>
     <app-list-brooding-check-list></app-list-brooding-check-list>
-    </div>
-<div class="container-box-add" style="margin-bottom: 100px;">
-    <form novalidate name="myForm" #myForm='ngForm'>
-        <h3 class="modal-title" style="padding: 15px 16px 8px; box-shadow: 1px 1px 8px #888888;  margin-bottom: 5px;">
-            <img src="../../../assets/brood-check.png" width="40" style="margin-bottom: 8px; margin-right: 10px;">
-            Brooding check list
-        </h3>
-        <div class="modal-body "
-            style="overflow-y: scroll;  padding-bottom: 40px; padding-right: 12px; padding-left: 0px;">
-            <!-- Table -->
-            <div class="tabs-vertical tabs-vertical-style">
-                <!-- Tabs title -->
+</div>
+  <div class="container-box-add" style="margin-bottom: 100px;">
+    <form clrStepper name="myForm" #myForm='ngForm'>
+      <h3 class="modal-title" style="padding: 15px 16px 8px; box-shadow: 1px 1px 8px #888888;  margin-bottom: 5px;">
+        <img src="../../../assets/brood-check.png" width="40" style="margin-bottom: 8px; margin-right: 10px;">
+        Brooding check list
+      </h3>
+      <div class="modal-body ">
+    <clr-stepper-panel ngModelGroup="name">
+      <clr-step-title>Before Arrival</clr-step-title>
+      <clr-step-content>
+        <div class="form-visitV clr-row">
 
+          <table class="table  table-noborder table-compact">
 
-                <clr-tabs clrLayout="vertical">
+            <tbody>
+            <tr>
+              <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
 
+                Date</td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <div class="radip-wrapper" style="display: flex">
+                    <!-- Form table-->
+                    <clr-date-container class="formDate clr-col-12"
+                                        style="display: -webkit-inline-box;margin-top:0px !important">
 
+                      <input type="date" clrDate name="dailyVisit"
+                             [(ngModel)]="visitDate" required>
 
-                    <clr-tab>
-                        <button clrTabLink>1. Before Arrival </button>
-                        <clr-tab-content *clrIfActive="true">
-                            <!-- Before Arrival  -->
+                    </clr-date-container>
 
-                            <div class="form-visitV clr-row">
 
-                                <table class="table  table-noborder table-compact">
 
-                                    <tbody>
+                  </div>
 
+                </div>
 
+              </td>
+              <td>
 
 
-                                        <tr>
-                                            <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
+              </td>
 
-                                                Date</td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <div class="radip-wrapper" style="display: flex">
-                                                        <!-- Form table-->
-                                                        <clr-date-container class="formDate clr-col-12"
-                                                            style="display: -webkit-inline-box;margin-top:0px !important">
 
-                                                            <input type="date" clrDate name="dailyVisit"
-                                                                [(ngModel)]="visitDate" required>
+            </tr>
+            <!-- Form table-->
 
-                                                        </clr-date-container>
+            <!--  Litter depth (2-5 cm) / temperature : 28-30°C-->
+            <tr>
+              <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
 
+                Center</td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <div class="radip-wrapper" style="display: flex">
+                    <clr-select-container class="clr-col-md-12 "
+                                          style="display: -webkit-inline-box; margin-top:0px !important">
 
+                      <select clrSelect name="farm" required name="centerId"
+                              [(ngModel)]="centerId" style="width: 130px;"
+                              (change)="getCenterId($event.target.value)">
+                        <option *ngFor="let center of centers"
+                                [value]='center.centerId'>
+                          {{center.centerName}}
+                        </option>
+                      </select>
+                    </clr-select-container>
 
-                                                    </div>
 
-                                                </div>
 
-                                            </td>
-                                            <td>
+                  </div>
 
+                </div>
 
-                                            </td>
+              </td>
+              <td>
 
 
-                                        </tr>
-                                        <!-- Form table-->
+              </td>
 
-                                        <!--  Litter depth (2-5 cm) / temperature : 28-30°C-->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
 
-                                                Center</td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <div class="radip-wrapper" style="display: flex">
-                                                        <clr-select-container class="clr-col-md-12 "
-                                                            style="display: -webkit-inline-box; margin-top:0px !important">
+            </tr>
 
-                                                            <select clrSelect name="farm" required name="centerId"
-                                                                [(ngModel)]="centerId" style="width: 130px;"
-                                                                (change)="getCenterId($event.target.value)">
-                                                                <option *ngFor="let center of centers"
-                                                                    [value]='center.centerId'>
-                                                                    {{center.centerName}}
-                                                                </option>
-                                                            </select>
-                                                        </clr-select-container>
+            <tr>
+              <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
 
+                House</td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <div class="radip-wrapper" style="display: flex">
+                    <clr-select-container class="clr-col-md-12 "
+                                          style="display: -webkit-inline-box; margin-top:0px !important">
 
+                      <select clrSelect name="houseId" required
+                              style="width: 105px;" [(ngModel)]="housesId"
+                              (change)="getHouseId($event.target.value)">
+                        <option *ngFor="let house of houses"
+                                [value]='house.houseId'>
+                          {{house.houseName}}
+                        </option>
+                      </select>
+                    </clr-select-container>
 
-                                                    </div>
 
-                                                </div>
 
-                                            </td>
-                                            <td>
+                  </div>
 
+                </div>
 
-                                            </td>
+              </td>
+              <td>
 
 
-                                        </tr>
+              </td>
 
-                                        <tr>
-                                            <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
 
-                                                House</td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <div class="radip-wrapper" style="display: flex">
-                                                        <clr-select-container class="clr-col-md-12 "
-                                                            style="display: -webkit-inline-box; margin-top:0px !important">
+            </tr>
 
-                                                            <select clrSelect name="houseId" required
-                                                                style="width: 105px;" [(ngModel)]="houseId"
-                                                                (change)="getHouseId($event.target.value)">
-                                                                <option *ngFor="let house of houses"
-                                                                    [value]='house.houseId'>
-                                                                    {{house.houseName}}
-                                                                </option>
-                                                            </select>
-                                                        </clr-select-container>
 
 
 
-                                                    </div>
 
-                                                </div>
 
-                                            </td>
-                                            <td>
+            </tbody>
 
 
-                                            </td>
-
-
-                                        </tr>
-
-
-
-
-
-
-                                    </tbody>
-
-
-                                </table>
-
-                            </div>
-
-                        </clr-tab-content>
-                    </clr-tab>
-
-                    <!--    -->
-                    <clr-tab>
-                        <button clrTabLink>1. Before Arrival </button>
-                        <clr-tab-content>
-                            <!-- Before Arrival  -->
-
-                            <div class="form-visitV clr-row">
-
-                                <table class="table  table-noborder table-compact">
-                                    <!-- head Table -->
-                                    <thead>
-                                        <tr>
-                                            <th class="left"></th>
-                                            <th class="left"></th>
-                                            <th class="left">YES</th>
-                                            <th class="left">NO</th>
-
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        <!-- Form table-->
-
-                                        <!--  Litter depth (2-5 cm) / temperature : 28-30°C-->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Litter depth : <small>2-4 cm</small> </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper (change)="getlitterDepth($event.target.value)"
-                                                        style="margin-right: 20px;">
-                                                        <input type="radio" clrRadio name="litterDepth" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper (change)="getlitterDepth($event.target.value)">
-                                                        <input type="radio" clrRadio name="litterDepth" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <tr>
-                                            <td><img src="../../../assets/Icones audit/tempHot.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                 litter temperature :  <small>28-30°C </small></td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper (change)="getTemperature($event.target.value)"
-                                                        style="margin-right: 20px;">
-                                                        <input type="radio" clrRadio name="temperature" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper (change)="getTemperature($event.target.value)">
-                                                        <input type="radio" clrRadio name="temperature" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!-- Pre-heat at least 24 h ( 48h in winter )-->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones audit/airQuality.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Pre-heat at least : <small>24 h ( 48h in winter )</small></td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper (change)="getPreHeatLeast($event.target.value)"
-                                                        style="margin-right: 20px;">
-                                                        <input type="radio" clrRadio name="PreHeatLeast" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper (change)="getPreHeatLeast($event.target.value)">
-                                                        <input type="radio" clrRadio name="PreHeatLeast" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!-- Air temperature-->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones audit/tempHot.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Air temperature : <small>30°C/86°F</small></td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper (change)="getAirTemperature($event.target.value)"
-                                                        style="margin-right: 20px;">
-                                                        <input type="radio" clrRadio name="AirTemperature" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getAirTemperature($event.target.value)">
-                                                        <input type="radio" clrRadio name="AirTemperature" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-                                        <!-- Floor temperature-->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones audit/tempHot.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Floor temperature : <small>28-30°C </small></td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper (change)="getfloorTemperature($event.target.value)"
-                                                        style="margin-right: 20px;">
-                                                        <input type="radio" clrRadio name="floorTemperature" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getfloorTemperature($event.target.value)">
-                                                        <input type="radio" clrRadio name="floorTemperature" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!-- Spot brooding-->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones audit/tempHot.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Spot brooding:<small> 32°C under brooder / 29° at brooder edge</small></td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper (change)="getSpotBrooding($event.target.value)"
-                                                        style="margin-right: 20px;">
-                                                        <input type="radio" clrRadio name="spotBrooding" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getSpotBrooding($event.target.value)">
-                                                        <input type="radio" clrRadio name="spotBrooding" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-
-                                        <!-- Realtive humidity: 60-70%-->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones audit/humidity.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Realtive humidity: <small>60-70%</small></td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper
-                                                        (change)="getRealtiveHumidity($event.target.value)"
-                                                        style="margin-right: 20px;">
-                                                        <input type="radio" clrRadio name="options4" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getRealtiveHumidity($event.target.value)">
-                                                        <input type="radio" clrRadio name="options4" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                         <!-- distance access water-->
-                                         <tr>
-                                            <td><img src="../../../assets/Icones audit/tempHot.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                               Distance to access water: <small> No more than 1meter/3.3 feet</small></td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper (change)="getDistance($event.target.value)"
-                                                        style="margin-right: 20px;">
-                                                        <input type="radio" clrRadio name="distanceAccessWater" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getDistance($event.target.value)">
-                                                        <input type="radio" clrRadio name="distanceAccessWater" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!-- Air speed  < 0,15 m/s-->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones visit/windsock.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Air speed : <small> <0,15 m/s </small></td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper (change)="getAirSpeed($event.target.value)"
-                                                        style="margin-right: 20px;">
-                                                        <input type="radio" clrRadio name="options5" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper (change)="getAirSpeed($event.target.value)">
-                                                        <input type="radio" clrRadio name="options5" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-                                        <!-- check feed form -->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones visit/feedConsumption.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                               Check feed form: <small>Crumble / pellet 2mm</small></td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper (change)="getCheckFeed($event.target.value)"
-                                                        style="margin-right: 20px;">
-                                                        <input type="radio" clrRadio name="checkFeedForm" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getCheckFeed($event.target.value)">
-                                                        <input type="radio" clrRadio name="checkFeedForm" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!-- feed on paper -->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones visit/feedConsumption.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                               Feed on paper : <small> 80% of brooding area</small> </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper (change)="getfeedOnPaper($event.target.value)"
-                                                        style="margin-right: 20px;">
-                                                        <input type="radio" clrRadio name="feedOnPaper" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getfeedOnPaper($event.target.value)">
-                                                        <input type="radio" clrRadio name="feedOnPaper" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-                                        <!-- feed trays -->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones visit/feedConsumption.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                               Feeders Trays : <small> 1/100 chicks</small> </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper (change)="getfeedTrays($event.target.value)"
-                                                        style="margin-right: 20px;">
-                                                        <input type="radio" clrRadio name="feedTrays" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getfeedTrays($event.target.value)">
-                                                        <input type="radio" clrRadio name="feedTrays" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!-- Drinkers Nipple lines -->
-                                        <tr>
-                                            <td><img src="../../../assets/water-clean.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Drinkers Nipple lines : <small> 12 birds/nipple</small> </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper (change)="getDrinkersNipple($event.target.value)"
-                                                        style="margin-right: 20px;">
-                                                        <input type="radio" clrRadio name="drinkersNipple" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getDrinkersNipple($event.target.value)">
-                                                        <input type="radio" clrRadio name="drinkersNipple" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-                                        <!-- Drinkers (bell drinkers)  -->
-                                        <tr>
-                                            <td><img src="../../../assets/water-clean.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Drinkers (bell drinkers) : <small> 6/1000 birds</small> </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper (change)="getDrinkers($event.target.value)"
-                                                        style="margin-right: 20px;">
-                                                        <input type="radio" clrRadio name="drinkers" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getDrinkers($event.target.value)">
-                                                        <input type="radio" clrRadio name="drinkers" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-                                        <!-- Drinkers supplementary  -->
-                                        <tr>
-                                            <td><img src="../../../assets/water-clean.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Drinkers supplementary : <small> 10/1000 chicks</small> </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper (change)="getDrinkerSupp($event.target.value)"
-                                                        style="margin-right: 20px;">
-                                                        <input type="radio" clrRadio name="drinkersSupp" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getDrinkerSupp($event.target.value)">
-                                                        <input type="radio" clrRadio name="drinkersSupp" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!-- Position supplmentary drinkers near automed system
-                                        <tr>
-                                            <td><img src="../../../assets/Icones audit/hopper.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Position supplmentary drinkers near automed system </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper
-                                                        (change)="getPositionSuppDrink($event.target.value)"
-                                                        style="margin-right: 20px;">
-                                                        <input type="radio" clrRadio name="options6" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getPositionSuppDrink($event.target.value)">
-                                                        <input type="radio" clrRadio name="options6" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>-->
-
-
-                                    </tbody>
-
-
-                                </table>
-
-                            </div>
-
-                        </clr-tab-content>
-                    </clr-tab>
-
-
-
-
-
-                    <!--2eme block
-                    -->
-                    <!-- /End Before Arrival -->
-
-
-
-                    <!-- ===========================================================-->
-                    <!-- Check delivery  -->
-
-                    <clr-tab>
-                        <button clrTabLink>2. Check delivery </button>
-                        <clr-tab-content>
-                            <!-- Before Arrival  -->
-
-                            <div class="form-visitV clr-row">
-
-                                <table class="table  table-noborder table-compact">
-                                    <!-- head Table -->
-                                    <thead>
-                                        <tr>
-                                            <th class="left">
-                                                <img src="../../../assets/vehicul.png" class="imgIcon" width="26">
-                                            </th>
-                                            <th class="left"></th>
-                                            <th class="left">YES</th>
-                                            <th class="left">NO</th>
-
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-
-
-                                        <!-- Delivery vehicle temperature-->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones visit/thermometer.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Delivery vehicle temperature <small>chick box :32°C  outside chick box : 24°C</small></td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper style="margin-right: 20px;"
-                                                        (change)="getDeliveryVehiTemp($event.target.value)">
-
-                                                        <input type="radio" clrRadio name="options7" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getDeliveryVehiTemp($event.target.value)">
-                                                        <input type="radio" clrRadio name="options7" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!-- Delivery vehicle humidity-->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones audit/humidity.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Delivery vehicle humidity: <small>60-70%</small></td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper style="margin-right: 20px;"
-                                                        (change)="getDeliveryVehiHumi($event.target.value)">
-
-                                                        <input type="radio" clrRadio name="options8" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getDeliveryVehiHumi($event.target.value)">
-                                                        <input type="radio" clrRadio name="options8" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!-- Chick confort ( rectal temperature )-->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones audit/hatchingChick.png"
-                                                    class="imgIcon" width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Chick confort ( rectal temperature ):<small>39.5-40.5 °C</small></td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper style="margin-right: 20px;"
-                                                        (change)="getChickConfort($event.target.value)">
-
-                                                        <input type="radio" clrRadio name="options9" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper (change)="getChickConfort($event.target.value)">
-                                                        <input type="radio" clrRadio name="options9" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!--External environmental conditions ( Temperature , Humidity ) -->
-                                        <tr>
-                                            <td><img src="../../../assets/icon-tempextern.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                External environmental conditions ( Temperature , Humidity ) </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper style="margin-right: 20px;"
-                                                        (change)="getExternalEnvCond($event.target.value)">
-
-                                                        <input type="radio" clrRadio name="options10" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getExternalEnvCond($event.target.value)">
-                                                        <input type="radio" clrRadio name="options10" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!--Transit time ( hatchery- farm ) -->
-                                        <tr>
-                                            <td><img src="../../../assets/transpTime.png" class="imgIcon" width="22"
-                                                    height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Transit time ( hatchery- farm ): <small>short / long</small> </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper style="margin-right: 20px;"
-                                                        (change)="getTransitTime($event.target.value)">
-
-                                                        <input type="radio" clrRadio name="options11" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper (change)="getTransitTime($event.target.value)">
-                                                        <input type="radio" clrRadio name="options11" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!--Delivery vehicle : air exchange  -->
-                                        <tr>
-                                            <td><img src="../../../assets/airExchange.png" class="imgIcon" width="22"
-                                                    height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Delivery vehicle : air exchange </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper style="margin-right: 20px;"
-                                                        (change)="getDeliveryVehicleAirExch($event.target.value)">
-
-                                                        <input type="radio" clrRadio name="options12" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getDeliveryVehicleAirExch($event.target.value)">
-                                                        <input type="radio" clrRadio name="options12" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!--Delivery vehicle : hygiene  -->
-                                        <tr>
-                                            <td><img src="../../../assets/hygiene.png" class="imgIcon" width="22"
-                                                    height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Delivery vehicle : hygiene <small>disinfected</small> </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper style="margin-right: 20px;"
-                                                        (change)="getDeliveryVehicleHygiene($event.target.value)">
-
-                                                        <input type="radio" clrRadio name="options13" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getDeliveryVehicleHygiene($event.target.value)">
-                                                        <input type="radio" clrRadio name="options13" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-
-
-
-
-
-
-                                    </tbody>
-
-
-                                </table>
-
-                            </div>
-
-                        </clr-tab-content>
-                    </clr-tab>
-
-
-                    <!-- ===========================================================-->
-                    <!-- The arrival -->
-
-                    <clr-tab>
-                        <button clrTabLink>3. The arrival</button>
-                        <clr-tab-content>
-                            <!-- The arrival -->
-
-                            <clr-tab-content>
-                                <!-- Before Arrival  -->
-
-                                <div class="form-visitV clr-row">
-
-                                    <table class="table  table-noborder table-compact">
-                                        <!-- head Table -->
-                                        <thead>
-                                            <tr>
-                                                <th class="left"></th>
-                                                <th class="left"></th>
-                                                <th class="left">YES</th>
-                                                <th class="left">NO</th>
-
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-
-
-                                            <!-- Internal chick temperature -->
-                                            <tr>
-                                                <td><img src="../../../assets/Icones audit/tempInside.png"
-                                                        class="imgIcon" width="22" height="20"></td>
-                                                <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                    Internal chick temperature : <small>40°C-41°C</small> </td>
-                                                <td>
-                                                    <div class="radip-wrapper" style="display: flex">
-                                                        <clr-radio-wrapper style="margin-right: 20px;"
-                                                            (change)="getInternalChickTemp($event.target.value)">
-
-                                                            <input type="radio" clrRadio name="options13" required
-                                                                value='Yes' />
-                                                        </clr-radio-wrapper>
-
-
-                                                    </div>
-
-                                                </td>
-                                                <td>
-                                                    <div class="radip-wrapper" style="display: flex">
-
-                                                        <clr-radio-wrapper
-                                                            (change)="getInternalChickTemp($event.target.value)">
-                                                            <input type="radio" clrRadio name="options13" required
-                                                                value='No' />
-                                                        </clr-radio-wrapper>
-
-                                                    </div>
-
-                                                </td>
-
-
-                                            </tr>
-
-                                            <!-- Weigh a sample of chick record average live .. -->
-                                            <tr>
-                                                <td><img src="../../../assets/icons8-weight-96.png" class="imgIcon"
-                                                        width="22" height="20"></td>
-                                                <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                    Weigh a sample of chick record average live weight and CV% /
-                                                    uniformity : <small>Average 36-45g</small> </td>
-                                                <td>
-                                                    <div class="radip-wrapper" style="display: flex">
-                                                        <clr-radio-wrapper style="margin-right: 20px;"
-                                                            (change)="getWeighSampleChick($event.target.value)">
-
-                                                            <input type="radio" clrRadio name="options14" required
-                                                                value='Yes' />
-                                                        </clr-radio-wrapper>
-
-
-                                                    </div>
-
-                                                </td>
-                                                <td>
-                                                    <div class="radip-wrapper" style="display: flex">
-
-                                                        <clr-radio-wrapper
-                                                            (change)="getWeighSampleChick($event.target.value)">
-                                                            <input type="radio" clrRadio name="options14" required
-                                                                value='No' />
-                                                        </clr-radio-wrapper>
-
-                                                    </div>
-
-                                                </td>
-
-
-                                            </tr>
-
-                                            <tr>
-                                                <td><img src="../../../assets/icon-feedeWater.png" class="imgIcon"
-                                                        width="22" height="20"></td>
-                                                <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                    Ensure feed and water is available </td>
-                                                <td>
-                                                    <div class="radip-wrapper" style="display: flex">
-                                                        <clr-radio-wrapper style="margin-right: 20px;"
-                                                            (change)="getEnsureFeedWater($event.target.value)">
-
-                                                            <input type="radio" clrRadio name="options16" required
-                                                                value='Yes' />
-                                                        </clr-radio-wrapper>
-
-
-                                                    </div>
-
-                                                </td>
-                                                <td>
-                                                    <div class="radip-wrapper" style="display: flex">
-
-                                                        <clr-radio-wrapper
-                                                            (change)="getEnsureFeedWater($event.target.value)">
-                                                            <input type="radio" clrRadio name="options16" required
-                                                                value='No' />
-                                                        </clr-radio-wrapper>
-
-                                                    </div>
-
-                                                </td>
-
-
-                                            </tr>
-
-                                            <!--Light intensity 30-40 lux -->
-                                            <tr>
-                                                <td><img src="../../../assets/light.png" class="imgIcon" width="22"
-                                                        height="20"></td>
-                                                <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                    Light intensity :<small>30-40 lux</small>  </td>
-                                                <td>
-                                                    <div class="radip-wrapper" style="display: flex">
-                                                        <clr-radio-wrapper style="margin-right: 20px;"
-                                                            (change)="getLightIntensity($event.target.value)">
-
-                                                            <input type="radio" clrRadio name="options17" required
-                                                                value='Yes' />
-                                                        </clr-radio-wrapper>
-
-
-                                                    </div>
-
-                                                </td>
-                                                <td>
-                                                    <div class="radip-wrapper" style="display: flex">
-
-                                                        <clr-radio-wrapper
-                                                            (change)="getLightIntensity($event.target.value)">
-                                                            <input type="radio" clrRadio name="options17" required
-                                                                value='No' />
-                                                        </clr-radio-wrapper>
-
-                                                    </div>
-
-                                                </td>
-
-
-                                            </tr>
-
-                                            <!--Water temperature -->
-                                            <tr>
-                                                <td><img src="../../../assets/light.png" class="imgIcon" width="22"
-                                                        height="20"></td>
-                                                <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                    Water temperature :<small>18-21 °C</small>  </td>
-                                                <td>
-                                                    <div class="radip-wrapper" style="display: flex">
-                                                        <clr-radio-wrapper style="margin-right: 20px;"
-                                                            (change)="getwaterTemperature($event.target.value)">
-
-                                                            <input type="radio" clrRadio name="waterTemperature" required
-                                                                value='Yes' />
-                                                        </clr-radio-wrapper>
-
-
-                                                    </div>
-
-                                                </td>
-                                                <td>
-                                                    <div class="radip-wrapper" style="display: flex">
-
-                                                        <clr-radio-wrapper
-                                                            (change)="getwaterTemperature($event.target.value)">
-                                                            <input type="radio" clrRadio name="waterTemperature" required
-                                                                value='No' />
-                                                        </clr-radio-wrapper>
-
-                                                    </div>
-
-                                                </td>
-
-
-                                            </tr>
-
-
-
-                                        </tbody>
-
-
-                                    </table>
-
-                                </div>
-
-                            </clr-tab-content>
-
-                            <!-- /End The arrival-->
-                        </clr-tab-content>
-                    </clr-tab>
-
-
-                    <!-- ===========================================================-->
-                    <!-- After installation -->
-                    <clr-tab>
-                        <button clrTabLink>4. After installation </button>
-                        <clr-tab-content>
-                            <!-- After installation  -->
-
-                            <div class="FormComV">
-
-                                <table class="table  table-noborder table-compact">
-                                    <!-- head Table -->
-                                    <thead>
-                                        <tr>
-                                            <th class="left"></th>
-                                            <th class="left"></th>
-                                            <th class="left">YES</th>
-                                            <th class="left">NO</th>
-
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-
-                                        <!--Check chick behavior after 1-2 hours -->
-                                        <tr>
-                                            <td><img src="../../../assets/check.png" class="imgIcon" width="22"
-                                                    height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Check chick behavior after 1-2 hours </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper style="margin-right: 20px;"
-                                                        (change)="getCheckChickBehavior($event.target.value)">
-
-                                                        <input type="radio" clrRadio name="options18" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getCheckChickBehavior($event.target.value)">
-                                                        <input type="radio" clrRadio name="options18" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!--Check chick water supply ( fresh & clean water ) -->
-                                        <tr>
-                                            <td><img src="../../../assets/water-clean.png" class="imgIcon" width="22"
-                                                    height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Check chick water supply ( fresh & clean water ) </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper style="margin-right: 20px;"
-                                                        (change)="getCheckChickWaterSupply($event.target.value)">
-
-                                                        <input type="radio" clrRadio name="options19" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getCheckChickWaterSupply($event.target.value)">
-                                                        <input type="radio" clrRadio name="options19" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!--Check feed supply ( small & frequent )) -->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones visit/feedConsumption.png"
-                                                    class="imgIcon" width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Check feed supply ( small & frequent ) </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper style="margin-right: 20px;"
-                                                        (change)="getCheckFeedSupply($event.target.value)">
-
-                                                        <input type="radio" clrRadio name="options20" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getCheckFeedSupply($event.target.value)">
-                                                        <input type="radio" clrRadio name="options20" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!--Check chick crop fill  -->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Check chick crop fill </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper style="margin-right: 20px;"
-                                                        (change)="getCheckChickCropFill($event.target.value)">
-
-                                                        <input type="radio" clrRadio name="options21-" required
-                                                            value='Yes' />
-
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getCheckChickCropFill($event.target.value)">
-                                                        <input type="radio" clrRadio name="options21-" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!--Distribution of day old chicks  -->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Distribution of day old chicks </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper style="margin-right: 20px;"
-                                                        (change)="getDistributionDayOldChicks($event.target.value)">
-
-                                                        <input type="radio" clrRadio name="options21" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getDistributionDayOldChicks($event.target.value)">
-                                                        <input type="radio" clrRadio name="options21" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!--Daily purges piping  -->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Daily purges piping </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper style="margin-right: 20px;"
-                                                        (change)="getDailyPurgesPiping($event.target.value)">
-
-                                                        <input type="radio" clrRadio name="options22" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper
-                                                        (change)="getDailyPurgesPiping($event.target.value)">
-                                                        <input type="radio" clrRadio name="options22" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-                                        <!--Air quality  -->
-                                        <tr>
-                                            <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                                    width="22" height="20"></td>
-                                            <td class="left" style="font-weight: 600; color: #454545;">
-
-                                                Air quality </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-                                                    <clr-radio-wrapper style="margin-right: 20px;"
-                                                        (change)="getAirQuality($event.target.value)">
-
-                                                        <input type="radio" clrRadio name="options23" required
-                                                            value='Yes' />
-                                                    </clr-radio-wrapper>
-
-
-                                                </div>
-
-                                            </td>
-                                            <td>
-                                                <div class="radip-wrapper" style="display: flex">
-
-                                                    <clr-radio-wrapper (change)="getAirQuality($event.target.value)">
-                                                        <input type="radio" clrRadio name="options23" required
-                                                            value='No' />
-                                                    </clr-radio-wrapper>
-
-                                                </div>
-
-                                            </td>
-
-
-                                        </tr>
-
-
-
-
-                                    </tbody>
-
-
-                                </table>
-
-
-
-                                <div class="modal-footer">
-
-                                    <button type="button" class="btn btn-outline">Refaire</button>
-                                    <button type="button" class="btn btn-primary" (click)="save()">Sauvegarder</button>
-                                </div>
-
-
-                            </div>
-
-                            <!-- /End The arrival-->
-                        </clr-tab-content>
-                    </clr-tab>
-
-                </clr-tabs>
-                <!-- End Tabs title -->
-
-
-
-
-
-
-
-            </div>
-
-            <!-- End Table -->
+          </table>
 
         </div>
 
+        <button class="btn btn-primary" clrStepButton="next">next</button>
+      </clr-step-content>
+    </clr-stepper-panel>
+
+    <clr-stepper-panel ngModelGroup="beforeArrival">
+      <clr-step-title>Before arrival</clr-step-title>
+      <clr-step-content>
+        <div class="form-visitV clr-row">
+
+          <table class="table  table-noborder table-compact">
+            <!-- head Table -->
+            <thead>
+            <tr>
+              <th class="left"></th>
+              <th class="left"></th>
+              <th class="left">YES</th>
+              <th class="left">NO</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+
+            <!-- Form table-->
+
+            <!--  Litter depth (2-5 cm) / temperature : 28-30°C-->
+            <tr>
+              <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Litter depth : <small>2-4 cm</small> </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper (change)="getlitterDepth($event.target.value)"
+                                     style="margin-right: 20px;">
+                    <input type="radio" clrRadio name="litterDepth" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper (change)="getlitterDepth($event.target.value)">
+                    <input type="radio" clrRadio name="litterDepth" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+
+            <tr>
+              <td><img src="../../../assets/Icones audit/tempHot.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                litter temperature :  <small>28-30°C </small></td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper (change)="getTemperature($event.target.value)"
+                                     style="margin-right: 20px;">
+                    <input type="radio" clrRadio name="temperature" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper (change)="getTemperature($event.target.value)">
+                    <input type="radio" clrRadio name="temperature" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+
+            <!-- Pre-heat at least 24 h ( 48h in winter )-->
+            <tr>
+              <td><img src="../../../assets/Icones audit/airQuality.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Pre-heat at least : <small>24 h ( 48h in winter )</small></td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper (change)="getPreHeatLeast($event.target.value)"
+                                     style="margin-right: 20px;">
+                    <input type="radio" clrRadio name="PreHeatLeast" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper (change)="getPreHeatLeast($event.target.value)">
+                    <input type="radio" clrRadio name="PreHeatLeast" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+
+            <!-- Air temperature-->
+            <tr>
+              <td><img src="../../../assets/Icones audit/tempHot.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Air temperature : <small>30°C/86°F</small></td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper (change)="getAirTemperature($event.target.value)"
+                                     style="margin-right: 20px;">
+                    <input type="radio" clrRadio name="AirTemperature" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper
+                    (change)="getAirTemperature($event.target.value)">
+                    <input type="radio" clrRadio name="AirTemperature" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+            <!-- Floor temperature-->
+            <tr>
+              <td><img src="../../../assets/Icones audit/tempHot.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Floor temperature : <small>28-30°C </small></td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper (change)="getfloorTemperature($event.target.value)"
+                                     style="margin-right: 20px;">
+                    <input type="radio" clrRadio name="floorTemperature" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper
+                    (change)="getfloorTemperature($event.target.value)">
+                    <input type="radio" clrRadio name="floorTemperature" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+
+            <!-- Spot brooding-->
+            <tr>
+              <td><img src="../../../assets/Icones audit/tempHot.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Spot brooding:<small> 32°C under brooder / 29° at brooder edge</small></td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper (change)="getSpotBrooding($event.target.value)"
+                                     style="margin-right: 20px;">
+                    <input type="radio" clrRadio name="spotBrooding" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper
+                    (change)="getSpotBrooding($event.target.value)">
+                    <input type="radio" clrRadio name="spotBrooding" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+
+
+            <!-- Realtive humidity: 60-70%-->
+            <tr>
+              <td><img src="../../../assets/Icones audit/humidity.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Realtive humidity: <small>60-70%</small></td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper
+                    (change)="getRealtiveHumidity($event.target.value)"
+                    style="margin-right: 20px;">
+                    <input type="radio" clrRadio name="options4" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper
+                    (change)="getRealtiveHumidity($event.target.value)">
+                    <input type="radio" clrRadio name="options4" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+
+            <!-- distance access water-->
+            <tr>
+              <td><img src="../../../assets/Icones audit/tempHot.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Distance to access water: <small> No more than 1meter/3.3 feet</small></td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper (change)="getDistance($event.target.value)"
+                                     style="margin-right: 20px;">
+                    <input type="radio" clrRadio name="distanceAccessWater" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper
+                    (change)="getDistance($event.target.value)">
+                    <input type="radio" clrRadio name="distanceAccessWater" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+
+            <!-- Air speed  < 0,15 m/s-->
+            <tr>
+              <td><img src="../../../assets/Icones visit/windsock.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Air speed : <small> <0,15 m/s </small></td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper (change)="getAirSpeed($event.target.value)"
+                                     style="margin-right: 20px;">
+                    <input type="radio" clrRadio name="options5" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper (change)="getAirSpeed($event.target.value)">
+                    <input type="radio" clrRadio name="options5" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+            <!-- check feed form -->
+            <tr>
+              <td><img src="../../../assets/Icones visit/feedConsumption.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Check feed form: <small>Crumble / pellet 2mm</small></td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper (change)="getCheckFeed($event.target.value)"
+                                     style="margin-right: 20px;">
+                    <input type="radio" clrRadio name="checkFeedForm" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper
+                    (change)="getCheckFeed($event.target.value)">
+                    <input type="radio" clrRadio name="checkFeedForm" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+
+            <!-- feed on paper -->
+            <tr>
+              <td><img src="../../../assets/Icones visit/feedConsumption.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Feed on paper : <small> 80% of brooding area</small> </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper (change)="getfeedOnPaper($event.target.value)"
+                                     style="margin-right: 20px;">
+                    <input type="radio" clrRadio name="feedOnPaper" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper
+                    (change)="getfeedOnPaper($event.target.value)">
+                    <input type="radio" clrRadio name="feedOnPaper" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+            <!-- feed trays -->
+            <tr>
+              <td><img src="../../../assets/Icones visit/feedConsumption.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Feeders Trays : <small> 1/100 chicks</small> </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper (change)="getfeedTrays($event.target.value)"
+                                     style="margin-right: 20px;">
+                    <input type="radio" clrRadio name="feedTrays" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper
+                    (change)="getfeedTrays($event.target.value)">
+                    <input type="radio" clrRadio name="feedTrays" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+
+            <!-- Drinkers Nipple lines -->
+            <tr>
+              <td><img src="../../../assets/water-clean.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Drinkers Nipple lines : <small> 12 birds/nipple</small> </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper (change)="getDrinkersNipple($event.target.value)"
+                                     style="margin-right: 20px;">
+                    <input type="radio" clrRadio name="drinkersNipple" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper
+                    (change)="getDrinkersNipple($event.target.value)">
+                    <input type="radio" clrRadio name="drinkersNipple" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+            <!-- Drinkers (bell drinkers)  -->
+            <tr>
+              <td><img src="../../../assets/water-clean.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Drinkers (bell drinkers) : <small> 6/1000 birds</small> </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper (change)="getDrinkers($event.target.value)"
+                                     style="margin-right: 20px;">
+                    <input type="radio" clrRadio name="drinkers" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper
+                    (change)="getDrinkers($event.target.value)">
+                    <input type="radio" clrRadio name="drinkers" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+            <!-- Drinkers supplementary  -->
+            <tr>
+              <td><img src="../../../assets/water-clean.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Drinkers supplementary : <small> 10/1000 chicks</small> </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper (change)="getDrinkerSupp($event.target.value)"
+                                     style="margin-right: 20px;">
+                    <input type="radio" clrRadio name="drinkersSupp" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper
+                    (change)="getDrinkerSupp($event.target.value)">
+                    <input type="radio" clrRadio name="drinkersSupp" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+
+            <!-- Position supplmentary drinkers near automed system
+            <tr>
+                <td><img src="../../../assets/Icones audit/hopper.png" class="imgIcon"
+                        width="22" height="20"></td>
+                <td class="left" style="font-weight: 600; color: #454545;">
+
+                    Position supplmentary drinkers near automed system </td>
+                <td>
+                    <div class="radip-wrapper" style="display: flex">
+                        <clr-radio-wrapper
+                            (change)="getPositionSuppDrink($event.target.value)"
+                            style="margin-right: 20px;">
+                            <input type="radio" clrRadio name="options6" required
+                                value='Yes' />
+                        </clr-radio-wrapper>
+
+
+                    </div>
+
+                </td>
+                <td>
+                    <div class="radip-wrapper" style="display: flex">
+
+                        <clr-radio-wrapper
+                            (change)="getPositionSuppDrink($event.target.value)">
+                            <input type="radio" clrRadio name="options6" required
+                                value='No' />
+                        </clr-radio-wrapper>
+
+                    </div>
+
+                </td>
+
+
+            </tr>-->
+
+
+            </tbody>
+
+
+          </table>
+
+        </div>
+        <button class="btn btn-primary" clrStepButton="next">next</button>
+      </clr-step-content>
+    </clr-stepper-panel>
+
+    <clr-stepper-panel ngModelGroup="checkDelivery">
+      <clr-step-title>Check delivery</clr-step-title>
+      <clr-step-content>
+        <div class="form-visitV clr-row">
+
+          <table class="table  table-noborder table-compact">
+            <!-- head Table -->
+            <thead>
+            <tr>
+              <th class="left">
+                <img src="../../../assets/vehicul.png" class="imgIcon" width="26">
+              </th>
+              <th class="left"></th>
+              <th class="left">YES</th>
+              <th class="left">NO</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
 
 
 
+            <!-- Delivery vehicle temperature-->
+            <tr>
+              <td><img src="../../../assets/Icones visit/thermometer.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Delivery vehicle temperature <small>chick box :32°C  outside chick box : 24°C</small></td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper style="margin-right: 20px;"
+                                     (change)="getDeliveryVehiTemp($event.target.value)">
+
+                    <input type="radio" clrRadio name="options7" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper
+                    (change)="getDeliveryVehiTemp($event.target.value)">
+                    <input type="radio" clrRadio name="options7" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+
+            <!-- Delivery vehicle humidity-->
+            <tr>
+              <td><img src="../../../assets/Icones audit/humidity.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Delivery vehicle humidity: <small>60-70%</small></td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper style="margin-right: 20px;"
+                                     (change)="getDeliveryVehiHumi($event.target.value)">
+
+                    <input type="radio" clrRadio name="options8" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper
+                    (change)="getDeliveryVehiHumi($event.target.value)">
+                    <input type="radio" clrRadio name="options8" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+
+            <!-- Chick confort ( rectal temperature )-->
+            <tr>
+              <td><img src="../../../assets/Icones audit/hatchingChick.png"
+                       class="imgIcon" width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Chick confort ( rectal temperature ):<small>39.5-40.5 °C</small></td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper style="margin-right: 20px;"
+                                     (change)="getChickConfort($event.target.value)">
+
+                    <input type="radio" clrRadio name="options9" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper (change)="getChickConfort($event.target.value)">
+                    <input type="radio" clrRadio name="options9" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+
+            <!--External environmental conditions ( Temperature , Humidity ) -->
+            <tr>
+              <td><img src="../../../assets/icon-tempextern.png" class="imgIcon"
+                       width="22" height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                External environmental conditions ( Temperature , Humidity ) </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper style="margin-right: 20px;"
+                                     (change)="getExternalEnvCond($event.target.value)">
+
+                    <input type="radio" clrRadio name="options10" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper
+                    (change)="getExternalEnvCond($event.target.value)">
+                    <input type="radio" clrRadio name="options10" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+
+            <!--Transit time ( hatchery- farm ) -->
+            <tr>
+              <td><img src="../../../assets/transpTime.png" class="imgIcon" width="22"
+                       height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Transit time ( hatchery- farm ): <small>short / long</small> </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper style="margin-right: 20px;"
+                                     (change)="getTransitTime($event.target.value)">
+
+                    <input type="radio" clrRadio name="options11" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper (change)="getTransitTime($event.target.value)">
+                    <input type="radio" clrRadio name="options11" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+
+            <!--Delivery vehicle : air exchange  -->
+            <tr>
+              <td><img src="../../../assets/airExchange.png" class="imgIcon" width="22"
+                       height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Delivery vehicle : air exchange </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper style="margin-right: 20px;"
+                                     (change)="getDeliveryVehicleAirExch($event.target.value)">
+
+                    <input type="radio" clrRadio name="options12" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper
+                    (change)="getDeliveryVehicleAirExch($event.target.value)">
+                    <input type="radio" clrRadio name="options12" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+
+            <!--Delivery vehicle : hygiene  -->
+            <tr>
+              <td><img src="../../../assets/hygiene.png" class="imgIcon" width="22"
+                       height="20"></td>
+              <td class="left" style="font-weight: 600; color: #454545;">
+
+                Delivery vehicle : hygiene <small>disinfected</small> </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+                  <clr-radio-wrapper style="margin-right: 20px;"
+                                     (change)="getDeliveryVehicleHygiene($event.target.value)">
+
+                    <input type="radio" clrRadio name="options13" required
+                           value='Yes' />
+                  </clr-radio-wrapper>
+
+
+                </div>
+
+              </td>
+              <td>
+                <div class="radip-wrapper" style="display: flex">
+
+                  <clr-radio-wrapper
+                    (change)="getDeliveryVehicleHygiene($event.target.value)">
+                    <input type="radio" clrRadio name="options13" required
+                           value='No' />
+                  </clr-radio-wrapper>
+
+                </div>
+
+              </td>
+
+
+            </tr>
+
+
+
+
+
+
+
+            </tbody>
+
+
+          </table>
+
+        </div>
+        <button class="btn btn-primary" clrStepButton="next">next</button>
+      </clr-step-content>
+    </clr-stepper-panel>
+        <clr-stepper-panel ngModelGroup="arrival">
+          <clr-step-title>The arrival</clr-step-title>
+          <clr-step-content>
+            <div class="form-visitV clr-row">
+
+              <table class="table  table-noborder table-compact">
+                <!-- head Table -->
+                <thead>
+                <tr>
+                  <th class="left"></th>
+                  <th class="left"></th>
+                  <th class="left">YES</th>
+                  <th class="left">NO</th>
+
+
+                </tr>
+                </thead>
+                <tbody>
+
+
+
+                <!-- Internal chick temperature -->
+                <tr>
+                  <td><img src="../../../assets/Icones audit/tempInside.png"
+                           class="imgIcon" width="22" height="20"></td>
+                  <td class="left" style="font-weight: 600; color: #454545;">
+
+                    Internal chick temperature : <small>40°C-41°C</small> </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+                      <clr-radio-wrapper style="margin-right: 20px;"
+                                         (change)="getInternalChickTemp($event.target.value)">
+
+                        <input type="radio" clrRadio name="options13" required
+                               value='Yes' />
+                      </clr-radio-wrapper>
+
+
+                    </div>
+
+                  </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+
+                      <clr-radio-wrapper
+                        (change)="getInternalChickTemp($event.target.value)">
+                        <input type="radio" clrRadio name="options13" required
+                               value='No' />
+                      </clr-radio-wrapper>
+
+                    </div>
+
+                  </td>
+
+
+                </tr>
+
+                <!-- Weigh a sample of chick record average live .. -->
+                <tr>
+                  <td><img src="../../../assets/icons8-weight-96.png" class="imgIcon"
+                           width="22" height="20"></td>
+                  <td class="left" style="font-weight: 600; color: #454545;">
+
+                    Weigh a sample of chick record average live weight and CV% /
+                    uniformity : <small>Average 36-45g</small> </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+                      <clr-radio-wrapper style="margin-right: 20px;"
+                                         (change)="getWeighSampleChick($event.target.value)">
+
+                        <input type="radio" clrRadio name="options14" required
+                               value='Yes' />
+                      </clr-radio-wrapper>
+
+
+                    </div>
+
+                  </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+
+                      <clr-radio-wrapper
+                        (change)="getWeighSampleChick($event.target.value)">
+                        <input type="radio" clrRadio name="options14" required
+                               value='No' />
+                      </clr-radio-wrapper>
+
+                    </div>
+
+                  </td>
+
+
+                </tr>
+
+                <tr>
+                  <td><img src="../../../assets/icon-feedeWater.png" class="imgIcon"
+                           width="22" height="20"></td>
+                  <td class="left" style="font-weight: 600; color: #454545;">
+
+                    Ensure feed and water is available </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+                      <clr-radio-wrapper style="margin-right: 20px;"
+                                         (change)="getEnsureFeedWater($event.target.value)">
+
+                        <input type="radio" clrRadio name="options16" required
+                               value='Yes' />
+                      </clr-radio-wrapper>
+
+
+                    </div>
+
+                  </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+
+                      <clr-radio-wrapper
+                        (change)="getEnsureFeedWater($event.target.value)">
+                        <input type="radio" clrRadio name="options16" required
+                               value='No' />
+                      </clr-radio-wrapper>
+
+                    </div>
+
+                  </td>
+
+
+                </tr>
+
+                <!--Light intensity 30-40 lux -->
+                <tr>
+                  <td><img src="../../../assets/light.png" class="imgIcon" width="22"
+                           height="20"></td>
+                  <td class="left" style="font-weight: 600; color: #454545;">
+
+                    Light intensity :<small>30-40 lux</small>  </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+                      <clr-radio-wrapper style="margin-right: 20px;"
+                                         (change)="getLightIntensity($event.target.value)">
+
+                        <input type="radio" clrRadio name="options17" required
+                               value='Yes' />
+                      </clr-radio-wrapper>
+
+
+                    </div>
+
+                  </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+
+                      <clr-radio-wrapper
+                        (change)="getLightIntensity($event.target.value)">
+                        <input type="radio" clrRadio name="options17" required
+                               value='No' />
+                      </clr-radio-wrapper>
+
+                    </div>
+
+                  </td>
+
+
+                </tr>
+
+                <!--Water temperature -->
+                <tr>
+                  <td><img src="../../../assets/light.png" class="imgIcon" width="22"
+                           height="20"></td>
+                  <td class="left" style="font-weight: 600; color: #454545;">
+
+                    Water temperature :<small>18-21 °C</small>  </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+                      <clr-radio-wrapper style="margin-right: 20px;"
+                                         (change)="getwaterTemperature($event.target.value)">
+
+                        <input type="radio" clrRadio name="waterTemperature" required
+                               value='Yes' />
+                      </clr-radio-wrapper>
+
+
+                    </div>
+
+                  </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+
+                      <clr-radio-wrapper
+                        (change)="getwaterTemperature($event.target.value)">
+                        <input type="radio" clrRadio name="waterTemperature" required
+                               value='No' />
+                      </clr-radio-wrapper>
+
+                    </div>
+
+                  </td>
+
+
+                </tr>
+
+
+
+                </tbody>
+
+
+              </table>
+
+            </div>
+            <button class="btn btn-primary" clrStepButton="next">next</button>
+          </clr-step-content>
+        </clr-stepper-panel>
+        <clr-stepper-panel ngModelGroup="afterInstallation">
+          <clr-step-title>After installation</clr-step-title>
+          <clr-step-content>
+            <div class="FormComV">
+
+              <table class="table  table-noborder table-compact">
+                <!-- head Table -->
+                <thead>
+                <tr>
+                  <th class="left"></th>
+                  <th class="left"></th>
+                  <th class="left">YES</th>
+                  <th class="left">NO</th>
+
+
+                </tr>
+                </thead>
+                <tbody>
+
+
+                <!--Check chick behavior after 1-2 hours -->
+                <tr>
+                  <td><img src="../../../assets/check.png" class="imgIcon" width="22"
+                           height="20"></td>
+                  <td class="left" style="font-weight: 600; color: #454545;">
+
+                    Check chick behavior after 1-2 hours </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+                      <clr-radio-wrapper style="margin-right: 20px;"
+                                         (change)="getCheckChickBehavior($event.target.value)">
+
+                        <input type="radio" clrRadio name="options18" required
+                               value='Yes' />
+                      </clr-radio-wrapper>
+
+
+                    </div>
+
+                  </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+
+                      <clr-radio-wrapper
+                        (change)="getCheckChickBehavior($event.target.value)">
+                        <input type="radio" clrRadio name="options18" required
+                               value='No' />
+                      </clr-radio-wrapper>
+
+                    </div>
+
+                  </td>
+
+
+                </tr>
+
+                <!--Check chick water supply ( fresh & clean water ) -->
+                <tr>
+                  <td><img src="../../../assets/water-clean.png" class="imgIcon" width="22"
+                           height="20"></td>
+                  <td class="left" style="font-weight: 600; color: #454545;">
+
+                    Check chick water supply ( fresh & clean water ) </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+                      <clr-radio-wrapper style="margin-right: 20px;"
+                                         (change)="getCheckChickWaterSupply($event.target.value)">
+
+                        <input type="radio" clrRadio name="options19" required
+                               value='Yes' />
+                      </clr-radio-wrapper>
+
+
+                    </div>
+
+                  </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+
+                      <clr-radio-wrapper
+                        (change)="getCheckChickWaterSupply($event.target.value)">
+                        <input type="radio" clrRadio name="options19" required
+                               value='No' />
+                      </clr-radio-wrapper>
+
+                    </div>
+
+                  </td>
+
+
+                </tr>
+
+                <!--Check feed supply ( small & frequent )) -->
+                <tr>
+                  <td><img src="../../../assets/Icones visit/feedConsumption.png"
+                           class="imgIcon" width="22" height="20"></td>
+                  <td class="left" style="font-weight: 600; color: #454545;">
+
+                    Check feed supply ( small & frequent ) </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+                      <clr-radio-wrapper style="margin-right: 20px;"
+                                         (change)="getCheckFeedSupply($event.target.value)">
+
+                        <input type="radio" clrRadio name="options20" required
+                               value='Yes' />
+                      </clr-radio-wrapper>
+
+
+                    </div>
+
+                  </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+
+                      <clr-radio-wrapper
+                        (change)="getCheckFeedSupply($event.target.value)">
+                        <input type="radio" clrRadio name="options20" required
+                               value='No' />
+                      </clr-radio-wrapper>
+
+                    </div>
+
+                  </td>
+
+
+                </tr>
+
+                <!--Check chick crop fill  -->
+                <tr>
+                  <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
+                           width="22" height="20"></td>
+                  <td class="left" style="font-weight: 600; color: #454545;">
+
+                    Check chick crop fill </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+                      <clr-radio-wrapper style="margin-right: 20px;"
+                                         (change)="getCheckChickCropFill($event.target.value)">
+
+                        <input type="radio" clrRadio name="options21-" required
+                               value='Yes' />
+
+                      </clr-radio-wrapper>
+
+
+                    </div>
+
+                  </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+
+                      <clr-radio-wrapper
+                        (change)="getCheckChickCropFill($event.target.value)">
+                        <input type="radio" clrRadio name="options21-" required
+                               value='No' />
+                      </clr-radio-wrapper>
+
+                    </div>
+
+                  </td>
+
+
+                </tr>
+
+                <!--Distribution of day old chicks  -->
+                <tr>
+                  <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
+                           width="22" height="20"></td>
+                  <td class="left" style="font-weight: 600; color: #454545;">
+
+                    Distribution of day old chicks </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+                      <clr-radio-wrapper style="margin-right: 20px;"
+                                         (change)="getDistributionDayOldChicks($event.target.value)">
+
+                        <input type="radio" clrRadio name="options21" required
+                               value='Yes' />
+                      </clr-radio-wrapper>
+
+
+                    </div>
+
+                  </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+
+                      <clr-radio-wrapper
+                        (change)="getDistributionDayOldChicks($event.target.value)">
+                        <input type="radio" clrRadio name="options21" required
+                               value='No' />
+                      </clr-radio-wrapper>
+
+                    </div>
+
+                  </td>
+
+
+                </tr>
+
+                <!--Daily purges piping  -->
+                <tr>
+                  <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
+                           width="22" height="20"></td>
+                  <td class="left" style="font-weight: 600; color: #454545;">
+
+                    Daily purges piping </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+                      <clr-radio-wrapper style="margin-right: 20px;"
+                                         (change)="getDailyPurgesPiping($event.target.value)">
+
+                        <input type="radio" clrRadio name="options22" required
+                               value='Yes' />
+                      </clr-radio-wrapper>
+
+
+                    </div>
+
+                  </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+
+                      <clr-radio-wrapper
+                        (change)="getDailyPurgesPiping($event.target.value)">
+                        <input type="radio" clrRadio name="options22" required
+                               value='No' />
+                      </clr-radio-wrapper>
+
+                    </div>
+
+                  </td>
+
+
+                </tr>
+
+                <!--Air quality  -->
+                <tr>
+                  <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
+                           width="22" height="20"></td>
+                  <td class="left" style="font-weight: 600; color: #454545;">
+
+                    Air quality </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+                      <clr-radio-wrapper style="margin-right: 20px;"
+                                         (change)="getAirQuality($event.target.value)">
+
+                        <input type="radio" clrRadio name="options23" required
+                               value='Yes' />
+                      </clr-radio-wrapper>
+
+
+                    </div>
+
+                  </td>
+                  <td>
+                    <div class="radip-wrapper" style="display: flex">
+
+                      <clr-radio-wrapper (change)="getAirQuality($event.target.value)">
+                        <input type="radio" clrRadio name="options23" required
+                               value='No' />
+                      </clr-radio-wrapper>
+
+                    </div>
+
+                  </td>
+
+
+                </tr>
+
+
+
+
+                </tbody>
+
+
+              </table>
+
+
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="save(myForm)">Sauvegarder</button>
+              </div>
+
+
+            </div>
+          </clr-step-content>
+        </clr-stepper-panel>
+      </div>
     </form>
-</div>
+    </div>
+
 </div>

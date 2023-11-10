@@ -75,6 +75,7 @@ button {
   margin-top: 0rem !important;
 
 }
+.highcharts-credits {display:none}
 
 
 .datagrid-table {

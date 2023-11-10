@@ -731,8 +731,8 @@ export class MortalityComponent implements OnInit {
     this.dashboardService.getFeedByHouseOfLastDays(event).subscribe(res => {
       console.log('feed', res);
       for (let r of res) {
-        categories.push(r.date);
-        data.push(r.mesure);
+        categories.push(r.dateAge);
+        data.push({y: r.mesure , z: r.visitDate});
       }
       this.optionsChart2 = {
         chart: {
@@ -747,17 +747,21 @@ export class MortalityComponent implements OnInit {
         },
         yAxis: {
           title: {
-            text: 'g/brid/day'
+            text: 'g/day'
           }
         },
-        tooltip: {
-          valueSuffix: 'g/brid/day'
+        legend: {
+          enabled: false
         },
         series: [{
           name: 'feed',
           data: data,
           color: '#01897a'
-        }]
+        }],
+        tooltip: {
+          pointFormat: 'Quantity of feed : <b> {point.y} g</b><br>' +
+            'Visit date: <b> {point.z}</b><br>'
+        }
       };
       Highcharts.chart('chartfeedByhouseofLastDays', this.optionsChart2);
     });
@@ -765,20 +769,21 @@ export class MortalityComponent implements OnInit {
 
   getMortalityByHouseofLastDays(event) {
     let categories = [];
-    let data = [];
+    let data1 = [];
     this.dashboardService.getMortalityByHouseOfLastDays(event).subscribe(res => {
       console.log('Mortality', res);
       for (let r of res) {
-        categories.push(r.date);
-        data.push(r.mesure);
+        categories.push(r.dateAge);
+        data1.push({y: r.mesure , z: r.visitDate});
       }
+      console.log(data1);
       this.optionsChart5 = {
         chart: {
-          type: 'spline',
+          type: 'column',
           backgroundColor: 'rgba(0, 0, 0, 0)',
         },
         title: {
-          text: 'Measure of Motality'
+          text: 'Measure of Mortality'
         },
         xAxis: {
           categories: categories
@@ -788,14 +793,18 @@ export class MortalityComponent implements OnInit {
             text: 'brid/day'
           }
         },
-        tooltip: {
-          valueSuffix: 'brid/day'
+        legend: {
+          enabled: false
         },
         series: [{
           name: 'Mortality',
-          data: data,
+          data: data1,
           color: 'red'
-        }]
+        }],
+        tooltip: {
+          pointFormat: 'Nomber of bird: <b> {point.y}</b><br>' +
+            'Visit date: <b> {point.z}</b><br>'
+        }
       };
       Highcharts.chart('chartMortalityByhouseofLastDays', this.optionsChart5);
     });
@@ -807,8 +816,8 @@ export class MortalityComponent implements OnInit {
     this.dashboardService.getWeightByHouseOfLastDays(event).subscribe(res => {
       console.log('Mortality', res);
       for (let r of res) {
-        categories.push(r.date);
-        data.push(r.mesure);
+        categories.push(r.dateAge);
+        data.push({y: r.mesure , z: r.visitDate});
       }
       this.optionsChart6 = {
         chart: {
@@ -827,7 +836,8 @@ export class MortalityComponent implements OnInit {
           }
         },
         tooltip: {
-          valueSuffix: 'g'
+          pointFormat: 'Average body weight: <b> {point.y} g</b><br>' +
+            'Visit date: <b> {point.z}</b><br>'
         },
         series: [{
           name: 'Weight',
@@ -845,8 +855,8 @@ export class MortalityComponent implements OnInit {
     this.dashboardService.getwaterByHouseOfLastDays(event).subscribe(res => {
       console.log('Mortality', res);
       for (let r of res) {
-        categories.push(r.date);
-        data.push(r.mesure);
+        categories.push(r.dateAge);
+        data.push({y: r.mesure , z: r.visitDate});
       }
       this.optionsChart7 = {
         chart: {
@@ -861,11 +871,12 @@ export class MortalityComponent implements OnInit {
         },
         yAxis: {
           title: {
-            text: 'ml/brid/day'
+            text: 'ml/day'
           }
         },
         tooltip: {
-          valueSuffix: 'ml/brid/day'
+          pointFormat: 'Quantity of water: <b> {point.y} ml</b><br>' +
+            'Visit date: <b> {point.z}</b><br>'
         },
         series: [{
           name: 'Water',

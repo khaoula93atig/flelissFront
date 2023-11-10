@@ -5,6 +5,7 @@ import {SubSink} from 'subsink';
 import {WeeklyWeightComponent} from '../weekly-weight/weekly-weight.component';
 import {WeeklyFeedComponent} from '../weekly-feed/weekly-feed.component';
 import {MotalityVisitComponent} from '../motality-visit/motality-visit.component';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-list-visit',
@@ -12,7 +13,8 @@ import {MotalityVisitComponent} from '../motality-visit/motality-visit.component
   styleUrls: ['./list-visit.component.css'],
 })
 export class ListVisitComponent implements OnInit {
-  constructor(private visitService: VisitService) {
+  constructor(private visitService: VisitService,
+              private userService: UserService) {
   }
 
   @ViewChild(WeeklyWeightComponent) modal2: WeeklyWeightComponent;
@@ -27,6 +29,7 @@ export class ListVisitComponent implements OnInit {
   visits: any = [];
   visitId: string;
   visittasks: any = [];
+  user: string;
 
   // humidity fields
   measureHumResult: string;
@@ -98,7 +101,11 @@ export class ListVisitComponent implements OnInit {
     if (event != null && event != undefined) {
       this.visitId = event.visitId;
       console.log(this.visitId);
-      this.showTaskResult(this.visitId)
+      this.userService.getUserByUserName(event.username).subscribe(data => {
+        console.log('user', data);
+        this.user = data[0].name;
+      } );
+      this.showTaskResult(this.visitId);
       /*this.visitService.getConsultingvisitID(this.visitId).subscribe(data => {
         this.visittasks = data;
         for (let i = 0; i < this.visittasks.length; i++) {
@@ -117,76 +124,20 @@ export class ListVisitComponent implements OnInit {
       this.visitService.getConsultingvisitID(id).subscribe(
         (data) => {
           console.log(data);
-          this.visittasks=data;
-          this.visittasks.forEach((element) => {
-          });
           for (let i = 0; i < data.length; i++) {
-            if (data[i].taskId == 1) {
-
-              this.measureTemResult = data[i].measure;
-              this.standardTemResult = data[i].standard;
-              this.deviationTemResult = data[i].deviation;
-              this.descritptionTemResult = data[i].task.description;
-            } else if (data[i].taskId == 2) {
-              this.measureHumResult = data[i].measure;
-              this.standardHumResult = data[i].standard;
-              this.deviationHumResult = data[i].deviation;
-              this.descritptionHumResult = data[i].task.description;
-            } else if (data[i].taskId == 3) {
-              this.measureAirSResult = data[i].measure;
-              this.standardAirSResult = data[i].standard;
-              this.deviationAirSResult = data[i].deviation;
-              this.descritptionAirSResult = data[i].task.description;
-            } else if (data[i].taskId == 4) {
-              this.measureAmoResult = data[i].measure;
-              this.standardAmoResult = '< ' + data[i].standard;
-              this.deviationAmoResult = data[i].deviation;
-              this.descritptionAmoResult = data[i].task.description;
-            } else if (data[i].taskId == 5) {
-              this.measureLighIResult = data[i].measure;
-              this.standardLighIResult = data[i].standard;
-              this.deviationLighIResult = data[i].deviation;
-              this.descritptionLighIResult = data[i].task.description;
-            } else if (data[i].taskId == 6) {
-              this.measureFeedCResult = data[i].measure;
-              this.percentageFeedCResult = data[i].percentage.toFixed(2);
-              this.standardFeedCResult = data[i].standard;
-              this.deviationFeedCResult = data[i].deviation;
-              this.descritptionFeedCResult = data[i].task.description;
-            } else if (data[i].taskId == 7) {
-              this.measureWatCResult = data[i].measure;
-              this.percentageWatCResult = data[i].percentage.toFixed(2);
-              this.standardWatCResult = data[i].standard;
-              this.deviationWatCResult = data[i].deviation;
-              this.descritptionWatCResult = data[i].task.description;
-            } else if (data[i].taskId == 8) {
-              this.measureMortResult = data[i].measure;
-              this.standardMortResult = data[i].standard;
-              this.deviationMortResult = data[i].deviation;
-              this.descritptionMortResult = data[i].task.description;
-              this.percentageMortResult = data[i].percentage.toFixed(2);
-            } else if (data[i].taskId == 9) {
-              this.measureLittCResult = data[i].measure;
-              this.standardLittCResult = data[i].standard;
-              this.deviationLittCResult = data[i].deviation;
-              this.descritptionLittCResult = data[i].task.description;
-            } else if (data[i].taskId == 10) {
-              this.measureDensResult = data[i].measure;
-              this.standardDensResult = data[i].standard;
-              this.deviationDensResult = data[i].deviation;
-              this.descritptionDensResult = data[i].task.description;
-            } else if (data[i].taskId == 11) {
-              this.measureWeightResult = data[i].measure;
-              this.standardWeightResult = data[i].standard;
-              this.deviationWeightResult = data[i].deviation;
-              this.descritptionWeightResult = data[i].task.description;
-            } else if (data[i].taskId == 12) {
-              this.measureHomogResult = data[i].measure;
-              this.standardHomogResult = data[i].standard;
-              this.deviationHomogResult = data[i].deviation;
-              this.descritptionHomogResult = data[i].task.description;
+            if (data[i].taskId == 9) {
+              if (data[i].measure == 0) {
+                data[i].measure = 'aerate';
+              } else if (data[i].measure == 1) {
+                data[i].measure = 'not aerate';
+              } else {
+                data[i].measure = 'humid';
+              }
             }
           }
+          this.visittasks = data;
+          this.visittasks.forEach((element) => {
+          });
         },
       ),
     );

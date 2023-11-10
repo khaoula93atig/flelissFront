@@ -183,4 +183,9 @@ export class VisitService {
     return this.http.get<any>(environment.url_visit + '/Dailyvisit/TotalTaskMeasure/' + flockId + '/' + taskId + '/' + ageFlock);
   }
 
+  // get visit by age and flock
+  getVisitByAgeAndflock(age , flockId){
+    return this.http.get<any[]>(environment.url_visit + '/visitExist/' + age + '/' + flockId);
+  }
+
 }

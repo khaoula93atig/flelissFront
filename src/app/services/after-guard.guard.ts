@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router, NavigationEnd , Event } from '@angular/router';
 import { Observable } from 'rxjs';
+import {AuthService} from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AfterGuardGuard implements CanActivate {
-    currentRoute:String
-  constructor(private router: Router) { }
-  canActivate(route: import("@angular/router").ActivatedRouteSnapshot, state: import("@angular/router").RouterStateSnapshot): boolean | import("@angular/router").UrlTree | import("rxjs").Observable<boolean | import("@angular/router").UrlTree> | Promise<boolean | import("@angular/router").UrlTree> {
+    currentRoute: String;
+  constructor(private router: Router , private tokenService: AuthService) { }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    if (this.tokenService.loggedIn()) {
 
-    if (localStorage.getItem('currentUser') != null) {
-      //this.router.onSameUrlNavigation;
-      window.location.reload
+      this.router.navigateByUrl('/Dashboard/general');
     }
-
-    // this.router.navigate(['login']);
     return true;
-}
+
+  }
 }

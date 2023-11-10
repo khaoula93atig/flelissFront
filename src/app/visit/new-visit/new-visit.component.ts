@@ -11,7 +11,7 @@ import {
   IRegistrationTask,
   IRegistrationVisitTasks,
   DynamicGrid,
-  WeeklyWeightMeasurement,
+  WeeklyWeightMeasurement, WeeklyFeed,
 } from 'src/app/shared/registration';
 import {FormGroup, Validators, FormArray, FormControl} from '@angular/forms';
 
@@ -47,6 +47,7 @@ export class NewVisitComponent implements OnInit {
   totalWater = 0;
   testFeed = 0;
   testWater = 0;
+  weeklyFeed = new WeeklyFeed();
 
   constructor(
     private farmService: FarmService,
@@ -54,7 +55,7 @@ export class NewVisitComponent implements OnInit {
     private houseService: HouseService,
     private datepipe: DatePipe,
     private listComponenet: ListVisitComponent,
-    private FlockService: FlockService,
+    private flockService: FlockService,
     library: FaIconLibrary
   ) {
     library.addIconPacks(far);
@@ -82,8 +83,8 @@ export class NewVisitComponent implements OnInit {
   birdsNumberDay0: number;
   calculpercentage: number;
   calculpercentageWater: number;
-  farmID: string = '';
-  houseId: string = '';
+  farmID: string ;
+  houseId: string;
   description: string;
   ageOfTheFlock: any;
   // task fields
@@ -158,9 +159,10 @@ export class NewVisitComponent implements OnInit {
   measureAirSpeed: number;
   measureAmoniac: number;
   measurelightIntensity: number;
-  measurefeedConsumption: number = 0;
+  measurefeedConsumption: number;
   measureWaterConsumption: number;
   measureMortality: number;
+  measureLitterCondition: number;
   measureDensity: number;
   measureWeight: any;
   measureHomogeneity: number;
@@ -178,35 +180,21 @@ export class NewVisitComponent implements OnInit {
   centers: any[] = [];
   // weight fields
   weightcalcul: number;
-  visitID: string = '';
-  weightMeasure: number = 0;
+  visitID: string;
+  weightMeasure: number;
   nbrbirds: number;
   dynamicArray: Array<DynamicGrid> = [];
   newDynamic: any = {};
   centerId: string;
   cv: number;
   flockNumber: number;
-  flockName= " " ;
-  flock: any ;
+  flockName = ' ';
+  flock: any;
+  nbrofBirdWeight: number;
+  uniformity: number;
+  weeklyWeightMeasurement: WeeklyWeightMeasurement = new WeeklyWeightMeasurement();
   // Reference to the included DataGrid showing the different sectors
   @ViewChild(ClrDatagrid) dg: ClrDatagrid;
-
-  /*gethouse_id(id: string) {
-    return id.substr(10, id.length);
-  }
-
-  //get getSelectedfarm
-  getFarmId(event) {
-    //console.log(event)
-    this.farmID = event;
-
-    this.subs.add(
-      this.HouseService.getConsultingHouse(this.farmID).subscribe((data) => {
-        this.houses = data;
-        this.loading = false;
-      }),
-    );
-  }*/
 
   getCenterId(event) {
     this.centerId = event;
@@ -306,24 +294,26 @@ export class NewVisitComponent implements OnInit {
         });
         this.getTotalMeasureTask(this.flockID, this.ageOfTheFlock);
       })
-  );
+    );
   }
-  calculTotalTemporary(){
+
+  calculTotalTemporary() {
     if (this.testFeed == this.totalFeed) {
-        this.totalFeed = this.totalFeed + this.measurefeedConsumption;
-    }else {
+      this.totalFeed = this.totalFeed + this.measurefeedConsumption;
+    } else {
       this.totalFeed = this.testFeed + this.measurefeedConsumption;
     }
   }
-    calculTotalWaterTemporary(){
-        if (this.testWater == this.totalWater) {
-            this.totalWater = this.totalWater + this.measureWaterConsumption;
-        }else {
-            this.totalWater = this.testWater + this.measureWaterConsumption;
-        }
-    }
 
-  calculAge(){
+  calculTotalWaterTemporary() {
+    if (this.testWater == this.totalWater) {
+      this.totalWater = this.totalWater + this.measureWaterConsumption;
+    } else {
+      this.totalWater = this.testWater + this.measureWaterConsumption;
+    }
+  }
+
+  calculAge() {
     let date1 = new Date(this.flock.hatchDate);
     let date2 = new Date(this.visitDate);
     // To calculate the time difference of two dates
@@ -333,7 +323,9 @@ export class NewVisitComponent implements OnInit {
     this.ageOfTheFlock = Math.round(
       Math.abs(this.ageOfTheFlock / (1000 * 3600 * 24)),
     );
+    this.getvisitByAgeAndFlock(this.ageOfTheFlock, this.flockID);
   }
+
   ngOnInit(): void {
     // this.visitDate = this.reverseDate("MM/DD/yyyy", new Date());
     this.visitDate = this.reverseDate('yyyy-MM-DD', new Date());
@@ -356,7 +348,7 @@ export class NewVisitComponent implements OnInit {
 
     this.initResults();
     this.initVisit();
-    this.initWeight();
+    //this.initWeight();
 
     // get all Task
     this.subs.add(
@@ -457,6 +449,7 @@ export class NewVisitComponent implements OnInit {
     this.weightMeasure = 0;
     this.cv = 0;
     console.log(this.dynamicArray);
+    this.nbrofBirdWeight = this.dynamicArray.length;
     for (var i = 0; i < this.dynamicArray.length; i++) {
       this.weightMeasure = this.weightMeasure + this.dynamicArray[i].weight;
       if (this.maxWeight < this.dynamicArray[i].weight) {
@@ -470,6 +463,16 @@ export class NewVisitComponent implements OnInit {
     this.measureWeight = (this.weightMeasure / this.dynamicArray.length).toFixed(2);
     this.cv = ((this.maxWeight - this.minWeight) / this.measureWeight) * 100;
     this.cv = parseFloat(this.cv.toFixed(3));
+    let bornSup = parseFloat((this.measureWeight + ((this.measureWeight / 100) * 10)).toFixed(2));
+    let bornInf = parseFloat((this.measureWeight - ((this.measureWeight / 100) * 10)).toFixed(2));
+    let outOff= 0;
+    // calcul uniformity
+    for (i = 0; i < this.dynamicArray.length; i++) {
+      if (this.dynamicArray[i].weight > bornSup || this.dynamicArray[i].weight < bornInf) {
+        outOff++;
+      }
+    }
+    this.uniformity = parseFloat((((this.dynamicArray.length - outOff) / this.dynamicArray.length) * 100).toFixed(2));
     // this.Weightclosed = false
     this.WeightOpened = false;
     this.dynamicArray = [];
@@ -540,7 +543,8 @@ export class NewVisitComponent implements OnInit {
 
     return dt;
   }
-  getTotalMeasureTask(flockId, ageFlock){
+
+  getTotalMeasureTask(flockId, ageFlock) {
     this.visitService.totalMeasureTaskDate(flockId, ageFlock, 6).subscribe(data => {
       console.log(data);
       this.totalFeed = data;
@@ -552,53 +556,6 @@ export class NewVisitComponent implements OnInit {
       this.testWater = data;
     });
   }
-
-  // date formatting
-  /*setDate(format: string, date: string) {
-    if (format == 'yyyy-MM-DD') {
-      var dateObj = date.split('-');
-      var year = dateObj[0];
-      var month = dateObj[1];
-      var day = dateObj[2];
-
-      var dateFormatted = new Date();
-      dateFormatted.setFullYear(+year, +month - 1, +day);
-      var dt = dateFormatted;
-    } //else { console.log("Format date not supported"); }
-
-    if (format == 'MM/DD/yyyy') {
-      console.log('date string ' + date);
-      const dateObj = date.split('/');
-      let month = dateObj[0];
-      let day = dateObj[1];
-      let year = dateObj[2];
-      console.log(
-        'date string month ' + month + ' day ' + day + ' year ' + year,
-      );
-      let dateFormatted = new Date();
-      dateFormatted.setFullYear(+year, +month - 1, +day);
-      var dt = dateFormatted;
-      console.log('date date ' + dt);
-    } //else { console.log("Format date not supported"); }
-    return dt;
-  }
-
-  //date formatting
-  setNewDate(format: string, date: Date) {
-    if (format == 'MM/DD/yyyy') {
-      const year = date.getFullYear();
-      const month = date.getMonth() + 1;
-      const day = date.getDate();
-
-      let smonth = month < 10 ? '0' + month : month;
-      let sday = day < 10 ? '0' + day : day;
-
-      var dateFormatted = smonth + '/' + sday + '/' + year;
-      var dt = dateFormatted;
-    } //else { console.log("Format date not supported"); }
-
-    return dt;
-  }*/
 
   // visit Creation
   submit(): void {
@@ -628,8 +585,10 @@ export class NewVisitComponent implements OnInit {
     registrationVisit.centerID = this.centerId;
     registrationVisit.farmId = this.farmID;
     registrationVisit.mortality = this.measureMortality;
+    registrationVisit.total_feed_consumption = this.totalFeed;
+    registrationVisit.total_water_consumption = this.totalWater;
     console.log('visit', registrationVisit);
-    //Invoking service
+    // Invoking service
     this.visitService.createRegistrationVisits(registrationVisit).subscribe(
       (data) => {
         console.log('visit', data);
@@ -718,30 +677,33 @@ export class NewVisitComponent implements OnInit {
 
           // weight
           // console.log('weightTask.taskId' + this.weightTask.taskId)
-          let registrationVisitTasksWeight: IRegistrationVisitTasks = new Object() as IRegistrationVisitTasks;
-          registrationVisitTasksWeight.ageFlock = this.ageOfTheFlock;
-          registrationVisitTasksWeight.taskId = this.weightTask.taskId;
-          registrationVisitTasksWeight.visitId = this.visitIDnew;
-          registrationVisitTasksWeight.measure = this.measureWeight;
-          registrationVisitTasksWeight.breedId = this.breedId;
-          // Invoking service
-          this.visitService.createRegistrationVisitTasks(
-            registrationVisitTasksWeight,
-          ).subscribe((data) => {
-            this.messageWeight = data['response'];
-          });
+          if(this.measureWeight != null) {
+            console.log(this.measureWeight);
+            let registrationVisitTasksWeight: IRegistrationVisitTasks = new Object() as IRegistrationVisitTasks;
+            registrationVisitTasksWeight.ageFlock = this.ageOfTheFlock;
+            registrationVisitTasksWeight.taskId = this.weightTask.taskId;
+            registrationVisitTasksWeight.visitId = this.visitIDnew;
+            registrationVisitTasksWeight.measure = this.measureWeight;
+            registrationVisitTasksWeight.breedId = this.breedId;
+            // Invoking service
+            this.visitService.createRegistrationVisitTasks(
+              registrationVisitTasksWeight,
+            ).subscribe((data) => {
+              this.messageWeight = data['response'];
+            });
 
-          // homogenité
-          let registrationVisitTaskshomognite: IRegistrationVisitTasks = new Object() as IRegistrationVisitTasks;
-          registrationVisitTaskshomognite.ageFlock = this.ageOfTheFlock;
-          registrationVisitTaskshomognite.taskId = this.homogeneityFlockTask.taskId;
-          registrationVisitTaskshomognite.visitId = this.visitIDnew;
-          registrationVisitTaskshomognite.measure = this.cv;
-          this.visitService.createRegistrationVisitTasks(
-            registrationVisitTaskshomognite,
-          ).subscribe((data) => {
-            this.messageHomogeneity = data['response'];
-          });
+            // homogenité
+            let registrationVisitTaskshomognite: IRegistrationVisitTasks = new Object() as IRegistrationVisitTasks;
+            registrationVisitTaskshomognite.ageFlock = this.ageOfTheFlock;
+            registrationVisitTaskshomognite.taskId = this.homogeneityFlockTask.taskId;
+            registrationVisitTaskshomognite.visitId = this.visitIDnew;
+            registrationVisitTaskshomognite.measure = this.cv;
+            this.visitService.createRegistrationVisitTasks(
+              registrationVisitTaskshomognite,
+            ).subscribe((data) => {
+              this.messageHomogeneity = data['response'];
+            });
+          }
 
           // light intensité
           let registrationVisitTasklight: IRegistrationVisitTasks = new Object() as IRegistrationVisitTasks;
@@ -752,7 +714,7 @@ export class NewVisitComponent implements OnInit {
           this.visitService.createRegistrationVisitTasks(
             registrationVisitTasklight,
           ).subscribe((data) => {
-            this.messageHomogeneity = data['response' ];
+            this.messageHomogeneity = data['response'];
           });
 
           // density
@@ -795,48 +757,131 @@ export class NewVisitComponent implements OnInit {
           registrationVisitTasksMortality.percentage = this.calculpercentage;
           registrationVisitTasksMortality.breedId = this.breedId;
           // Invoking service
-          console.log('mortality',registrationVisitTasksMortality);
+          console.log('mortality', registrationVisitTasksMortality);
           this.visitService.createRegistrationVisitTasks(
             registrationVisitTasksMortality,
           ).subscribe((data) => {
             this.messageMortality = data['response'];
+            switch (this.ageOfTheFlock) {
+              case 0 :
+                this.weeklyFeed.totalStarterFeed = this.totalFeed;
+                this.weeklyFeed.starterFeedPerBird = this.totalFeed / this.flocks[0].restFlockNumber;
+                this.saveweeklyFeed(this.weeklyFeed);
+                this.saveWeeklyWeight(this.weeklyWeightMeasurement);
+                break;
+              case 7 :
+                this.weeklyFeed.totalStarterFeed = this.totalFeed;
+                this.weeklyFeed.starterFeedPerBird = this.totalFeed / this.flocks[0].restFlockNumber;
+                this.saveweeklyFeed(this.weeklyFeed);
+                this.saveWeeklyWeight(this.weeklyWeightMeasurement);
+                break;
+              case 14 :
+                this.weeklyFeed.totalGrowerFeed = this.totalFeed;
+                this.weeklyFeed.growerFeedPerBird = this.totalFeed / this.flocks[0].restFlockNumber;
+                this.saveweeklyFeed(this.weeklyFeed);
+                this.saveWeeklyWeight(this.weeklyWeightMeasurement);
+                break;
+              case 21 :
+                this.weeklyFeed.totalGrowerFeed = this.totalFeed;
+                this.weeklyFeed.growerFeedPerBird = this.totalFeed / this.flocks[0].restFlockNumber;
+                this.saveweeklyFeed(this.weeklyFeed);
+                this.saveWeeklyWeight(this.weeklyWeightMeasurement);
+                break;
+              case 28 :
+                this.weeklyFeed.totalFinisherFeed = this.totalFeed;
+                this.weeklyFeed.finisherFeedBird = this.totalFeed / this.flocks[0].restFlockNumber;
+                this.saveweeklyFeed(this.weeklyFeed);
+                this.saveWeeklyWeight(this.weeklyWeightMeasurement);
+                break;
+              case 35 :
+                this.weeklyFeed.totalFinisherFeed = this.totalFeed;
+                this.weeklyFeed.finisherFeedBird = this.totalFeed / this.flocks[0].restFlockNumber;
+                this.saveweeklyFeed(this.weeklyFeed);
+                this.saveWeeklyWeight(this.weeklyWeightMeasurement);
+                break;
+              case 42 :
+                this.weeklyFeed.totalFinisherFeed = this.totalFeed;
+                this.weeklyFeed.finisherFeedBird = this.totalFeed / this.flocks[0].restFlockNumber;
+                this.saveweeklyFeed(this.weeklyFeed);
+                this.saveWeeklyWeight(this.weeklyWeightMeasurement);
+                break;
+            }
+          });
+
+          let registrationVisitTasksLitterCondition: IRegistrationVisitTasks = new Object() as IRegistrationVisitTasks;
+          registrationVisitTasksLitterCondition.ageFlock = this.ageOfTheFlock;
+          registrationVisitTasksLitterCondition.taskId = this.litterConditionTask.taskId;
+          registrationVisitTasksLitterCondition.visitId = this.visitIDnew;
+          registrationVisitTasksLitterCondition.measure = this.measureLitterCondition;
+          // Invoking service
+          console.log('litter condition ', registrationVisitTasksLitterCondition);
+          this.visitService.createRegistrationVisitTasks(
+            registrationVisitTasksLitterCondition,
+          ).subscribe((data) => {
+            this.messageMortality = data['response'];
           });
         }
-
-        /*this.FlockService.updateRestNumberFlock(
-          this.flockID,
-          this.flockNumber - this.measureMortality,
-        ).subscribe((data) => {
-          //console.log('success  ' + data['response'])
-        })
-        /*if (
-          this.messageTemp &&
-          this.messageHumidity &&
-          this.messageWeight &&
-          this.messageAirSpeed &&
-          this.messageAmoniac &&
-          this.messagefeedConsumption &&
-          this.messageWaterConsumption &&
-          this.messageMortality == 'OK'
-        ) {
-          console.log('////////////////')
-        }*/
-
         // this.showResult(this.visitIDnew)
         this.resultOpened = true;
+        // this.showResult(this.visitIDnew);
         this.visitService.getConsultingvisitID(this.visitIDnew).subscribe(
           (data) => {
+            // this.showResult(this.visitIDnew);
+            for (let d of data) {
+              if (d.taskId == 9) {
+                if (d.measure == 0) {
+                  d.measure = 'aerate';
+                } else if (d.measure == 1) {
+                  d.measure = 'not aerate';
+                } else {
+                  d.measure = 'humid';
+                }
+              }
+            }
             this.visittasks = data;
           });
+
       },
     );
-
-    //  this.exampleForm.reset();
   }
 
-  //button save
+  // button save
   submitAll(): void {
     this.submit();
+  }
+
+  saveweeklyFeed(feed) {
+    feed.farmId = this.farmID;
+    feed.centerId = this.centerId;
+    feed.houseId = this.houseId;
+    feed.flockId = this.flockID;
+    feed.week = this.ageOfTheFlock;
+    feed.breed = this.breedId;
+    console.log(this.weeklyFeed);
+    this.visitService.saveWeeklyFeed(this.weeklyFeed).subscribe((data) => {
+      console.log('weeklyFeed ' + JSON.stringify(this.weeklyFeed));
+      console.log('data[\'response\']  ' + data['response']);
+      if (data['response'] == 'OK') {
+        console.log('test');
+      }
+    });
+  }
+  saveWeeklyWeight(weeklyWeightMeasurement){
+    weeklyWeightMeasurement.centerId = this.centerId;
+    weeklyWeightMeasurement.farmId = this.farmID;
+    weeklyWeightMeasurement.houseId = this.houseId;
+    weeklyWeightMeasurement.flockId = this.flockID;
+    weeklyWeightMeasurement.flockNbr = this.nbrofBirdWeight;
+    // weeklyWeightMeasurement.weight = o;
+    weeklyWeightMeasurement.average = this.weightMeasure;
+    weeklyWeightMeasurement.week = this.ageOfTheFlock;
+    weeklyWeightMeasurement.breed = this.breedId;
+    weeklyWeightMeasurement.cv = this.cv;
+    weeklyWeightMeasurement.uniformity =  this.uniformity;
+    this.visitService.saveWeeklyWeight(weeklyWeightMeasurement).subscribe(data=>
+      console.log(weeklyWeightMeasurement)
+    );
+
   }
 
   // Reset the form after 'Annuler' Button clicked
@@ -937,121 +982,9 @@ export class NewVisitComponent implements OnInit {
     this.nbrbirds = 0;
   }
 
-  // open tasks Results  after save
-  showResult(id): void {
-    this.resultOpened = true;
-    this.subs.add(
-      this.visitService.getConsultingvisitID(this.visitIDnew).subscribe(
-        (visittasks) => {
-          this.visittasks.forEach((element) => {
-            // console.log('visitTasks element => ', element.standard)
-          });
-          // console.log('visitTasks Result' + visittasks)
-          for (let i = 0; i < visittasks.length; i++) {
-            /*console.log('controle' + visittasks[i])
-            console.log('controleID *' + visittasks[i].measure)
-            console.log(
-              'controleDescroption *' + visittasks[i].task.description,
-            )*/
-            if (visittasks[i].taskId == 1) {
-              //console.log('ok1')
-              this.measureTemResult = visittasks[i].measure;
-              this.standardTemResult = visittasks[i].standard;
-              this.deviationTemResult = visittasks[i].deviation;
-              /*console.log('measureTemResult' + this.measureTemResult)
-              console.log('standardTemResult' + this.standardTemResult)
-              console.log('deviationTemResult' + this.deviationTemResult)*/
-            } else if (visittasks[i].taskId == 2) {
-              //console.log('ok2')
-              this.measureHumResult = visittasks[i].measure;
-              this.standardHumResult = visittasks[i].standard;
-              this.deviationHumResult = visittasks[i].deviation;
-              /*console.log('measureHumResult' + this.measureHumResult)
-              console.log('standardHumResult' + this.standardHumResult)
-              console.log('deviationHumResult' + this.deviationHumResult)*/
-            } else if (visittasks[i].taskId == 3) {
-              //console.log('ok3')
-              this.measureAirSResult = visittasks[i].measure;
-              this.standardAirSResult = visittasks[i].standard;
-              this.deviationAirSResult = visittasks[i].deviation;
-              /*console.log('measureAirSResult' + this.measureAirSResult)
-              console.log('standardAirSResult' + this.standardAirSResult)
-              console.log('deviationAirSResult' + this.deviationAirSResult)*/
-            } else if (visittasks[i].taskId == 4) {
-              //console.log('ok4')
-              this.measureAmoResult = visittasks[i].measure;
-              this.standardAmoResult = '< ' + visittasks[i].standard;
-              this.deviationAmoResult = visittasks[i].deviation;
-              /*console.log('measureAmoResult' + this.measureAmoResult)
-              console.log('standardAmoResult' + this.standardAmoResult)
-              console.log('deviationAmoResult' + this.deviationAmoResult)*/
-            } else if (visittasks[i].taskId == 5) {
-              this.measureLighIResult = visittasks[i].measure;
-              this.standardLighIResult = visittasks[i].standard;
-              this.deviationLighIResult = visittasks[i].deviation;
-              /*console.log('measureLighIResult' + this.measureLighIResult)
-              console.log('standardLighIResult' + this.standardLighIResult)
-              console.log('deviationLighIResult' + this.deviationLighIResult)*/
-            } else if (visittasks[i].taskId == 6) {
-              this.measureFeedCResult = visittasks[i].measure;
-              this.standardFeedCResult = visittasks[i].standard;
-              this.deviationFeedCResult = visittasks[i].deviation;
-              this.percentageFeedCResult = visittasks[i].percentage.toFixed(2);
-              /*console.log('measureFeedCResult' + this.measureFeedCResult)
-              console.log('standardFeedCResult' + this.standardFeedCResult)
-              console.log('deviationFeedCResult' + this.deviationFeedCResult)
-              console.log('percentageFeedCResult' + this.percentageFeedCResult)*/
-            } else if (visittasks[i].taskId == 7) {
-              this.measureWatCResult = visittasks[i].measure;
-              this.standardWatCResult = visittasks[i].standard;
-              this.deviationWatCResult = visittasks[i].deviation;
-              this.percentageWatCResult = visittasks[i].percentage.toFixed(2);
-              /* console.log('measureWatCResult' + this.measureWatCResult)
-               console.log('percentageWatCResult' + this.percentageWatCResult)
-               console.log('standardWatCResult' + this.standardWatCResult)
-               console.log('deviationWatCResult' + this.deviationWatCResult)*/
-            } else if (visittasks[i].taskId == 8) {
-              this.measureMortResult = visittasks[i].measure;
-              this.standardMortResult = visittasks[i].standard;
-              this.deviationMortResult = visittasks[i].deviation;
-              this.percentageMortResult = visittasks[i].percentage.toFixed(2);
-              /*console.log('measureMortResult' + this.measureMortResult)
-              console.log('percentageMortResult' + this.percentageMortResult)
-              console.log('standardMortResult' + this.standardMortResult)
-              console.log('deviationMortResult' + this.deviationMortResult)*/
-            } else if (visittasks[i].taskId == 9) {
-              this.measureLittCResult = visittasks[i].measure;
-              this.standardLittCResult = visittasks[i].standard;
-              this.deviationLittCResult = visittasks[i].deviation;
-              /*console.log('measureLittCResult' + this.measureLittCResult)
-              console.log('standardLittCResult' + this.standardLittCResult)
-              console.log('deviationLittCResult' + this.deviationLittCResult)*/
-            } else if (visittasks[i].taskId == 10) {
-              this.measureDensResult = visittasks[i].measure;
-              this.standardDensResult = visittasks[i].standard;
-              this.deviationDensResult = visittasks[i].deviation;
-              console.log('measureDensResult' + this.measureDensResult)
-              console.log('standardDensResult' + this.standardDensResult)
-              console.log('deviationDensResult' + this.deviationDensResult);
-            } else if (visittasks[i].taskId == 11) {
-              //console.log('ok11')
-              this.measureWeightResult = visittasks[i].measure;
-              this.standardWeightResult = visittasks[i].standard;
-              this.deviationWeightResult = visittasks[i].deviation;
-              /*console.log('measureWeightResult' + this.measureWeightResult)
-              console.log('standardWeightResult' + this.standardWeightResult)
-              console.log('deviationWeightResult' + this.deviationWeightResult)*/
-            } else if (visittasks[i].taskId == 12) {
-              this.measureHomogResult = visittasks[i].measure;
-              this.standardHomogResult = visittasks[i].standard;
-              this.deviationHomogResult = visittasks[i].deviation;
-              /*console.log('measureHomogResult' + this.measureHomogResult)
-              console.log('standardHomogResult' + this.standardHomogResult)
-              console.log('deviationHomogResult' + this.deviationHomogResult )*/
-            }
-          }
-        },
-      ),
-    )
+  getvisitByAgeAndFlock(age, flock) {
+    this.visitService.getVisitByAgeAndflock(age, flock).subscribe(data => {
+      console.log('exisit', data);
+    });
   }
 }

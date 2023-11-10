@@ -187,8 +187,8 @@ export class DashboardService {
   }
 
   // get feed total consum by company
-  getfeedConsumTotalByCompany(companyId: string) {
-    return this.http.get<any>(environment.url_dashboard + '/feed/company/' + companyId, this.httpOptions);
+  getfeedConsumTotalByCompany(companyId: string, date: string) {
+    return this.http.get<any>(environment.url_dashboard + '/feed/company/' + companyId + '/' + date , this.httpOptions);
   }
 
   // getflocks By house and year
