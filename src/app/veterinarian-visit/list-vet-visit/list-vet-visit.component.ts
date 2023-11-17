@@ -3,6 +3,7 @@ import {NewVetVisitComponent} from '../new-vet-visit/new-vet-visit.component';
 import {VisitService} from '../../services/visit.service';
 import {VisitVeterinarianService} from '../../services/visit-veterinarian.service';
 import {SubSink} from 'subsink';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-list-vet-visit',
@@ -64,7 +65,9 @@ export class ListVetVisitComponent implements OnInit {
   DermatitisMeasure: string;
   otherObservation: string;
   visitDate: string;
-
+  // files of visitNecropsyObservation
+  filesList: string[];
+  analyse = false;
   ngOnInit(): void {
     this.refresh();
   }
@@ -104,8 +107,9 @@ export class ListVetVisitComponent implements OnInit {
 
   // open health status & necropsy result
   showHealthStatusResult(id: string): void {
-    // heathStatus result by visit ID
-
+    //  heathStatus result by visit ID
+    this.filesList = [];
+    this.analyse=false;
     this.subs.add(
       this.VisitVeterinarianService.getConsultingHealthStatusbyId(id).subscribe(
         (data) => {
@@ -245,6 +249,19 @@ export class ListVetVisitComponent implements OnInit {
             this.bursaFabriciusComment = Necropsy.bursaFabricius;
             this.brainComment = Necropsy.brain;
           }
+          this.VisitVeterinarianService.getImagesOfVisit(this.visitId, this.visitNecropsy[0].visitNecropsyObservationId).subscribe(datafile=>{
+            console.log(datafile);
+            for(let f of datafile){
+              this.filesList.push(environment.url_file + '/image/' + f.name);
+            }
+          });
+          this.VisitVeterinarianService.getImagesOfVisit(this.visitId, "analyse").subscribe(dataanalyse=> {
+            console.log('dataanalyse',dataanalyse);
+            if ( dataanalyse.length != 0){
+              console.log('test');
+              this.analyse = true;
+            }
+          });
         },
       ),
     );
@@ -256,7 +273,10 @@ export class ListVetVisitComponent implements OnInit {
   }
 
   showAnalyse() {
-    this.VisitVeterinarianService.showAnalyse(this.visitDate, this.visitId);
+    let urlReport = environment.upload_analyseUrl + this.visitDate + '/' + this.visitId;
+    console.log('urlReport ' + urlReport);
+    window.open(urlReport, '_blank');
+    //this.VisitVeterinarianService.showAnalyse(this.visitDate, this.visitId);
   }
 
   @ViewChild(NewVetVisitComponent) modal: NewVetVisitComponent;

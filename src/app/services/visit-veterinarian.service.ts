@@ -103,7 +103,7 @@ export class VisitVeterinarianService {
 
   // Create Registration VisitNecropsy
   createRegistrationVisitNecropsy(visitNecropsy: VisitNecropsy) {
-    return this.http.post<IRegistrationVisitNecropsy>(
+    return this.http.post<VisitNecropsy>(
       environment.registrationVisitNecropsy,
       visitNecropsy,
     );
@@ -136,5 +136,22 @@ export class VisitVeterinarianService {
     let urlReport = environment.upload_analyseUrl + visitDate + '/' + visitId;
     console.log('urlReport ' + urlReport);
     window.open(urlReport, '_blank');
+  }
+  // add image to visit
+  addfilesTovist(formData) {
+    return this.http.post<any>(environment.url_file + '/save', formData);
+  }
+  getImagesOfVisit(visitId: string , visitNecropsyNbservationId: string){
+    return this.http.get<any[]>(
+      environment.url_file + '/filesVisitNecropsy/' + visitId + '/' + visitNecropsyNbservationId,
+      this.httpOptions,
+    );
+  }
+
+  getAnalyseOfVisit(visitId: string){
+    return this.http.get<any[]>(
+      environment.url_file + '/analyseVisit/' + visitId ,
+      this.httpOptions,
+    );
   }
 }

@@ -43,7 +43,8 @@ export const environment = {
   url_breedingManagement: '/farmApi/breedingManagement/',
   url_mortaliteDash: '/farmApi/mortalitedashboard',
   url_dashboard: '/farmApi/dashboard',
-  url_auth:'/farmApi/api/auth/'
+  url_auth:'/farmApi/api/auth/',
+  url_file: '/farmApi/fileVisit'
 }
 
 /*

@@ -873,7 +873,7 @@ export class NewVisitComponent implements OnInit {
     weeklyWeightMeasurement.flockId = this.flockID;
     weeklyWeightMeasurement.flockNbr = this.nbrofBirdWeight;
     // weeklyWeightMeasurement.weight = o;
-    weeklyWeightMeasurement.average = this.weightMeasure;
+    weeklyWeightMeasurement.average = this.measureWeight;
     weeklyWeightMeasurement.week = this.ageOfTheFlock;
     weeklyWeightMeasurement.breed = this.breedId;
     weeklyWeightMeasurement.cv = this.cv;

@@ -1,1022 +1,1048 @@
 <form class="foot" novalidate name="myForm" #myForm='ngForm' (ngSubmit)="onSubmit();">
 
 
+  <!-- Table -->
 
-    <!-- Table -->
+  <clr-wizard #wizard [(clrWizardOpen)]="openWZ" [clrWizardSize]="'md, sm'">
+    <clr-wizard-title><img src="../../../assets/newVisit.png" width="26" height="26"
+                           style="margin-top: -5px; margin-right: 10px;"> Veterinarian visit
+    </clr-wizard-title>
 
-    <clr-wizard  #wizard [(clrWizardOpen)]="openWZ" [clrWizardSize]="'md, sm'">
-        <clr-wizard-title> <img src="../../../assets/newVisit.png" width="26" height="26"
-                style="margin-top: -5px; margin-right: 10px;"> Veterinarian visit</clr-wizard-title>
+    <clr-wizard-button [type]="'cancel'">Cancel</clr-wizard-button>
+    <clr-wizard-button [type]="'previous'">Back</clr-wizard-button>
+    <clr-wizard-button [type]="'next'">Next</clr-wizard-button>
+    <clr-wizard-button (click)="submit()" [type]="'finish'">Save</clr-wizard-button>
 
-        <clr-wizard-button [type]="'cancel'">Cancel</clr-wizard-button>
-        <clr-wizard-button [type]="'previous'">Back</clr-wizard-button>
-        <clr-wizard-button [type]="'next'">Next</clr-wizard-button>
-        <clr-wizard-button (click)="submit()" [type]="'finish'">Save</clr-wizard-button>
+    <clr-wizard-page>
+      <ng-template clrPageTitle>Check your flocks</ng-template>
+      <div class="form-visitV clr-row">
 
-        <clr-wizard-page>
-            <ng-template clrPageTitle>Check your flocks</ng-template>
-            <div class="form-visitV clr-row">
-
-                <!-- form-visitV1 -->
-                
-
-                <clr-date-container class="clr-row clr-col-md-12">
-                    <label for="visitDate" class="clr-control-label labelV">
-                        Visit date *
-                    </label>
-                    <input clrDate class="clr-control-container clr-col-md-6 clr-col-xs-sm-12" required [(ngModel)]="visitDate" size="30"
-                        type="date" n="1" name="visitDate" />
-                </clr-date-container>
-
-                <div class="form-visit11 clr-col-md-12 clr-row">
-                    <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
-
-                        <label for="farm" class="clr-control-label labelV">
-                            Center *
-                        </label>
-                    </div>
-                    <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
-                        <select clrSelect name="farm" [(ngModel)]="centerId" name="farmID"
-                            (change)="getCenterId($event.target.value)" style="width: 166px;">
-                            <option *ngFor="let center of centers " [value]='center.centerId'>
-                                {{center.centerName}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-visit11 clr-col-md-12 clr-row">
-                    <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
-
-                        <label for="house" class="clr-control-label labelV">
-                            House *
-                        </label>
-                    </div>
-                    <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
-                        <select clrSelect name="houseId" [(ngModel)]="houseId" style="width: 166px;"
-                            (change)="getflockId($event.target.value)">
-                            <option *ngFor="let house of houses" [value]='house.houseId'>
-                                {{house.houseName}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
+        <!-- form-visitV1 -->
 
 
-                <!-- form-visitV2 -->
+        <clr-date-container class="clr-row clr-col-md-12">
+          <label for="visitDate" class="clr-control-label labelV">
+            Visit date *
+          </label>
+          <input clrDate class="clr-control-container clr-col-md-6 clr-col-xs-sm-12" required [(ngModel)]="visitDate"
+                 size="30"
+                 type="date" n="1" name="visitDate"/>
+        </clr-date-container>
 
-                <div class="form-visit11 clr-col-md-12 clr-row">
-                    <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
+        <div class="form-visit11 clr-col-md-12 clr-row">
+          <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
 
-                        <label for="flock" class="clr-control-label labelV">
-                            Flock *
-                        </label>
-                    </div>
-                    <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="text" n="1"
-                                name="flockName" style=" width: 130px;" [(ngModel)]="flockName"
-                                readonly />
-                        </div>
-                    </div>
-                </div>
+            <label for="farm" class="clr-control-label labelV">
+              Center *
+            </label>
+          </div>
+          <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
+            <select clrSelect name="farm" [(ngModel)]="centerId" name="farmID"
+                    (change)="getCenterId($event.target.value)" style="width: 166px;">
+              <option *ngFor="let center of centers " [value]='center.centerId'>
+                {{center.centerName}}
+              </option>
+            </select>
+          </div>
+        </div>
 
-                <div class="form-visit11 clr-col-md-12 clr-row">
-                    <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
+        <div class="form-visit11 clr-col-md-12 clr-row">
+          <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
 
-                        <label for="breeddescription" class="clr-control-label labelV">
-                            Breed
-                        </label>
-                    </div>
-                    <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="text" n="1"
-                                name="breed" style=" width: 130px;" [(ngModel)]="breed"
-                                readonly />
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- form-visitV3 -->
-
-                <div class="form-visit11 clr-col-md-12 clr-row">
-                    <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
-
-                        <label for="hatchDate" class="clr-control-label labelV" style="width: 100%;">
-                            Hatch date
-                        </label>
-                    </div>
-                    <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-12" size="25" type="text" n="1"
-                                name="hatchDate" [(ngModel)]="hatchDate" readonly />
-                        </div>
-                    </div>
-                </div>
+            <label for="house" class="clr-control-label labelV">
+              House *
+            </label>
+          </div>
+          <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
+            <select clrSelect name="houseId" [(ngModel)]="houseId" style="width: 166px;"
+                    (change)="getflockId($event.target.value)">
+              <option *ngFor="let house of houses" [value]='house.houseId'>
+                {{house.houseName}}
+              </option>
+            </select>
+          </div>
+        </div>
 
 
-                <div class="form-visit11 clr-col-md-12 clr-row">
-                    <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
+        <!-- form-visitV2 -->
 
-                        <label for="ageFlock" class="clr-control-label labelV" style="width: 100%;">
-                            Age of the flock
-                        </label>
-                    </div>
-                    <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="number" n="1"
-                                name="ageFlock" style=" width: 130px;" [(ngModel)]="ageOfTheFlock" readonly />
-                        </div>
-                        <div class="Unite" style="margin-top: 24px;  margin-left: -40px;">
-                            <span class="taskUnit"> days </span>
-                        </div>
-                    </div>
-                </div>
+        <div class="form-visit11 clr-col-md-12 clr-row">
+          <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
 
+            <label for="flock" class="clr-control-label labelV">
+              Flock *
+            </label>
+          </div>
+          <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
+            <div class="clr-input-wrapper">
+              <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="text" n="1"
+                     name="flockName" style=" width: 130px;" [(ngModel)]="flockName"
+                     readonly/>
+            </div>
+          </div>
+        </div>
 
-                <!-- form-visitV4 -->
-                <div class="form-visit10 clr-col-md-12 clr-row">
-                    <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
+        <div class="form-visit11 clr-col-md-12 clr-row">
+          <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
 
-                        <label for="chickPlaced" class="clr-control-label labelV" style="width: 100%;">
-                            Chick placed
-                        </label>
-                    </div>
-                    <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="number" n="1"
-                                name="chickPlaced" style=" width: 130px;" [(ngModel)]="chikedPlaced" readonly />
-                        </div>
-
-                    </div>
-                </div>
+            <label for="breeddescription" class="clr-control-label labelV">
+              Breed
+            </label>
+          </div>
+          <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
+            <div class="clr-input-wrapper">
+              <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="text" n="1"
+                     name="breed" style=" width: 130px;" [(ngModel)]="breed"
+                     readonly/>
+            </div>
+          </div>
+        </div>
 
 
-                <div class="form-visit10 clr-col-md-12 clr-row">
-                    <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
+        <!-- form-visitV3 -->
 
-                        <label for="psOrigin" class="clr-control-label labelV">
-                            PS origin
-                        </label>
-                    </div>
-                    <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-12" size="25" type="text" n="1"
-                                [(ngModel)]="psOrigin" name="psOrigin" readonly />
-                        </div>
+        <div class="form-visit11 clr-col-md-12 clr-row">
+          <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
 
-                    </div>
-                </div>
-
-
-                <!-- form-visitV5 -->
-
-                <div class="form-visit10 clr-col-md-12 clr-row">
-                    <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
-
-                        <label for="morbidity" class="clr-control-label labelV">
-                            Morbidity
-                        </label>
-                    </div>
-                    <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="number" n="1"
-                                name="morbidity" style=" width: 140px;" [(ngModel)]="MorbidityPercentage" readonly />
-                        </div>
-                        <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
-                            <span class="taskUnit"> % </span>
-                        </div>
-                        <button class="btn btn-sm btn-link" (click)="submitMorbidity()" style="margin-top: 24px;">
-                            <img src="../../../assets/edit.png" width="20" height="20" />
-                        </button>
-                    </div>
-                </div>
-
-                <div class="form-visit11 clr-col-md-12 clr-row">
-                    <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
-
-                        <label for="totalMortality" class="clr-control-label labelV" style="width: 100%;">
-                            Total mortality
-                        </label>
-                    </div>
-                    <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="number" n="1"
-                                name="MortalityPercentage" style=" width: 140px;" [(ngModel)]="MortalityPercentage"
-                                readonly />
-                        </div>
-                        <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
-                            <span class="taskUnit"> % </span>
-                        </div>
-                    </div>
-                </div>
+            <label for="hatchDate" class="clr-control-label labelV" style="width: 100%;">
+              Hatch date
+            </label>
+          </div>
+          <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
+            <div class="clr-input-wrapper">
+              <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-12" size="25" type="text" n="1"
+                     name="hatchDate" [(ngModel)]="hatchDate" readonly/>
+            </div>
+          </div>
+        </div>
 
 
-                <!-- form-visitV6 -->
+        <div class="form-visit11 clr-col-md-12 clr-row">
+          <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
 
-                <div class="form-visit11 clr-col-md-12 clr-row">
-                    <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
-
-                        <label for="feedConsumption" class="clr-control-label labelV" style="width: 100%;">
-                            Feed consumption
-                        </label>
-                    </div>
-                    <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="number" n="1"
-                                name="feedConsumption" style=" width: 140px;" [(ngModel)]="FeedConsumptionPercentage"
-                                readonly />
-                        </div>
-                        <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
-                            <span class="taskUnit"> g/bird/day </span>
-                        </div>
-                    </div>
-                </div>
+            <label for="ageFlock" class="clr-control-label labelV" style="width: 100%;">
+              Age of the flock
+            </label>
+          </div>
+          <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
+            <div class="clr-input-wrapper">
+              <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="number" n="1"
+                     name="ageFlock" style=" width: 130px;" [(ngModel)]="ageOfTheFlock" readonly/>
+            </div>
+            <div class="Unite" style="margin-top: 24px;  margin-left: -40px;">
+              <span class="taskUnit"> days </span>
+            </div>
+          </div>
+        </div>
 
 
-                <div class="form-visit11 clr-col-md-12 clr-row">
-                    <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
+        <!-- form-visitV4 -->
+        <div class="form-visit10 clr-col-md-12 clr-row">
+          <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
 
-                        <label for="waterConsumption" class="clr-control-label labelV" style="width: 100%;">
-                            Water consumption
-                        </label>
-                    </div>
-                    <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="number" n="1"
-                                name="waterConsumption" style=" width: 140px;" [(ngModel)]="WaterConsumptionPercentage"
-                                readonly />
-                        </div>
-                        <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
-                            <span class="taskUnit"> ml/bird/day </span>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- form-visitV7 -->
-                <div class="form-visit11 clr-col-md-12 clr-row">
-                    <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
-
-                        <label for="fcr" class="clr-control-label labelV" style="width: 100%;">
-                            FCR
-                        </label>
-                    </div>
-                    <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="number" n="1"
-                                name="fcr" style=" width: 140px;" [(ngModel)]="FCR" readonly />
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="form-visit11 clr-col-md-12 clr-row">
-                    <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
-
-                        <label for="dwg" class="clr-control-label labelV" style="width: 100%;">
-                            DWG
-                        </label>
-                    </div>
-                    <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="number" n="1"
-                                name="dwg" style=" width: 140px;" [(ngModel)]="DWG" readonly />
-                        </div>
-                        <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
-                            <span class="taskUnit"> g </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-visit11 clr-col-md-12 clr-row">
-                    <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
-
-                        <label for="eep" class="clr-control-label labelV" style="width: 100%;">
-                            EEP
-                        </label>
-                    </div>
-                    <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-7" size="30" type="number"
-                                n="1" name="eep" style=" width: 140px;" [(ngModel)]="eep" readonly />
-                        </div>
-                        <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
-                            <span class="taskUnit"> g </span>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
+            <label for="chickPlaced" class="clr-control-label labelV" style="width: 100%;">
+              Chick placed
+            </label>
+          </div>
+          <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
+            <div class="clr-input-wrapper">
+              <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="number" n="1"
+                     name="chickPlaced" style=" width: 130px;" [(ngModel)]="chikedPlaced" readonly/>
             </div>
 
-        </clr-wizard-page>
-
-        <clr-wizard-page>
-            <ng-template clrPageTitle>Health status of the bird</ng-template>
-
-            <!-- Health status of the bird -->
-
-            <div class="form-check">
-
-                <div class="form-checkVpart1">
-                    <h4> <img src="../../../assets/Icones veter/doctors-bag.png" class="imgIcon" width="22" height="22"
-                            style="margin-right: 8px;" />
-                        General
-                    </h4>
-
-                    <div class="clr-radio-container form-visit9 clr-row" clrInline
-                        style="display: -webkit-box; margin-top: 30px;">
-                        <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
-                            Prostration</label>
-                        <div class="radip-wrapper" style="display: flex">
-                            <clr-radio-wrapper style="margin-right: 20px;"
-                                (change)="getProstration($event.target.value)">
-                                <input type="radio" clrRadio name="options0" required [value]='true' />
-                                <label>Yes</label>
-                            </clr-radio-wrapper>
-
-                            <clr-radio-wrapper (change)="getProstration($event.target.value)">
-                                <input type="radio" clrRadio name="options0" required [value]='false' />
-                                <label>No</label>
-                            </clr-radio-wrapper>
-
-                        </div>
-                    </div>
-
-                    <div class="clr-radio-container form-visit9 clr-row" clrInline
-                        style="display: -webkit-box; margin-top: 30px;">
-                        <label for="Anorexia" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
-                            Anorexia</label>
-                        <div class="radip-wrapper" style="display: flex;">
-                            <clr-radio-wrapper style="margin-right: 20px;" (change)="getAnorexia($event.target.value)">
-                                <input type="radio" clrRadio name="options1" required [value]='true' />
-                                <label>Yes</label>
-                            </clr-radio-wrapper>
-
-                            <clr-radio-wrapper (change)="getAnorexia($event.target.value)">
-                                <input type="radio" clrRadio name="options1" required [value]='false' />
-                                <label>No</label>
-                            </clr-radio-wrapper>
-
-                        </div>
-                    </div>
+          </div>
+        </div>
 
 
-                    <div class="clr-radio-container form-visit9 clr-row" clrInline
-                        style="display: -webkit-box; margin-top: 30px;">
-                        <label for="ruffledFeather " class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
-                            Ruffled feather </label>
-                        <div class="radip-wrapper" style="display: flex;">
-                            <clr-radio-wrapper style="margin-right: 20px;" (change)="getRuffled($event.target.value)">
-                                <input type="radio" clrRadio name="options2" required [value]='true' />
-                                <label>Yes</label>
-                            </clr-radio-wrapper>
+        <div class="form-visit10 clr-col-md-12 clr-row">
+          <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
 
-                            <clr-radio-wrapper (change)="getRuffled($event.target.value)">
-                                <input type="radio" clrRadio name="options2" required [value]='false' />
-                                <label>No</label>
-                            </clr-radio-wrapper>
+            <label for="psOrigin" class="clr-control-label labelV">
+              PS origin
+            </label>
+          </div>
+          <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
+            <div class="clr-input-wrapper">
+              <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-12" size="25" type="text" n="1"
+                     [(ngModel)]="psOrigin" name="psOrigin" readonly/>
+            </div>
 
-                        </div>
-                    </div>
+          </div>
+        </div>
 
 
-                    <div class="clr-radio-container form-visit9 clr-row" clrInline
-                        style="display: -webkit-box; margin-top: 30px;">
-                        <label for="Dehydratation" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
-                            Dehydratation </label>
-                        <div class="radip-wrapper" style="display: flex">
-                            <clr-radio-wrapper style="margin-right: 20px;"
-                                (change)="getDehydratation($event.target.value)">
-                                <input type="radio" clrRadio name="options3" required [value]='true' />
-                                <label>Yes</label>
-                            </clr-radio-wrapper>
+        <!-- form-visitV5 -->
 
-                            <clr-radio-wrapper (change)="getDehydratation($event.target.value)">
-                                <input type="radio" clrRadio name="options3" required [value]='false' />
-                                <label>No</label>
-                            </clr-radio-wrapper>
+        <div class="form-visit10 clr-col-md-12 clr-row">
+          <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
 
-                        </div>
-                    </div>
+            <label for="morbidity" class="clr-control-label labelV">
+              Morbidity
+            </label>
+          </div>
+          <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
+            <div class="clr-input-wrapper">
+              <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="number" n="1"
+                     name="morbidity" style=" width: 140px;" [(ngModel)]="MorbidityPercentage" readonly/>
+            </div>
+            <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
+              <span class="taskUnit"> % </span>
+            </div>
+            <button class="btn btn-sm btn-link" (click)="submitMorbidity()" style="margin-top: 24px;">
+              <img src="../../../assets/edit.png" width="20" height="20"/>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-visit11 clr-col-md-12 clr-row">
+          <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
+
+            <label for="totalMortality" class="clr-control-label labelV" style="width: 100%;">
+              Total mortality
+            </label>
+          </div>
+          <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
+            <div class="clr-input-wrapper">
+              <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="number" n="1"
+                     name="MortalityPercentage" style=" width: 140px;" [(ngModel)]="MortalityPercentage"
+                     readonly/>
+            </div>
+            <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
+              <span class="taskUnit"> % </span>
+            </div>
+          </div>
+        </div>
 
 
-                    <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
+        <!-- form-visitV6 -->
+
+        <div class="form-visit11 clr-col-md-12 clr-row">
+          <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
+
+            <label for="feedConsumption" class="clr-control-label labelV" style="width: 100%;">
+              Feed consumption
+            </label>
+          </div>
+          <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
+            <div class="clr-input-wrapper">
+              <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="number" n="1"
+                     name="feedConsumption" style=" width: 140px;" [(ngModel)]="FeedConsumptionPercentage"
+                     readonly/>
+            </div>
+            <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
+              <span class="taskUnit"> g/bird/day </span>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-visit11 clr-col-md-12 clr-row">
+          <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
+
+            <label for="waterConsumption" class="clr-control-label labelV" style="width: 100%;">
+              Water consumption
+            </label>
+          </div>
+          <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
+            <div class="clr-input-wrapper">
+              <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="number" n="1"
+                     name="waterConsumption" style=" width: 140px;" [(ngModel)]="WaterConsumptionPercentage"
+                     readonly/>
+            </div>
+            <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
+              <span class="taskUnit"> ml/bird/day </span>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- form-visitV7 -->
+        <div class="form-visit11 clr-col-md-12 clr-row">
+          <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
+
+            <label for="fcr" class="clr-control-label labelV" style="width: 100%;">
+              FCR
+            </label>
+          </div>
+          <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
+            <div class="clr-input-wrapper">
+              <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="number" n="1"
+                     name="fcr" style=" width: 140px;" [(ngModel)]="FCR" readonly/>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-visit11 clr-col-md-12 clr-row">
+          <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
+
+            <label for="dwg" class="clr-control-label labelV" style="width: 100%;">
+              DWG
+            </label>
+          </div>
+          <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
+            <div class="clr-input-wrapper">
+              <input clrInput class="clr-col-xs-12-sm-12 clr-col-md-7" size="25" type="number" n="1"
+                     name="dwg" style=" width: 140px;" [(ngModel)]="DWG" readonly/>
+            </div>
+            <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
+              <span class="taskUnit"> g </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-visit11 clr-col-md-12 clr-row">
+          <div class="labelVisit clr-col-md-7 clr-row" style="margin-top: 25px;">
+
+            <label for="eep" class="clr-control-label labelV" style="width: 100%;">
+              EEP
+            </label>
+          </div>
+          <div class="clr-control-container clr-col-md-5" style="display: flex; padding-left: 2px;">
+            <div class="clr-input-wrapper">
+              <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-7" size="30" type="number"
+                     n="1" name="eep" style=" width: 140px;" [(ngModel)]="eep" readonly/>
+            </div>
+            <div class="Unite" style="margin-top: 24px;  margin-left: -50px;">
+              <span class="taskUnit"> g </span>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+    </clr-wizard-page>
+
+    <clr-wizard-page>
+      <ng-template clrPageTitle>Health status of the bird</ng-template>
+
+      <!-- Health status of the bird -->
+
+      <div class="form-check">
+
+        <div class="form-checkVpart1">
+          <h4><img src="../../../assets/Icones veter/doctors-bag.png" class="imgIcon" width="22" height="22"
+                   style="margin-right: 8px;"/>
+            General
+          </h4>
+
+          <div class="clr-radio-container form-visit9 clr-row" clrInline
+               style="display: -webkit-box; margin-top: 30px;">
+            <label for="General" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
+              Prostration</label>
+            <div class="radip-wrapper" style="display: flex">
+              <clr-radio-wrapper style="margin-right: 20px;"
+                                 (change)="getProstration($event.target.value)">
+                <input type="radio" clrRadio name="options0" required [value]='true'/>
+                <label>Yes</label>
+              </clr-radio-wrapper>
+
+              <clr-radio-wrapper (change)="getProstration($event.target.value)">
+                <input type="radio" clrRadio name="options0" required [value]='false'/>
+                <label>No</label>
+              </clr-radio-wrapper>
+
+            </div>
+          </div>
+
+          <div class="clr-radio-container form-visit9 clr-row" clrInline
+               style="display: -webkit-box; margin-top: 30px;">
+            <label for="Anorexia" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
+              Anorexia</label>
+            <div class="radip-wrapper" style="display: flex;">
+              <clr-radio-wrapper style="margin-right: 20px;" (change)="getAnorexia($event.target.value)">
+                <input type="radio" clrRadio name="options1" required [value]='true'/>
+                <label>Yes</label>
+              </clr-radio-wrapper>
+
+              <clr-radio-wrapper (change)="getAnorexia($event.target.value)">
+                <input type="radio" clrRadio name="options1" required [value]='false'/>
+                <label>No</label>
+              </clr-radio-wrapper>
+
+            </div>
+          </div>
+
+
+          <div class="clr-radio-container form-visit9 clr-row" clrInline
+               style="display: -webkit-box; margin-top: 30px;">
+            <label for="ruffledFeather " class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
+              Ruffled feather </label>
+            <div class="radip-wrapper" style="display: flex;">
+              <clr-radio-wrapper style="margin-right: 20px;" (change)="getRuffled($event.target.value)">
+                <input type="radio" clrRadio name="options2" required [value]='true'/>
+                <label>Yes</label>
+              </clr-radio-wrapper>
+
+              <clr-radio-wrapper (change)="getRuffled($event.target.value)">
+                <input type="radio" clrRadio name="options2" required [value]='false'/>
+                <label>No</label>
+              </clr-radio-wrapper>
+
+            </div>
+          </div>
+
+
+          <div class="clr-radio-container form-visit9 clr-row" clrInline
+               style="display: -webkit-box; margin-top: 30px;">
+            <label for="Dehydratation" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
+              Dehydratation </label>
+            <div class="radip-wrapper" style="display: flex">
+              <clr-radio-wrapper style="margin-right: 20px;"
+                                 (change)="getDehydratation($event.target.value)">
+                <input type="radio" clrRadio name="options3" required [value]='true'/>
+                <label>Yes</label>
+              </clr-radio-wrapper>
+
+              <clr-radio-wrapper (change)="getDehydratation($event.target.value)">
+                <input type="radio" clrRadio name="options3" required [value]='false'/>
+                <label>No</label>
+              </clr-radio-wrapper>
+
+            </div>
+          </div>
+
+
+          <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
 
 
                         <textarea clrTextarea rows="4" [(ngModel)]="generalObservation" name="generalObservation"
-                            style="width:100%  !important; border-color: #b9b8b8"
-                            placeholder="Observations.."></textarea>
-                    </div>
+                                  style="width:100%  !important; border-color: #b9b8b8"
+                                  placeholder="Observations.."></textarea>
+          </div>
 
-                </div>
+        </div>
 
-                <div class="form-checkVpart2">
-                    <h4> <img src="../../../assets/Icones veter/Respiratory.png" class="imgIcon" width="22" height="22"
-                            style="margin-right: 8px;" />
-                        Respiratory
-                    </h4>
+        <div class="form-checkVpart2">
+          <h4><img src="../../../assets/Icones veter/Respiratory.png" class="imgIcon" width="22" height="22"
+                   style="margin-right: 8px;"/>
+            Respiratory
+          </h4>
 
-                    <div class="clr-radio-container form-visit9 clr-row" clrInline
-                        style="display: -webkit-box; margin-top: 30px;">
-                        <label for="Coughing" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
-                            Coughing</label>
-                        <div class="radip-wrapper" style="display: flex;">
-                            <clr-radio-wrapper style="margin-right: 20px;" (change)="getCoughing($event.target.value)">
-                                <input type="radio" clrRadio name="options4" required [value]='true' />
-                                <label>Yes</label>
-                            </clr-radio-wrapper>
+          <div class="clr-radio-container form-visit9 clr-row" clrInline
+               style="display: -webkit-box; margin-top: 30px;">
+            <label for="Coughing" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
+              Coughing</label>
+            <div class="radip-wrapper" style="display: flex;">
+              <clr-radio-wrapper style="margin-right: 20px;" (change)="getCoughing($event.target.value)">
+                <input type="radio" clrRadio name="options4" required [value]='true'/>
+                <label>Yes</label>
+              </clr-radio-wrapper>
 
-                            <clr-radio-wrapper (change)="getCoughing($event.target.value)">
-                                <input type="radio" clrRadio name="options4" required [value]='false' />
-                                <label>No</label>
-                            </clr-radio-wrapper>
+              <clr-radio-wrapper (change)="getCoughing($event.target.value)">
+                <input type="radio" clrRadio name="options4" required [value]='false'/>
+                <label>No</label>
+              </clr-radio-wrapper>
 
-                        </div>
-                    </div>
+            </div>
+          </div>
 
-                    <div class="clr-radio-container form-visit9 clr-row" clrInline
-                        style="display: -webkit-box; margin-top: 30px;">
-                        <label for="nasalExsudate" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
-                            Nasal exsudate</label>
-                        <div class="radip-wrapper" style="display: flex;">
-                            <clr-radio-wrapper style="margin-right: 20px;"
-                                (change)="getNasalExsudateMeasure($event.target.value)">
-                                <input type="radio" clrRadio name="options5" required [value]='true' />
-                                <label>Yes</label>
-                            </clr-radio-wrapper>
+          <div class="clr-radio-container form-visit9 clr-row" clrInline
+               style="display: -webkit-box; margin-top: 30px;">
+            <label for="nasalExsudate" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
+              Nasal exsudate</label>
+            <div class="radip-wrapper" style="display: flex;">
+              <clr-radio-wrapper style="margin-right: 20px;"
+                                 (change)="getNasalExsudateMeasure($event.target.value)">
+                <input type="radio" clrRadio name="options5" required [value]='true'/>
+                <label>Yes</label>
+              </clr-radio-wrapper>
 
-                            <clr-radio-wrapper (change)="getNasalExsudateMeasure($event.target.value)">
-                                <input type="radio" clrRadio name="options5" required [value]='false' />
-                                <label>No</label>
-                            </clr-radio-wrapper>
+              <clr-radio-wrapper (change)="getNasalExsudateMeasure($event.target.value)">
+                <input type="radio" clrRadio name="options5" required [value]='false'/>
+                <label>No</label>
+              </clr-radio-wrapper>
 
-                        </div>
-                    </div>
+            </div>
+          </div>
 
-                    <div class="clr-radio-container form-visit9 clr-row" clrInline
-                        style="display: -webkit-box; margin-top: 30px;">
-                        <label for="Sneezing" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
-                            Sneezing </label>
-                        <div class="radip-wrapper" style="display: flex;">
-                            <clr-radio-wrapper style="margin-right: 20px;" (change)="getSneezing($event.target.value)">
-                                <input type="radio" clrRadio name="options6" required [value]='true' />
-                                <label>Yes</label>
-                            </clr-radio-wrapper>
+          <div class="clr-radio-container form-visit9 clr-row" clrInline
+               style="display: -webkit-box; margin-top: 30px;">
+            <label for="Sneezing" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
+              Sneezing </label>
+            <div class="radip-wrapper" style="display: flex;">
+              <clr-radio-wrapper style="margin-right: 20px;" (change)="getSneezing($event.target.value)">
+                <input type="radio" clrRadio name="options6" required [value]='true'/>
+                <label>Yes</label>
+              </clr-radio-wrapper>
 
-                            <clr-radio-wrapper (change)="getSneezing($event.target.value)">
-                                <input type="radio" clrRadio name="options6" required [value]='false' />
-                                <label>No</label>
-                            </clr-radio-wrapper>
+              <clr-radio-wrapper (change)="getSneezing($event.target.value)">
+                <input type="radio" clrRadio name="options6" required [value]='false'/>
+                <label>No</label>
+              </clr-radio-wrapper>
 
-                        </div>
-                    </div>
+            </div>
+          </div>
 
-                    <div class="clr-radio-container form-visit9 clr-row" clrInline
-                        style="display: -webkit-box; margin-top: 30px;">
-                        <label for="trachealRales " class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
-                            Tracheal rales </label>
-                        <div class="radip-wrapper" style="display: flex;">
-                            <clr-radio-wrapper style="margin-right: 20px;" (change)="getTracheal($event.target.value)">
-                                <input type="radio" clrRadio name="options7" required [value]='true' />
-                                <label>Yes</label>
-                            </clr-radio-wrapper>
+          <div class="clr-radio-container form-visit9 clr-row" clrInline
+               style="display: -webkit-box; margin-top: 30px;">
+            <label for="trachealRales " class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
+              Tracheal rales </label>
+            <div class="radip-wrapper" style="display: flex;">
+              <clr-radio-wrapper style="margin-right: 20px;" (change)="getTracheal($event.target.value)">
+                <input type="radio" clrRadio name="options7" required [value]='true'/>
+                <label>Yes</label>
+              </clr-radio-wrapper>
 
-                            <clr-radio-wrapper (change)="getTracheal($event.target.value)">
-                                <input type="radio" clrRadio name="options7" required [value]='false' />
-                                <label>No</label>
-                            </clr-radio-wrapper>
+              <clr-radio-wrapper (change)="getTracheal($event.target.value)">
+                <input type="radio" clrRadio name="options7" required [value]='false'/>
+                <label>No</label>
+              </clr-radio-wrapper>
 
-                        </div>
-                    </div>
+            </div>
+          </div>
 
-                    <div class="clr-radio-container form-visit9 clr-row" clrInline
-                        style="display: -webkit-box; margin-top: 30px;">
-                        <label for="ocularDischarge" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
-                            Ocular discharge </label>
-                        <div class="radip-wrapper" style="display: flex;">
-                            <clr-radio-wrapper style="margin-right: 20px;" (change)="getOcular($event.target.value)">
-                                <input type="radio" clrRadio name="options8" required [value]='true' />
-                                <label>Yes</label>
-                            </clr-radio-wrapper>
+          <div class="clr-radio-container form-visit9 clr-row" clrInline
+               style="display: -webkit-box; margin-top: 30px;">
+            <label for="ocularDischarge" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
+              Ocular discharge </label>
+            <div class="radip-wrapper" style="display: flex;">
+              <clr-radio-wrapper style="margin-right: 20px;" (change)="getOcular($event.target.value)">
+                <input type="radio" clrRadio name="options8" required [value]='true'/>
+                <label>Yes</label>
+              </clr-radio-wrapper>
 
-                            <clr-radio-wrapper (change)="getOcular($event.target.value)">
-                                <input type="radio" clrRadio name="options8" required [value]='false' />
-                                <label>No</label>
-                            </clr-radio-wrapper>
+              <clr-radio-wrapper (change)="getOcular($event.target.value)">
+                <input type="radio" clrRadio name="options8" required [value]='false'/>
+                <label>No</label>
+              </clr-radio-wrapper>
 
-                        </div>
-                    </div>
+            </div>
+          </div>
 
-                    <div class="clr-radio-container form-visit9 clr-row" clrInline
-                        style="display: -webkit-box; margin-top: 30px;">
-                        <label for="conjonctivitis" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
-                            Conjonctivitis </label>
-                        <div class="radip-wrapper" style="display: flex; ">
-                            <clr-radio-wrapper style="margin-right: 20px;"
-                                (change)="getConjonctivitis($event.target.value)">
-                                <input type="radio" clrRadio name="options9" required [value]='true' />
-                                <label>Yes</label>
-                            </clr-radio-wrapper>
+          <div class="clr-radio-container form-visit9 clr-row" clrInline
+               style="display: -webkit-box; margin-top: 30px;">
+            <label for="conjonctivitis" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
+              Conjonctivitis </label>
+            <div class="radip-wrapper" style="display: flex; ">
+              <clr-radio-wrapper style="margin-right: 20px;"
+                                 (change)="getConjonctivitis($event.target.value)">
+                <input type="radio" clrRadio name="options9" required [value]='true'/>
+                <label>Yes</label>
+              </clr-radio-wrapper>
 
-                            <clr-radio-wrapper (change)="getConjonctivitis($event.target.value)">
-                                <input type="radio" clrRadio name="options9" required [value]='false' />
-                                <label>No</label>
-                            </clr-radio-wrapper>
+              <clr-radio-wrapper (change)="getConjonctivitis($event.target.value)">
+                <input type="radio" clrRadio name="options9" required [value]='false'/>
+                <label>No</label>
+              </clr-radio-wrapper>
 
-                        </div>
-                    </div>
+            </div>
+          </div>
 
-                    <div class="clr-radio-container form-visit9 clr-row" clrInline
-                        style="display: -webkit-box; margin-top: 30px;">
-                        <label for="oedema" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
-                            Oedema </label>
-                        <div class="radip-wrapper" style="display: flex;">
-                            <clr-radio-wrapper style="margin-right: 20px;" (change)="getOedema($event.target.value)">
-                                <input type="radio" clrRadio name="options10" required [value]='true' />
-                                <label>Yes</label>
-                            </clr-radio-wrapper>
+          <div class="clr-radio-container form-visit9 clr-row" clrInline
+               style="display: -webkit-box; margin-top: 30px;">
+            <label for="oedema" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
+              Oedema </label>
+            <div class="radip-wrapper" style="display: flex;">
+              <clr-radio-wrapper style="margin-right: 20px;" (change)="getOedema($event.target.value)">
+                <input type="radio" clrRadio name="options10" required [value]='true'/>
+                <label>Yes</label>
+              </clr-radio-wrapper>
 
-                            <clr-radio-wrapper (change)="getOedema($event.target.value)">
-                                <input type="radio" clrRadio name="options10" required [value]='false' />
-                                <label>No</label>
-                            </clr-radio-wrapper>
+              <clr-radio-wrapper (change)="getOedema($event.target.value)">
+                <input type="radio" clrRadio name="options10" required [value]='false'/>
+                <label>No</label>
+              </clr-radio-wrapper>
 
-                        </div>
-                    </div>
+            </div>
+          </div>
 
-                    <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
+          <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
 
 
                         <textarea clrTextarea rows="4" [(ngModel)]="respiratoryObservation"
-                            name="respiratoryObservation" style="width:100%  !important; border-color: #b9b8b8"
-                            placeholder="Observations.."></textarea>
+                                  name="respiratoryObservation" style="width:100%  !important; border-color: #b9b8b8"
+                                  placeholder="Observations.."></textarea>
 
-                    </div>
+          </div>
 
-                </div>
+        </div>
 
-                <div class="form-checkVpart3">
-                    <h4> <img src="../../../assets/Icones veter/digestive.png" class="imgIcon" width="22" height="22"
-                            style="margin-right: 8px;" />
-                        Digestive
-                    </h4>
+        <div class="form-checkVpart3">
+          <h4><img src="../../../assets/Icones veter/digestive.png" class="imgIcon" width="22" height="22"
+                   style="margin-right: 8px;"/>
+            Digestive
+          </h4>
 
-                    <div class="clr-radio-container form-visit9 clr-row" clrInline
-                        style="display: -webkit-box; margin-top: 30px;">
-                        <label for="Diarrhoea" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
-                            Diarrhoea</label>
-                        <div class="radip-wrapper" style="display: flex;">
-                            <clr-radio-wrapper style="margin-right: 20px;" (change)="getDiarrhoea($event.target.value)">
-                                <input type="radio" clrRadio name="options11" required [value]='true' />
-                                <label>Yes</label>
-                            </clr-radio-wrapper>
+          <div class="clr-radio-container form-visit9 clr-row" clrInline
+               style="display: -webkit-box; margin-top: 30px;">
+            <label for="Diarrhoea" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
+              Diarrhoea</label>
+            <div class="radip-wrapper" style="display: flex;">
+              <clr-radio-wrapper style="margin-right: 20px;" (change)="getDiarrhoea($event.target.value)">
+                <input type="radio" clrRadio name="options11" required [value]='true'/>
+                <label>Yes</label>
+              </clr-radio-wrapper>
 
-                            <clr-radio-wrapper (change)="getDiarrhoea($event.target.value)">
-                                <input type="radio" clrRadio name="options11" required [value]='false' />
-                                <label>No</label>
-                            </clr-radio-wrapper>
+              <clr-radio-wrapper (change)="getDiarrhoea($event.target.value)">
+                <input type="radio" clrRadio name="options11" required [value]='false'/>
+                <label>No</label>
+              </clr-radio-wrapper>
 
-                        </div>
-                    </div>
+            </div>
+          </div>
 
-                    <div class="clr-radio-container form-visit9 clr-row" clrInline
-                        style="display: -webkit-box; margin-top: 30px;">
-                        <label for="whitish" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
-                            Whitish</label>
-                        <div class="radip-wrapper" style="display: flex;">
-                            <clr-radio-wrapper style="margin-right: 20px;" (change)="getWhitishn($event.target.value)">
-                                <input type="radio" clrRadio name="options12" required [value]='true' />
-                                <label>Yes</label>
-                            </clr-radio-wrapper>
+          <div class="clr-radio-container form-visit9 clr-row" clrInline
+               style="display: -webkit-box; margin-top: 30px;">
+            <label for="whitish" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
+              Whitish</label>
+            <div class="radip-wrapper" style="display: flex;">
+              <clr-radio-wrapper style="margin-right: 20px;" (change)="getWhitishn($event.target.value)">
+                <input type="radio" clrRadio name="options12" required [value]='true'/>
+                <label>Yes</label>
+              </clr-radio-wrapper>
 
-                            <clr-radio-wrapper (change)="getWhitishn($event.target.value)">
-                                <input type="radio" clrRadio name="options12" required [value]='false' />
-                                <label>No</label>
-                            </clr-radio-wrapper>
+              <clr-radio-wrapper (change)="getWhitishn($event.target.value)">
+                <input type="radio" clrRadio name="options12" required [value]='false'/>
+                <label>No</label>
+              </clr-radio-wrapper>
 
-                        </div>
-                    </div>
+            </div>
+          </div>
 
-                    <div class="clr-radio-container form-visit9 clr-row" clrInline
-                        style="display: -webkit-box; margin-top: 30px;">
-                        <label for="Watery" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
-                            Watery </label>
-                        <div class="radip-wrapper" style="display: flex;">
-                            <clr-radio-wrapper style="margin-right: 20px;" (change)="getWatery($event.target.value)">
-                                <input type="radio" clrRadio name="options13" required [value]='true' />
-                                <label>Yes</label>
-                            </clr-radio-wrapper>
+          <div class="clr-radio-container form-visit9 clr-row" clrInline
+               style="display: -webkit-box; margin-top: 30px;">
+            <label for="Watery" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
+              Watery </label>
+            <div class="radip-wrapper" style="display: flex;">
+              <clr-radio-wrapper style="margin-right: 20px;" (change)="getWatery($event.target.value)">
+                <input type="radio" clrRadio name="options13" required [value]='true'/>
+                <label>Yes</label>
+              </clr-radio-wrapper>
 
-                            <clr-radio-wrapper (change)="getWatery($event.target.value)">
-                                <input type="radio" clrRadio name="options13" required [value]='false' />
-                                <label>No</label>
-                            </clr-radio-wrapper>
+              <clr-radio-wrapper (change)="getWatery($event.target.value)">
+                <input type="radio" clrRadio name="options13" required [value]='false'/>
+                <label>No</label>
+              </clr-radio-wrapper>
 
-                        </div>
-                    </div>
+            </div>
+          </div>
 
-                    <div class="clr-radio-container form-visit9 clr-row" clrInline
-                        style="display: -webkit-box; margin-top: 30px;">
-                        <label for="Mucoid" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
-                            Mucoid </label>
-                        <div class="radip-wrapper" style="display: flex;">
-                            <clr-radio-wrapper style="margin-right: 20px;" (change)="getMucoid($event.target.value)">
-                                <input type="radio" clrRadio name="options14" required [value]='true' />
-                                <label>Yes</label>
-                            </clr-radio-wrapper>
+          <div class="clr-radio-container form-visit9 clr-row" clrInline
+               style="display: -webkit-box; margin-top: 30px;">
+            <label for="Mucoid" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
+              Mucoid </label>
+            <div class="radip-wrapper" style="display: flex;">
+              <clr-radio-wrapper style="margin-right: 20px;" (change)="getMucoid($event.target.value)">
+                <input type="radio" clrRadio name="options14" required [value]='true'/>
+                <label>Yes</label>
+              </clr-radio-wrapper>
 
-                            <clr-radio-wrapper (change)="getMucoid($event.target.value)">
-                                <input type="radio" clrRadio name="options14" required [value]='false' />
-                                <label>No</label>
-                            </clr-radio-wrapper>
+              <clr-radio-wrapper (change)="getMucoid($event.target.value)">
+                <input type="radio" clrRadio name="options14" required [value]='false'/>
+                <label>No</label>
+              </clr-radio-wrapper>
 
-                        </div>
-                    </div>
+            </div>
+          </div>
 
-                    <div class="clr-radio-container form-visit9 clr-row" clrInline
-                        style="display: -webkit-box; margin-top: 30px;">
-                        <label for="Greenish" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
-                            Greenish </label>
-                        <div class="radip-wrapper" style="display: flex;">
-                            <clr-radio-wrapper style="margin-right: 20px;" (change)="getGreenish($event.target.value)">
-                                <input type="radio" clrRadio name="options15" required [value]='true' />
-                                <label>Yes</label>
-                            </clr-radio-wrapper>
+          <div class="clr-radio-container form-visit9 clr-row" clrInline
+               style="display: -webkit-box; margin-top: 30px;">
+            <label for="Greenish" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-7">
+              Greenish </label>
+            <div class="radip-wrapper" style="display: flex;">
+              <clr-radio-wrapper style="margin-right: 20px;" (change)="getGreenish($event.target.value)">
+                <input type="radio" clrRadio name="options15" required [value]='true'/>
+                <label>Yes</label>
+              </clr-radio-wrapper>
 
-                            <clr-radio-wrapper (change)="getGreenish($event.target.value)">
-                                <input type="radio" clrRadio name="options15" required [value]='false' />
-                                <label>No</label>
-                            </clr-radio-wrapper>
+              <clr-radio-wrapper (change)="getGreenish($event.target.value)">
+                <input type="radio" clrRadio name="options15" required [value]='false'/>
+                <label>No</label>
+              </clr-radio-wrapper>
 
-                        </div>
-                    </div>
+            </div>
+          </div>
 
-                    <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
+          <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
 
 
                         <textarea clrTextarea rows="4" [(ngModel)]="digestiveObservation" name="digestiveObservation"
-                            style="width:100%  !important; border-color: #b9b8b8"
-                            placeholder="Observations.."></textarea>
+                                  style="width:100%  !important; border-color: #b9b8b8"
+                                  placeholder="Observations.."></textarea>
 
-                    </div>
+          </div>
 
-                </div>
+        </div>
 
-                <div class="form-checkVpart4">
-                    <h4> <img src="../../../assets/Icones veter/locomotion.png" class="imgIcon" width="22" height="22"
-                            style="margin-right: 8px;" />
-                        Locomotion
-                    </h4>
+        <div class="form-checkVpart4">
+          <h4><img src="../../../assets/Icones veter/locomotion.png" class="imgIcon" width="22" height="22"
+                   style="margin-right: 8px;"/>
+            Locomotion
+          </h4>
 
-                    <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
+          <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
 
 
 
                         <textarea clrTextarea rows="4" [(ngModel)]="locomotionObservation" name="locomotionObservation"
-                            style="width:100%  !important; border-color: #b9b8b8"
-                            placeholder="Observations.."></textarea>
-                    </div>
+                                  style="width:100%  !important; border-color: #b9b8b8"
+                                  placeholder="Observations.."></textarea>
+          </div>
 
 
+        </div>
 
-                </div>
-
-                <div class="form-checkVpart5">
-                    <h4> <img src="../../../assets/Icones veter/others.png" class="imgIcon" width="22" height="22"
-                            style="margin-right: 8px;" />
-                        Other clinical signs
-                    </h4>
-
+        <div class="form-checkVpart5">
+          <h4><img src="../../../assets/Icones veter/others.png" class="imgIcon" width="22" height="22"
+                   style="margin-right: 8px;"/>
+            Other clinical signs
+          </h4>
 
 
+          <clr-input-container class="clr-col-md-12 clr-row" style="padding-left: 0;">
+            <label for="nervous" class="clr-control-label labelV ">
+              Nervous *
+            </label>
+            <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" type="text" n="1"
+                   name="nervous" [(ngModel)]="NervousMeasure"/>
+          </clr-input-container>
 
-                    <clr-input-container class="clr-col-md-12 clr-row" style="padding-left: 0;">
-                        <label for="nervous" class="clr-control-label labelV ">
-                            Nervous *
-                        </label>
-                        <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" type="text" n="1"
-                            name="nervous" [(ngModel)]="NervousMeasure" />
-                    </clr-input-container>
+          <clr-input-container class="clr-col-md-12 clr-row" style="padding-left: 0">
+            <label for="dermatitis" class="clr-control-label labelV ">
+              Dermatitis *
+            </label>
+            <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" type="text" n="1"
+                   name="dermatitis" [(ngModel)]="DermatitisMeasure"/>
+          </clr-input-container>
 
-                    <clr-input-container class="clr-col-md-12 clr-row" style="padding-left: 0">
-                        <label for="dermatitis" class="clr-control-label labelV ">
-                            Dermatitis *
-                        </label>
-                        <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" type="text" n="1"
-                            name="dermatitis" [(ngModel)]="DermatitisMeasure" />
-                    </clr-input-container>
-
-                    <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
+          <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
 
 
 
                         <textarea clrTextarea rows="4" [(ngModel)]="otherObservation" name="description"
-                            style="width:100%  !important; border-color: #b9b8b8"
-                            placeholder="Observations.."></textarea>
+                                  style="width:100%  !important; border-color: #b9b8b8"
+                                  placeholder="Observations.."></textarea>
 
 
-                    </div>
+          </div>
 
 
-
-                </div>
-
+        </div>
 
 
+      </div>
+    </clr-wizard-page>
+
+    <clr-wizard-page #pageThree>
+      <ng-template clrPageTitle>Necropsy observation</ng-template>
+      <div class="FormComV">
+        <div class="form-visit-title">
+          <h4>
+            <img src="../../../assets/necropsy.png" class="imgIcon" width="24" height="24"
+                 style="margin-right: 8px;"/>
+            Necropsy observation
+          </h4>
+        </div>
+
+        <div class="form-visitV1">
+          <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
+            <label for="externalExamination" class="clr-control-label ">
+              External examination </label>
+          </div>
+          <div class="clr-control-container " style="margin-top: -24px;">
+            <div class="clr-input-wrapper">
+              <input clrInput name="shortEnName" size="40" type="text" name="externalExamination"
+                     [(ngModel)]="examinationMeasure"/>
             </div>
-        </clr-wizard-page>
 
-        <clr-wizard-page #pageThree>
-            <ng-template clrPageTitle>Necropsy observation</ng-template>
-            <div class="FormComV">
-                <div class="form-visit-title">
-                    <h4>
-                        <img src="../../../assets/necropsy.png" class="imgIcon" width="24" height="24"
-                            style="margin-right: 8px;" />
-                        Necropsy observation
-                    </h4>
-                </div>
+          </div>
+        </div>
 
-                <div class="form-visitV1">
-                    <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
-                        <label for="externalExamination" class="clr-control-label ">
-                            External examination </label>
-                    </div>
-                    <div class="clr-control-container " style="margin-top: -24px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput name="shortEnName" size="40" type="text" name="externalExamination"
-                                [(ngModel)]="examinationMeasure" />
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="form-visitV2">
-                    <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
-                        <label for="bones" class="clr-control-label">
-                            Bones </label>
-                    </div>
-                    <div class="clr-control-container" style="margin-top: -24px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput size="40" type="text" name="bones" [(ngModel)]="bonesMeasure" />
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="form-visitV3">
-                    <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
-                        <label for="legandFeet" class="clr-control-label">
-                            Leg and Feet </label>
-                    </div>
-                    <div class="clr-control-container" style="margin-top: -24px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput size="40" type="text" name="legandFeet" [(ngModel)]="legFeetMeasure" />
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="form-visitV4">
-                    <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
-                        <label for="trachea" class="clr-control-label">
-                            Trachea </label>
-                    </div>
-                    <div class="clr-control-container" style="margin-top: -24px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput name="shortEnName" size="40" type="text" name="trachea"
-                                [(ngModel)]="tracheaMeasure" />
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="form-visitV5">
-                    <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
-                        <label for="crop" class="clr-control-label">
-                            Crop </label>
-                    </div>
-                    <div class="clr-control-container" style="margin-top: -24px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput name="shortEnName" size="40" type="text" name="crop"
-                                [(ngModel)]="cropMeasure" />
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="form-visitV6">
-                    <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
-                        <label for="thymus" class="clr-control-label">
-                            Thymus </label>
-                    </div>
-                    <div class="clr-control-container" style="margin-top: -24px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput size="40" type="text" name="thymus" [(ngModel)]="thymusMeasure" />
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="form-visitV7">
-                    <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
-                        <label for="liver" class="clr-control-label">
-                            Liver </label>
-                    </div>
-                    <div class="clr-control-container" style="margin-top: -24px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput size="40" type="text" name="liver" [(ngModel)]="liverMeasure" />
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="form-visitV8">
-                    <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
-                        <label for="spleen" class="clr-control-label">
-                            Spleen </label>
-                    </div>
-                    <div class="clr-control-container" style="margin-top: -24px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput name="shortEnName" size="40" type="text" name="spleen"
-                                [(ngModel)]="spleenMeasure" />
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="form-visitV9">
-                    <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
-                        <label for="Kidney" class="clr-control-label">
-                            Kidney </label>
-                    </div>
-                    <div class="clr-control-container" style="margin-top: -24px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput name="shortEnName" size="40" type="text" name="Kidney"
-                                [(ngModel)]="kidneyMeasure" />
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="form-visitV10">
-                    <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
-                        <label for="heart" class="clr-control-label">
-                            Heart </label>
-                    </div>
-                    <div class="clr-control-container" style="margin-top: -24px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput name="shortEnName" size="40" type="text" name="heart"
-                                [(ngModel)]="heartMeasure" />
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="form-visitV11">
-                    <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
-                        <label for="lung" class="clr-control-label">
-                            Lung </label>
-                    </div>
-                    <div class="clr-control-container" style="margin-top: -24px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput name="shortEnName" size="40" type="text" name="lung"
-                                [(ngModel)]="lungMeasure" />
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="form-visitV12">
-                    <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
-                        <label for="gastroIntestinalTract" class="clr-control-label">
-                            Gastro intestinal tract </label>
-                    </div>
-                    <div class="clr-control-container" style="margin-top: -24px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput name="shortEnName" size="40" type="text" name="gastroIntestinalTract"
-                                [(ngModel)]="gastroIntestMeasure" />
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="form-visitV13">
-                    <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
-                        <label for="bursaFabricius " class="clr-control-label">
-                            Bursa of Fabricius </label>
-                    </div>
-                    <div class="clr-control-container" style="margin-top: -24px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput name="shortEnName" size="40" type="text" name="bursaFabricius"
-                                [(ngModel)]="bursaFabriMeasure" />
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="form-visitV14">
-                    <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
-                        <label for="brain " class="clr-control-label">
-                            Brain </label>
-                    </div>
-                    <div class="clr-control-container" style="margin-top: -24px;">
-                        <div class="clr-input-wrapper">
-                            <input clrInput name="shortEnName" size="40" type="text" name="brain"
-                                [(ngModel)]="brainMeasure" />
-                        </div>
-
-                    </div>
-                </div>
+        <div class="form-visitV2">
+          <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
+            <label for="bones" class="clr-control-label">
+              Bones </label>
+          </div>
+          <div class="clr-control-container" style="margin-top: -24px;">
+            <div class="clr-input-wrapper">
+              <input clrInput size="40" type="text" name="bones" [(ngModel)]="bonesMeasure"/>
             </div>
-        </clr-wizard-page>
 
+          </div>
+        </div>
 
-
-        <clr-wizard-page #pageFive>
-            <ng-template clrPageTitle>Analyses</ng-template>
-            <div class="FormComV">
-                <div class="form-visit-title" style="    margin-bottom: 25px;">
-                    <h4>
-                        <img src="../../../assets/upload.png" class="imgIcon" width="24" height="24"
-                            style="margin-right: 8px;" />
-                        Upload analyse
-                    </h4>
-                </div>
-                <label>
-                    <input type="file" id="myfile" name="myfile" (change)="onFileChange($event)" placeholder="Upload file" accept="*" multiple
-                        class=" clr-col-xs-12-sm-12 clr-col-md-12" value="Choisir un fichier" />  
-                        <span class=" clr-col-xs-12-sm-12 clr-col-md-12" style="font-size:small ; margin-right: 49px;"><clr-icon class="alert-icon" shape="exclamation-circle" style="color:red"></clr-icon>A <span style="font-weight:bold ; color:red">pdf</span> file should be uploaded.</span>
-                       
-
-                </label>
-                
-                
-
-
+        <div class="form-visitV3">
+          <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
+            <label for="legandFeet" class="clr-control-label">
+              Leg and Feet </label>
+          </div>
+          <div class="clr-control-container" style="margin-top: -24px;">
+            <div class="clr-input-wrapper">
+              <input clrInput size="40" type="text" name="legandFeet" [(ngModel)]="legFeetMeasure"/>
             </div>
-        </clr-wizard-page>
-    </clr-wizard>
-    <!-- End Table -->
+
+          </div>
+        </div>
+
+        <div class="form-visitV4">
+          <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
+            <label for="trachea" class="clr-control-label">
+              Trachea </label>
+          </div>
+          <div class="clr-control-container" style="margin-top: -24px;">
+            <div class="clr-input-wrapper">
+              <input clrInput name="shortEnName" size="40" type="text" name="trachea"
+                     [(ngModel)]="tracheaMeasure"/>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-visitV5">
+          <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
+            <label for="crop" class="clr-control-label">
+              Crop </label>
+          </div>
+          <div class="clr-control-container" style="margin-top: -24px;">
+            <div class="clr-input-wrapper">
+              <input clrInput name="shortEnName" size="40" type="text" name="crop"
+                     [(ngModel)]="cropMeasure"/>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-visitV6">
+          <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
+            <label for="thymus" class="clr-control-label">
+              Thymus </label>
+          </div>
+          <div class="clr-control-container" style="margin-top: -24px;">
+            <div class="clr-input-wrapper">
+              <input clrInput size="40" type="text" name="thymus" [(ngModel)]="thymusMeasure"/>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-visitV7">
+          <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
+            <label for="liver" class="clr-control-label">
+              Liver </label>
+          </div>
+          <div class="clr-control-container" style="margin-top: -24px;">
+            <div class="clr-input-wrapper">
+              <input clrInput size="40" type="text" name="liver" [(ngModel)]="liverMeasure"/>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-visitV8">
+          <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
+            <label for="spleen" class="clr-control-label">
+              Spleen </label>
+          </div>
+          <div class="clr-control-container" style="margin-top: -24px;">
+            <div class="clr-input-wrapper">
+              <input clrInput name="shortEnName" size="40" type="text" name="spleen"
+                     [(ngModel)]="spleenMeasure"/>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-visitV9">
+          <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
+            <label for="Kidney" class="clr-control-label">
+              Kidney </label>
+          </div>
+          <div class="clr-control-container" style="margin-top: -24px;">
+            <div class="clr-input-wrapper">
+              <input clrInput name="shortEnName" size="40" type="text" name="Kidney"
+                     [(ngModel)]="kidneyMeasure"/>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-visitV10">
+          <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
+            <label for="heart" class="clr-control-label">
+              Heart </label>
+          </div>
+          <div class="clr-control-container" style="margin-top: -24px;">
+            <div class="clr-input-wrapper">
+              <input clrInput name="shortEnName" size="40" type="text" name="heart"
+                     [(ngModel)]="heartMeasure"/>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-visitV11">
+          <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
+            <label for="lung" class="clr-control-label">
+              Lung </label>
+          </div>
+          <div class="clr-control-container" style="margin-top: -24px;">
+            <div class="clr-input-wrapper">
+              <input clrInput name="shortEnName" size="40" type="text" name="lung"
+                     [(ngModel)]="lungMeasure"/>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-visitV12">
+          <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
+            <label for="gastroIntestinalTract" class="clr-control-label">
+              Gastro intestinal tract </label>
+          </div>
+          <div class="clr-control-container" style="margin-top: -24px;">
+            <div class="clr-input-wrapper">
+              <input clrInput name="shortEnName" size="40" type="text" name="gastroIntestinalTract"
+                     [(ngModel)]="gastroIntestMeasure"/>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-visitV13">
+          <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
+            <label for="bursaFabricius " class="clr-control-label">
+              Bursa of Fabricius </label>
+          </div>
+          <div class="clr-control-container" style="margin-top: -24px;">
+            <div class="clr-input-wrapper">
+              <input clrInput name="shortEnName" size="40" type="text" name="bursaFabricius"
+                     [(ngModel)]="bursaFabriMeasure"/>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-visitV14">
+          <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
+            <label for="brain " class="clr-control-label">
+              Brain </label>
+          </div>
+          <div class="clr-control-container" style="margin-top: -24px;">
+            <div class="clr-input-wrapper">
+              <input clrInput name="shortEnName" size="40" type="text" name="brain"
+                     [(ngModel)]="brainMeasure"/>
+            </div>
+
+          </div>
+        </div>
+        <div class="form-visitV14">
+          <div class="labelVisit clr-col-md-12" style="margin-top: 30px; padding-left: 0;">
+            <label for="image " class="clr-control-label">
+              Add image of observation </label>
+          </div>
+          <button class="btn btn-primary" (click)="fileInput.click()">Select File</button>
+
+          <input
+            style="display: none"
+            #attachments
+            type="file"
+            (change)="onFileChanged($event)"
+            #fileInput
+            multiple="true"
+            accept="image/*"
+          />
+
+          <div >
+            <table class="table">
+              <tbody>
+              <tr *ngFor="let selected of listOfFiles; let index = index">
+                <td class="left">{{ selected }}</td>
+                <td class="left" (click)="removeSelectedFile(index)"><clr-icon
+                  class="alert-icon" shape="trash" style="color:red"></clr-icon></td>
+              </tr>
+              </tbody>
+            </table>
+            <!--<h3>{{ selected }}</h3>
+            <button mat-icon-button (click)="removeSelectedFile(index)">delete</button>-->
+          </div>
+
+          <p *ngIf="isLoading">Loading.....</p>
+        </div>
+      </div>
+    </clr-wizard-page>
+
+
+    <clr-wizard-page #pageFive>
+      <ng-template clrPageTitle>Analyses</ng-template>
+      <div class="FormComV">
+        <div class="form-visit-title" style="    margin-bottom: 25px;">
+          <h4>
+            <img src="../../../assets/upload.png" class="imgIcon" width="24" height="24"
+                 style="margin-right: 8px;"/>
+            Upload analyse
+          </h4>
+        </div>
+        <label>
+          <input type="file" id="myfile" name="myfile" (change)="onFileChange($event)" placeholder="Upload file"
+                 accept=".pdf" multiple
+                 class=" clr-col-xs-12-sm-12 clr-col-md-12" value="Choisir un fichier"/>
+          <span class=" clr-col-xs-12-sm-12 clr-col-md-12" style="font-size:small ; margin-right: 49px;"><clr-icon
+            class="alert-icon" shape="exclamation-circle" style="color:red"></clr-icon>A <span
+            style="font-weight:bold ; color:red">pdf</span> file should be uploaded.</span>
+
+
+        </label>
+
+
+      </div>
+    </clr-wizard-page>
+  </clr-wizard>
+  <!-- End Table -->
 
 
 </form>
 <form clrForm class="clr-form clr-form-horizontal">
-    <clr-modal title="Morbidity" [(clrModalOpen)]="MorbidityOpened" [clrModalStaticBackdrop]="true">
+  <clr-modal title="Morbidity" [(clrModalOpen)]="MorbidityOpened" [clrModalStaticBackdrop]="true">
 
 
-        <h3 class="modal-title" style="color: #02675c;">
-            <img src="../../../assets/Sickbirds.png" width="24" style="margin-right: 10px; margin-top: -6px;">
-            Morbidity measurement
-        </h3>
+    <h3 class="modal-title" style="color: #02675c;">
+      <img src="../../../assets/Sickbirds.png" width="24" style="margin-right: 10px; margin-top: -6px;">
+      Morbidity measurement
+    </h3>
 
-        <div class="modal-body">
-            <div class="container">
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
+    <div class="modal-body">
+      <div class="container">
+        <table class="table table-striped table-bordered">
+          <thead>
+          <tr>
 
-                            <th>Total number</th>
-                            <th>Number of sick birds</th>
+            <th>Total number</th>
+            <th>Number of sick birds</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-
-
-                            <td>
-                                <input [(ngModel)]="nbrTotal" class="form-control clickFormV" style="  border: 0; background-color: #fafafa; padding: 6px;border-bottom: .5px solid #ececec;
-                                        outline: 0" [ngModelOptions]="{standalone: true}" type="text" />
-                            </td>
-
-                            <td>
-                                <input [(ngModel)]="nbrMorbidity" class="form-control clickFormV" style="  border: 0; background-color: #fafafa; padding: 6px;border-bottom: .5px solid #ececec;
-                                        outline: 0" [ngModelOptions]="{standalone: true}" type="text" />
-                            </td>
-                        </tr>
-                        <tr>
-
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-        <div class="modal-footer">
-
-            <button type="button" class="btn btn-outline" (click)="MorbidityOpened = false">Cancel</button>
-            <button type="button" class="btn btn-primary "
-                (click)='saveMorbidity();MorbidityOpened = false'>save</button>
-        </div>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
 
 
+            <td>
+              <input [(ngModel)]="nbrTotal" class="form-control clickFormV" style="  border: 0; background-color: #fafafa; padding: 6px;border-bottom: .5px solid #ececec;
+                                        outline: 0" [ngModelOptions]="{standalone: true}" type="text"/>
+            </td>
 
-    </clr-modal>
+            <td>
+              <input [(ngModel)]="nbrMorbidity" class="form-control clickFormV" style="  border: 0; background-color: #fafafa; padding: 6px;border-bottom: .5px solid #ececec;
+                                        outline: 0" [ngModelOptions]="{standalone: true}" type="text"/>
+            </td>
+          </tr>
+          <tr>
+
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+
+      <button type="button" class="btn btn-outline" (click)="MorbidityOpened = false">Cancel</button>
+      <button type="button" class="btn btn-primary "
+              (click)='saveMorbidity();MorbidityOpened = false'>save
+      </button>
+    </div>
+
+
+  </clr-modal>
 </form>

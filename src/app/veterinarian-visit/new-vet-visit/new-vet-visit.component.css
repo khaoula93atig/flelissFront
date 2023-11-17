@@ -1,3 +1,9 @@
+.uploader-cfg {
+  --ctx-name: "uploader";
+
+  /* DO NOT FORGET TO USE YOUR OWN PUBLIC KEY */
+  --cfg-pubkey: "demopublickey";
+}
 .labelV {
     margin-top: 3.5px;
     width: 50%
@@ -42,7 +48,7 @@
     .clr-form-control{
         display: -webkit-flex;
         flex-direction: inherit;
-    } 
+    }
   }
   @media screen and (max-width: 576px){
 .modal-body {
@@ -51,5 +57,4 @@
 }
 
   }
- 
-    
+

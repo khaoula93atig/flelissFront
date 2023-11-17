@@ -13,12 +13,13 @@ import {
   IRegistrationVisitNecropsy,
   Morbidity,
   VisitHealthStatus,
-  VisitNecropsy,
+  VisitNecropsy, FileInfoVisit,
 } from 'src/app/shared/registration';
 import {ListVetVisitComponent} from '../list-vet-visit/list-vet-visit.component';
 import {ClrWizard, ClrWizardPage} from '@clr/angular';
 import {FlockService} from 'src/app/services/flock.service';
 import {ToastrService} from 'ngx-toastr';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-new-vetvisit',
@@ -26,7 +27,11 @@ import {ToastrService} from 'ngx-toastr';
   styleUrls: ['./new-vet-visit.component.css'],
 })
 export class NewVetVisitComponent implements OnInit {
-  //flock fields
+  // add images
+  fileList: File[] = [];
+  listOfFiles: any[] = [];
+  isLoading = false;
+  // flock fields
   hatchDate: Date;
   chikedPlaced: any;
   breeddescription: string;
@@ -632,6 +637,8 @@ export class NewVetVisitComponent implements OnInit {
   }
 
   submit(): void {
+    console.log(this.listOfFiles);
+    console.log(this.fileList);
     let registrationVisitvet: IRegistrationVisits = new Object() as IRegistrationVisits;
     var date =
       this.visitDate.substring(3, 5) +
@@ -721,19 +728,25 @@ export class NewVetVisitComponent implements OnInit {
         console.log('visitNecropsy ' + JSON.stringify(visitNecropsy));
         this.VisitVeterinarianService.createRegistrationVisitNecropsy(
           visitNecropsy,
-        ).subscribe((data) => {
-          console.log('data message visitNecropsy' + data['message']);
-          console.log('data response, visitNecropsy' + data['response']);
+        ).subscribe(( data ) => {
+          console.log('alldata', data);
+          for ( const file of this.fileList) {
+            const fileInfoVisit: FileInfoVisit = new Object() as FileInfoVisit;
+            fileInfoVisit.visitId = this.visitIDnew;
+            fileInfoVisit.visitNecropsyNbservationId = data.visitNecropsyObservationId;
+            fileInfoVisit.url = ' ';
+            console.log(fileInfoVisit);
+            this.uploadNecropsyFile(file , fileInfoVisit);
+          }
         });
-        this.uploadFile(date, this.visitIDnew);
+        if(this.agreementFile!=null) {
+          this.uploadFile(date, this.visitIDnew);
+        }
         this.toastr.success('Success', 'Successfully added');
         this.initForm();
         this.ListComponenet.refresh();
-
-        //this.succesMsg = 'Success'
       } else {
         this.toastr.error('Error', 'Operation failed');
-        //this.dangerMsg = 'Erreur'
       }
     });
 
@@ -862,4 +875,40 @@ export class NewVetVisitComponent implements OnInit {
   public jumpToFive(): void {
     this.jumpTo(this.pageFive)
   }
+
+  // add images
+  onFileChanged(event: any) {
+    this.isLoading = true;
+    for (var i = 0; i <= event.target.files.length - 1; i++) {
+      var selectedFile = event.target.files[i];
+      if (this.listOfFiles.indexOf(selectedFile.name) === -1) {
+        this.fileList.push(selectedFile);
+        this.listOfFiles.push(selectedFile.name);
+      }
+    }
+
+    this.isLoading = false;
+
+    //this.attachment.nativeElement.value = '';
+  }
+
+  removeSelectedFile(index) {
+    // Delete the item from fileNames list
+    this.listOfFiles.splice(index, 1);
+    // delete file from FileList
+    this.fileList.splice(index, 1);
+  }
+uploadNecropsyFile(fichier, filevisit) {
+  const formData = new FormData();
+  formData.append('fichier', fichier);
+  formData.append('fileEntite', JSON.stringify(filevisit));
+
+
+  // Invoking service
+  this.VisitVeterinarianService.addfilesTovist(formData).subscribe(data => {
+    console.log(" data " + data[" response"]);
+
+  });
+}
+
 }
