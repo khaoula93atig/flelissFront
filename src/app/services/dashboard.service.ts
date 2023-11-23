@@ -206,6 +206,10 @@ export class DashboardService {
     return this.http.get<any>(environment.url_dashboard + '/flock/feed/' + houseId + '/' + year);
   }
 
+  getFcrFlocksByHouse(houseId: string) {
+    return this.http.get<any>(environment.url_dashboard + '/flock/fcr/' + houseId );
+  }
+
   // get Water of flocks By house and year
   getWaterFlocksByHouseandYear(houseId: string, date: string, year: number) {
     return this.http.get<any>(environment.url_dashboard + '/flock/water/' + houseId + '/' + date + '/' + year, this.httpOptions);

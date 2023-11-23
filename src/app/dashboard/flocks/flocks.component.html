@@ -57,14 +57,14 @@
                     <label>House</label>
                     <select clrSelect name="house" [(ngModel)]="houseId" (change)="getFlocksByHouseAndYear($event.target.value);
                     getMortalitybyFlock($event.target.value);getWeightByFlock($event.target.value);getFeedByFlock($event.target.value);
-                    getWaterByFlocks($event.target.value)">
+                    getWaterByFlocks($event.target.value);getFcrByFlock($event.target.value)">
                         <option *ngFor="let house of houses" [value]="house.houseId"> {{house.houseName}}
                         </option>
                     </select>
                 </clr-select-container>
             </form>
         </div>
-        
+
 
         <div class="clr-col-lg-2 clr-col-md-12 clr-col-sm-4">
             <div class="DateHeader" style="float: right;">
@@ -77,31 +77,26 @@
         <div class="clr-row clr-col-lg-12 clr-col-md-12 clr-col-sm-12">
 
             <div class="clr-col-lg-6 clr-col-md-6 clr-col-sm-6">
-
-                <h3>Death analysis <img src="../../../assets/death-chiken.png" width="45" height="45"></h3>
                 <div id="chartdeathflocksComparaison" style=" height: 100%;  width: 100%"></div>
             </div>
-            <div class="clr-col-lg-6 clr-col-md-6 clr-col-sm-6">
-                <h3>Feed analysis <img src="../../../assets/Icones visit/feedConsumption.png" width="40" height="40"
-                    class="imgIcon"></h3>
-                    <div id="chartFeedFlock" style=" height: 300px;  width: 100%"></div>
-            </div>
-                
+          <div class="clr-col-lg-6 clr-col-md-6 clr-col-sm-6">
+            <div id="chartWaterflocksComparaison" style=" height:100%;  width: 100%"></div>
+          </div>
+
+
         </div>
         <div class="clr-row clr-col-lg-12 clr-col-md-12 clr-col-sm-12">
 
-            <div class="clr-col-lg-6 clr-col-md-6 clr-col-sm-6">
-
-                <h3>Weight analysis <img src="../../../assets/Icones visit/weight.png" width="45" height="45" style="margin-top:-13px"
-                    class="imgIcon"></h3>
+            <div class="clr-col-lg-4 clr-col-md-4 clr-col-sm-4">
                     <div id="chartWeightFlock" style=" height: 300px;  width: 100%"></div>
             </div>
-            <div class="clr-col-lg-6 clr-col-md-6 clr-col-sm-6">
-                <h3>Water analysis <img src="../../../assets/Icones visit/waterConsumption.png" width="40" height="40"
-                            class="imgIcon"></h3>
-                            <div id="chartWaterflocksComparaison" style=" height:100%;  width: 100%"></div>
-            </div>
-                
+          <div class="clr-col-lg-4 clr-col-md-4 clr-col-sm-4">
+            <div id="chartFcrFlock" style=" height: 300px;  width: 100%"></div>
+          </div>
+          <div class="clr-col-lg-4 clr-col-md-4 clr-col-sm-4">
+            <div id="chartFeedFlock" style=" height: 300px;  width: 100%"></div>
+          </div>
+
         </div>
 
 

@@ -739,7 +739,7 @@ export class NewVetVisitComponent implements OnInit {
             this.uploadNecropsyFile(file , fileInfoVisit);
           }
         });
-        if(this.agreementFile!=null) {
+        if(this.agreementFile != null) {
           this.uploadFile(date, this.visitIDnew);
         }
         this.toastr.success('Success', 'Successfully added');

@@ -52,7 +52,7 @@ import { HeaderComponent } from './shared/header/header.component';
     ToastrModule.forRoot(),
     FormsModule,
     CaptchaModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
 
 
   ],

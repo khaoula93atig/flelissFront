@@ -587,6 +587,9 @@ export class NewVisitComponent implements OnInit {
     registrationVisit.mortality = this.measureMortality;
     registrationVisit.total_feed_consumption = this.totalFeed;
     registrationVisit.total_water_consumption = this.totalWater;
+    if(this.measureWeight != null && this.measureWeight != 0){
+      registrationVisit.fcr = this.totalFeed / this.measureWeight;
+    }
     console.log('visit', registrationVisit);
     // Invoking service
     this.visitService.createRegistrationVisits(registrationVisit).subscribe(

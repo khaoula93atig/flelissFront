@@ -16,6 +16,7 @@ export class FlocksComponent implements OnInit {
   public optionsChartMortality: any;
   public optionsChartWeight: any;
   public optionsChartFeed: any;
+  public optionsChartFcr: any;
   public optionsChartWater: any;
   colors: [
     {
@@ -120,6 +121,7 @@ export class FlocksComponent implements OnInit {
       this.getMortalitybyFlock(this.houseId);
       this.getWeightByFlock(this.houseId);
       this.getFeedByFlock(this.houseId);
+      this.getFcrByFlock(this.houseId);
       this.getWaterByFlocks(this.houseId);
 
     });
@@ -173,8 +175,15 @@ export class FlocksComponent implements OnInit {
           {
             linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
             stops: [
-              [0, '#1F7D77'],
-              [1, '#18534F']
+              [0, '#D6955B'],
+              [1, '#D07627']
+            ]
+          },
+          {
+            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
+            stops: [
+              [0, '#FF0000'],
+              [1, '#6E0C07']
             ]
           },
           {
@@ -182,13 +191,6 @@ export class FlocksComponent implements OnInit {
             stops: [
               [0, '#FEEAA1'],
               [1, '#FFD849']
-            ]
-          },
-          {
-            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
-            stops: [
-              [0, '#D6955B'],
-              [1, '#D07627']
             ]
           },
           {
@@ -222,7 +224,7 @@ export class FlocksComponent implements OnInit {
   getWeightByFlock(event) {
     let series = [{
       name: '',
-      data: [{week: 7, weight: null}, {week: 14, weight: null}, {week: 21, weight: null}, {week: 28, weight: null}, {
+      data: [{week: 0, weight: null}, {week: 7, weight: null}, {week: 14, weight: null}, {week: 21, weight: null}, {week: 28, weight: null}, {
         week: 35,
         weight: null
       }, {week: 42, weight: null},]
@@ -251,7 +253,7 @@ export class FlocksComponent implements OnInit {
           } else {
             series.push({
               name: d.flockId,
-              data: [{week: 7, weight: null}, {week: 14, weight: null}, {week: 21, weight: null}, {week: 28, weight: null}, {
+              data: [{week: 0, weight: null},{week: 7, weight: null}, {week: 14, weight: null}, {week: 21, weight: null}, {week: 28, weight: null}, {
                 week: 35,
                 weight: null
               }, {week: 42, weight: null},]
@@ -289,11 +291,11 @@ export class FlocksComponent implements OnInit {
           text: 'Weekly weight by flock'
         },
         xAxis: {
-          categories: [7, 14, 21, 28, 35, 42, 49]
+          categories: ['D0', 'D7', 'D14', 'D21', 'D28', 'D35', 'D42', 'D49']
         },
         yAxis: {
           title: {
-            text: 'g'
+            text: 'g/day'
           }
         },
         tooltip: {
@@ -301,7 +303,7 @@ export class FlocksComponent implements OnInit {
         },
         colors: [
           {
-            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
+            linearGradient: {x1: 0, y1: 0, y2: 1},
             stops: [
               [0, '#1F7D77'],
               [1, '#18534F']
@@ -349,10 +351,8 @@ export class FlocksComponent implements OnInit {
   getFeedByFlock(event) {
     let series = [{
       name: '',
-      data: [{week: 7, feed: null}, {week: 14, feed: null}, {week: 21, feed: null}, {week: 28, feed: null}, {
-        week: 35,
-        feed: null
-      }, {week: 42, feed: null},]
+      data: [{week: 0, feed: null}, {week: 7, feed: null}, {week: 14, feed: null}, {week: 21, feed: null},
+        {week: 28, feed: null}, {week: 35, feed: null}, {week: 42, feed: null},]
     }];
     this.dashService.getFeedFlocksByHouseandYear(event, this.date.getFullYear()).subscribe(data => {
       for (let d of data) {
@@ -377,10 +377,8 @@ export class FlocksComponent implements OnInit {
           } else {
             series.push({
               name: d.flockId,
-              data: [{week: 7, feed: null}, {week: 14, feed: null}, {week: 21, feed: null}, {week: 28, feed: null}, {
-                week: 35,
-                feed: null
-              }, {week: 42, feed: null}]
+              data: [{week: 0, feed: null}, {week: 7, feed: null}, {week: 14, feed: null}, {week: 21, feed: null},
+                {week: 28, feed: null}, {week: 35, feed: null}, {week: 42, feed: null}]
             });
             for (let w of series[series.length - 1].data) {
               if (w.week == d.week) {
@@ -405,7 +403,7 @@ export class FlocksComponent implements OnInit {
         s.data = tab;
       }
       console.log('seriefeed', series);
-      this.optionsChartWeight = {
+      this.optionsChartFeed = {
         chart: {
           type: 'spline',
           backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -414,15 +412,15 @@ export class FlocksComponent implements OnInit {
           text: 'Measure of feed'
         },
         xAxis: {
-          categories: [7, 14, 21, 28, 35, 42, 49]
+          categories: ['D0', 'D7', 'D14', 'D21', 'D28', 'D35', 'D42', 'D49']
         },
         yAxis: {
           title: {
-            text: 'g'
+            text: 'g/day'
           }
         },
         tooltip: {
-          valueSuffix: 'g'
+          valueSuffix: 'g/day'
         },
         colors: [
           {
@@ -465,7 +463,122 @@ export class FlocksComponent implements OnInit {
         series: SerieFeed
       };
 
-      Highcharts.chart('chartFeedFlock', this.optionsChartWeight);
+      Highcharts.chart('chartFeedFlock', this.optionsChartFeed);
+
+    });
+  }
+
+  getFcrByFlock(event) {
+    let series = [{
+      name: '',
+      data: [{week: 0, fcr: null},{week: 7, fcr: null}, {week: 14, fcr: null}, {week: 21, fcr: null}, {week: 28, fcr: null}, {
+        week: 35,
+        fcr: null
+      }, {week: 42, fcr: null}]
+    }];
+    this.dashService.getFcrFlocksByHouse(event).subscribe(data => {
+      for (let d of data) {
+        if ((series.length == 1) && (series[0].name == '')) {
+          series[0].name = d.flockId;
+          for (let w of series[0].data) {
+            if (w.week == d.week) {
+              w.fcr = d.average;
+            }
+          }
+        } else {
+          if (series.find(x => x.name === d.flockId)) {
+            for (let s of series) {
+              if (s.name == d.flockId) {
+                for (let w of s.data) {
+                  if (w.week == d.week) {
+                    w.fcr = d.average;
+                  }
+                }
+              }
+            }
+          } else {
+            series.push({
+              name: d.flockId,
+              data: [{week: 0, fcr: null},{week: 7, fcr: null}, {week: 14, fcr: null}, {week: 21, fcr: null}, {week: 28, fcr: null}, {
+                week: 35,
+                fcr: null
+              }, {week: 42, fcr: null}]
+            });
+            for (let w of series[series.length - 1].data) {
+              if (w.week == d.week) {
+                w.fcr = d.average;
+              }
+            }
+          }
+        }
+
+      }
+      let SerieFcr = series;
+      for (let s of SerieFcr) {
+        let tab = [];
+        for (let f of this.flocks) {
+          if (s.name == f.flockID) {
+            s.name = f.flockName;
+          }
+        }
+        for (let d of s.data) {
+          tab.push(d.fcr);
+        }
+        s.data = tab;
+      }
+      console.log('SerieFcr', series);
+      this.optionsChartFcr = {
+        chart: {
+          type: 'spline',
+          backgroundColor: 'rgba(0, 0, 0, 0)',
+        },
+        title: {
+          text: 'Measure of FCR'
+        },
+        xAxis: {
+          categories: ['D0', 'D7', 'D14', 'D21', 'D28', 'D35', 'D42', 'D49'],
+        },
+        tooltip: {
+          tooltip: {
+            pointFormat: 'D {point.x}: <br>' +
+              'Fcr: <b> {point.y} </b><br>'
+          },
+        },
+        colors: [
+          {
+            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
+            stops: [
+              [0, '#64605C'],
+              [1, '#392E2C']
+            ]
+          },
+          {
+            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
+            stops: [
+              [0, '#D6955B'],
+              [1, '#D07627']
+            ]
+          },
+          {
+            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
+            stops: [
+              [0, '#ECF8F6'],
+              [1, '#A0FBEC']
+            ]
+          },
+          {
+            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
+            stops: [
+              [0, '#64605C'],
+              [1, '#392E2C']
+            ]
+          }
+
+        ],
+        series: SerieFcr
+      };
+
+      Highcharts.chart('chartFcrFlock', this.optionsChartFcr);
 
     });
   }
@@ -522,6 +635,13 @@ export class FlocksComponent implements OnInit {
           {
             linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
             stops: [
+              [0, '#7BB4EC'],
+              [1, '#407AA9']
+            ]
+          },
+          {
+            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
+            stops: [
               [0, '#1F7D77'],
               [1, '#18534F']
             ]
@@ -538,13 +658,6 @@ export class FlocksComponent implements OnInit {
             stops: [
               [0, '#D6955B'],
               [1, '#D07627']
-            ]
-          },
-          {
-            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
-            stops: [
-              [0, '#ECF8F6'],
-              [1, '#A0FBEC']
             ]
           },
           {

@@ -915,7 +915,7 @@ export class MortalityComponent implements OnInit {
             text: 'Weekly weight'
           },
           xAxis: {
-            categories: [7, 14, 21, 28, 35, 42, 49]
+            categories: [0, 7, 14, 21, 28, 35, 42, 49]
           },
           yAxis: {
             title: {

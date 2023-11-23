@@ -120,7 +120,7 @@
                                         <td>{{vtask.measure}}  {{vtask.task.measureUnit}}</td>
                                         <td>{{vtask.standard}}</td>
                                         <td class="left"
-                                        [ngClass]="{'alert-low': vtask.deviation=='Low', 'alert-high':vtask.deviation=='High' ,'normal':vtask.deviation=='Normal' }">
+                                            [ngClass]="{'alert-low': vtask.deviation=='Low' || vtask.deviation == 'Poor', 'alert-high':vtask.deviation=='High' ,'normal':vtask.deviation=='Normal'|| vtask.deviation=='Good' }">
                                         {{vtask.deviation}}</td>
                                     </tr>
 

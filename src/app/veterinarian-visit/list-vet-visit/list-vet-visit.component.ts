@@ -66,8 +66,11 @@ export class ListVetVisitComponent implements OnInit {
   otherObservation: string;
   visitDate: string;
   // files of visitNecropsyObservation
-  filesList: string[];
+  filesList: any[];
   analyse = false;
+  basic = false;
+  backgroundModal = ' ';
+  closable = true;
   ngOnInit(): void {
     this.refresh();
   }
@@ -252,10 +255,10 @@ export class ListVetVisitComponent implements OnInit {
           this.VisitVeterinarianService.getImagesOfVisit(this.visitId, this.visitNecropsy[0].visitNecropsyObservationId).subscribe(datafile=>{
             console.log(datafile);
             for(let f of datafile){
-              this.filesList.push(environment.url_file + '/image/' + f.name);
+              this.filesList.push(environment.url_file + '/image/' + f.name );
             }
           });
-          this.VisitVeterinarianService.getImagesOfVisit(this.visitId, "analyse").subscribe(dataanalyse=> {
+          this.VisitVeterinarianService.getImagesOfVisit(this.visitId, 'analyse').subscribe(dataanalyse=> {
             console.log('dataanalyse',dataanalyse);
             if ( dataanalyse.length != 0){
               console.log('test');
@@ -280,4 +283,12 @@ export class ListVetVisitComponent implements OnInit {
   }
 
   @ViewChild(NewVetVisitComponent) modal: NewVetVisitComponent;
+
+  imgSrc:string;
+  onClick(event){
+    console.log(event);
+    this.basic=true;
+    this.backgroundModal=event;
+
+  }
 }

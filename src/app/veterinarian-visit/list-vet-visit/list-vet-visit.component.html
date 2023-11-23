@@ -847,8 +847,9 @@
                           <div class="resultV">
 
                             <div *ngFor="let f of filesList">
-                              <img src={{f}} style="width:100px; height: 100px"/>
+                              <img src={{f}} style="width:100px; height: 100px" (click)="onClick(f)"/>
                             </div>
+
 
 
 
@@ -887,4 +888,17 @@
 
     </div>
   </div>
+
 </div>
+<clr-modal [(clrModalOpen)]="basic" [clrModalClosable]="true">
+  <div class="modal-title"><clr-icon (click)="basic=false"
+                 class="alert-icon-sm" shape="times" style=" float: right"></clr-icon></div>
+  <div class="modal-body"
+       [ngStyle]= "{'background-image': 'url('+ backgroundModal+')',  'background-repeat': 'no-repeat',
+    'background-size': 'contain',
+    'padding': '150px',
+    'background-position': 'center'}">
+
+  </div>
+</clr-modal>
+
