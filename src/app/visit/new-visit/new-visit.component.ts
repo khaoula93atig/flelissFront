@@ -565,6 +565,8 @@ export class NewVisitComponent implements OnInit {
     // Find out from the list of types which one corresponding to the selected Code
 
     let registrationVisit: IRegistrationVisits = new Object() as IRegistrationVisits;
+    this.weeklyFeed = new WeeklyFeed();
+    this.weeklyWeightMeasurement = new WeeklyWeightMeasurement();
 
     var date =
       this.visitDate.substring(8, 10) +
@@ -680,7 +682,7 @@ export class NewVisitComponent implements OnInit {
 
           // weight
           // console.log('weightTask.taskId' + this.weightTask.taskId)
-          if(this.measureWeight != null) {
+          if(this.measureWeight != null && this.measureWeight != 0) {
             console.log(this.measureWeight);
             let registrationVisitTasksWeight: IRegistrationVisitTasks = new Object() as IRegistrationVisitTasks;
             registrationVisitTasksWeight.ageFlock = this.ageOfTheFlock;
@@ -861,7 +863,7 @@ export class NewVisitComponent implements OnInit {
     feed.week = this.ageOfTheFlock;
     feed.breed = this.breedId;
     console.log(this.weeklyFeed);
-    this.visitService.saveWeeklyFeed(this.weeklyFeed).subscribe((data) => {
+    this.visitService.saveWeeklyFeed(feed).subscribe((data) => {
       console.log('weeklyFeed ' + JSON.stringify(this.weeklyFeed));
       console.log('data[\'response\']  ' + data['response']);
       if (data['response'] == 'OK') {
@@ -870,21 +872,22 @@ export class NewVisitComponent implements OnInit {
     });
   }
   saveWeeklyWeight(weeklyWeightMeasurement){
-    weeklyWeightMeasurement.centerId = this.centerId;
-    weeklyWeightMeasurement.farmId = this.farmID;
-    weeklyWeightMeasurement.houseId = this.houseId;
-    weeklyWeightMeasurement.flockId = this.flockID;
-    weeklyWeightMeasurement.flockNbr = this.nbrofBirdWeight;
-    // weeklyWeightMeasurement.weight = o;
-    weeklyWeightMeasurement.average = this.measureWeight;
-    weeklyWeightMeasurement.week = this.ageOfTheFlock;
-    weeklyWeightMeasurement.breed = this.breedId;
-    weeklyWeightMeasurement.cv = this.cv;
-    weeklyWeightMeasurement.uniformity =  this.uniformity;
-    this.visitService.saveWeeklyWeight(weeklyWeightMeasurement).subscribe(data=>
-      console.log(weeklyWeightMeasurement)
-    );
-
+    if(this.measureWeight != 0 && this.measureWeight != null) {
+      weeklyWeightMeasurement.centerId = this.centerId;
+      weeklyWeightMeasurement.farmId = this.farmID;
+      weeklyWeightMeasurement.houseId = this.houseId;
+      weeklyWeightMeasurement.flockId = this.flockID;
+      weeklyWeightMeasurement.flockNbr = this.nbrofBirdWeight;
+      // weeklyWeightMeasurement.weight = o;
+      weeklyWeightMeasurement.average = this.measureWeight;
+      weeklyWeightMeasurement.week = this.ageOfTheFlock;
+      weeklyWeightMeasurement.breed = this.breedId;
+      weeklyWeightMeasurement.cv = this.cv;
+      weeklyWeightMeasurement.uniformity = this.uniformity;
+      this.visitService.saveWeeklyWeight(weeklyWeightMeasurement).subscribe(data =>
+        console.log(weeklyWeightMeasurement)
+      );
+    }
   }
 
   // Reset the form after 'Annuler' Button clicked

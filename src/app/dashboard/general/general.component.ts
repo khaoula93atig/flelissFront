@@ -148,16 +148,48 @@ export class GeneralComponent implements OnInit {
         series: [
           {
             name: 'Mortality',
-            color: {
-              linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
-              stops: [
-                [0, '#FEEAA1'],
-                [1, '#FFD849']
-              ]
-            },
+            colorByPoint: true,
             data: this.donnes1
           }
-        ]
+        ],
+        colors: [
+          {
+            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
+            stops: [
+              [0, '#1F7D77'],
+              [1, '#18534F']
+            ]
+          },
+          {
+            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
+            stops: [
+              [0, '#FEEAA1'],
+              [1, '#FFD849']
+            ]
+          },
+          {
+            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
+            stops: [
+              [0, '#D6955B'],
+              [1, '#D07627']
+            ]
+          },
+          {
+            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
+            stops: [
+              [0, '#ECF8F6'],
+              [1, '#A0FBEC']
+            ]
+          },
+          {
+            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
+            stops: [
+              [0, '#64605C'],
+              [1, '#392E2C']
+            ]
+          }
+
+        ],
       };
       Highcharts.chart('chartGeneralMortalityByFarm', this.optionsChart2);
     });

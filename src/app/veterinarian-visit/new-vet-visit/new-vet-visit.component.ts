@@ -740,6 +740,7 @@ export class NewVetVisitComponent implements OnInit {
           }
         });
         if(this.agreementFile != null) {
+          console.log('test file');
           this.uploadFile(date, this.visitIDnew);
         }
         this.toastr.success('Success', 'Successfully added');
