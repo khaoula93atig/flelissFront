@@ -257,7 +257,7 @@
                             <clr-select-container>
                                 <label class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">Water Source
                                 </label>
-                                <select clrSelect [(ngModel)]="waterSource" name="waterSource" style="width: 155px; 
+                                <select clrSelect [(ngModel)]="waterSource" name="waterSource" style="width: 155px;
                     background-color: #f9f9f9; border-bottom: 1px solid #b3b3b3;" class="clr-col-xs-12 clr-col-md-6"
                                     (change)="getWaterSelect($event.target.value)">
                                     <option size="200">
@@ -303,8 +303,8 @@
                                 <label for="cycle" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
                                     Name
                                 </label>
-                                <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" size="30" type="text"
-                                    n="1" [(ngModel)]="flockName" name="flockName" style="width: 234px;" />
+                                <input clrInput required class="clr-col-xs-12-sm-12 clr-col-md-6" size="20" type="text"
+                                    n="1" [(ngModel)]="flockName" name="flockName" />
                                 <clr-control-helper></clr-control-helper>
                             </clr-input-container>
                             <clr-input-container style="display: -webkit-box;">
@@ -319,7 +319,7 @@
                                 <label for="startOfCycle" class="clr-control-label clr-col-xs-12-sm-12 clr-col-md-6">
                                     Start of Cycle
                                 </label>
-                                <input clrDate required class="clr-col-xs-12-sm-12 clr-col-md-6" size="45" type="date"
+                                <input clrDate required class="clr-col-xs-12-sm-12 clr-col-md-6" size="60" type="date"
                                     n="1" [(ngModel)]="startOfCycle" name="startOfCycle" />
                             </clr-date-container>
                             <clr-input-container style="display: -webkit-box;">
@@ -360,7 +360,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline"
                             (click)="FlockManagerOpened = false">Cancel</button>
-                        <button type="button" class="btn btn-primary" (click)="submitFlock();">save</button>
+                        <button type="button" class="btn btn-primary" [disabled]="!myForm.valid" (click)="submitFlock();">save</button>
                     </div>
                 </clr-modal>
             </form>
@@ -456,7 +456,8 @@
                                 </clr-toggle-wrapper>
 
                                 <input type="date" value="2020-11-30" *ngIf="checkEndOfCycle" [(ngModel)]="endOfCycle"
-                                    [ngModelOptions]="{standalone: true}" />
+                                    [ngModelOptions]="{standalone: true}"  style=" border: 1px solid #c1c1c1;
+                                     padding: 3px 10px;"/>
                             </div>
 
 

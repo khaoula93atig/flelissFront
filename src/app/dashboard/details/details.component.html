@@ -8,7 +8,7 @@
                     General</a>
             </li>
             <li class="nav-item">
-                <a routerLink="/Dashboard/mortality" class="nav-link" routerLinkActive="active" >
+                <a routerLink="/Dashboard/details" class="nav-link" routerLinkActive="active" >
                     <img class="iconimage" src="../../assets/Icones/list.png" alt="">
                     Details  </a>
             </li>
@@ -22,7 +22,7 @@
         </ul>
     </nav>
     <div class="container " style="background:rgba(255, 255, 255); margin: 16px 20px; padding: 0px;">
-    
+
 
     <!-- /Charts -->
 
@@ -97,6 +97,7 @@
             <div class="clr-col-lg-4 clr-col-md-8 clr-col-sm-8">
 
                 <h3>Death analysis <img src="../../../assets/death-chiken.png" width="45" height="45"></h3>
+              <p style="color: red" *ngIf="visitMortalit"> There is not measure of mortality today</p>
 
                 <div class="clr-row">
                     <div class="basic-column w-col w-col-3">
@@ -118,13 +119,13 @@
                                         style="font-size:15px;">birds</small></h1>
                                 <div class="number-card-divider1"></div>
                                 <div class="number-card-progress-wrapper">
-                                    <div class="tagline number-card-currency1">Survival rate</div>
+                                    <div class="tagline number-card-currency1">Survival</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="clr-row">
                     <div id="chartMortalityByhouseofLastDays" style=" height: 200px; width: 100%;"></div>
                 </div>
@@ -132,7 +133,7 @@
 
                 <h3>Weight analysis <img src="../../../assets/Icones visit/weight.png" width="45" height="45" style="margin-top:-13px"
                         class="imgIcon"></h3>
-
+              <p style="color: red" *ngIf="visitWeight"> There is not measure of body weight today</p>
                 <div class="clr-row">
                     <div class="basic-column w-col w-col-3">
                         <div class="tag-wrapper">
@@ -159,14 +160,14 @@
                     </div>
 
 
-                    
+
                     <div id="chartWeightByhouseofLastDays" style=" height: 200px; width: 100%;"></div>
 
                 </div>
             </div>
 
             <!-- Section center -->
-            <div class="clr-col-lg-4 clr-col-md-4 clr-col-sm-8" 
+            <div class="clr-col-lg-4 clr-col-md-4 clr-col-sm-8"
             style="background-color:rgba(1, 103, 92, .05);
                 box-shadow: rgb(0 0 0 / 10%) 0px 0px 5px 0px, rgb(0 0 0 / 10%) 0px 0px 1px 0px;">
 
@@ -189,13 +190,13 @@
 
                 <h3>Feed analysis <img src="../../../assets/Icones visit/feedConsumption.png" width="40" height="40"
                         class="imgIcon"></h3>
-
+              <p style="color: red" *ngIf="visitFeed"> There is not measure of feed consumption today</p>
                 <div class="clr-row">
                     <div class="basic-column w-col w-col-3">
                         <div class="tag-wrapper">
                             <div class="number-card1">
                                 <h1 class="number-card-number1">{{feedhousedaily}} <small
-                                        style="font-size:15px;">g/birds</small></h1>
+                                        style="font-size:15px;">g/bird</small></h1>
                                 <div class="number-card-divider1"></div>
                                 <div class="number-card-progress-wrapper">
                                     <div class="tagline number-card-currency1">Quantity material feed</div>
@@ -207,7 +208,7 @@
                         <div class="tag-wrapper">
                             <div class="number-card">
                                 <h1 class="number-card-number">{{totalFeed}} <small
-                                        style="font-size:15px;">g/birds</small></h1>
+                                        style="font-size:15px;">g/bird</small></h1>
                                 <div class="number-card-divider"></div>
                                 <div class="number-card-progress-wrapper">
                                     <div class="tagline number-card-currency">Cumulative feed</div>
@@ -220,16 +221,16 @@
                 <div id="chartfeedByhouseofLastDays" style=" height: 200px;"></div>
                 <h3>Water analysis <img src="../../../assets/Icones visit/waterConsumption.png" width="40" height="40"
                         class="imgIcon"></h3>
-
+              <p style="color: red" *ngIf="visitWater"> There is not measure of water consumption today</p>
                 <div class="clr-row">
                     <div class="basic-column w-col w-col-3">
                         <div class="tag-wrapper">
                             <div class="number-card1">
                                 <h1 class="number-card-number1">{{waterConsm}} <small
-                                        style="font-size:15px;">ml/brid/day</small></h1>
+                                        style="font-size:15px;">ml/bird</small></h1>
                                 <div class="number-card-divider1"></div>
                                 <div class="number-card-progress-wrapper">
-                                    <div class="tagline number-card-currency1">Water consumption</div>
+                                    <div class="tagline number-card-currency1">Daily water consumption</div>
                                 </div>
                             </div>
                         </div>
@@ -238,7 +239,7 @@
                         <div class="tag-wrapper">
                             <div class="number-card">
                                 <h1 class="number-card-number">{{waterConsumTotal}} <small
-                                        style="font-size:15px;">ml/brid/day</small></h1>
+                                        style="font-size:15px;">ml/bird</small></h1>
                                 <div class="number-card-divider"></div>
                                 <div class="number-card-progress-wrapper">
                                     <div class="tagline number-card-currency">Cumulative water</div>

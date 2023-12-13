@@ -106,15 +106,6 @@ export class ListVisitComponent implements OnInit {
         this.user = data[0].name;
       } );
       this.showTaskResult(this.visitId);
-      /*this.visitService.getConsultingvisitID(this.visitId).subscribe(data => {
-        this.visittasks = data;
-        for (let i = 0; i < this.visittasks.length; i++) {
-          if (this.visittasks[i].taskId == 8) {
-            this.visittasks[i].measure = this.visittasks[i].percentage.toFixed(2);
-          }
-        }
-        console.log(data);
-      });*/
     }
   }
 

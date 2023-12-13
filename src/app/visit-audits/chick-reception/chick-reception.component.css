@@ -10,7 +10,7 @@
     display: inline-block;
     animation: pulse 0.5s infinite ease-in-out;
   }
-  
+
   @keyframes pulse {
     to {
       transform: scale(0.8);
@@ -27,3 +27,11 @@
   .addbtn {
     float: right
   }
+
+  .btn-hist {
+  background-color: #02675c!important;
+  }
+.btn-hist:hover {
+  background-color: #003e37!important;
+  transform: .5s;
+}

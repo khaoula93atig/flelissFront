@@ -85,10 +85,6 @@ export class FlocksComponent implements OnInit {
     this.dashService.getFlocksByHouseandYear(event, this.date.getFullYear()).subscribe(data => {
       this.flocks = data;
       console.log(this.flocks);
-      /*for(let d of data ){
-        category.push(d.flockName)
-      }
-      console.log('cat',category)*/
 
     });
 
@@ -284,7 +280,7 @@ export class FlocksComponent implements OnInit {
       console.log('serie', SerieWeight);
       this.optionsChartWeight = {
         chart: {
-          type: 'spline',
+          type: 'areaspline',
           backgroundColor: 'rgba(0, 0, 0, 0)',
         },
         title: {
@@ -296,49 +292,28 @@ export class FlocksComponent implements OnInit {
         yAxis: {
           title: {
             text: 'g/day'
+          },
+          labels: {
+            format: '{value}'
           }
         },
         tooltip: {
           valueSuffix: 'g'
         },
-        colors: [
-          {
-            linearGradient: {x1: 0, y1: 0, y2: 1},
-            stops: [
-              [0, '#1F7D77'],
-              [1, '#18534F']
-            ]
-          },
-          {
-            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
-            stops: [
-              [0, '#FEEAA1'],
-              [1, '#FFD849']
-            ]
-          },
-          {
-            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
-            stops: [
-              [0, '#D6955B'],
-              [1, '#D07627']
-            ]
-          },
-          {
-            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
-            stops: [
-              [0, '#ECF8F6'],
-              [1, '#A0FBEC']
-            ]
-          },
-          {
-            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
-            stops: [
-              [0, '#64605C'],
-              [1, '#392E2C']
-            ]
-          }
+        plotOptions: {
+          areaspline: {
+            color: '#02897A',
+            fillColor: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, '#02897A94'],
+                [1, '#FFFFFF00']
+              ]
+            },
+            threshold: null,
 
-        ],
+          }
+        },
         series: SerieWeight
       };
 
@@ -405,7 +380,7 @@ export class FlocksComponent implements OnInit {
       console.log('seriefeed', series);
       this.optionsChartFeed = {
         chart: {
-          type: 'spline',
+          type: 'areaspline',
           backgroundColor: 'rgba(0, 0, 0, 0)',
         },
         title: {
@@ -413,53 +388,34 @@ export class FlocksComponent implements OnInit {
         },
         xAxis: {
           categories: ['D0', 'D7', 'D14', 'D21', 'D28', 'D35', 'D42', 'D49']
+        }, lang: {
+          numericSymbols: ['']
         },
         yAxis: {
           title: {
             text: 'g/day'
+          },
+          labels: {
+            format: '{value}'
           }
         },
         tooltip: {
           valueSuffix: 'g/day'
         },
-        colors: [
-          {
-            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
-            stops: [
-              [0, '#1F7D77'],
-              [1, '#18534F']
-            ]
-          },
-          {
-            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
-            stops: [
-              [0, '#FEEAA1'],
-              [1, '#FFD849']
-            ]
-          },
-          {
-            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
-            stops: [
-              [0, '#D6955B'],
-              [1, '#D07627']
-            ]
-          },
-          {
-            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
-            stops: [
-              [0, '#ECF8F6'],
-              [1, '#A0FBEC']
-            ]
-          },
-          {
-            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
-            stops: [
-              [0, '#64605C'],
-              [1, '#392E2C']
-            ]
-          }
+        plotOptions: {
+          areaspline: {
+            color: '#02897A',
+            fillColor: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, '#02897A94'],
+                [1, '#FFFFFF00']
+              ]
+            },
+            threshold: null,
 
-        ],
+          }
+        },
         series: SerieFeed
       };
 
@@ -529,7 +485,7 @@ export class FlocksComponent implements OnInit {
       console.log('SerieFcr', series);
       this.optionsChartFcr = {
         chart: {
-          type: 'spline',
+          type: 'areaspline',
           backgroundColor: 'rgba(0, 0, 0, 0)',
         },
         title: {
@@ -538,43 +494,30 @@ export class FlocksComponent implements OnInit {
         xAxis: {
           categories: ['D0', 'D7', 'D14', 'D21', 'D28', 'D35', 'D42', 'D49'],
         },
+        yAxis: {
+          title: {
+            text: null
+          }},
         tooltip: {
           tooltip: {
             pointFormat: 'D {point.x}: <br>' +
               'Fcr: <b> {point.y} </b><br>'
           },
         },
-        colors: [
-          {
-            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
-            stops: [
-              [0, '#64605C'],
-              [1, '#392E2C']
-            ]
-          },
-          {
-            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
-            stops: [
-              [0, '#D6955B'],
-              [1, '#D07627']
-            ]
-          },
-          {
-            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
-            stops: [
-              [0, '#ECF8F6'],
-              [1, '#A0FBEC']
-            ]
-          },
-          {
-            linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
-            stops: [
-              [0, '#64605C'],
-              [1, '#392E2C']
-            ]
-          }
+        plotOptions: {
+          areaspline: {
+            color: '#02897A',
+            fillColor: {
+              linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+              stops: [
+                [0, '#02897A94'],
+                [1, '#FFFFFF00']
+              ]
+            },
+            threshold: null,
 
-        ],
+          }
+        },
         series: SerieFcr
       };
 
@@ -621,7 +564,7 @@ export class FlocksComponent implements OnInit {
             borderWidth: 0,
             dataLabels: {
               enabled: true,
-              format: '{point.y:.1f}ml'
+              format: '{point.y:.1f} ml/bird'
             }
           }
         },

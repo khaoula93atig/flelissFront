@@ -20,14 +20,15 @@
     </ul>
 </nav>
 <div class="addbtn">
-<button class="btn btn-primary" (click)="modal.open()" style="float: right;background-color: #02675c">
+<button class="btn btn-primary btn-hist" (click)="modal.open()" style="float: right;
+padding: 0px 30px; margin-top: 20px; margin-right: 30px ">
     History
 </button>
 <app-chick-reception-list></app-chick-reception-list>
 </div>
 <div class="container-box-add" style="margin-bottom: 100px;">
     <form novalidate name="myForm" #myForm='ngForm'>
-        <h3 class="modal-title" style="padding: 15px 16px 8px; box-shadow: 1px 1px 8px #888888;">
+        <h3 class="modal-title" style="padding: 15px 16px 8px; box-shadow: 1px 1px 8px #888888; margin-top: 0">
             <img src="../../../assets/chick.png" width="40" style="margin-bottom: 8px;">
             Chick reception
         </h3>
@@ -66,7 +67,7 @@
                             </select>
                         </clr-select-container>
                     </div>
-                  
+
 
                     <!-- check-form part 2 -->
                     <div class="formV form-visit2 clr-row">
@@ -107,11 +108,11 @@
                                 [(ngModel)]="chikedPlaced" readonly />
                         </clr-input-container>
 
-                        
+
                     </div>
                     <!-- check-form part4 -->
                     <div class="formV form-visit4 clr-row">
-                       
+
                         <clr-input-container class="clr-col-md-6 clr-col-sm-12" style="display: -webkit-inline-box;">
                             <label for="psOrigin" class="clr-control-label clr-col-4">
                                 PS origin </label>
@@ -155,11 +156,10 @@
                         <tbody>
 
                             <!-- Form table-->
-                            
+
                             <tr>
                                <td rowspan="3">Navel</td>
-                                <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                        width="22" height="20"></td>
+                                <td></td>
                                 <td class="left" style="font-weight: 600; color: #454545;">
 
                                     Clean and well healed *</td>
@@ -190,8 +190,7 @@
                             </tr>
 
                             <tr>
-                                <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                        width="22" height="20"></td>
+                                <td></td>
                                 <td class="left" style="font-weight: 600; color: #454545;">
 
                                     Closed but slight abrasiveness *</td>
@@ -221,8 +220,7 @@
 
                             </tr>
                             <tr>
-                                <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                        width="22" height="20"></td>
+                                <td></td>
                                 <td class="left" style="font-weight: 600; color: #454545;">
 
                                     Not closed/ strung / button attached or discolored *</td>
@@ -254,10 +252,9 @@
 
                             <tr>
                                 <td rowspan="3">Legs </td>
-                                 <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                         width="22" height="20"></td>
+                                 <td></td>
                                  <td class="left" style="font-weight: 600; color: #454545;">
- 
+
                                     Clean , waxy legs *</td>
                                  <td>
                                      <div class="radip-wrapper" style="display: flex">
@@ -265,31 +262,30 @@
                                              <input type="radio" clrRadio name="options4" required [value]='10'
                                                  [(ngModel)]="checkReception.legsCleanWaxy" />
                                          </clr-radio-wrapper>
- 
- 
+
+
                                      </div>
- 
+
                                  </td>
                                  <td>
                                      <div class="radip-wrapper" style="display: flex">
- 
+
                                          <clr-radio-wrapper>
                                              <input type="radio" clrRadio name="options4" required [value]='0'
                                                  [(ngModel)]="checkReception.legsCleanWaxy" />
                                          </clr-radio-wrapper>
- 
+
                                      </div>
- 
+
                                  </td>
- 
- 
+
+
                              </tr>
- 
+
                              <tr>
-                                 <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                         width="22" height="20"></td>
+                                 <td></td>
                                  <td class="left" style="font-weight: 600; color: #454545;">
- 
+
                                     Some dryness/ pale *</td>
                                  <td>
                                      <div class="radip-wrapper" style="display: flex">
@@ -297,30 +293,29 @@
                                              <input type="radio" clrRadio name="options5" required [value]='5'
                                                  [(ngModel)]="checkReception.legsDrynessPale" />
                                          </clr-radio-wrapper>
- 
- 
+
+
                                      </div>
- 
+
                                  </td>
                                  <td>
                                      <div class="radip-wrapper" style="display: flex">
- 
+
                                          <clr-radio-wrapper>
                                              <input type="radio" clrRadio name="options5" required [value]='0'
                                                  [(ngModel)]="checkReception.legsDrynessPale" />
                                          </clr-radio-wrapper>
- 
+
                                      </div>
- 
+
                                  </td>
- 
- 
+
+
                              </tr>
                              <tr>
-                                 <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                         width="22" height="20"></td>
+                                 <td></td>
                                  <td class="left" style="font-weight: 600; color: #454545;">
- 
+
                                     Deshydrated with vein protruding *</td>
                                  <td>
                                      <div class="radip-wrapper" style="display: flex">
@@ -328,32 +323,31 @@
                                              <input type="radio" clrRadio name="options6" required [value]='0'
                                                  [(ngModel)]="checkReception.legsDeshydratedVienProtruding" />
                                          </clr-radio-wrapper>
- 
- 
+
+
                                      </div>
- 
+
                                  </td>
                                  <td>
                                      <div class="radip-wrapper" style="display: flex">
- 
+
                                          <clr-radio-wrapper>
                                              <input type="radio" clrRadio name="options6" required [value]='-1'
                                                  [(ngModel)]="checkReception.legsDeshydratedVienProtruding" />
                                          </clr-radio-wrapper>
- 
+
                                      </div>
- 
+
                                  </td>
- 
- 
+
+
                              </tr>
 
                              <tr>
                                 <td rowspan="3">Hocks </td>
-                                 <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                         width="22" height="20"></td>
+                                 <td></td>
                                  <td class="left" style="font-weight: 600; color: #454545;">
- 
+
                                     Clean , no blemishes *</td>
                                  <td>
                                      <div class="radip-wrapper" style="display: flex">
@@ -361,31 +355,30 @@
                                              <input type="radio" clrRadio name="options7" required [value]='10'
                                                  [(ngModel)]="checkReception.hocksCleanNoblemishes" />
                                          </clr-radio-wrapper>
- 
- 
+
+
                                      </div>
- 
+
                                  </td>
                                  <td>
                                      <div class="radip-wrapper" style="display: flex">
- 
+
                                          <clr-radio-wrapper>
                                              <input type="radio" clrRadio name="options7" required [value]='0'
                                                  [(ngModel)]="checkReception.hocksCleanNoblemishes" />
                                          </clr-radio-wrapper>
- 
+
                                      </div>
- 
+
                                  </td>
- 
- 
+
+
                              </tr>
- 
+
                              <tr>
-                                 <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                         width="22" height="20"></td>
+                                 <td></td>
                                  <td class="left" style="font-weight: 600; color: #454545;">
- 
+
                                     slight blushing *</td>
                                  <td>
                                      <div class="radip-wrapper" style="display: flex">
@@ -393,30 +386,29 @@
                                              <input type="radio" clrRadio name="options8" required [value]='5'
                                                  [(ngModel)]="checkReception.hocksSlightBlushing" />
                                          </clr-radio-wrapper>
- 
- 
+
+
                                      </div>
- 
+
                                  </td>
                                  <td>
                                      <div class="radip-wrapper" style="display: flex">
- 
+
                                          <clr-radio-wrapper>
                                              <input type="radio" clrRadio name="options8" required [value]='0'
                                                  [(ngModel)]="checkReception.hocksSlightBlushing" />
                                          </clr-radio-wrapper>
- 
+
                                      </div>
- 
+
                                  </td>
- 
- 
+
+
                              </tr>
                              <tr>
-                                 <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                         width="22" height="20"></td>
+                                 <td></td>
                                  <td class="left" style="font-weight: 600; color: #454545;">
- 
+
                                     Red color / heavy blushing *</td>
                                  <td>
                                      <div class="radip-wrapper" style="display: flex">
@@ -424,32 +416,31 @@
                                              <input type="radio" clrRadio name="options9" required [value]='0'
                                                  [(ngModel)]="checkReception.hocksRedcolorHeavyblushing" />
                                          </clr-radio-wrapper>
- 
- 
+
+
                                      </div>
- 
+
                                  </td>
                                  <td>
                                      <div class="radip-wrapper" style="display: flex">
- 
+
                                          <clr-radio-wrapper>
                                              <input type="radio" clrRadio name="options9" required [value]='-1'
                                                  [(ngModel)]="checkReception.hocksRedcolorHeavyblushing" />
                                          </clr-radio-wrapper>
- 
+
                                      </div>
- 
+
                                  </td>
- 
- 
+
+
                              </tr>
 
                              <tr>
                                 <td rowspan="3">Defects </td>
-                                 <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                         width="22" height="20"></td>
+                                 <td></td>
                                  <td class="left" style="font-weight: 600; color: #454545;">
- 
+
                                     Clean , no defects  *</td>
                                  <td>
                                      <div class="radip-wrapper" style="display: flex">
@@ -457,31 +448,30 @@
                                              <input type="radio" clrRadio name="options10" required [value]='10'
                                                  [(ngModel)]="checkReception.defectsCleanNodefects" />
                                          </clr-radio-wrapper>
- 
- 
+
+
                                      </div>
- 
+
                                  </td>
                                  <td>
                                      <div class="radip-wrapper" style="display: flex">
- 
+
                                          <clr-radio-wrapper>
                                              <input type="radio" clrRadio name="options10" required [value]='0'
                                                  [(ngModel)]="checkReception.defectsCleanNodefects" />
                                          </clr-radio-wrapper>
- 
+
                                      </div>
- 
+
                                  </td>
- 
- 
+
+
                              </tr>
- 
+
                              <tr>
-                                 <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                         width="22" height="20"></td>
+                                 <td></td>
                                  <td class="left" style="font-weight: 600; color: #454545;">
- 
+
                                     Minor defects ( yolk staining , feather coloration,…) *</td>
                                  <td>
                                      <div class="radip-wrapper" style="display: flex">
@@ -489,30 +479,29 @@
                                              <input type="radio" clrRadio name="options11" required [value]='5'
                                                  [(ngModel)]="checkReception.defectsMinorDefects" />
                                          </clr-radio-wrapper>
- 
- 
+
+
                                      </div>
- 
+
                                  </td>
                                  <td>
                                      <div class="radip-wrapper" style="display: flex">
- 
+
                                          <clr-radio-wrapper>
                                              <input type="radio" clrRadio name="options11" required [value]='0'
                                                  [(ngModel)]="checkReception.defectsMinorDefects" />
                                          </clr-radio-wrapper>
- 
+
                                      </div>
- 
+
                                  </td>
- 
- 
+
+
                              </tr>
                              <tr>
-                                 <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                         width="22" height="20"></td>
+                                 <td></td>
                                  <td class="left" style="font-weight: 600; color: #454545;">
- 
+
                                     missing eye / blind , legs with cuts/ abrasions , spraddled legs ,cross beaks , poor feathering , clubbed down *</td>
                                  <td>
                                      <div class="radip-wrapper" style="display: flex">
@@ -520,30 +509,30 @@
                                              <input type="radio" clrRadio name="options12" required [value]='0'
                                                  [(ngModel)]="checkReception.defectsEyeLegsSpraddled" />
                                          </clr-radio-wrapper>
- 
- 
+
+
                                      </div>
- 
+
                                  </td>
                                  <td>
                                      <div class="radip-wrapper" style="display: flex">
- 
+
                                          <clr-radio-wrapper>
                                              <input type="radio" clrRadio name="options12" required [value]='-1'
                                                  [(ngModel)]="checkReception.defectsEyeLegsSpraddled" />
                                          </clr-radio-wrapper>
- 
+
                                      </div>
- 
+
                                  </td>
- 
- 
+
+
                              </tr>
                         </tbody>
                     </table>
 
 
-                   
+
 
 
                 </div>
@@ -588,7 +577,7 @@
             <tbody>
 
                 <!-- Form table-->
-                
+
                 <tr>
                    <td class="left">{{checkReception.visitDate | date:'dd-MM-yyyy'}}</td>
                    <td class="left">{{checkReception.totalScore}}</td>

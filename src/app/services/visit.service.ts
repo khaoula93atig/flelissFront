@@ -164,6 +164,15 @@ export class VisitService {
 
   }
 
+  // weekly feed and weight by flock and age
+  getweeklyfeedandweightByFlockAndAge(age, flockId) {
+    return this.http.get<any[]>(
+      environment.url_WeeklyFeed + 'feed/weight/' + age + '/' + flockId,
+      this.httpOptions,
+    );
+
+  }
+
   // get visit tasks verification
   getVisitTasksVerification(flockId, age, task) {
     return this.http.get<any[]>(
@@ -171,7 +180,7 @@ export class VisitService {
       this.httpOptions,
     );
   }
-  // historique of mortality by flock
+  // historique of details by flock
   getHistoriqueMortalityByFlock(flockId) {
     return this.http.get<any[]>(
       environment.url_visit + '/historiqueMortalityByFlock/' + flockId ,

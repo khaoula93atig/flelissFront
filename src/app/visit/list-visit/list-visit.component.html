@@ -82,22 +82,35 @@
                     <!-- / Details list of visits -->
                     <clr-dg-detail *clrIfDetail="let detail">
                         <clr-dg-detail-header>
+                          <div>
                             <h3 class="modal-title" style="color: #8c8c8c;">
-                                Date of visit: <strong style="color: #02675c; " >{{detail.visitDate}} </strong>
+                                Date of visit: <strong style="color: #02675c; " > {{detail.visitDate}} </strong>
                             </h3>
-                            <div class="clr-row">
-                            <h6  class="clr-col-4" class="modal-title"  style="color: #8c8c8c;">
+                          </div>
+                            <div style="DISPLAY: grid; grid-auto-flow: column;">
+                              <div>
+                            <h6   class="modal-title"  style="color: #8c8c8c;">
                                 House: <strong style="color: #02675c; ">{{detail.flock.house.houseName}} </strong>
                             </h6>
-                            <div class="clr-col-4">
-
-                            </div>
-                            <h6 class="clr-col-4" class="modal-title" style="color: #8c8c8c;">
+                              </div>
+                              <div>
+                            <h6 class="modal-title" style="color: #8c8c8c;">
                                 Flock: <strong style="color: #02675c; ">{{detail.flock.flockName}} </strong>
                             </h6>
+                              </div>
+                              <div>
+                              <h6 class="modal-title" style="color: #8c8c8c;">
+                                Age : <strong style="color: #02675c; ">{{detail.ageFlock}} day</strong>
+                              </h6>
+                              </div>
+                              <div>
+                                <h6 class="modal-title" style="color: #8c8c8c;">
+                                  Breed : <strong style="color: #02675c; ">{{detail.flock.breedObject.description}}</strong>
+                                </h6>
+                              </div>
                             </div>
-                          <div class="clr-row">
-                            <h6  class="clr-col-4" class="modal-title"  style="color: #8c8c8c;">
+                          <div style="DISPLAY: grid; grid-auto-flow: column;">
+                            <h6 class="modal-title"  style="color: #8c8c8c;">
                               Done by: <strong style="color: #02675c; ">{{user}} </strong>
                             </h6>
                           </div>

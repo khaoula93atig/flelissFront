@@ -114,73 +114,6 @@
                     <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" min="0"
                         [(ngModel)]="bridsNumberPerHouse" name="bridsNumberPerHouse" style="width: 197px;" />
                 </clr-input-container>
-                <!--<clr-input-container class="clr-row">
-                    <label for="centerMultiage" class="clr-control-label clr-col-xs-6 clr-col-md-7">Center
-                        Multiage
-                        *
-                    </label>
-                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" min="0"
-                        [(ngModel)]="centerMultiage" name="centerMultiage" style="width: 197px;" />
-                </clr-input-container>
-
-                <clr-input-container class="clr-row">
-                    <label for="town" class="clr-control-label clr-col-xs-6 clr-col-md-7">Average Mortality Per
-                        Flock
-                        *
-                    </label>
-                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" min="0"
-                        [(ngModel)]="avMortalityPerFlock" name="avMortalityPerFlock" style="width: 197px;" />
-                </clr-input-container>
-                <clr-input-container class="clr-row">
-                    <label for="avWaterConsumption" class="clr-control-label clr-col-xs-6 clr-col-md-7">Average
-                        Water
-                        Consumption
-                    </label>
-                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" min="0"
-                        [(ngModel)]="avWaterConsumption" name="avWaterConsumption" style="width: 197px;" />
-                </clr-input-container>
-                <clr-input-container class="clr-row">
-                    <label for="avFeedConsumption" class="clr-control-label clr-col-xs-6 clr-col-md-7">Average
-                        Feed
-                        Consumption
-                    </label>
-                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" min="0"
-                        [(ngModel)]="avFeedConsumption" name="avFeedConsumption" style="width: 197px;" />
-                </clr-input-container>
-                <clr-input-container class="clr-row">
-                    <label for="eggProduction" class="clr-control-label clr-col-xs-6 clr-col-md-7">Egg
-                        Production
-                    </label>
-                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" min="0"
-                        [(ngModel)]="eggProduction" name="eggProduction" style="width: 197px;" />
-                </clr-input-container>
-                <clr-input-container class="clr-row">
-                    <label for="avFcr" class="clr-control-label clr-col-xs-6 clr-col-md-7">Average FCR
-                    </label>
-                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" min="0"
-                        [(ngModel)]="avFcr" name="avFcr" style="width: 197px;" />
-                </clr-input-container>
-
-                <clr-input-container class="clr-row">
-                    <label for="avEef" class="clr-control-label clr-col-xs-6 clr-col-md-7">Average EEF
-                    </label>
-                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" min="0"
-                        [(ngModel)]="avEef" name="avEef" style="width: 197px;" />
-                </clr-input-container>
-
-                <clr-input-container class="clr-row">
-                    <label for="mainDiseases" class="clr-control-label clr-col-xs-6 clr-col-md-7">Main Diseases
-                    </label>
-                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="text"
-                        [(ngModel)]="mainDiseases" name="mainDiseases" style="width: 197px;" />
-                </clr-input-container>
-
-                <clr-input-container class="clr-row">
-                    <label for="species" class="clr-control-label clr-col-xs-6 clr-col-md-7">Species
-                    </label>
-                    <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="text"
-                        [(ngModel)]="species" name="species" style="width: 197px;" />
-                </clr-input-container>-->
 
 
             </div>
@@ -192,7 +125,7 @@
 
         <div class="modal-footer">
             <button type="button" class="btn btn-outline" (click)="close()">Cancel</button>
-            <button type="button" class="btn btn-primary" (click)='submit()'>save</button>
+            <button type="button" class="btn btn-primary" [disabled]="!myForm.valid" (click)='submit()'>save</button>
 
         </div>
 

@@ -68,7 +68,7 @@ export class ChickReceptionListComponent implements OnInit {
     console.log(event);
     this.detail = event;
   }
-
+// create pdf file
   public async export(): Promise<void> {
   if (this.detail.totalScore >= 40) {
     this.variation = 'Excellent' ;

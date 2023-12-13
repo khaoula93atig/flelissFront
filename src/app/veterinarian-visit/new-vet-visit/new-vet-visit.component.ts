@@ -113,7 +113,7 @@ export class NewVetVisitComponent implements OnInit {
   DermatitisMeasure: String;
   /************** */
   TotalmeasureFeedConsumption: number;
-  TotalmeasureMortality: number;
+  TotalmeasureMortality: any;
   Morbidity: number;
   MorbidityPercentage: any;
   TotalmeasureWaterConsumption: number;
@@ -124,7 +124,7 @@ export class NewVetVisitComponent implements OnInit {
   FCR: any;
   DWG: any;
   FeedConsumptionPercentage: number;
-  MortalityPercentage: number;
+  MortalityPercentage: any;
   WaterConsumptionPercentage: number;
   /************Necropsy***********/
   examinationMeasure: string;
@@ -465,7 +465,7 @@ export class NewVetVisitComponent implements OnInit {
   GetTotalMeasure(): void {
     console.log(this.flockID);
     var visitDateFormatter = this.getDate('MM/DD/yyyy', this.visitDate);
-    // get Total Measures of mortality
+    // get Total Measures of details
     this.subs.add(
       this.VisitVeterinarianService.getConsultingTotalMeasure(
         visitDateFormatter,
@@ -473,11 +473,66 @@ export class NewVetVisitComponent implements OnInit {
         this.flockID,
       ).subscribe((data) => {
         this.TotalmeasureMortality = data;
-        this.MortalityPercentage =
-          (this.TotalmeasureMortality * 100) / this.birdsNumber;
+        this.MortalityPercentage = ((this.TotalmeasureMortality * 100) / this.birdsNumber).toFixed(2);
         this.Liveability = 100 - this.MortalityPercentage;
       }),
     );
+    if ( this.ageOfTheFlock < 7){
+    this.VisitService.getweeklyfeedandweightByFlockAndAge(0, this.flockID).subscribe(data=>{
+      console.log(data);
+      this.FeedConsumptionPercentage = data[0].totalStarterFeed;
+      this.FCR = (data[0].totalStarterFeed / data[0].average).toFixed(2);
+    }
+    );
+    }
+    else if(this.ageOfTheFlock >= 7 && this.ageOfTheFlock < 14){
+      this.VisitService.getweeklyfeedandweightByFlockAndAge(7, this.flockID).subscribe(data=>{
+        console.log(data);
+        this.FeedConsumptionPercentage = data[0].totalStarterFeed;
+        this.FCR = (data[0].totalStarterFeed / data[0].average).toFixed(2);
+        }
+      );
+    }
+    else if(this.ageOfTheFlock >= 14 && this.ageOfTheFlock < 21){
+      this.VisitService.getweeklyfeedandweightByFlockAndAge(14, this.flockID).subscribe(data=>{
+        console.log(data);
+        this.FeedConsumptionPercentage = data[0].totalGrowerFeed;
+        this.FCR = (data[0].totalGrowerFeed / data[0].average).toFixed(2);
+        }
+      );
+    }
+    else if(this.ageOfTheFlock >= 21 && this.ageOfTheFlock < 28){
+      this.VisitService.getweeklyfeedandweightByFlockAndAge(21, this.flockID).subscribe(data=>{
+          console.log(data);
+          this.FeedConsumptionPercentage = data[0].totalGrowerFeed;
+          this.FCR = (data[0].totalGrowerFeed / data[0].average).toFixed(2);
+        }
+      );
+    }
+    else if(this.ageOfTheFlock >= 28 && this.ageOfTheFlock < 35){
+      this.VisitService.getweeklyfeedandweightByFlockAndAge(28, this.flockID).subscribe(data=>{
+          console.log(data);
+          this.FeedConsumptionPercentage = data[0].totalFinisherFeed;
+        this.FCR = (data[0].totalFinisherFeed / data[0].average).toFixed(2);
+        }
+      );
+    }
+    else if(this.ageOfTheFlock >= 35 && this.ageOfTheFlock < 42){
+      this.VisitService.getweeklyfeedandweightByFlockAndAge(35, this.flockID).subscribe(data=>{
+          console.log(data);
+          this.FeedConsumptionPercentage = data[0].totalFinisherFeed;
+        this.FCR = (data[0].totalFinisherFeed / data[0].average).toFixed(2);
+        }
+      );
+    }
+    else if(this.ageOfTheFlock >= 42 ){
+      this.VisitService.getweeklyfeedandweightByFlockAndAge(42, this.flockID).subscribe(data=>{
+          console.log(data);
+          this.FeedConsumptionPercentage = data[0].totalFinisherFeed;
+          this.FCR = (data[0].totalFinisherFeed / data[0].average).toFixed(2);
+        }
+      );
+    }
     this.subs.add(
       this.VisitVeterinarianService.getWeightVariationByFlock(
         this.flockID,
@@ -487,10 +542,10 @@ export class NewVetVisitComponent implements OnInit {
         //this.ageOfTheFlock = data.ageFlock;
         this.averageWeight = this.weightVariationForFcr / this.ageOfTheFlock;
         console.log('averageWeight' + this.averageWeight);
-        this.FCR = (
+        /*this.FCR = (
           (this.TotalmeasureFeedConsumption) /
           (this.birdsNumber * (this.averageWeight / 1000))
-        ).toFixed(3);
+        ).toFixed(3);*/
         console.log('FCR' + this.FCR);
         this.weightVariationForDWG = data.weightVariationDWG.toFixed(3);
         this.DWG = (
@@ -506,7 +561,7 @@ export class NewVetVisitComponent implements OnInit {
         console.log(' this.eep' + this.eep);
       }),
     );
-
+/*
     // get Total Measures of Feed consumption
     this.subs.add(
       this.VisitVeterinarianService.getConsultingTotalMeasure(
@@ -518,7 +573,7 @@ export class NewVetVisitComponent implements OnInit {
         this.FeedConsumptionPercentage = this.TotalmeasureFeedConsumption  / this.birdsNumber;
          // (this.TotalmeasureFeedConsumption * 25 * 1000) / this.birdsNumber;
       }),
-    );
+    );*/
     // get Total Measures of Water consumption
     this.subs.add(
       this.VisitVeterinarianService.getConsultingTotalMeasure(
@@ -527,8 +582,9 @@ export class NewVetVisitComponent implements OnInit {
         this.flockID,
       ).subscribe((data) => {
         this.TotalmeasureWaterConsumption = data;
-        this.WaterConsumptionPercentage =
-          (this.TotalmeasureWaterConsumption * 1000000) / this.birdsNumber;
+        this.WaterConsumptionPercentage = data;
+        /*this.WaterConsumptionPercentage =
+          (this.TotalmeasureWaterConsumption * 1000000) / this.birdsNumber;*/
       }),
     );
   }

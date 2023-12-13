@@ -124,31 +124,31 @@ export class FlockReportComponent implements OnInit {
 
   getStandardWeight(res,flockId){
     this.Weight=[]
-    switch(res) { 
-      case "Hubbard": { 
+    switch(res) {
+      case "Hubbard": {
          this.breed=1
-         break; 
-      } 
-      case "Cobb 500": { 
-        this.breed=2 
-         break; 
-      } 
-      case "Ross": { 
-        this.breed=3 
-        break; 
-     } 
-     case "Arbor Acres plus": { 
-      this.breed=4 
-      break; 
-   } 
-   } 
+         break;
+      }
+      case "Cobb 500": {
+        this.breed=2
+         break;
+      }
+      case "Ross": {
+        this.breed=3
+        break;
+     }
+     case "Arbor Acres plus": {
+      this.breed=4
+      break;
+   }
+   }
    console.log('breed',this.breed)
     this.dashboardService.getweeklyweightStandardBybreed(this.breed).subscribe(data=>{
       for(let d of data){
         this.Weight.push({age:d.age, actual:0, standard:d.weight})
       }
-      
-      
+
+
       this.dashboardService.getweeklyweightByBreed(this.breed,flockId,localStorage.getItem("farmID")).subscribe(data1=>{
         this.fcrweekly=[]
         for(let d1 of data1){
@@ -157,7 +157,7 @@ export class FlockReportComponent implements OnInit {
               s.actual=d1.averge
 
             }
-            
+
           }
         }
         //chart of weight
@@ -172,10 +172,10 @@ export class FlockReportComponent implements OnInit {
          xAxis:{
             categories:this.Weight.map(p => p.age)
          },
-         yAxis: {          
+         yAxis: {
             title:{
                text:"g"
-            } 
+            }
          },
          tooltip: {
             valueSuffix:"g"
@@ -217,14 +217,14 @@ export class FlockReportComponent implements OnInit {
            title: {
             text: 'FCR'
           },
-           
+
            xAxis:{
               categories:this.fcrweekly.map(p => p.age)
            },
-           yAxis: {          
+           yAxis: {
               title:{
                  text:"g"
-              } 
+              }
            },
            tooltip: {
               valueSuffix:"g"
@@ -246,11 +246,11 @@ export class FlockReportComponent implements OnInit {
         this.getEPEF()
         console.log('fcr',this.fcrweekly)
         console.log('wa',this.Weight)
-        
-       
+
+
       })
     })
-    
+
   }
 
   getMortality(flock){
@@ -270,7 +270,7 @@ for(let i = 0; i <= 42; i += 7) {
     }
   }
   console.log(this.mortality.map(p => p.actual))
-  //chart of mortality
+  //chart of details
   this.optionsChartMortality = {
     chart: {
       type: "spline",
@@ -282,10 +282,10 @@ for(let i = 0; i <= 42; i += 7) {
    xAxis:{
       categories:this.mortality.map(p => p.age)
    },
-   yAxis: {          
+   yAxis: {
       title:{
          text:"bird"
-      } 
+      }
    },
    tooltip: {
       valueSuffix:"bird"
@@ -322,10 +322,10 @@ for(let i = 0; i <= 42; i += 7) {
      xAxis:{
         categories:this.Weight.map(p => p.age)
      },
-     yAxis: {          
+     yAxis: {
         title:{
            text:"g"
-        } 
+        }
      },
      tooltip: {
         valueSuffix:"g"
@@ -345,7 +345,7 @@ for(let i = 0; i <= 42; i += 7) {
      };
      console.log("chart",this.optionsChartEpef)
      Highcharts.chart('chartEpefByStandard', this.optionsChartEpef);
-    
+
     for(let i=0;i<=7;i++){
       let j = jValues.shift();
       let epef=((100-this.mortality[i].actual)*this.Weight[i].actual*100)/(this.Weight[i].age*this.fcrweekly[i].actual)
@@ -358,7 +358,7 @@ for(let i = 0; i <= 42; i += 7) {
         this.epefWeek.push({age:this.Weight[i].age, actual:epef, standard:j})
         this.optionsChartEpef.series[0].data.push(epef)
       }
-      
+
     }
     console.log('epef',this.epefWeek)
     this.optionsChartEpef.series[0].data=this.epefWeek.map(p => p.actual)
@@ -374,10 +374,10 @@ for(let i = 0; i <= 42; i += 7) {
      xAxis:{
         categories:this.Weight.map(p => p.age)
      },
-     yAxis: {          
+     yAxis: {
         title:{
            text:"g"
-        } 
+        }
      },
      tooltip: {
         valueSuffix:"g"

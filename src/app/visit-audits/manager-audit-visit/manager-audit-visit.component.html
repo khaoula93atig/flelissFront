@@ -20,14 +20,16 @@
     </ul>
 </nav>
 <div class="addbtn">
-    <button class="btn btn-primary" (click)="modal.open()" style="float: right;background-color: #02675c">
+    <button class="btn btn-primary" (click)="modal.open()" style="float: right;
+padding: 0px 30px; margin-top: 20px; margin-right: 30px ">
         History
     </button>
     <app-list-manager-audit-vist></app-list-manager-audit-vist>
     </div>
 <div class="container-box-add" style="margin-bottom: 100px;">
     <form novalidate name="myForm" #myForm='ngForm'>
-        <h3 class="modal-title" style="padding: 15px 16px 8px; box-shadow: 1px 1px 8px #888888;">
+        <h3 class="modal-title" style="padding: 15px 16px 8px; box-shadow: 1px 1px 8px #888888;
+       margin-top: 0; margin-bottom: 24px">
             <img src="../../../assets/managmn.png" width="35" style="margin-bottom: 8px;">
             Breeding management
         </h3>
@@ -39,8 +41,7 @@
             <div class="clr-row">
                 <div class="clr-col">
                     <div class="clr-row">
-                        <div class="clr-col-1 "><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
-                                width="22" height="20"></div>
+                        <div class="clr-col-1 "></div>
                         <div class="left clr-col-2 " style="font-weight: 600; color: #454545;">
 
                             Date
@@ -92,8 +93,8 @@
                     <thead>
                         <tr>
                             <th class="left"></th>
-                            <th class="left">Conform</th>
-                            <th class="left">No conform</th>
+                            <th class="left text-center">Conform</th>
+                            <th class="left text-center" >No Conform</th>
 
 
                         </tr>
@@ -101,7 +102,7 @@
                     <tbody>
 
                         <!-- Form table-->
-                        
+
                         <tr>
                             <td class="clr-row">
                                 <div class="clr-col-1 ">
@@ -110,7 +111,7 @@
                                 <div class="clr-col-10" style="text-align: left;">
                                 <label for="General" class="clr-control-label clr-col-9"  style="padding-left:0px;display: inline;">
                                     Cleanliness of buildings *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper>
@@ -134,7 +135,7 @@
                                 <div class="clr-col-10" style="text-align: left;">
                                 <label for="General" class="clr-control-label clr-col-9"  style="padding-left:0px;display: inline;">
                                     Absence of holes and sharp cracks in buildings *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -156,10 +157,10 @@
                                     <img src="../../../assets/Icones audit/CleanTigh.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Condition of doors and windows at building level (cleanliness and tightness) *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -180,10 +181,10 @@
                                     <img src="../../../assets/roof.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Sealing of the ceiling at building level *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -205,10 +206,10 @@
                                     <img src="../../../assets/Icones audit/airQuality.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         No air leaks in buildings *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -229,10 +230,10 @@
                                     <img src="../../../assets/Icones audit/hopper.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Cleanliness of hoppers *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -253,10 +254,10 @@
                                     <img src="../../../assets/Icones audit/AvaiLocation.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Storage of vaccines*</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -277,10 +278,10 @@
                                     <img src="../../../assets/Icones audit/CleanFeeder.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Cleanliness of feeders *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -301,10 +302,10 @@
                                     <img src="../../../assets/Icones audit/hopper.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Sufficient number of feeders *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -325,10 +326,10 @@
                                     <img src="../../../assets/Icones audit/hopperAdjus.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Adjustment of the height of the feeders according to age*</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -349,10 +350,10 @@
                                     <img src="../../../assets/Icones audit/hopper.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         No unjustified feed leaks *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -373,10 +374,10 @@
                                     <img src="../../../assets/Icones audit/Feeding.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Feed shape and size according to age *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -397,10 +398,10 @@
                                     <img src="../../../assets/Icones audit/Feeding.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Feed transition achieved*</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -421,10 +422,10 @@
                                     <img src="../../../assets/Icones audit/feedConsumption.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Recording of daily feed consumption *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -445,10 +446,10 @@
                                     <img src="../../../assets/Icones audit/feedSuff.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Availability and sufficiency of feed *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -469,10 +470,10 @@
                                     <img src="../../../assets/Icones audit/filters.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Cleanliness of tanks and filters *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -493,10 +494,10 @@
                                     <img src="../../../assets/Icones audit/CleanNip.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Cleanliness of nipples *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -517,10 +518,10 @@
                                     <img src="../../../assets/Icones audit/waterLines.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Correct operation of the watering lines *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -541,10 +542,10 @@
                                     <img src="../../../assets/Icones audit/pressureReg.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Correct operation of pressure regulator *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -565,10 +566,10 @@
                                     <img src="../../../assets/Icones audit/waterDrin.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Sufficient number of drinkers *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -589,10 +590,10 @@
                                     <img src="../../../assets/Icones audit/adjDrin.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Adjustment of height of drinkers according to growth *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -613,10 +614,10 @@
                                     <img src="../../../assets/Icones audit/waterLeaks.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         No water leaks *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -637,10 +638,10 @@
                                     <img src="../../../assets/Icones audit/waterCons.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Recording of daily water consumption *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -661,10 +662,10 @@
                                     <img src="../../../assets/Icones audit/waterMonit.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Monitoring the physico-chemical quality of drinking water*</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -685,10 +686,10 @@
                                     <img src="../../../assets/Icones audit/waterMicro.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Monitoring the bacteriological quality of drinking water*</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -709,10 +710,10 @@
                                     <img src="../../../assets/Icones audit/waterPump.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Dosing pump compliant *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -733,10 +734,10 @@
                                     <img src="../../../assets/Icones audit/cleanBrooders.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Cleanliness of brooders *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -757,10 +758,10 @@
                                     <img src="../../../assets/Icones audit/distBrooders.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Correct distribution of brooders *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -781,10 +782,10 @@
                                     <img src="../../../assets/Icones audit/cleanBrooders.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Availability, location and functionality (thermometers and sonsors) *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -805,10 +806,10 @@
                                     <img src="../../../assets/Icones audit/heaProgram.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Observance of the heating program *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -829,10 +830,10 @@
                                     <img src="../../../assets/Icones audit/cooling.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         State of the cooling system (pad cooling) *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -853,10 +854,10 @@
                                     <img src="../../../assets/Icones audit/cooliSystem.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Correct operation of the cooling system *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -877,10 +878,10 @@
                                     <img src="../../../assets/Icones audit/fan.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Fans maintained *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -901,10 +902,10 @@
                                     <img src="../../../assets/Icones audit/fanOpe.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Proper operation of fans *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -925,10 +926,10 @@
                                     <img src="../../../assets/Icones audit/hatchingChick.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Hatch opening level *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -949,10 +950,10 @@
                                     <img src="../../../assets/Icones audit/airQuality.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Observance of air flow *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -973,10 +974,10 @@
                                     <img src="../../../assets/Icones audit/tempInside.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Daily recording of minimum and maximum temperatures *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -997,10 +998,10 @@
                                     <img src="../../../assets/Icones audit/humidMes.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Recording of minimum and maximum daily humidity *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -1021,10 +1022,10 @@
                                     <img src="../../../assets/Icones audit/humidity.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Breeding humidity conforms *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -1045,10 +1046,10 @@
                                     <img src="../../../assets/Icones audit/energySaving.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Energy saving lamps *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -1069,10 +1070,10 @@
                                     <img src="../../../assets/Icones audit/nbrLamps.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Number of working lamps *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -1093,10 +1094,10 @@
                                     <img src="../../../assets/Icones audit/nbrLamps.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Adequate distribution of lamps *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -1117,10 +1118,10 @@
                                     <img src="../../../assets/Icones audit/nbrLamps.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Litter quality *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -1141,10 +1142,10 @@
                                     <img src="../../../assets/Icones audit/thermostat.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Mechanical thermostat and alarm functional *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -1165,10 +1166,10 @@
                                     <img src="../../../assets/Icones audit/parameter.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Functional technical parameter display system *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -1189,10 +1190,10 @@
                                     <img src="../../../assets/Icones audit/CleanNip.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Number of birds per cage or square meter *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -1213,10 +1214,10 @@
                                     <img src="../../../assets/Icones audit/isolAnim.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Isolation of sick sick animals *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -1237,10 +1238,10 @@
                                     <img src="../../../assets/Icones audit/weighing.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Compliant weighing method *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -1261,10 +1262,10 @@
                                     <img src="../../../assets/Icones audit/Sampling.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Sampling compliant *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -1285,10 +1286,10 @@
                                     <img src="../../../assets/Icones audit/weigMesure.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Weighing recording *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -1309,10 +1310,10 @@
                                     <img src="../../../assets/Icones audit/evolution.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Evolution of the weight compared to standard *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -1333,10 +1334,10 @@
                                     <img src="../../../assets/Icones audit/vaccination.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Compliance with the vaccination program *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -1357,10 +1358,10 @@
                                     <img src="../../../assets/Icones audit/vaccination6.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Monitoring of vaccination age *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -1381,10 +1382,10 @@
                                     <img src="../../../assets/Icones audit/vaccinationControl.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Vaccine dose control *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -1405,10 +1406,10 @@
                                     <img src="../../../assets/Icones audit/techPerf.png" class="imgIcon" width="22" height="20">
                                 </div>
                                 <div class="clr-col-10" style="text-align: left;">
-                                   
+
                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                         Technical performance *</label>
-                                </div>    
+                                </div>
                                 </td>
                             <td>
                                 <clr-radio-wrapper >
@@ -1460,7 +1461,7 @@
             <tbody>
 
                 <!-- Form table-->
-                
+
                 <tr>
                    <td class="left">{{breedingManagement.visitDate | date:'dd-MM-yyyy'}}</td>
                    <td class="left">{{score}}</td>

@@ -35,16 +35,17 @@
 
                     </clr-dg-detail-header>
                     <clr-dg-detail-body>
-                        <div style="float: right;    padding-right: 25px;" (click)="export()">
-                            <span>Export Report </span>
+                        <div class="btn-report"
+                             (click)="export()">
+                            <span>Export Report  </span>
                             <img src="../../../assets/export.png" style="width: 21px;
                             height:21px;
                             text-align:right;
                             float:right;" alt="">
                         </div>
                         <div #contentToConvert class="content">
-                        <img src="../../../assets/icon-detail.png" width="40" style="margin-bottom: 8px;">
-                        <span class="internal-title" style="font-weight:bold ; font-size: large;"> Date of visit : {{detail.visitDate}}</span>
+                        <img src="../../../assets/icon-detail.png" width="35" style="margin-bottom: 8px;">
+                        <span class="internal-title" style="font-weight:bold ; font-size: large;"> Date of visit: {{detail.visitDate}}</span>
                         <form clrForm>
                             <div class="clr-row">
                             <clr-input-container class="clr-col-6">

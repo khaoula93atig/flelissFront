@@ -4,6 +4,7 @@ import {VisitService} from '../../services/visit.service';
 import {VisitVeterinarianService} from '../../services/visit-veterinarian.service';
 import {SubSink} from 'subsink';
 import {environment} from '../../../environments/environment';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-list-vet-visit',
@@ -14,6 +15,7 @@ export class ListVetVisitComponent implements OnInit {
   constructor(
     private VisitService: VisitService,
     private VisitVeterinarianService: VisitVeterinarianService,
+    private userService: UserService
   ) {
   }
 
@@ -71,6 +73,7 @@ export class ListVetVisitComponent implements OnInit {
   basic = false;
   backgroundModal = ' ';
   closable = true;
+  user : string;
   ngOnInit(): void {
     this.refresh();
   }
@@ -103,6 +106,10 @@ export class ListVetVisitComponent implements OnInit {
     if (event != null && event != undefined) {
       this.visitId = event.visitId;
       this.visitDate = event.visitDate;
+      this.userService.getUserByUserName(event.username).subscribe(data => {
+        console.log('user', data);
+        this.user = data[0].name;
+      } );
 
       this.showHealthStatusResult(this.visitId);
     }

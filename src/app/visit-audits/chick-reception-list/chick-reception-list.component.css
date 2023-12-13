@@ -8,3 +8,20 @@
     width: 56rem !important;
     max-width: 102%;
 }
+
+.btn-report  {
+  float: right;
+  padding: 6px 18px;
+  background-color: #02675c12;
+  color: #1a675c;
+  border: 1px solid #1a675c;
+  border-radius: 3px;
+  font-weight: 550;
+}
+.btn-report:hover{
+  background-color: #1a675c3b;
+  transition: .5s;
+  cursor: pointer;
+  font-weight: 550;
+}
+

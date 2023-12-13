@@ -4,8 +4,7 @@
   <!-- Table -->
 
   <clr-wizard #wizard [(clrWizardOpen)]="openWZ" [clrWizardSize]="'md, sm'">
-    <clr-wizard-title><img src="../../../assets/newVisit.png" width="26" height="26"
-                           style="margin-top: -5px; margin-right: 10px;"> Veterinarian visit
+    <clr-wizard-title style="font-size: 23px; font-weight: 550; color: #02675c"> Veterinarian visit
     </clr-wizard-title>
 
     <clr-wizard-button [type]="'cancel'">Cancel</clr-wizard-button>
@@ -407,9 +406,9 @@
           <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
 
 
-                        <textarea clrTextarea rows="4" [(ngModel)]="generalObservation" name="generalObservation"
-                                  style="width:100%  !important; border-color: #b9b8b8"
-                                  placeholder="Observations.."></textarea>
+            <textarea clrTextarea rows="4" [(ngModel)]="generalObservation" name="generalObservation"
+               style="width:100%  !important; border-color: #b9b8b8"
+                placeholder="Observations.."></textarea>
           </div>
 
         </div>

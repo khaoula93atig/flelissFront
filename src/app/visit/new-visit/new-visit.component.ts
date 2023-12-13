@@ -463,6 +463,7 @@ export class NewVisitComponent implements OnInit {
     this.measureWeight = (this.weightMeasure / this.dynamicArray.length).toFixed(2);
     this.cv = ((this.maxWeight - this.minWeight) / this.measureWeight) * 100;
     this.cv = parseFloat(this.cv.toFixed(3));
+    this.WeightOpened = false;
     let bornSup = parseFloat((this.measureWeight + ((this.measureWeight / 100) * 10)).toFixed(2));
     let bornInf = parseFloat((this.measureWeight - ((this.measureWeight / 100) * 10)).toFixed(2));
     let outOff= 0;
@@ -473,8 +474,6 @@ export class NewVisitComponent implements OnInit {
       }
     }
     this.uniformity = parseFloat((((this.dynamicArray.length - outOff) / this.dynamicArray.length) * 100).toFixed(2));
-    // this.Weightclosed = false
-    this.WeightOpened = false;
     this.dynamicArray = [];
     this.newDynamic = {weight: 0, nbr: 1};
     this.dynamicArray.push(this.newDynamic);

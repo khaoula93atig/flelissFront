@@ -7,20 +7,6 @@
 
       <!-- /Spinner-->
       <div class="form" style="margin-top: -5px;">
-        <!--<clr-select-container class="clr-row">
-          <label class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">Company * </label>
-          <select clrSelect required [(ngModel)]="farm.companyID" name="companyID" class="clr-col-xs-6 clr-col-md-6"
-            style="width: 233px;" (change)="getCompanyId($event.target.value)">
-            <option *ngFor="let companydata of companies" [value]='companydata.companyId' size="25">
-              {{companydata.name}}
-            </option>
-          </select>
-          <clr-control-helper>You must select something!</clr-control-helper>
-          <clr-control-error>This field is required!</clr-control-error>
-
-
-
-        </clr-select-container>-->
 
         <clr-input-container class="clr-row">
           <label for="housesNumber" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">Farm Name * </label>
@@ -32,7 +18,7 @@
 
         </clr-input-container>
 
-        
+
 
         <clr-input-container class="clr-row">
           <label for="country" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">Address *</label>
@@ -102,56 +88,6 @@
 
         </clr-input-container>
 
-       <!--<clr-input-container class="clr-row">
-          <label for="bridsNumberPerCenter" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">
-            Number of breeding centers *
-          </label>
-          <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" n="1" style="width: 233px;"
-            [(ngModel)]="bridsNumberPerCenter" name="bridsNumberPerCenter" />
-        </clr-input-container>
-
-
-        <clr-input-container class="clr-row">
-          <label for="result" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">Result
-          </label>
-          <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="string" n="1" [(ngModel)]="result"
-            name="result" />
-        </clr-input-container>
-
-        <clr-input-container class="clr-row">
-          <label for="avMortalityRate" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">
-            Average Mortality Rate
-          </label>
-          <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" n="1" style="width: 233px;"
-            [(ngModel)]="avMortalityRate" name="avMortalityRate" />
-        </clr-input-container>
-
-
-
-        <clr-input-container class="clr-row">
-          <label for="fcr" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">
-            Fcr
-          </label>
-          <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" n="1" style="width: 233px;"
-            [(ngModel)]="fcr" name="fcr" />
-        </clr-input-container>
-
-        <clr-input-container class="clr-row">
-          <label for="epef" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">
-            Epef
-          </label>
-          <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" n="1" style="width: 233px;"
-            [(ngModel)]="epef" name="epef" />
-        </clr-input-container>
-
-        <clr-input-container class="clr-row">
-          <label for="avLayRate" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">
-            Average lay rate
-          </label>
-          <input clrInput required class="clr-col-xs-6 clr-col-md-6" size="30" type="number" n="1" style="width: 233px;"
-            [(ngModel)]="avLayRate" name="avLayRate" />
-        </clr-input-container>
-      -->
         <clr-input-container class="clr-row">
           <label for="rotation" class="clr-control-label clr-col-xs-6-sm-6 clr-col-md-6">
             Rotation
@@ -169,7 +105,7 @@
     <div class="modal-footer">
 
       <button type="button" class="btn btn-outline" (click)="close()">Cancel</button>
-      <button type="button" class="btn btn-primary" (click)='submit()'>save</button>
+      <button type="button" class="btn btn-primary" [disabled]="!myForm.valid" (click)='submit()'>save</button>
 
     </div>
 

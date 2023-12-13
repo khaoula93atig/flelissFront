@@ -20,12 +20,12 @@
                 </clr-dg-footer>
                 <ng-template clrIfDetail (clrIfDetailChange)="onDetailOpen($event)">
                     <clr-dg-detail *clrIfDetail="let detail">
-                        
+
                         <clr-dg-detail-header>
-                            
+
                         </clr-dg-detail-header>
                         <clr-dg-detail-body>
-                            <div style="float: right;    padding-right: 25px;" (click)="export()">
+                            <div class="btn-report" (click)="export()">
                                 <span>Export Report </span>
                                 <img src="../../../assets/export.png" style="width: 21px;
                                 height:21px;
@@ -41,8 +41,8 @@
                                     <input class="clr-col-md-9" clrInput readonly type="text" [value]="detail.center.centerName"
                                         name="House" size="35" />
                                 </clr-input-container>
-                                <div class="clr-row"> 
-                                    <p style="font-weight:bold ; font-size: large; margin-left: 12px;" >Total Score 
+                                <div class="clr-row">
+                                    <p style="font-weight:bold ; font-size: large; margin-left: 12px;" >Total Score
                                         <span class="clr-col-md-4" style="color: green; font-weight:bold ; font-size: large;" *ngIf="detail.scoring<=800 && detail.scoring>=700">{{detail.scoring}} Excellent</span>
                                         <span class="clr-col-md-4" style="color: green; font-weight:bold ; font-size: large;" *ngIf="detail.scoring<700 && detail.scoring>=600">{{detail.scoring}} Good</span>
                                         <span class="clr-col-md-4" style="color:#e47200; font-weight:bold ; font-size: large; " *ngIf="detail.scoring<600 && detail.scoring>=500">{{detail.scoring}} Acceptable</span>
@@ -58,9 +58,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                
+
                                         <!-- Form table-->
-                                        
+
                                         <tr>
                                             <td class="clr-row">
                                                 <div class="clr-col-1 ">
@@ -69,13 +69,13 @@
                                                 <div class="clr-col-10" style="text-align: left;">
                                                 <label for="General" class="clr-control-label clr-col-9"  style="padding-left:0px;display: inline;">
                                                     Cleanliness of buildings</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.cleanlinessBuild}}
                                             </td>
                                         </tr>
-                
+
                                         <tr>
                                             <td class="clr-row">
                                                 <div class="clr-col-1">
@@ -84,23 +84,23 @@
                                                 <div class="clr-col-10" style="text-align: left;">
                                                 <label for="General" class="clr-control-label clr-col-9"  style="padding-left:0px;display: inline;">
                                                     Absence of holes and sharp cracks in buildings</label>
-                                                </div>    
+                                                </div>
                                                 </td>
-                                            
+
                                             <td>{{detail.absenceHolesSharpCracks}}
                                             </td>
                                         </tr>
-                
+
                                         <tr>
                                             <td class="clr-row">
                                                 <div class="clr-col-1">
                                                     <img src="../../../assets/Icones audit/CleanTigh.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Condition of doors and windows at building level (cleanliness and tightness)</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.conditionDoorsWindowsBuilding}}
@@ -113,26 +113,26 @@
                                                     <img src="../../../assets/roof.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Sealing of the ceiling at building level</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.sealingCeilingBuilding}}
                                             </td>
                                         </tr>
-                
+
                                         <tr>
                                             <td class="clr-row">
                                                 <div class="clr-col-1">
                                                     <img src="../../../assets/Icones audit/airQuality.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         No air leaks in buildings</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.airLeaksBuildings}}
@@ -144,10 +144,10 @@
                                                     <img src="../../../assets/Icones audit/hopper.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Cleanliness of hoppers</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.cleanlinessHoppers}}
@@ -159,10 +159,10 @@
                                                     <img src="../../../assets/Icones audit/AvaiLocation.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Storage of vaccines</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.storageVaccines}}
@@ -174,10 +174,10 @@
                                                     <img src="../../../assets/Icones audit/CleanFeeder.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Cleanliness of feeders</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.cleanlinessFeeders}}
@@ -189,10 +189,10 @@
                                                     <img src="../../../assets/Icones audit/hopper.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Sufficient number of feeders</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.sufficientNumberFeeders}}
@@ -204,10 +204,10 @@
                                                     <img src="../../../assets/Icones audit/hopperAdjus.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Adjustment of the height of the feeders according to age</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.adjustmentHeightFeedersAccording}}
@@ -219,10 +219,10 @@
                                                     <img src="../../../assets/Icones audit/hopper.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         No unjustified feed leaks</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.unjustifiedFeedLeaks}}
@@ -234,10 +234,10 @@
                                                     <img src="../../../assets/Icones audit/Feeding.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Feed shape and size according to age</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.feedShapeSizeAccordingAge}}
@@ -249,10 +249,10 @@
                                                     <img src="../../../assets/Icones audit/Feeding.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Feed transition achieved</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.feedTransitionAchieved}}
@@ -264,10 +264,10 @@
                                                     <img src="../../../assets/Icones audit/feedConsumption.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Recording of daily feed consumption</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.recordingDailFeedConsumption}}
@@ -279,10 +279,10 @@
                                                     <img src="../../../assets/Icones audit/feedSuff.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Availability and sufficiency of feed</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.availabilitySufficiencyFeed}}
@@ -294,10 +294,10 @@
                                                     <img src="../../../assets/Icones audit/filters.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Cleanliness of tanks and filters</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.cleanlinessTanksFilters}}
@@ -309,10 +309,10 @@
                                                     <img src="../../../assets/Icones audit/CleanNip.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Cleanliness of nipples</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.cleanlinessNipples}}
@@ -324,10 +324,10 @@
                                                     <img src="../../../assets/Icones audit/waterLines.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Correct operation of the watering lines</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.correctOperationWatering}}
@@ -339,12 +339,12 @@
                                                     <img src="../../../assets/Icones audit/pressureReg.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Correct operation of pressure regulator</label>
-                                                </div>    
+                                                </div>
                                                 </td>
-                                            
+
                                             <td>
                                                 {{detail.correctOperationPressureRegulator}}
                                             </td>
@@ -355,10 +355,10 @@
                                                     <img src="../../../assets/Icones audit/waterDrin.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Sufficient number of drinkers</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.sufficientNumberDrinkers}}
@@ -370,10 +370,10 @@
                                                     <img src="../../../assets/Icones audit/adjDrin.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Adjustment of height of drinkers according to growth</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.adjustmentHeightDrinkersAccording}}
@@ -385,10 +385,10 @@
                                                     <img src="../../../assets/Icones audit/waterLeaks.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         No water leaks</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.waterLeaks}}
@@ -400,10 +400,10 @@
                                                     <img src="../../../assets/Icones audit/waterCons.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Recording of daily water consumption</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.recordingDailyWaterConsumption}}
@@ -415,10 +415,10 @@
                                                     <img src="../../../assets/Icones audit/waterMonit.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Monitoring the physico-chemical quality of drinking water</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.monitoringPhysicoDw}}
@@ -430,10 +430,10 @@
                                                     <img src="../../../assets/Icones audit/waterMicro.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Monitoring the bacteriological quality of drinking water</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.monitoringBacteriologicalDw}}
@@ -445,10 +445,10 @@
                                                     <img src="../../../assets/Icones audit/waterPump.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Dosing pump compliant</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.dosingPumpCompliant}}
@@ -460,10 +460,10 @@
                                                     <img src="../../../assets/Icones audit/cleanBrooders.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Cleanliness of brooders</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.cleanlinessBrooders}}
@@ -475,10 +475,10 @@
                                                     <img src="../../../assets/Icones audit/distBrooders.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Correct distribution of brooders</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.correctDistributionBrooders}}
@@ -490,10 +490,10 @@
                                                     <img src="../../../assets/Icones audit/cleanBrooders.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Availability, location and functionality (thermometers and sonsors)</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.availLocationFunct}}
@@ -505,10 +505,10 @@
                                                     <img src="../../../assets/Icones audit/heaProgram.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Observance of the heating program</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.observanceHeatingProgram}}
@@ -520,10 +520,10 @@
                                                     <img src="../../../assets/Icones audit/cooling.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         State of the cooling system (pad cooling)</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.stateCoolingSystem}}
@@ -535,10 +535,10 @@
                                                     <img src="../../../assets/Icones audit/cooliSystem.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Correct operation of the cooling system</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.correctOperationCoolingSystem}}
@@ -550,10 +550,10 @@
                                                     <img src="../../../assets/Icones audit/fan.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Fans maintained</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.fansMaintained}}
@@ -565,10 +565,10 @@
                                                     <img src="../../../assets/Icones audit/fanOpe.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Proper operation of fans</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.properOperationFans}}
@@ -580,10 +580,10 @@
                                                     <img src="../../../assets/Icones audit/hatchingChick.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Hatch opening level</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.hatchOpeningLevel}}
@@ -595,10 +595,10 @@
                                                     <img src="../../../assets/Icones audit/airQuality.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Observance of air flow</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.observanceAirFlow}}
@@ -610,10 +610,10 @@
                                                     <img src="../../../assets/Icones audit/tempInside.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Daily recording of minimum and maximum temperatures</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.dailyRecordMinMaxTemp}}
@@ -625,10 +625,10 @@
                                                     <img src="../../../assets/Icones audit/humidMes.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Recording of minimum and maximum daily humidity</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.recordMinmaxDailyHumidity}}
@@ -640,10 +640,10 @@
                                                     <img src="../../../assets/Icones audit/humidity.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Breeding humidity conforms</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.breedingHumidityConfor}}
@@ -655,10 +655,10 @@
                                                     <img src="../../../assets/Icones audit/energySaving.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Energy saving lamps</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.energySavingLamps}}
@@ -670,10 +670,10 @@
                                                     <img src="../../../assets/Icones audit/nbrLamps.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Number of working lamps</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.numberWorkingLamps}}
@@ -685,10 +685,10 @@
                                                     <img src="../../../assets/Icones audit/nbrLamps.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Adequate distribution of lamps</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.adequateDistriLamps}}
@@ -700,10 +700,10 @@
                                                     <img src="../../../assets/Icones audit/nbrLamps.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Litter quality</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.litterQuality}}
@@ -715,10 +715,10 @@
                                                     <img src="../../../assets/Icones audit/thermostat.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Mechanical thermostat and alarm functional</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.mechanicalThermostatAlarmFunct}}
@@ -730,10 +730,10 @@
                                                     <img src="../../../assets/Icones audit/parameter.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Functional technical parameter display system</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.functionalTechParaDisplaySys}}
@@ -745,10 +745,10 @@
                                                     <img src="../../../assets/Icones audit/CleanNip.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Number of birds per cage or square meter</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.numberBirdCageSquareMeter}}
@@ -760,10 +760,10 @@
                                                     <img src="../../../assets/Icones audit/isolAnim.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Isolation of sick sick animals</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.isolationSickSickAnimals}}
@@ -775,10 +775,10 @@
                                                     <img src="../../../assets/Icones audit/weighing.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Compliant weighing method</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.compliantWeighingMethod}}
@@ -790,10 +790,10 @@
                                                     <img src="../../../assets/Icones audit/Sampling.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Sampling compliant</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.samplingCompliant}}
@@ -805,10 +805,10 @@
                                                     <img src="../../../assets/Icones audit/weigMesure.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Weighing recording</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                {{detail.weighingRecording}}
@@ -820,10 +820,10 @@
                                                     <img src="../../../assets/Icones audit/evolution.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Evolution of the weight compared to standard</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                {{detail.evolutionWeightComparedStandard}}
@@ -835,10 +835,10 @@
                                                     <img src="../../../assets/Icones audit/vaccination.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Compliance with the vaccination program</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.complianceVaccinProgram}}
@@ -850,10 +850,10 @@
                                                     <img src="../../../assets/Icones audit/vaccination6.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Monitoring of vaccination age</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.monitoringVaccinationAge}}
@@ -865,10 +865,10 @@
                                                     <img src="../../../assets/Icones audit/vaccinationControl.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Vaccine dose control</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.vaccineDoseControl}}
@@ -880,10 +880,10 @@
                                                     <img src="../../../assets/Icones audit/techPerf.png" class="imgIcon" width="22" height="20">
                                                 </div>
                                                 <div class="clr-col-10" style="text-align: left;">
-                                                   
+
                                                     <label for="General" class="clr-control-label clr-col-9" style="padding-left:0px;display: inline;">
                                                         Technical performance</label>
-                                                </div>    
+                                                </div>
                                                 </td>
                                             <td>
                                                 {{detail.technicalPerformance}}
@@ -901,6 +901,6 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="show = false">Cancel</button>
-    
+
     </div>
 </clr-modal>

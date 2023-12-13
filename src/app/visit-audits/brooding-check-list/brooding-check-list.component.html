@@ -20,14 +20,16 @@
     </ul>
 </nav>
 <div class="addbtn">
-    <button class="btn btn-primary" (click)="modal.open()" style="float: right;background-color: #02675c">
+    <button class="btn btn-primary" (click)="modal.open()" style="float: right;
+padding: 0px 30px; margin-top: 20px; margin-right: 30px ">
         History
     </button>
     <app-list-brooding-check-list></app-list-brooding-check-list>
 </div>
   <div class="container-box-add" style="margin-bottom: 100px;">
     <form clrStepper name="myForm" #myForm='ngForm'>
-      <h3 class="modal-title" style="padding: 15px 16px 8px; box-shadow: 1px 1px 8px #888888;  margin-bottom: 5px;">
+      <h3 class="modal-title" style="padding: 15px 16px 8px; box-shadow: 1px 1px 8px #888888;
+       margin-bottom: 5px; margin-top: 0">
         <img src="../../../assets/brood-check.png" width="40" style="margin-bottom: 8px; margin-right: 10px;">
         Brooding check list
       </h3>
@@ -43,15 +45,13 @@
             <tr>
               <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
                        width="22" height="20"></td>
-              <td class="left" style="font-weight: 600; color: #454545;">
-
-                Date</td>
+              <td class="left" style="font-weight: 600; color: #454545;">Date</td>
               <td>
                 <div class="radip-wrapper" style="display: flex">
                   <div class="radip-wrapper" style="display: flex">
                     <!-- Form table-->
-                    <clr-date-container class="formDate clr-col-12"
-                                        style="display: -webkit-inline-box;margin-top:0px !important">
+                    <clr-date-container class="formDate"
+                    style="display: -webkit-inline-box;margin-top:0px !important">
 
                       <input type="date" clrDate name="dailyVisit"
                              [(ngModel)]="visitDate" required>
@@ -65,11 +65,6 @@
                 </div>
 
               </td>
-              <td>
-
-
-              </td>
-
 
             </tr>
             <!-- Form table-->
@@ -79,7 +74,6 @@
               <td><img src="../../../assets/Icones audit/tempInside.png" class="imgIcon"
                        width="22" height="20"></td>
               <td class="left" style="font-weight: 600; color: #454545;">
-
                 Center</td>
               <td>
                 <div class="radip-wrapper" style="display: flex">
@@ -88,7 +82,7 @@
                                           style="display: -webkit-inline-box; margin-top:0px !important">
 
                       <select clrSelect name="farm" required name="centerId"
-                              [(ngModel)]="centerId" style="width: 130px;"
+                              [(ngModel)]="centerId" style="width: 200px;"
                               (change)="getCenterId($event.target.value)">
                         <option *ngFor="let center of centers"
                                 [value]='center.centerId'>
@@ -104,11 +98,6 @@
                 </div>
 
               </td>
-              <td>
-
-
-              </td>
-
 
             </tr>
 
@@ -122,10 +111,10 @@
                 <div class="radip-wrapper" style="display: flex">
                   <div class="radip-wrapper" style="display: flex">
                     <clr-select-container class="clr-col-md-12 "
-                                          style="display: -webkit-inline-box; margin-top:0px !important">
+                   style="display: -webkit-inline-box; margin-top:0px !important">
 
                       <select clrSelect name="houseId" required
-                              style="width: 105px;" [(ngModel)]="housesId"
+                              style="width: 200px;" [(ngModel)]="housesId"
                               (change)="getHouseId($event.target.value)">
                         <option *ngFor="let house of houses"
                                 [value]='house.houseId'>
@@ -141,15 +130,8 @@
                 </div>
 
               </td>
-              <td>
-
-
-              </td>
-
 
             </tr>
-
-
 
 
 
@@ -170,7 +152,7 @@
       <clr-step-content>
         <div class="form-visitV clr-row">
 
-          <table class="table  table-noborder table-compact">
+          <table class="table  table-noborder table-compact" style="margin-top: 0">
             <!-- head Table -->
             <thead>
             <tr>
@@ -755,7 +737,7 @@
       <clr-step-content>
         <div class="form-visitV clr-row">
 
-          <table class="table  table-noborder table-compact">
+          <table class="table  table-noborder table-compact" style="margin-top: 0">
             <!-- head Table -->
             <thead>
             <tr>
@@ -1043,7 +1025,7 @@
           <clr-step-content>
             <div class="form-visitV clr-row">
 
-              <table class="table  table-noborder table-compact">
+              <table class="table  table-noborder table-compact" style="margin-top: 0">
                 <!-- head Table -->
                 <thead>
                 <tr>
@@ -1255,7 +1237,7 @@
           <clr-step-content>
             <div class="FormComV">
 
-              <table class="table  table-noborder table-compact">
+              <table class="table  table-noborder table-compact"  style="margin-top: 0">
                 <!-- head Table -->
                 <thead>
                 <tr>

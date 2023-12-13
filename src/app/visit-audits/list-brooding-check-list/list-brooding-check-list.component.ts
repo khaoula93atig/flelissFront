@@ -7,6 +7,7 @@ import {getBase64ImageFromURL} from '../../shared/ImageFromUrl';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import {environment} from '../../../environments/environment';
+import {UserService} from '../../services/user.service';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -28,10 +29,12 @@ export class ListBroodingCheckListComponent implements OnInit {
   breedingDetail: any;
   company: string;
   image: string;
+  user: string;
 
   constructor(private visitAuditsService: VisitAuditsService,
               private houseService: HouseService,
-              private farmService: FarmService) {
+              private farmService: FarmService,
+              private userService: UserService) {
   }
 
   ngOnInit(): void {

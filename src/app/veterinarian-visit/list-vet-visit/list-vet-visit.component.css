@@ -343,7 +343,7 @@ clr-select-container {
   color: #02675c;
   border-left: 2px solid;
   width: 100%;
-  padding-left: 10px;
+  padding: 12px 10px;
   background-color: #02675c17;
 }
 

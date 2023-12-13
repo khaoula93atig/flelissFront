@@ -369,3 +369,34 @@ clr-main-container{
 }
 
 clr-main-container:-webkit-scrollbar { width: 0 !important }
+
+
+header .settings .nav-link, header .header-nav .nav-link, header .header-actions .nav-link, .header
+.settings .nav-link, .header .header-nav .nav-link, .header .header-actions .nav-link
+{ text-align: left !important }
+.dropdown-menu { padding: 0.2rem 0px !important }
+.btn-report  {
+  float: right;
+  padding: 6px 18px;
+  background-color: #02675c12;
+  color: #1a675c;
+  border: 1px solid #1a675c;
+  border-radius: 3px;
+  font-weight: 550;
+}
+.btn-report:hover{
+  background-color: #1a675c3b;
+  transition: .5s;
+  cursor: pointer;
+  font-weight: 550;
+}
+
+.clr-wizard .clr-wizard-stepnav{
+  padding-left: 0rem !important;
+}
+.clr-wizard .clr-wizard-stepnav-wrapper {
+  width: 40%;
+  max-width: 40%;
+}
+
+

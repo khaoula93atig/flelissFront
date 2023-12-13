@@ -68,21 +68,36 @@
               <div class="separator"></div>
               <form clrForm>
 
-
-                <h3 class="modal-title" style="color: #8c8c8c;   margin-left: 13px;">
+                  <h3 class="modal-title" style="color: #8c8c8c;   margin-left: 13px;">
                   Date of visit: <strong style="color: #02675c;">{{detail.visitDate}}</strong>
                 </h3>
-                <div class="clr-row" style="margin-left: 13px;">
-                  <h6  class="clr-col-3" class="modal-title"  style="color: #8c8c8c;">
+                <div style="DISPLAY: grid; grid-auto-flow: column;">
+                  <div>
+                    <h6   class="modal-title"  style="color: #8c8c8c;">
                       House: <strong style="color: #02675c; ">{{detail.flock.house.houseName}} </strong>
-                  </h6>
-                  <div class="clr-col-1">
-
+                    </h6>
                   </div>
-                  <h6 class="clr-col-3" class="modal-title" style="color: #8c8c8c;">
+                  <div>
+                    <h6 class="modal-title" style="color: #8c8c8c;">
                       Flock: <strong style="color: #02675c; ">{{detail.flock.flockName}} </strong>
-                  </h6>
+                    </h6>
                   </div>
+                  <div>
+                    <h6 class="modal-title" style="color: #8c8c8c;">
+                      Age : <strong style="color: #02675c; ">{{detail.ageFlock}} day</strong>
+                    </h6>
+                  </div>
+                  <div>
+                    <h6 class="modal-title" style="color: #8c8c8c;">
+                      Breed : <strong style="color: #02675c; ">{{detail.flock.breedObject.description}}</strong>
+                    </h6>
+                  </div>
+                </div>
+                <div style="DISPLAY: grid; grid-auto-flow: column;">
+                  <h6 class="modal-title"  style="color: #8c8c8c;">
+                    Done by: <strong style="color: #02675c; ">{{user}} </strong>
+                  </h6>
+                </div>
 
 
                 <div class="modal-body">
@@ -189,11 +204,10 @@
                           </div>
                         </div>
 
+
                         <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
-                          <clr-textarea-container class="clr-form-control clr-row ng-star-inserted">
-                            <textarea clrTextarea rows="4" [(ngModel)]="generalObservation" name="generalObservation"
+                            <textarea  rows="3" [(ngModel)]="generalObservation" name="generalObservation"
                               style="width:100%  !important; border-color: #b9b8b8" readonly></textarea>
-                          </clr-textarea-container>
                         </div>
 
 
@@ -362,7 +376,7 @@
                         <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
 
 
-                          <textarea clrTextarea rows="4" [(ngModel)]="respiratoryObservation"
+                          <textarea rows="3" [(ngModel)]="respiratoryObservation"
                             name="respiratoryObservation" style="width:100%  !important; border-color: #b9b8b8"
                             readonly></textarea>
 
@@ -490,7 +504,7 @@
                         <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
 
 
-                          <textarea clrTextarea rows="4" [(ngModel)]="digestiveObservation" name="digestiveObservation"
+                          <textarea  rows="3" [(ngModel)]="digestiveObservation" name="digestiveObservation"
                             style="width:100%  !important; border-color: #b9b8b8" readonly></textarea>
 
                         </div>
@@ -509,7 +523,7 @@
 
 
 
-                          <textarea clrTextarea rows="4" [(ngModel)]="locomotionObservation"
+                          <textarea rows="3" [(ngModel)]="locomotionObservation"
                             name="locomotionObservation" style="width:100%  !important; border-color: #b9b8b8"
                             readonly></textarea>
                         </div>
@@ -554,7 +568,7 @@
                           </div>
                         </div>
                         <div class="form-group clr-col-md-12" style="margin-top: 20px;  padding: 0;">
-                          <textarea clrTextarea rows="4" [(ngModel)]="otherObservation" name="description"
+                          <textarea  rows="3" [(ngModel)]="otherObservation" name="description"
                             style="width:100%  !important; border-color: #b9b8b8" readonly></textarea>
                         </div>
                       </div>
@@ -841,13 +855,13 @@
                       <div class="form-visitResult form-visitV  visitContent">
                         <div class="labelVisit">
                           <label for="brain" class="clr-control-label clr-col-12 clr-col-md-12">
-                            Image of visit</label>
+                            Image of observation:</label>
                         </div>
                         <div class="clr-control-container clr-col-md-12 visitContentD">
                           <div class="resultV">
 
                             <div *ngFor="let f of filesList">
-                              <img src={{f}} style="width:100px; height: 100px" (click)="onClick(f)"/>
+                              <img src={{f}} style="width:100px; height: 100px; margin-top: 20px; cursor: pointer" (click)="onClick(f)"/>
                             </div>
 
 
@@ -862,7 +876,7 @@
                         </h4>
                         <div *ngIf="analyse==true">
 
-                          <h6 (click)="showAnalyse()"> <img
+                          <h6 (click)="showAnalyse()" style=" cursor: pointer"> <img
                             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAADdElEQVRoge2YzW8UZRzHP8+87OxOty/4hpU3Q1MSCCRgqG1dOEAkDVE42BjDgYAHSbz5D3j1LgexBwkaE7lIYsQQo0YDVsREEkxUBNIitdJh7dLusq+dmYfDxDUEgWH6PNsY93OaTJ7n+f4+O8/s88wDbdq0+U8j4jSSH597AeQYsGKxgYVjR8Yf/fT9bYsd52+MeM3kuygoHsCfvJyb3XPgWxVjQWwBVqoKNDOZSGLvq2dVjBdXQBmGk4okJn4bUiGxJAIqJVouIExLqUTrn4BlKpVouQCmoVSi9QKgVKL1U6ijM7q4j0ThpddirxMtF3Cee/6BEguXfs7FlYi5lfheJi85OWJ06IH1WTqC65d+Zf7EcYLiPJ27dpPdMaIjBtA0heaOf4Cf95D1GsXPPiGYv6kjBtAgEFbKzYJTff0gQxamp1THNFEuIBwHjGjqhuWy6uHvQr2AaWH3RptX35sBwOzqUR3TRMs7kNm8NbqQIRgG1hNP6ogBNAm4gzmEFf3B2StWI1IpHTGAJgGjI4uzbj0AwjRA6ltG9KzEoaQx9TsAjasTlM+e0RIDmgTqVy4SlooIM5pGxZMnCGbzOqL0CFTP/wBAdscu0hs3I+s1ZscOE5aKyrOUbyXC8i2qF86DIXCHtiOcNH/lPXzvOoWjR+jcvRc/P4Pv3UAGPsIQ2GvW4m55FsyH/z2VC5TPfI1s1Elv2IS57BH8mWmcvn587zqNa5PMjr19d6fvTtO4fJGefQcfOk+pgKzXKI9/A0RbCu+tN++Y+8K0kIH/T/jjy8G08GemqV74cWkFZOBT+vwkYSXaPjSuTkQBy3tJr9+Es2EjqTVrKZ/+itKXp5D1Gn7ea/ZP9fUnyl28gAypnBun9MUpgrkCAMJJk9kyQMfwduyVq+9ont05gju0jdovP+H/OY30F7CfWkXmmYHWC/g3POY+Okbj2mTznr3qaR57/Q2Ek75nP8PtwN06vJjoJokFGpNXKLz3DmG10rwnTIueV/bft3jVJFsHQsnND48SViuYXd0gomE6R17E7lVyBhybRE9ABn5zUQqK8wC4A8Nkd+r7dLwXiZ6AsG26R/dhdnVjdi+ja88oPS/vBxHrjEApid8BdzCHO5hTWUsiluZkTiH/G4E/tFbx78Q6yognYMhDtFZiChEeamFemzZtlorb+oIyI4Q5NRoAAAAASUVORK5CYII="
                             style="width: 30px; height: 30px;" >{{visitId}}_{{visitDate}}.pdf</h6>
                         </div>

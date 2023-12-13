@@ -8,6 +8,7 @@ import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import {DatePipe} from '@angular/common';
+import Drilldown from 'highcharts-drilldown';
 
 
 declare var require: any;
@@ -22,6 +23,8 @@ ExportData(Highcharts);
 
 const Accessibility = require('highcharts/modules/accessibility');
 Accessibility(Highcharts);
+
+Drilldown(Highcharts);
 
 
 @Component({
@@ -49,6 +52,7 @@ export class GeneralComponent implements OnInit {
   survivalCompany: number = 0;
   self = this;
 
+
   constructor(private UserService: UserService,
               private dashboardService: DashboardService,
               private farmService: FarmService,
@@ -65,6 +69,7 @@ export class GeneralComponent implements OnInit {
     this.mortalityBreed();
     this.getFeedConsumTotalBycompany();
     this.getBodyWeightbyfarm35jours();
+    this.getBodyWeightOfFarms();
   }
 
   getFarms() {
@@ -133,7 +138,7 @@ export class GeneralComponent implements OnInit {
                   console.log('Category: ' + category + ', Value: ' + value);
                   let selectedFarm = this.farms.find(farm => farm.farmName == event.point.name);
                   console.log(this.farms.find(farm => farm.farmName == event.point.name));
-                  this.router.navigate(['/Dashboard/mortality', {farmID: selectedFarm.farmId}]);
+                  this.router.navigate(['/Dashboard/details', {farmID: selectedFarm.farmId}]);
                 }
               }
             }
@@ -177,8 +182,8 @@ export class GeneralComponent implements OnInit {
           {
             linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
             stops: [
-              [0, '#ECF8F6'],
-              [1, '#A0FBEC']
+              [0, '#B64201'],
+              [1, '#B64201']
             ]
           },
           {
@@ -292,8 +297,8 @@ export class GeneralComponent implements OnInit {
           {
             linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
             stops: [
-              [0, '#ECF8F6'],
-              [1, '#A0FBEC']
+              [0, '#B64201'],
+              [1, '#B64201']
             ]
           },
           {
@@ -326,7 +331,7 @@ export class GeneralComponent implements OnInit {
       am4core.color('#D6955B'),
       am4core.color('#FEEAA1'),
       am4core.color('#392E2C'),
-      am4core.color('#A0FBEC'),
+      am4core.color('#B64201'),
       am4core.color('#D07627'),
       am4core.color('#FFD849'),
     ];
@@ -353,7 +358,7 @@ export class GeneralComponent implements OnInit {
       yAxis.renderer.minGridDistance = 10;
 
       const xAxis = this.chart.xAxes.push(new am4charts.ValueAxis());
-
+      xAxis.renderer.labels.template.fontSize = 10;
       // Create series
       const series = this.chart.series.push(new am4charts.ColumnSeries());
       series.dataFields.valueX = 'weight';
@@ -367,7 +372,6 @@ export class GeneralComponent implements OnInit {
             const index = farms.indexOf(farm);
             if (index !== -1) {
               return this.chart.colors.getIndex(index);
-              ;
             }
           }
         }
@@ -377,9 +381,12 @@ export class GeneralComponent implements OnInit {
       let axisBreaks = {};
       let legendData = [];
 
-//title
+      // title
       const title = this.chart.titles.create();
       title.text = 'Body weight of outgoing flocks';
+      title.fontSize = 15;
+      title.padding(0,0,20,0);
+      // title.fontWeight = "bold";
 
 // Add ranges
       function addRange(label, start, end, color) {
@@ -393,7 +400,7 @@ export class GeneralComponent implements OnInit {
         range.label.dx = -130;
         range.label.dy = 12;
         range.label.fontWeight = 'bold';
-        range.label.fontSize = 12;
+        range.label.fontSize = 11;
         range.label.horizontalCenter = 'left';
         range.label.inside = true;
 
@@ -436,16 +443,12 @@ export class GeneralComponent implements OnInit {
         addRange(data1, maxHouse, minHouse, this.chart.colors.getIndex(index));
 
       });
-      /*addRange("Central", "Texas", "North Dakota", this.chart.colors.getIndex(0));
-      addRange("East", "New York", "West Virginia", this.chart.colors.getIndex(1));
-      addRange("South", "Florida", "South Carolina", this.chart.colors.getIndex(2));
-      addRange("West", "California", "Wyoming", this.chart.colors.getIndex(3));*/
 
       this.chart.cursor = new am4charts.XYCursor();
 
 
       let legend = new am4charts.Legend();
-      legend.position = 'right';
+      legend.position = 'bottom';
       legend.scrollable = true;
       legend.valign = 'top';
       legend.reverseOrder = true;
@@ -476,7 +479,6 @@ export class GeneralComponent implements OnInit {
               dataItem.show(1000);
             }
           });
-
           series.dataItems.each(function(dataItem) {
             if (region == name) {
               dataItem.show(1000, 0, ['valueX']);
@@ -498,7 +500,7 @@ export class GeneralComponent implements OnInit {
     let date1 = new Date();
     const datepipe: DatePipe = new DatePipe('en-Fr');
     let formatedDate = datepipe.transform(date1, 'yyyy-MM-dd');
-    this.dashboardService.getfeedConsumTotalByCompany(this.companyId , formatedDate).subscribe(data => {
+    this.dashboardService.getfeedConsumTotalByCompany(this.companyId, formatedDate).subscribe(data => {
       console.log(data);
       for (let d of data) {
         this.donnes2.push({y: d.percentage, name: d.farmName});
@@ -545,7 +547,7 @@ export class GeneralComponent implements OnInit {
                   console.log('Category: ' + category + ', Value: ' + value);
                   let selectedFarm = this.farms.find(farm => farm.farmName == event.point.name);
                   console.log(this.farms.find(farm => farm.farmName == event.point.name));
-                  this.router.navigate(['/Dashboard/mortality', {farmID: selectedFarm.farmId}]);
+                  this.router.navigate(['/Dashboard/details', {farmID: selectedFarm.farmId}]);
                 }
               }
             }
@@ -605,6 +607,246 @@ export class GeneralComponent implements OnInit {
       };
       console.log(this.optionsChart5.series);
       Highcharts.chart('chartFeedConsumByfarm', this.optionsChart5);
+    });
+  }
+
+  getBodyWeightOfFarms() {
+    let houseWeight = [];
+    this.dashboardService.getWeeklyWeightByfarm(this.companyId).subscribe(data => {
+      console.log('weightFarm', data);
+      let farms = data.map(el => el.farmId);
+      farms = farms.filter((x, i) => farms.indexOf(x) === i);
+      console.log(farms );
+      let i = 0;
+      for ( let f of farms){
+        this.dashboardService.getWeeklyWeightByHouse(this.companyId,f).subscribe(datahouse => {
+          console.log(f);
+          console.log('datahouse', datahouse);
+          if(datahouse.length != 0){
+            let d0 = datahouse.filter(el => el.week == 0);
+            if (d0 != []){
+              houseWeight.push({id: 'd0'+ f , name : 'D0', data: []});
+              for ( let d of d0){
+                houseWeight[i].data.push({
+                  name: d.houseId,
+                  y: d.average
+                });
+              }
+            }
+            i++;
+          let d7 = datahouse.filter(el => el.week == 7);
+          if (d7 != []){
+            houseWeight.push({id: 'd7'+ f , name : 'D7', data: []});
+            for ( let d of d7){
+              houseWeight[i].data.push({
+                name: d.houseId,
+                y: d.average
+              });
+            }
+          }
+            i++;
+          let d14 = datahouse.filter(el => el.week == 14);
+          if (d14 != []){
+            houseWeight.push({id: 'd14'+ f , name : 'D14', data: []});
+            for ( let d of d14){
+              houseWeight[i].data.push({
+                name: d.houseId,
+                y: d.average
+              });
+            }
+          }
+            i++;
+          let d21 = datahouse.filter(el => el.week == 21);
+          if (d21 != []){
+            houseWeight.push({id: 'd21'+ f , name : 'D21', data: []});
+            for ( let d of d21){
+              houseWeight[i].data.push({
+                name: d.houseId,
+                y: d.average
+              });
+            }
+          }
+            i++;
+          let d28 = datahouse.filter(el => el.week == 28);
+          if (d28 != []){
+            houseWeight.push({id: 'd28'+ f , name : 'D28', data: []});
+            for ( let d of d28){
+              houseWeight[i].data.push({
+                name: d.houseId,
+                y: d.average
+              });
+            }
+          }
+            i++;
+          let d35 = datahouse.filter(el => el.week == 35);
+          if (d35 != []){
+            houseWeight.push({id: 'd35'+ f , name : 'D35', data: []});
+            for ( let d of d35){
+              houseWeight[i].data.push({
+                name: d.houseId,
+                y: d.average
+              });
+            }
+          }
+            i++;
+          let d42 = datahouse.filter(el => el.week == 42);
+          if (d42 != []){
+            houseWeight.push({id: 'd42'+ f , name : 'D42', data: []});
+            for ( let d of d42){
+              houseWeight[i].data.push({
+                name: d.houseId,
+                y: d.average
+              });
+            }
+          }
+            i++;
+          }
+          console.log(houseWeight);
+        });
+      }
+      let d0 = data.filter(el => el.week == 0);
+      if (d0 != []){
+        this.weeklyWeightFarm.push({name: 'D0' , data: []});
+        for ( let d of d0){
+          this.weeklyWeightFarm[0].data.push({
+            name: d.farmId,
+            y: d.average,
+            drilldown: 'd0' + d.farmId
+          });
+        }
+      }
+      let d7 = data.filter(el => el.week == 7);
+      if (d7 != []){
+        this.weeklyWeightFarm.push({name: 'D7' , data: []});
+        for(let d of d7){
+          this.weeklyWeightFarm[1].data.push({
+            name: d.farmId,
+            y: d.average,
+            drilldown: 'd7' + d.farmId
+          });
+        }
+      }
+      let d14 = data.filter(el => el.week == 14);
+      if (d14 != []){
+        this.weeklyWeightFarm.push({name: 'D14' , data: []});
+        for(let d of d14){
+          this.weeklyWeightFarm[2].data.push({
+            name: d.farmId,
+            y: d.average,
+            drilldown: 'd14' + d.farmId
+          });
+        }
+      }
+      let d21 = data.filter(el => el.week == 21);
+      if (d21 != []){
+        this.weeklyWeightFarm.push({name: 'D21' , data: []});
+        for(let d of d21){
+          this.weeklyWeightFarm[3].data.push({
+            name: d.farmId,
+            y: d.average,
+            drilldown: 'd21' + d.farmId
+          });
+        }
+      }
+      let d28 = data.filter(el => el.week == 28);
+      if (d28 != []){
+        this.weeklyWeightFarm.push({name: 'D28' , data: []});
+        for(let d of d28){
+          this.weeklyWeightFarm[4].data.push({
+            name: d.farmId,
+            y: d.average,
+            drilldown: 'd28' + d.farmId
+          });
+        }
+      }
+      let d35 = data.filter(el => el.week == 35);
+      if (d35 != []){
+        this.weeklyWeightFarm.push({name: 'D35' , data: []});
+        for(let d of d35){
+          this.weeklyWeightFarm[5].data.push({
+            name: d.farmId,
+            y: d.average,
+            drilldown: 'd35' + d.farmId
+          });
+        }
+      }
+      let d42 = data.filter(el => el.week == 42);
+      if (d42 != []){
+        this.weeklyWeightFarm.push({name: 'D42' , data: []});
+        for(let d of d42){
+          this.weeklyWeightFarm[6].data.push({
+            name: d.farmId,
+            y: d.average,
+            drilldown: 'd42' + d.farmId
+          });
+        }
+      }
+    this.optionsChart4 = {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: 'Average body weight by farm'
+      },
+      lang: {
+        drillUpText: '<< back to farms'
+      },
+      xAxis: {
+        type: 'category'
+      },
+      yAxis: {
+        title: {
+          text: null
+        },
+        labels: {
+          format: '{value}'
+        }},
+      colors: [
+        {
+          linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
+          stops: [
+            [0, '#1F7D77'],
+            [1, '#18534F']
+          ]
+        },
+        {
+          linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
+          stops: [
+            [0, '#FEEAA1'],
+            [1, '#FFD849']
+          ]
+        },
+        {
+          linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
+          stops: [
+            [0, '#D6955B'],
+            [1, '#D07627']
+          ]
+        },
+        {
+          linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
+          stops: [
+            [0, '#B64201'],
+            [1, '#B64201']
+          ]
+        },
+        {
+          linearGradient: {x1: 0, x2: 1, y1: 0, y2: 1},
+          stops: [
+            [0, '#64605C'],
+            [1, '#392E2C']
+          ]
+        }
+
+      ],
+      series: this.weeklyWeightFarm ,
+      drilldown: {
+        ' allowPointDrilldown ': false,
+        series: houseWeight
+      }
+    };
+    console.log(this.optionsChart4.series);
+    Highcharts.chart('chartBodyWeightByfarm', this.optionsChart4);
     });
   }
 

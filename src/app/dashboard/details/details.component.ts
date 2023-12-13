@@ -34,11 +34,11 @@ Accessibility(Highcharts);
 
 
 @Component({
-  selector: 'app-mortality',
-  templateUrl: './mortality.component.html',
-  styleUrls: ['./mortality.component.css']
+  selector: 'app-details',
+  templateUrl: './details.component.html',
+  styleUrls: ['./details.component.css']
 })
-export class MortalityComponent implements OnInit {
+export class DetailsComponent implements OnInit {
   public optionsPie: any;
   public optionsChart: any;
   public optionsChart1: any;
@@ -104,6 +104,10 @@ export class MortalityComponent implements OnInit {
   ageExists: any[] = [];
   breed: number;
   flockId: string;
+  visitMortalit = false;
+  visitWater = false;
+  visitFeed = false;
+  visitWeight = false ;
 
 
   ngOnInit(): void {
@@ -296,7 +300,7 @@ export class MortalityComponent implements OnInit {
       },
       yAxis: {
         title: {
-          text: 'Total percent mortality'
+          text: 'Total percent details'
         }
 
       },
@@ -567,9 +571,13 @@ export class MortalityComponent implements OnInit {
     let date1 = new Date();
     const datepipe: DatePipe = new DatePipe('en-Fr');
     let formatedDate = datepipe.transform(date1, 'yyyy-MM-dd');
-    this.dashboardService.getMortalityCountByHouse(house, formatedDate).subscribe(data => {
+    this.dashboardService.getMortalityCountByHouse(house, formatedDate).subscribe((data) => {
       console.log('todya', data);
+      this.visitMortalit = false;
       this.mortalityByHousedaily = data;
+    }, (error)=>{
+        console.log('echec');
+        this.visitMortalit = true;
     });
     date1.setDate(date1.getDate() - 1);
     let formatedDate1 = datepipe.transform(date1, 'yyyy-MM-dd');
@@ -595,9 +603,13 @@ export class MortalityComponent implements OnInit {
     let date1 = new Date();
     const datepipe: DatePipe = new DatePipe('en-Fr');
     let formatedDate = datepipe.transform(date1, 'yyyy-MM-dd');
-    this.dashboardService.getwaterconsumptionByHouseDaily(formatedDate, house).subscribe(data => {
+    this.dashboardService.getwaterconsumptionByHouseDaily(formatedDate, house).subscribe((data) => {
       this.waterConsm = data;
-      console.log('waterConsm', data);
+      this.visitWater = false;
+      console.log('waterConsm', data); } ,
+      (error)=>{
+      console.log('echec');
+      this.visitWater = true;
     });
 
   }
@@ -607,9 +619,14 @@ export class MortalityComponent implements OnInit {
     let date1 = new Date();
     const datepipe: DatePipe = new DatePipe('en-Fr');
     let formatedDate = datepipe.transform(date1, 'yyyy-MM-dd');
-    this.dashboardService.getweightByHouseDaily(formatedDate, house).subscribe(data => {
+    this.dashboardService.getweightByHouseDaily(formatedDate, house).subscribe((data) => {
       this.weightdaily = data;
+        this.visitWeight = false;
       console.log('weight', data);
+      } ,
+      (error)=>{
+        console.log('echec');
+        this.visitWeight = true;
     });
 
   }
@@ -658,9 +675,13 @@ export class MortalityComponent implements OnInit {
     let date1 = new Date();
     const datepipe: DatePipe = new DatePipe('en-Fr');
     let formatedDate = datepipe.transform(date1, 'yyyy-MM-dd');
-    this.dashboardService.getfeedByhouse(formatedDate, house).subscribe(data => {
+    this.dashboardService.getfeedByhouse(formatedDate, house).subscribe((data) => {
+        this.visitFeed = false;
       this.feedhousedaily = data;
-      console.log('todyafeed', data);
+      console.log('todyafeed', data) ;} ,
+      (error)=> {
+        console.log('echec');
+        this.visitFeed = true;
     });
 
     date1.setDate(date1.getDate() - 1);
@@ -897,15 +918,13 @@ export class MortalityComponent implements OnInit {
       console.log(data);
       this.dashboardService.getweeklyweightStandardBybreed(this.breed).subscribe(data1 => {
         for (let w of data1) {
-          this.standard.push(w.weight);
-          this.ageStandard.push(w.age);
+          this.standard.push([w.age, w.weight]);
         }
 
 
         for (let w of data) {
-          this.exists.push(w.averge);
-          this.ageExists.push(w.week);
-        }
+          this.exists.push([w.week , w.averge]);
+        };
         this.optionsChart8 = {
           chart: {
             type: 'spline',
@@ -915,8 +934,12 @@ export class MortalityComponent implements OnInit {
             text: 'Weekly weight'
           },
           xAxis: {
-            categories: [0, 7, 14, 21, 28, 35, 42, 49]
+            categories: [0, 7, 14, 21, 28, 35, 42],
+            tickInterval: 7, // Sauter chaque 7 unités
           },
+          /*xAxis: {
+            categories: [0, 7 ,14,21,28,35,42]
+          },*/
           yAxis: {
             title: {
               text: 'g'

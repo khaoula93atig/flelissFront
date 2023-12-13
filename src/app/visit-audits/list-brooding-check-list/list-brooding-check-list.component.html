@@ -25,7 +25,7 @@
 
                         </clr-dg-detail-header>
                         <clr-dg-detail-body>
-                            <div class="btn btn-primary" style="float: right;    padding-right: 25px;" (click)="export()">
+                            <div class="btn-report" (click)="export()">
                                 <span>Export Report </span>
                                 <img src="../../../assets/export.png" style="width: 21px;
                             height:21px;
@@ -33,7 +33,7 @@
                             float:right;" alt="">
                             </div>
                             <div #contentToConvert  class="content">
-                                <img src="../../../assets/icon-detail.png" width="40" style="margin-bottom: 8px;">
+                                <img src="../../../assets/icon-detail.png" width="30" style="margin-bottom: 8px;">
                                 <span class="internal-title" style="font-weight:bold ; font-size: large;"> Date of visit
                                     : {{detail.creationDate}}</span>
                                 <form clrForm>
@@ -47,6 +47,7 @@
                                             <label class="clr-col-md-3">House </label>
                                             <input class="clr-col-md-9" clrInput readonly type="text"
                                                 [value]="detail.house.houseName" name="House" size="35" />
+
                                         </clr-input-container>
                                     </div>
 
